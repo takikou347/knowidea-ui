@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KNOW IDEA 方向 B 見本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6f8;
+  --surface: #fdfdff;
+  --surface-2: #ebedef;
+  --text: #1a1b1c;
+  --text-muted: #515355;
+  --line: #d9dbdd;
+  --line-strong: #7e8083;
+  --primary: #0262ab;
+  --primary-hover: #00518f;
+  --on-primary: #fbfcfd;
+  --success: #026337;
+  --success-soft: #ddf6e4;
+  --warn: #804d0c;
+  --warn-soft: #feefcf;
+  --error: #b21a1c;
+  --error-soft: #ffebea;
+  --font-sans: "IBM Plex Sans JP", "BIZ UDPGothic", "Noto Sans CJK JP", "IPAPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --fs-1: 12px; --lh-1: 1.4;
+  --fs-2: 13px; --lh-2: 1.45;
+  --fs-3: 14px; --lh-3: 1.6;
+  --fs-4: 18px; --lh-4: 1.35;
+  --fs-5: 24px; --lh-5: 1.3;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;
+  --r-1: 2px; --r-2: 4px; --r-3: 6px;
+  --shadow-pop: 0 4px 12px oklch(0 0 0 / 0.14);
+
+  --t-fast: 120ms; --t-state: 160ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  --hit: 44px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131416;
+    --surface: #1d1e20;
+    --surface-2: #26282a;
+    --text: #ecedef;
+    --text-muted: #afb1b4;
+    --line: #343538;
+    --line-strong: #7e8083;
+    --primary: #68b2ef;
+    --primary-hover: #82c5fd;
+    --on-primary: #0e1216;
+    --success: #5dd68f;
+    --success-soft: #143320;
+    --warn: #f3b94c;
+    --warn-soft: #3e2909;
+    --error: #ff8a83;
+    --error-soft: #461d1a;
+    --shadow-pop: 0 4px 12px oklch(0 0 0 / 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131416;
+  --surface: #1d1e20;
+  --surface-2: #26282a;
+  --text: #ecedef;
+  --text-muted: #afb1b4;
+  --line: #343538;
+  --line-strong: #7e8083;
+  --primary: #68b2ef;
+  --primary-hover: #82c5fd;
+  --on-primary: #0e1216;
+  --success: #5dd68f;
+  --success-soft: #143320;
+  --warn: #f3b94c;
+  --warn-soft: #3e2909;
+  --error: #ff8a83;
+  --error-soft: #461d1a;
+  --shadow-pop: 0 4px 12px oklch(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 var(--fs-3)/var(--lh-3) var(--font-sans);
+  font-feature-settings: "palt" 0;
+  overflow-wrap: anywhere;
+}
+h1, h2, h3 { font-weight: 600; margin: 0; letter-spacing: 0; }
+h1 { font-size: var(--fs-5); line-height: var(--lh-5); }
+h2 { font-size: var(--fs-4); line-height: var(--lh-4); }
+h3 { font-size: var(--fs-3); line-height: var(--lh-3); }
+p { margin: 0; }
+a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); }
+a:hover { text-decoration-color: currentColor; }
+code, .mono, .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.num { text-align: right; }
+.dim { color: var(--text-muted); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+svg.i { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.doc-head { padding-top: var(--sp-6); padding-bottom: var(--sp-5); }
+.doc-head p { margin-top: var(--sp-2); max-width: 64ch; color: var(--text-muted); }
+section.sec { padding: var(--sp-6) 0; border-top: 1px solid var(--line); }
+section.sec h2 { margin-bottom: var(--sp-3); }
+.panel-head h2 { margin-bottom: 0 !important; }
+.sec .lead { color: var(--text-muted); max-width: 70ch; margin: 0 0 var(--sp-4); }
+.stack-v > * + * { margin-top: var(--sp-4); }
+.scroll { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--surface); }
+.scroll table { min-width: 560px; }
+
+/* ---------- 表 ---------- */
+table { width: 100%; border-collapse: collapse; font-size: var(--fs-2); line-height: var(--lh-2); }
+th, td { padding: 9px 12px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+th { background: var(--surface-2); color: var(--text-muted); font-weight: 500; font-size: var(--fs-1); white-space: nowrap; }
+th.num { text-align: right; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: var(--surface-2); }
+td.num, th.num { text-align: right; white-space: nowrap; }
+.sw { display: inline-block; width: 28px; height: 14px; border-radius: var(--r-1); border: 1px solid var(--line-strong); vertical-align: -2px; margin-right: 8px; }
+
+/* ---------- ボタン ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: var(--hit); padding: 0 16px; border-radius: var(--r-2);
+  font: 500 var(--fs-3)/1 var(--font-sans); cursor: pointer; border: 1px solid transparent;
+  transition: background-color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+  text-decoration: none;
+}
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover, .btn-primary.is-hover { background: var(--primary-hover); }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--line-strong); }
+.btn-secondary:hover, .btn-secondary.is-hover { background: var(--surface-2); }
+.btn-text { background: transparent; color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-strong); padding: 0 12px; }
+.btn-text:hover, .btn-text.is-hover { background: var(--surface-2); text-decoration-color: currentColor; }
+.btn.is-focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+.btn[disabled], .btn[aria-disabled="true"] { background: var(--surface-2); color: var(--text-muted); border-color: var(--line); cursor: not-allowed; text-decoration: none; }
+.btn-primary[disabled] { border-color: var(--line); }
+.btn-icon { width: var(--hit); padding: 0; }
+.spin { animation: spin 800ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-3); align-items: center; }
+.btn-grid .cap { grid-column: 1 / -1; color: var(--text-muted); font-size: var(--fs-1); margin-top: var(--sp-2); }
+.btn-grid .cap:first-child { margin-top: 0; }
+
+/* ---------- 入力欄 ---------- */
+.field { display: grid; gap: 6px; }
+.field label { font-size: var(--fs-2); font-weight: 500; }
+.field input {
+  min-height: var(--hit); padding: 0 12px; border-radius: var(--r-2); border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--text); font: 400 var(--fs-3)/1 var(--font-sans); width: 100%;
+}
+.field input::placeholder { color: var(--text-muted); opacity: 1; }
+.field input[aria-invalid="true"] { border-color: var(--error); box-shadow: inset 0 0 0 1px var(--error); }
+.field input:disabled { background: var(--surface-2); color: var(--text-muted); border-color: var(--line); cursor: not-allowed; }
+.field .hint { font-size: var(--fs-1); color: var(--text-muted); }
+.field .err { font-size: var(--fs-1); color: var(--error); display: flex; gap: 6px; align-items: center; }
+
+/* ---------- タグ ---------- */
+.tag {
+  display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px 0 6px; border-radius: var(--r-1);
+  font-size: var(--fs-1); font-weight: 500; line-height: 1; white-space: nowrap;
+  transition: background-color var(--t-state) var(--ease), color var(--t-state) var(--ease);
+}
+.tag .i { width: 12px; height: 12px; }
+.t-ok { background: var(--success-soft); color: var(--success); }
+.t-off { background: var(--surface-2); color: var(--text-muted); }
+.t-warn { background: var(--warn-soft); color: var(--warn); }
+.t-err { background: var(--error-soft); color: var(--error); }
+.tags { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+
+/* ---------- アプリ見本 ---------- */
+.app { background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.topbar { background: var(--surface); border-bottom: 1px solid var(--line); }
+.topbar .in { display: flex; align-items: stretch; gap: var(--sp-5); min-height: 48px; flex-wrap: wrap; }
+.topbar .nav { order: 3; flex: 1 0 100%; }
+.topbar .tool { order: 2; }
+.brand { display: flex; align-items: center; font: 600 var(--fs-3)/1 var(--font-mono); letter-spacing: 0.04em; min-height: var(--hit); }
+.nav { display: flex; gap: 0; overflow-x: auto; flex: 1 1 auto; min-width: 0; }
+.nav a {
+  display: inline-flex; align-items: center; min-height: var(--hit); padding: 0 12px; text-decoration: none;
+  color: var(--text-muted); font-size: var(--fs-2); white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.nav a:hover { color: var(--text); background: var(--surface-2); }
+.nav a[aria-current="page"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+.topbar .tool { display: flex; align-items: center; margin-left: auto; }
+.page { padding-top: var(--sp-5); padding-bottom: var(--sp-6); display: grid; gap: var(--sp-5); }
+.page-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2) var(--sp-4); justify-content: space-between; }
+.page-title .stamp { font: 400 var(--fs-2)/1.4 var(--font-mono); color: var(--text-muted); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-2); min-width: 0; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.panel-head h2 { font-size: var(--fs-3); line-height: var(--lh-3); }
+.panel-head .count { font: 400 var(--fs-2)/1 var(--font-mono); color: var(--text-muted); }
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); }
+.stat { padding: 12px 16px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+.stat:nth-child(2n) { border-right: 0; }
+.stat:nth-last-child(-n+2) { border-bottom: 0; }
+.stat .k { font-size: var(--fs-1); color: var(--text-muted); }
+.stat .v { font: 500 var(--fs-5)/var(--lh-5) var(--font-mono); font-variant-numeric: tabular-nums; }
+.stat .v.text { font: 500 var(--fs-4)/var(--lh-5) var(--font-sans); padding-top: 3px; }
+.cols { display: grid; gap: var(--sp-5); grid-template-columns: 1fr; }
+.wait { padding: 12px; display: grid; gap: var(--sp-2); }
+.wait .row1 { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: center; }
+.wait p { max-width: 70ch; }
+.prlinks { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.prlink {
+  display: inline-flex; align-items: center; gap: 6px; min-height: var(--hit); padding: 0 12px;
+  border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--surface);
+  color: var(--text); text-decoration: none; font: 400 var(--fs-2)/1 var(--font-mono);
+  transition: background-color var(--t-fast) var(--ease);
+}
+.prlink:hover { background: var(--surface-2); }
+.prlink .repo { color: var(--text-muted); }
+.pr-ref { font-family: var(--font-mono); white-space: nowrap; }
+.pr-ref b { font-weight: 500; }
+.pr-ref .repo { color: var(--text-muted); }
+.who { white-space: nowrap; }
+
+/* 狭い幅では表をカードの並びにする */
+@media (max-width: 679px) {
+  table.stackable thead { display: none; }
+  table.stackable, table.stackable tbody { display: block; }
+  table.stackable tr { display: grid; column-gap: 12px; row-gap: 2px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.stackable tbody tr:last-child { border-bottom: 0; }
+  table.stackable td { display: block; padding: 0; border: 0; background: none !important; }
+  table.routines tr { grid-template-columns: 1fr auto; grid-template-areas: "name status" "dept time"; align-items: center; }
+  table.routines .c-name { grid-area: name; font-weight: 500; }
+  table.routines .c-status { grid-area: status; justify-self: end; }
+  table.routines .c-dept { grid-area: dept; color: var(--text-muted); }
+  table.routines .c-time { grid-area: time; justify-self: end; color: var(--text-muted); }
+  table.prs tr { grid-template-columns: 1fr auto; grid-template-areas: "ref who" "title title" "desc desc"; }
+  table.prs .c-ref { grid-area: ref; }
+  table.prs .c-who { grid-area: who; justify-self: end; }
+  table.prs .c-title { grid-area: title; font-weight: 500; }
+  table.prs .c-desc { grid-area: desc; color: var(--text-muted); }
+}
+@media (min-width: 680px) {
+  .stats { grid-template-columns: repeat(4, 1fr); }
+  .stat { border-bottom: 0 !important; }
+  .stat:nth-child(2n) { border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: 0; }
+  .topbar .in { flex-wrap: nowrap; }
+  .topbar .nav { order: 0; flex: 1 1 auto; overflow: visible; }
+  .topbar .tool { order: 0; }
+}
+@media (min-width: 960px) {
+  .cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+}
+
+/* ---------- 字・余白・形 ---------- */
+.spec { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.spec .panel { padding: var(--sp-4); }
+.spec h3 { margin-bottom: var(--sp-2); }
+.ts { display: grid; grid-template-columns: 56px 1fr; gap: 4px 12px; align-items: baseline; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.ts:last-child { border-bottom: 0; }
+.ts .m { font: 400 var(--fs-1)/1.4 var(--font-mono); color: var(--text-muted); }
+.ts .s { min-width: 0; }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 12px; font: 400 var(--fs-2)/1 var(--font-mono); }
+.bar i { display: block; height: 12px; background: var(--text); border-radius: var(--r-1); }
+.shapes { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--sp-4); }
+.shape { padding: var(--sp-3); border: 1px solid var(--line); background: var(--surface); font-size: var(--fs-2); min-height: 80px; }
+.shape b { display: block; font: 500 var(--fs-2)/1.4 var(--font-mono); }
+.pop { box-shadow: var(--shadow-pop); border-color: transparent; }
+
+/* ---------- 部品 ---------- */
+.comp { display: grid; gap: var(--sp-5); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.comp > div { min-width: 0; }
+.comp h3 { margin-bottom: var(--sp-3); }
+.code { position: relative; background: var(--surface-2); border-radius: var(--r-2); padding: 4px 4px 4px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.code .btn { flex: none; white-space: nowrap; }
+.code code { flex: 1 1 auto; font-size: var(--fs-2); line-height: 1.5; overflow-x: auto; white-space: pre; padding: 10px 0; min-width: 0; }
+.quote { margin: 0; padding: var(--sp-3) 0 0; border-top: 1px solid var(--line-strong); }
+.quote p { font-size: var(--fs-4); line-height: 1.6; max-width: 40ch; }
+.quote cite { display: block; margin-top: 8px; font-style: normal; font-size: var(--fs-2); color: var(--text-muted); }
+.states { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.state { padding: var(--sp-4); display: grid; gap: var(--sp-3); align-content: start; min-height: 168px; }
+.state h3 { display: flex; align-items: center; gap: 8px; }
+.state p { color: var(--text-muted); font-size: var(--fs-2); }
+.skel { display: grid; gap: 8px; }
+.skel i { display: block; height: 12px; background: var(--surface-2); border-radius: var(--r-1); }
+.skel i:nth-child(1) { width: 70%; } .skel i:nth-child(2) { width: 90%; } .skel i:nth-child(3) { width: 55%; }
+.state.err h3 { color: var(--error); }
+.motion { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center; }
+.motion .stage { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--hit); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  .spin { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19 8a7.5 7.5 0 0 0-13.5-1.5M5 4v3.5h3.5M5 16a7.5 7.5 0 0 0 13.5 1.5M19 20v-3.5h-3.5"/></symbol>
+  <symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 4a8 8 0 1 1-8 8"/></symbol>
+  <symbol id="i-pr" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v8M18 16V9a3 3 0 0 0-3-3h-2"/></symbol>
+</svg>
+
+<header class="wrap doc-head">
+  <h1>KNOW IDEA 共通デザイン 方向 B</h1>
+  <p>密度を詰めた道具の画面。色の温度は灰、形は 4px の角丸、書体は IBM Plex Sans JP と IBM Plex Mono。表と状態を速く読むことを先に置く。</p>
+</header>
+
+<!-- ======== 1. 画面の見本 ======== -->
+<section class="sec" id="screen" style="padding-bottom:0">
+  <div class="wrap"><h2>画面の見本</h2><p class="lead">会社の状態の 1 画面。2026-10-13 07:50 日本時間の company/status.md の内容だけを使う。</p></div>
+  <div class="app">
+    <div class="topbar">
+      <div class="wrap in">
+        <div class="brand">KNOW IDEA</div>
+        <nav class="nav" aria-label="主なページ">
+          <a href="#screen" aria-current="page">会社の状態</a>
+          <a href="#wait">オーナー待ち</a>
+          <a href="#prs">PR</a>
+          <a href="#routines">routine</a>
+        </nav>
+        <div class="tool">
+          <button class="btn btn-text btn-icon" id="themeBtn" type="button" aria-label="ライトとダークを切り替える" title="ライトとダークを切り替える">
+            <svg class="i" aria-hidden="true"><use id="themeIcon" href="#i-moon"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <main class="wrap page">
+      <div class="page-title">
+        <h1>会社の状態</h1>
+        <span class="stamp">2026-10-13 07:50 日本時間</span>
+      </div>
+
+      <div class="panel stats" role="group" aria-label="件数">
+        <div class="stat"><div class="k">オーナー待ち</div><div class="v">1</div></div>
+        <div class="stat"><div class="k">マージを待つ PR</div><div class="v">2</div></div>
+        <div class="stat"><div class="k">止めた routine</div><div class="v text">無し</div></div>
+        <div class="stat"><div class="k">遅れた部署</div><div class="v text">無し</div></div>
+      </div>
+
+      <div class="cols">
+        <section class="panel" id="wait" aria-labelledby="h-wait">
+          <div class="panel-head"><h2 id="h-wait">オーナー待ち</h2><span class="count">1 件</span></div>
+          <div class="wait">
+            <div class="row1"><span class="tag t-warn"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>マージ待ち</span></div>
+            <p>整合性の見直しのうちオーナーが決める分。レビュー部は可(推奨: マージ)</p>
+            <div class="prlinks">
+              <a class="prlink" href="#prs"><svg class="i" aria-hidden="true"><use href="#i-pr"/></svg><span class="repo">develop-docs</span>#130</a>
+              <a class="prlink" href="#prs"><svg class="i" aria-hidden="true"><use href="#i-pr"/></svg><span class="repo">ruleru</span>#61</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="prs" aria-labelledby="h-prs">
+          <div class="panel-head"><h2 id="h-prs">マージを待つ PR</h2><span class="count">2 件</span></div>
+          <table class="stackable prs">
+            <thead><tr><th>PR</th><th>件名</th><th>内容</th><th>マージ</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="c-ref pr-ref"><span class="repo">develop-docs</span> <b>#130</b></td>
+                <td class="c-title" style="white-space:nowrap">整合性の見直し</td>
+                <td class="c-desc">docs.html を作るフックを止め、古い記述を直す</td>
+                <td class="c-who who">オーナー</td>
+              </tr>
+              <tr>
+                <td class="c-ref pr-ref"><span class="repo">ruleru</span> <b>#61</b></td>
+                <td class="c-title" style="white-space:nowrap">整合性の見直し</td>
+                <td class="c-desc">守りの網と憲法の参照先を今の正本に</td>
+                <td class="c-who who">オーナー</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <section class="panel" id="routines" aria-labelledby="h-routines">
+        <div class="panel-head"><h2 id="h-routines">routine</h2><span class="count">9 本</span></div>
+        <table class="stackable routines">
+          <thead><tr><th>routine</th><th>部署</th><th>状態</th><th class="num">最後のコミット</th></tr></thead>
+          <tbody>
+            <tr><td class="c-name">制作</td><td class="c-dept">コンテンツ部</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-13 03:24</td></tr>
+            <tr><td class="c-name">レビュー</td><td class="c-dept">本社(レビュー部)</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-13 04:17</td></tr>
+            <tr><td class="c-name">毎日の振り返り</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-13 04:43</td></tr>
+            <tr><td class="c-name">ネタ探し</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-off"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg>見ない</span></td><td class="c-time num">10-13 07:42</td></tr>
+            <tr><td class="c-name">経営会議</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-13 05:11</td></tr>
+            <tr><td class="c-name">週報</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-12 16:05</td></tr>
+            <tr><td class="c-name">ラボ</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-off"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg>見ない</span></td><td class="c-time num">10-12 19:05</td></tr>
+            <tr><td class="c-name">月次</td><td class="c-dept">本社</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-12 16:05</td></tr>
+            <tr><td class="c-name">Logru の週の改善</td><td class="c-dept">開発部</td><td class="c-status"><span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span></td><td class="c-time num">10-12 00:32</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+</section>
+
+<!-- ======== 2. 色 ======== -->
+<section class="sec" id="color">
+  <div class="wrap">
+    <h2>色</h2>
+    <p class="lead">灰は彩度 0.005 以下で、青にも黄にも寄せない。主の色は青 1 色だけで、使うのは主のボタンと今いる所(ナビの現在地、focus の輪)に限る。ダークは明るさと彩度を別に決め直していて、ライトの反転ではない。</p>
+    <div class="stack-v">
+      <div class="scroll"><table style="min-width:640px">
+        <thead><tr><th>トークン</th><th>役</th><th>ライト OKLCH / sRGB</th><th>ダーク OKLCH / sRGB</th></tr></thead>
+        <tbody>
+<tr><td class="mono">--bg</td><td>背景</td><td><span class="sw" style="background:#f5f6f8"></span><span class="mono">oklch(0.972 0.003 262)</span><br><span class="mono dim">#f5f6f8</span></td><td><span class="sw" style="background:#131416"></span><span class="mono">oklch(0.190 0.004 262)</span><br><span class="mono dim">#131416</span></td></tr>
+<tr><td class="mono">--surface</td><td>面</td><td><span class="sw" style="background:#fdfdff"></span><span class="mono">oklch(0.995 0.002 262)</span><br><span class="mono dim">#fdfdff</span></td><td><span class="sw" style="background:#1d1e20"></span><span class="mono">oklch(0.235 0.004 262)</span><br><span class="mono dim">#1d1e20</span></td></tr>
+<tr><td class="mono">--surface-2</td><td>面 2(表の見出し、コード)</td><td><span class="sw" style="background:#ebedef"></span><span class="mono">oklch(0.945 0.004 262)</span><br><span class="mono dim">#ebedef</span></td><td><span class="sw" style="background:#26282a"></span><span class="mono">oklch(0.275 0.005 262)</span><br><span class="mono dim">#26282a</span></td></tr>
+<tr><td class="mono">--text</td><td>文字</td><td><span class="sw" style="background:#1a1b1c"></span><span class="mono">oklch(0.220 0.004 262)</span><br><span class="mono dim">#1a1b1c</span></td><td><span class="sw" style="background:#ecedef"></span><span class="mono">oklch(0.945 0.003 262)</span><br><span class="mono dim">#ecedef</span></td></tr>
+<tr><td class="mono">--text-muted</td><td>弱い文字</td><td><span class="sw" style="background:#515355"></span><span class="mono">oklch(0.440 0.005 262)</span><br><span class="mono dim">#515355</span></td><td><span class="sw" style="background:#afb1b4"></span><span class="mono">oklch(0.760 0.005 262)</span><br><span class="mono dim">#afb1b4</span></td></tr>
+<tr><td class="mono">--line</td><td>線</td><td><span class="sw" style="background:#d9dbdd"></span><span class="mono">oklch(0.890 0.004 262)</span><br><span class="mono dim">#d9dbdd</span></td><td><span class="sw" style="background:#343538"></span><span class="mono">oklch(0.330 0.005 262)</span><br><span class="mono dim">#343538</span></td></tr>
+<tr><td class="mono">--line-strong</td><td>強い線(入力欄の枠)</td><td><span class="sw" style="background:#7e8083"></span><span class="mono">oklch(0.600 0.005 262)</span><br><span class="mono dim">#7e8083</span></td><td><span class="sw" style="background:#7e8083"></span><span class="mono">oklch(0.600 0.005 262)</span><br><span class="mono dim">#7e8083</span></td></tr>
+<tr><td class="mono">--primary</td><td>主</td><td><span class="sw" style="background:#0262ab"></span><span class="mono">oklch(0.490 0.138 250)</span><br><span class="mono dim">#0262ab</span></td><td><span class="sw" style="background:#68b2ef"></span><span class="mono">oklch(0.740 0.115 245)</span><br><span class="mono dim">#68b2ef</span></td></tr>
+<tr><td class="mono">--primary-hover</td><td>主の hover</td><td><span class="sw" style="background:#00518f"></span><span class="mono">oklch(0.430 0.122 250)</span><br><span class="mono dim">#00518f</span></td><td><span class="sw" style="background:#82c5fd"></span><span class="mono">oklch(0.800 0.105 245)</span><br><span class="mono dim">#82c5fd</span></td></tr>
+<tr><td class="mono">--on-primary</td><td>主の上の文字</td><td><span class="sw" style="background:#fbfcfd"></span><span class="mono">oklch(0.990 0.002 262)</span><br><span class="mono dim">#fbfcfd</span></td><td><span class="sw" style="background:#0e1216"></span><span class="mono">oklch(0.180 0.010 250)</span><br><span class="mono dim">#0e1216</span></td></tr>
+<tr><td class="mono">--success</td><td>成功</td><td><span class="sw" style="background:#026337"></span><span class="mono">oklch(0.440 0.108 155)</span><br><span class="mono dim">#026337</span></td><td><span class="sw" style="background:#5dd68f"></span><span class="mono">oklch(0.790 0.150 155)</span><br><span class="mono dim">#5dd68f</span></td></tr>
+<tr><td class="mono">--success-soft</td><td>成功の面</td><td><span class="sw" style="background:#ddf6e4"></span><span class="mono">oklch(0.950 0.035 155)</span><br><span class="mono dim">#ddf6e4</span></td><td><span class="sw" style="background:#143320"></span><span class="mono">oklch(0.290 0.050 155)</span><br><span class="mono dim">#143320</span></td></tr>
+<tr><td class="mono">--warn</td><td>注意</td><td><span class="sw" style="background:#804d0c"></span><span class="mono">oklch(0.470 0.100 65)</span><br><span class="mono dim">#804d0c</span></td><td><span class="sw" style="background:#f3b94c"></span><span class="mono">oklch(0.820 0.140 80)</span><br><span class="mono dim">#f3b94c</span></td></tr>
+<tr><td class="mono">--warn-soft</td><td>注意の面</td><td><span class="sw" style="background:#feefcf"></span><span class="mono">oklch(0.955 0.045 85)</span><br><span class="mono dim">#feefcf</span></td><td><span class="sw" style="background:#3e2909"></span><span class="mono">oklch(0.300 0.055 75)</span><br><span class="mono dim">#3e2909</span></td></tr>
+<tr><td class="mono">--error</td><td>誤り</td><td><span class="sw" style="background:#b21a1c"></span><span class="mono">oklch(0.490 0.185 27)</span><br><span class="mono dim">#b21a1c</span></td><td><span class="sw" style="background:#ff8a83"></span><span class="mono">oklch(0.760 0.142 25)</span><br><span class="mono dim">#ff8a83</span></td></tr>
+<tr><td class="mono">--error-soft</td><td>誤りの面</td><td><span class="sw" style="background:#ffebea"></span><span class="mono">oklch(0.955 0.022 20)</span><br><span class="mono dim">#ffebea</span></td><td><span class="sw" style="background:#461d1a"></span><span class="mono">oklch(0.290 0.065 25)</span><br><span class="mono dim">#461d1a</span></td></tr>
+
+        </tbody>
+      </table></div>
+      <h3>文字と背景のコントラスト比(WCAG 2.1、script で計算)</h3>
+      <div class="scroll"><table style="min-width:640px">
+        <thead><tr><th>組(文字 / 背景)</th><th>使う所</th><th class="num">基準</th><th class="num">ライト</th><th class="num">ダーク</th><th>判定</th></tr></thead>
+        <tbody>
+<tr><td class="mono">text / bg</td><td>本文</td><td class="num">4.5</td><td class="num">15.95</td><td class="num">15.73</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">text / surface</td><td>本文(面の上)</td><td class="num">4.5</td><td class="num">16.98</td><td class="num">14.24</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">text-muted / bg</td><td>弱い文字</td><td class="num">4.5</td><td class="num">7.14</td><td class="num">8.58</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">text-muted / surface</td><td>弱い文字(面の上)</td><td class="num">4.5</td><td class="num">7.60</td><td class="num">7.76</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">text-muted / surface-2</td><td>表の見出し</td><td class="num">4.5</td><td class="num">6.58</td><td class="num">6.88</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">text / surface-2</td><td>コードブロック</td><td class="num">4.5</td><td class="num">14.70</td><td class="num">12.63</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">primary / surface</td><td>今いる所の文字</td><td class="num">4.5</td><td class="num">6.19</td><td class="num">7.31</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">on-primary / primary</td><td>主のボタン</td><td class="num">4.5</td><td class="num">6.13</td><td class="num">8.24</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">on-primary / primary-hover</td><td>主のボタン hover</td><td class="num">4.5</td><td class="num">7.94</td><td class="num">10.17</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">success / success-soft</td><td>成功のタグ</td><td class="num">4.5</td><td class="num">6.47</td><td class="num">7.53</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">warn / warn-soft</td><td>注意のタグ</td><td class="num">4.5</td><td class="num">6.19</td><td class="num">7.77</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">error / error-soft</td><td>誤りのタグ</td><td class="num">4.5</td><td class="num">5.99</td><td class="num">6.35</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">error / surface</td><td>誤りの文</td><td class="num">4.5</td><td class="num">6.76</td><td class="num">7.32</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">success / surface</td><td>成功の文</td><td class="num">4.5</td><td class="num">7.27</td><td class="num">9.12</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">warn / surface</td><td>注意の文</td><td class="num">4.5</td><td class="num">6.93</td><td class="num">9.42</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">primary / bg</td><td>focus の輪(UI)</td><td class="num">3.0</td><td class="num">5.82</td><td class="num">8.08</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">line-strong / surface</td><td>入力欄の枠(UI)</td><td class="num">3.0</td><td class="num">3.90</td><td class="num">4.21</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">error / surface(枠)</td><td>誤りの入力欄の枠(UI)</td><td class="num">3.0</td><td class="num">6.76</td><td class="num">7.32</td><td><span class="tag t-ok">合格</span></td></tr>
+
+        </tbody>
+      </table></div>
+      <p class="dim" style="font-size:var(--fs-2)">本文と文字は 4.5:1 以上、UI の線と focus の輪は 3:1 以上。状態は色だけで伝えず、タグにアイコンと言葉を付ける。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 3. 字 ======== -->
+<section class="sec" id="type">
+  <div class="wrap">
+    <h2>字</h2>
+    <p class="lead">見出しと本文は IBM Plex Sans JP、数字と時刻と PR 番号とコードは IBM Plex Mono。桁は tabular-nums でそろえる。本文の太さは 400、見出しは 600、ラベルと UI は 500。</p>
+    <div class="spec">
+      <div class="panel">
+        <h3>役ごとの書体</h3>
+        <table style="font-size:var(--fs-2)">
+          <tbody>
+            <tr><td>見出し</td><td>IBM Plex Sans JP 600</td></tr>
+            <tr><td>本文</td><td>IBM Plex Sans JP 400</td></tr>
+            <tr><td>数字、時刻、PR 番号</td><td class="mono">IBM Plex Mono 400 / 500</td></tr>
+            <tr><td>コード</td><td class="mono">IBM Plex Mono 400</td></tr>
+            <tr><td>日本語の控え</td><td>BIZ UDPGothic、Noto Sans CJK JP</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel" style="padding:0">
+        <div class="ts"><span class="m">24 / 1.3</span><span class="s" style="font:600 var(--fs-5)/var(--lh-5) var(--font-sans)">会社の状態</span></div>
+        <div class="ts"><span class="m">18 / 1.35</span><span class="s" style="font:600 var(--fs-4)/var(--lh-4) var(--font-sans)">マージを待つ PR</span></div>
+        <div class="ts"><span class="m">14 / 1.6</span><span class="s">本文。守りの網と憲法の参照先を今の正本に直す。</span></div>
+        <div class="ts"><span class="m">13 / 1.45</span><span class="s" style="font-size:var(--fs-2);line-height:var(--lh-2)">表とコード。<span class="mono">develop-docs #130</span></span></div>
+        <div class="ts"><span class="m">12 / 1.4</span><span class="s" style="font-size:var(--fs-1);line-height:var(--lh-1)">表の見出し、タグ、補足</span></div>
+      </div>
+      <div class="panel">
+        <h3>数字は等幅で桁をそろえる</h3>
+        <table style="font-size:var(--fs-2)">
+          <tbody>
+            <tr><td class="mono">10-13 03:24</td><td class="num">#61</td></tr>
+            <tr><td class="mono">10-13 04:17</td><td class="num">#130</td></tr>
+            <tr><td class="mono">10-12 00:32</td><td class="num">#130</td></tr>
+          </tbody>
+        </table>
+        <p class="dim" style="font-size:var(--fs-1);margin-top:8px">右そろえの列は桁が縦に通る。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 4. 余白と形 ======== -->
+<section class="sec" id="shape">
+  <div class="wrap">
+    <h2>余白と形</h2>
+    <p class="lead">余白は 4px を基準に 7 段。角丸は 3 つ、影は 1 つ、線は 3 つ。区切りは枠 1 本で行い、カードの中にカードを入れない。</p>
+    <div class="spec">
+      <div class="panel">
+        <h3>余白</h3>
+        <div class="bars">
+          <div class="bar"><span>sp-1 4</span><i style="width:4px"></i></div>
+          <div class="bar"><span>sp-2 8</span><i style="width:8px"></i></div>
+          <div class="bar"><span>sp-3 12</span><i style="width:12px"></i></div>
+          <div class="bar"><span>sp-4 16</span><i style="width:16px"></i></div>
+          <div class="bar"><span>sp-5 24</span><i style="width:24px"></i></div>
+          <div class="bar"><span>sp-6 32</span><i style="width:32px"></i></div>
+          <div class="bar"><span>sp-7 48</span><i style="width:48px"></i></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>角丸と影</h3>
+        <div class="shapes">
+          <div class="shape" style="border-radius:var(--r-1)"><b>r-1 2px</b>タグ</div>
+          <div class="shape" style="border-radius:var(--r-2)"><b>r-2 4px</b>ボタン、入力欄、パネル</div>
+          <div class="shape pop" style="border-radius:var(--r-3)"><b>r-3 6px + 影</b>メニューだけ</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>線</h3>
+        <div class="bars" style="gap:16px">
+          <div class="bar"><span>line</span><i style="height:1px;background:var(--line)"></i></div>
+          <div class="bar"><span>strong</span><i style="height:1px;background:var(--line-strong)"></i></div>
+          <div class="bar"><span>primary</span><i style="height:2px;background:var(--primary)"></i></div>
+        </div>
+        <p class="dim" style="font-size:var(--fs-1);margin-top:12px">line は区切り、strong は入力欄とボタンの枠、primary は今いる所と focus に使う 2px。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 5. 部品 ======== -->
+<section class="sec" id="components">
+  <div class="wrap">
+    <h2>部品</h2>
+    <div class="comp">
+      <div>
+        <h3>ボタン</h3>
+        <div class="btn-grid">
+          <span class="cap">主</span>
+          <button class="btn btn-primary" type="button">通常</button>
+          <button class="btn btn-primary is-hover" type="button">hover</button>
+          <button class="btn btn-primary is-focus" type="button">focus</button>
+          <button class="btn btn-primary" type="button" disabled>無効</button>
+          <span class="cap">副</span>
+          <button class="btn btn-secondary" type="button">通常</button>
+          <button class="btn btn-secondary is-hover" type="button">hover</button>
+          <button class="btn btn-secondary is-focus" type="button">focus</button>
+          <button class="btn btn-secondary" type="button" disabled>無効</button>
+          <span class="cap">文字だけ</span>
+          <button class="btn btn-text" type="button">通常</button>
+          <button class="btn btn-text is-hover" type="button">hover</button>
+          <button class="btn btn-text is-focus" type="button">focus</button>
+          <button class="btn btn-text" type="button" disabled>無効</button>
+        </div>
+      </div>
+      <div>
+        <h3>入力欄</h3>
+        <div class="stack-v">
+          <div class="field"><label for="f1">routine 名</label><input id="f1" type="text" placeholder="例: 制作"><span class="hint">部分一致で絞る</span></div>
+          <div class="field"><label for="f2">PR 番号</label><input id="f2" type="text" value="abc" aria-invalid="true" aria-describedby="f2e"><span class="err" id="f2e"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>数字で入力する</span></div>
+          <div class="field"><label for="f3">部署</label><input id="f3" type="text" value="本社" disabled></div>
+        </div>
+      </div>
+      <div>
+        <h3>状態のタグ</h3>
+        <div class="tags">
+          <span class="tag t-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>動いている</span>
+          <span class="tag t-off"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg>見ない</span>
+          <span class="tag t-warn"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>遅れ</span>
+          <span class="tag t-err"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>止めた</span>
+        </div>
+        <h3 style="margin-top:var(--sp-5)">コードブロック</h3>
+        <div class="code">
+          <code id="codeText">python3 company/scripts/status.py</code>
+          <button class="btn btn-text" id="copyBtn" type="button" aria-label="コードをコピーする">
+            <svg class="i" aria-hidden="true"><use id="copyIcon" href="#i-copy"/></svg><span id="copyLabel">コピー</span>
+          </button>
+        </div>
+        <h3 style="margin-top:var(--sp-5)">引用</h3>
+        <figure class="quote">
+          <p>「結構しっかり作り込む必要があるのだが、AIぽいのは避けたい。」</p>
+          <cite>オーナー</cite>
+        </figure>
+      </div>
+    </div>
+
+    <h3 style="margin:var(--sp-6) 0 var(--sp-3)">表の形</h3>
+    <p class="dim" style="margin-bottom:var(--sp-3)">見出しは面 2、行は 1px の線、数字は右そろえの等幅。行の hover は面 2 に変える。幅 680px 未満では routine と PR の表をカードの並びに変える(上の画面の見本)。</p>
+
+    <h3 style="margin:var(--sp-5) 0 var(--sp-3)">空、読み込み、失敗</h3>
+    <div class="states">
+      <div class="panel state">
+        <h3><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg>空</h3>
+        <p>止めた routine は無し。遅れた部署も無し。</p>
+      </div>
+      <div class="panel state" aria-busy="true">
+        <h3><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>読み込み</h3>
+        <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
+        <p>company/status.md を読んでいる</p>
+      </div>
+      <div class="panel state err" role="alert">
+        <h3><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>失敗</h3>
+        <p style="color:var(--text)">company/status.md を読めなかった。作り直してから読み直す。</p>
+        <div><button class="btn btn-secondary" type="button"><svg class="i" aria-hidden="true"><use href="#i-refresh"/></svg>読み直す</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 6. 動き ======== -->
+<section class="sec" id="motion">
+  <div class="wrap">
+    <h2>動き</h2>
+    <p class="lead">状態が変わるときだけ動かす。タグの色は 160ms、ボタンの hover は 120ms、どちらも cubic-bezier(0.2, 0, 0, 1)。読み込み中の回転は読み込みの間だけ。prefers-reduced-motion では遷移も回転も止める。</p>
+    <div class="motion">
+      <button class="btn btn-secondary" id="toggleBtn" type="button">状態を切り替える</button>
+      <div class="stage"><span class="mono dim">ネタ探し</span><span class="tag t-off" id="demoTag"><svg class="i" aria-hidden="true"><use id="demoIcon" href="#i-minus"/></svg><span id="demoText">見ない</span></span></div>
+      <button class="btn btn-primary" id="loadBtn" type="button"><svg class="i" id="loadSvg" aria-hidden="true" style="display:none"><use href="#i-loader"/></svg><span id="loadText">更新する</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 選んだ理由 ======== -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <h2>選んだ理由</h2>
+    <div class="stack-v">
+      <p>この会社の画面は、routine、PR、待ちの件数を毎朝一度に見る道具なので、余白より表の読みやすさを取り、時刻と PR 番号を等幅にして縦に通した。</p>
+      <p>色の温度を灰で止めたのは、状態の緑、黄、赤を迷わず読ませるため。主の青は主のボタンと今いる所だけで、成功の緑と並んでも混ざらない。</p>
+      <p>名前を持たない既定の見た目にならないよう、Plex の日本語と等幅を同じ家族でそろえ、影は浮くメニューだけ、区切りは枠 1 本にした。</p>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  function effective() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function paint() {
+    var d = effective() === 'dark';
+    document.getElementById('themeIcon').setAttribute('href', d ? '#i-sun' : '#i-moon');
+  }
+  try { var s = localStorage.getItem('kn-theme'); if (s === 'light' || s === 'dark') root.setAttribute('data-theme', s); } catch (e) {}
+  paint();
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var n = effective() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n);
+    try { localStorage.setItem('kn-theme', n); } catch (e) {}
+    paint();
+  });
+  if (window.matchMedia) window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+
+  var copyTimer;
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var text = document.getElementById('codeText').textContent;
+    function done() {
+      document.getElementById('copyIcon').setAttribute('href', '#i-check');
+      document.getElementById('copyLabel').textContent = 'コピーした';
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function () {
+        document.getElementById('copyIcon').setAttribute('href', '#i-copy');
+        document.getElementById('copyLabel').textContent = 'コピー';
+      }, 1600);
+    }
+    try { navigator.clipboard.writeText(text).then(done, done); } catch (e) { done(); }
+  });
+
+  var on = false;
+  document.getElementById('toggleBtn').addEventListener('click', function () {
+    on = !on;
+    var tag = document.getElementById('demoTag');
+    tag.className = 'tag ' + (on ? 't-ok' : 't-off');
+    document.getElementById('demoIcon').setAttribute('href', on ? '#i-check' : '#i-minus');
+    document.getElementById('demoText').textContent = on ? '動いている' : '見ない';
+  });
+
+  var busy = false;
+  document.getElementById('loadBtn').addEventListener('click', function () {
+    if (busy) return; busy = true;
+    var b = this, svg = document.getElementById('loadSvg');
+    b.disabled = true; svg.style.display = ''; svg.classList.add('spin');
+    document.getElementById('loadText').textContent = '更新している';
+    setTimeout(function () {
+      b.disabled = false; svg.style.display = 'none'; svg.classList.remove('spin');
+      document.getElementById('loadText').textContent = '更新する'; busy = false;
+    }, 1200);
+  });
+})();
+</script>
+</body>
+</html>
