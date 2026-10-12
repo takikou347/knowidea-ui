@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KNOW IDEA 主の色とアイコンの案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f8;--surface:#fdfdff;--surface-2:#ebedef;--text:#1a1b1c;--text-muted:#515355;--line:#d9dbdd;--line-strong:#7e8083;--success:#026337;--success-soft:#ddf6e4;--warn:#804d0c;--warn-soft:#feefcf;--error:#b21a1c;--error-soft:#ffebea;--primary:#0262ab;--font-sans:"IBM Plex Sans JP","BIZ UDPGothic","Noto Sans CJK JP","IPAPGothic","Hiragino Sans","Yu Gothic",sans-serif;--font-mono:"IBM Plex Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;--r-1:2px;--r-2:4px;--r-3:6px;--hit:44px;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#131416;--surface:#1d1e20;--surface-2:#26282a;--text:#ecedef;--text-muted:#afb1b4;--line:#343538;--line-strong:#7e8083;--success:#5dd68f;--success-soft:#143320;--warn:#f3b94c;--warn-soft:#3e2909;--error:#ff8a83;--error-soft:#461d1a;color-scheme:dark;}}
+:root[data-theme="dark"]{--bg:#131416;--surface:#1d1e20;--surface-2:#26282a;--text:#ecedef;--text-muted:#afb1b4;--line:#343538;--line-strong:#7e8083;--success:#5dd68f;--success-soft:#143320;--warn:#f3b94c;--warn-soft:#3e2909;--error:#ff8a83;--error-soft:#461d1a;color-scheme:dark;}
+:root[data-theme="light"]{color-scheme:light;}
+.c1{--primary:#016c6c;--primary-hover:#005353;--on-primary:#ffffff;--primary-edge:#016c6c;--primary-text:#016c6c;--primary-ring:#016c6c;--primary-soft:#eefaf9;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .c1.follow{--primary:#4cbfbf;--primary-hover:#86d4d4;--on-primary:#001313;--primary-edge:#4cbfbf;--primary-text:#86d4d4;--primary-ring:#86d4d4;--primary-soft:#002d2d;}}
+:root[data-theme="dark"] .c1.follow{--primary:#4cbfbf;--primary-hover:#86d4d4;--on-primary:#001313;--primary-edge:#4cbfbf;--primary-text:#86d4d4;--primary-ring:#86d4d4;--primary-soft:#002d2d;}
+.c1.m-light{--bg:#f5f6f8;--surface:#fdfdff;--surface-2:#ebedef;--text:#1a1b1c;--text-muted:#515355;--line:#d9dbdd;--line-strong:#7e8083;--success:#026337;--success-soft:#ddf6e4;--warn:#804d0c;--warn-soft:#feefcf;--error:#b21a1c;--error-soft:#ffebea;--primary:#016c6c;--primary-hover:#005353;--on-primary:#ffffff;--primary-edge:#016c6c;--primary-text:#016c6c;--primary-ring:#016c6c;--primary-soft:#eefaf9;color-scheme:light;}
+.c1.m-dark{--bg:#131416;--surface:#1d1e20;--surface-2:#26282a;--text:#ecedef;--text-muted:#afb1b4;--line:#343538;--line-strong:#7e8083;--success:#5dd68f;--success-soft:#143320;--warn:#f3b94c;--warn-soft:#3e2909;--error:#ff8a83;--error-soft:#461d1a;--primary:#4cbfbf;--primary-hover:#86d4d4;--on-primary:#001313;--primary-edge:#4cbfbf;--primary-text:#86d4d4;--primary-ring:#86d4d4;--primary-soft:#002d2d;color-scheme:dark;}
+.c2{--primary:#9a227d;--primary-hover:#7b0f62;--on-primary:#ffffff;--primary-edge:#9a227d;--primary-text:#9a227d;--primary-ring:#9a227d;--primary-soft:#fff3fa;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .c2.follow{--primary:#ea80c9;--primary-hover:#f7a6dc;--on-primary:#220019;--primary-edge:#ea80c9;--primary-text:#f7a6dc;--primary-ring:#f7a6dc;--primary-soft:#3d1532;}}
+:root[data-theme="dark"] .c2.follow{--primary:#ea80c9;--primary-hover:#f7a6dc;--on-primary:#220019;--primary-edge:#ea80c9;--primary-text:#f7a6dc;--primary-ring:#f7a6dc;--primary-soft:#3d1532;}
+.c2.m-light{--bg:#f5f6f8;--surface:#fdfdff;--surface-2:#ebedef;--text:#1a1b1c;--text-muted:#515355;--line:#d9dbdd;--line-strong:#7e8083;--success:#026337;--success-soft:#ddf6e4;--warn:#804d0c;--warn-soft:#feefcf;--error:#b21a1c;--error-soft:#ffebea;--primary:#9a227d;--primary-hover:#7b0f62;--on-primary:#ffffff;--primary-edge:#9a227d;--primary-text:#9a227d;--primary-ring:#9a227d;--primary-soft:#fff3fa;color-scheme:light;}
+.c2.m-dark{--bg:#131416;--surface:#1d1e20;--surface-2:#26282a;--text:#ecedef;--text-muted:#afb1b4;--line:#343538;--line-strong:#7e8083;--success:#5dd68f;--success-soft:#143320;--warn:#f3b94c;--warn-soft:#3e2909;--error:#ff8a83;--error-soft:#461d1a;--primary:#ea80c9;--primary-hover:#f7a6dc;--on-primary:#220019;--primary-edge:#ea80c9;--primary-text:#f7a6dc;--primary-ring:#f7a6dc;--primary-soft:#3d1532;color-scheme:dark;}
+.c3{--primary:#b4d17a;--primary-hover:#97bb3d;--on-primary:#0c1200;--primary-edge:#3d5000;--primary-text:#3d5000;--primary-ring:#3d5000;--primary-soft:#f4f9eb;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .c3.follow{--primary:#97bb3d;--primary-hover:#b4d17a;--on-primary:#0c1200;--primary-edge:#97bb3d;--primary-text:#b4d17a;--primary-ring:#b4d17a;--primary-soft:#202b00;}}
+:root[data-theme="dark"] .c3.follow{--primary:#97bb3d;--primary-hover:#b4d17a;--on-primary:#0c1200;--primary-edge:#97bb3d;--primary-text:#b4d17a;--primary-ring:#b4d17a;--primary-soft:#202b00;}
+.c3.m-light{--bg:#f5f6f8;--surface:#fdfdff;--surface-2:#ebedef;--text:#1a1b1c;--text-muted:#515355;--line:#d9dbdd;--line-strong:#7e8083;--success:#026337;--success-soft:#ddf6e4;--warn:#804d0c;--warn-soft:#feefcf;--error:#b21a1c;--error-soft:#ffebea;--primary:#b4d17a;--primary-hover:#97bb3d;--on-primary:#0c1200;--primary-edge:#3d5000;--primary-text:#3d5000;--primary-ring:#3d5000;--primary-soft:#f4f9eb;color-scheme:light;}
+.c3.m-dark{--bg:#131416;--surface:#1d1e20;--surface-2:#26282a;--text:#ecedef;--text-muted:#afb1b4;--line:#343538;--line-strong:#7e8083;--success:#5dd68f;--success-soft:#143320;--warn:#f3b94c;--warn-soft:#3e2909;--error:#ff8a83;--error-soft:#461d1a;--primary:#97bb3d;--primary-hover:#b4d17a;--on-primary:#0c1200;--primary-edge:#97bb3d;--primary-text:#b4d17a;--primary-ring:#b4d17a;--primary-soft:#202b00;color-scheme:dark;}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 14px/1.6 var(--font-sans);overflow-wrap:anywhere}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:0}
+h1{font-size:24px;line-height:1.3}h2{font-size:18px;line-height:1.35}h3{font-size:16px;line-height:1.4}h4{font-size:14px;margin:24px 0 8px}
+p{margin:0}code{font-family:var(--font-mono);font-size:12px}
+a{color:var(--text);text-underline-offset:3px;text-decoration-color:var(--line-strong)}
+:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.top{padding-block:32px 16px;display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.top p{color:var(--text-muted);max-width:64ch;margin-top:8px}
+.btn{display:inline-flex;align-items:center;min-height:var(--hit);padding:0 16px;border:1px solid var(--line-strong);border-radius:var(--r-2);background:var(--surface);color:var(--text);font:500 14px/1 var(--font-sans);cursor:pointer}
+.btn:hover{background:var(--surface-2)}
+section.sec{border-top:1px solid var(--line);padding:32px 0}
+.lead{color:var(--text-muted);max-width:70ch;margin:8px 0 24px}
+.cands,.icons{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+.cand,.icard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-2);padding:16px;min-width:0}
+.chead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.no{font:500 12px/1 var(--font-mono);background:var(--surface-2);padding:5px 8px;border-radius:var(--r-1)}
+.en{font:400 12px var(--font-mono);color:var(--text-muted)}
+.why{margin:12px 0;max-width:70ch}
+.meta{display:grid;gap:8px;margin:0 0 8px}.meta div{display:grid;gap:2px}.meta dt{font-size:12px;color:var(--text-muted)}.meta dd{margin:0}
+.ramp{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.ramp li{display:grid;gap:2px;font-size:12px;min-width:0}
+.ramp i{display:block;height:40px;border-radius:var(--r-1);border:1px solid var(--line-strong)}
+.ramp b{font:500 12px var(--font-mono)}.ramp code{font-size:11px;color:var(--text-muted);line-height:1.35}
+table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.45}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--surface-2);color:var(--text-muted);font-weight:500;font-size:12px}
+.num{text-align:right;font-family:var(--font-mono)}caption{text-align:left;font-weight:600;padding:0 0 6px}
+.sw{display:inline-block;width:20px;height:12px;border:1px solid var(--line-strong);border-radius:var(--r-1);vertical-align:-1px;margin-right:8px}
+.vt{border:1px solid var(--line)}
+.cts{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.ct{border:1px solid var(--line)}.ct caption{border:0}
+.pair{display:inline-flex;margin-right:8px;vertical-align:-3px}.pair i{display:block;width:12px;height:16px;border:1px solid var(--line-strong)}.pair i+i{margin-left:-1px}
+.v{white-space:nowrap;font-weight:500}.v.pass{color:var(--success)}.v.fail{color:var(--error)}
+.scrollx{overflow-x:auto}
+/* mini */
+.minis{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.mini{background:var(--bg);color:var(--text);border:1px solid var(--line-strong);border-radius:var(--r-2);overflow:hidden;min-width:0}
+.mtop{background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 12px;flex-wrap:wrap}
+.mtop .ico{color:var(--primary-text)}
+.mb{font:600 13px/1 var(--font-mono);letter-spacing:.04em}
+.mnav{display:flex;margin-left:4px;overflow-x:auto;max-width:100%}
+.mnav a{display:inline-flex;align-items:center;min-height:var(--hit);padding:0 10px;color:var(--text-muted);text-decoration:none;font-size:13px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mnav a.cur{color:var(--primary-text);border-bottom-color:var(--primary-text);font-weight:500}
+.mbody{padding:12px;display:grid;gap:12px}
+.mrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mini button,.pv button{min-height:var(--hit);padding:0 14px;border-radius:var(--r-2);font:500 13px/1 var(--font-sans);cursor:pointer;border:1px solid transparent}
+.b-pri{background:var(--primary);color:var(--on-primary);border-color:var(--primary-edge)!important}
+.b-pri.hov{background:var(--primary-hover)}
+.b-pri:disabled{background:var(--surface-2);color:var(--text-muted);border-color:var(--line)!important;cursor:not-allowed}
+.b-sec{background:var(--surface);color:var(--text);border-color:var(--line-strong)!important}
+.focus{outline:2px solid var(--primary-ring);outline-offset:2px}
+.tag{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px 0 6px;border-radius:var(--r-1);font-size:12px;font-weight:500;white-space:nowrap}
+.tag .gl{width:11px;height:11px;fill:currentColor}
+.t-ok{background:var(--success-soft);color:var(--success)}.t-warn{background:var(--warn-soft);color:var(--warn)}.t-err{background:var(--error-soft);color:var(--error)}.t-off{background:var(--surface-2);color:var(--text-muted)}.t-pri{background:var(--primary-soft);color:var(--primary-text)}
+/* icons */
+.ico{display:block;color:inherit;flex:none}
+.sizes{display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;margin:16px 0}
+.sizes figure{margin:0;display:grid;gap:6px;justify-items:start}.sizes .ico{color:var(--text)}
+figcaption,.tone small{font:400 11px var(--font-mono);color:var(--text-muted)}
+.tones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tone{border:1px solid var(--line-strong);border-radius:var(--r-2);padding:16px 8px 8px;display:grid;justify-items:center;gap:8px}
+.tone.t-pri{background:var(--surface);color:var(--primary-text)}.tone .c1{color:var(--primary-text)}
+.tone.t-blk{background:#fff;color:#000}.tone.t-blk small{color:#444}
+.tone.t-wht{background:#000;color:#fff}.tone.t-wht small{color:#bbb}
+.locks{display:grid;gap:8px;margin-top:16px}
+.lk{border:1px solid var(--line-strong);border-radius:var(--r-2);padding:16px;display:flex;align-items:center;overflow:hidden}
+.lk.l{background:#fff;color:#111}.lk.d{background:#121316;color:#f0f1f2}
+.lock{display:inline-flex;align-items:center;gap:10px}
+.wm{font:600 22px/1 var(--font-mono);letter-spacing:.06em;white-space:nowrap}
+/* picker */
+.picker{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+fieldset{border:1px solid var(--line);border-radius:var(--r-2);padding:8px 12px 12px;margin:0;background:var(--surface);min-width:0}
+legend{font-weight:600;padding:0 4px}
+.opt{display:flex;align-items:center;gap:10px;min-height:var(--hit);cursor:pointer}
+.opt input{width:20px;height:20px;accent-color:var(--text);margin:0}
+.opt .sw3{display:inline-flex}.opt .sw3 i{width:14px;height:22px;display:block;border:1px solid var(--line-strong);margin-right:-1px}
+.prev{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+.pv{border:1px solid var(--line-strong);border-radius:var(--r-2);background:var(--bg);color:var(--text);padding:16px;display:grid;gap:16px;min-width:0}
+.pv .lock{color:var(--primary-text)}
+.pv .app{display:flex;align-items:center;gap:12px}
+.pv .apptile{width:56px;height:56px;border-radius:12px;background:var(--primary);color:var(--on-primary);display:grid;place-items:center}
+.pv small{color:var(--text-muted);font-size:12px}
+.note{color:var(--text-muted);font-size:13px;max-width:70ch}
+@media (min-width:680px){
+ .cts,.minis,.prev{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .icons{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1000px){.cands{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:679px){.ct td:first-child{min-width:150px}.ct{min-width:0}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="ic-a" viewBox="0 0 32 32"><path d="M8.5 11A7.5 7.5 0 1 1 16 18.5V21" fill="none" stroke="currentColor" stroke-width="4.8"/><rect x="13.6" y="24.6" width="4.8" height="4.8" fill="currentColor"/></symbol>
+<symbol id="ic-i" viewBox="0 0 32 32"><rect x="5" y="4" width="5.2" height="24" fill="currentColor"/><path d="M26.5 4.5L16.8 16 26.5 27.5" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linejoin="miter" stroke-miterlimit="4"/></symbol>
+<symbol id="ic-u" viewBox="0 0 32 32"><path d="M3 29V21H10.5V13H18V29Z" fill="currentColor"/><path d="M20.5 29V6H29V29Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="miter" transform="translate(0 0)"/></symbol>
+</svg>
+<header class="wrap top">
+ <div><h1>KNOW IDEA 主の色とアイコンの案</h1>
+ <p>方向 B の主の色を、既定の青から会社のための色に替える案が 3 つ。会社のアイコンの案が 3 つ。色とアイコンは別々に選べる。下の「組み合わせて見る」で、色 1〜3 とアイコン ア〜ウを自由に重ねる。</p></div>
+ <button class="btn" id="theme" type="button" aria-pressed="false">ダークにする</button>
+</header>
+
+<section class="sec" id="pick"><div class="wrap">
+ <h2>組み合わせて見る</h2>
+ <p class="lead">色とアイコンは独立。どの色にどのアイコンでも成り立つかを、ライトとダークで同時に見られる。</p>
+ <div class="picker">
+  <fieldset><legend>主の色</legend>
+   <label class="opt"><input type="radio" name="col" value="1" checked><span class="sw3"><i style="background:#016c6c"></i><i style="background:#4cbfbf"></i></span>色 1  青碧(せいへき)</label><label class="opt"><input type="radio" name="col" value="2"><span class="sw3"><i style="background:#9a227d"></i><i style="background:#ea80c9"></i></span>色 2  躑躅(つつじ)</label><label class="opt"><input type="radio" name="col" value="3"><span class="sw3"><i style="background:#b4d17a"></i><i style="background:#97bb3d"></i></span>色 3  若芽(わかめ)</label>
+  </fieldset>
+  <fieldset><legend>アイコン</legend>
+   <label class="opt"><input type="radio" name="ico" value="a" checked><svg class="ico" style="color:var(--text)" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg>アイコン ア  問いの形</label><label class="opt"><input type="radio" name="ico" value="i"><svg class="ico" style="color:var(--text)" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg>アイコン イ  黙字の K</label><label class="opt"><input type="radio" name="ico" value="u"><svg class="ico" style="color:var(--text)" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg>アイコン ウ  空の段</label>
+  </fieldset>
+ </div>
+ <div class="prev" style="margin-top:16px" id="prev">
+  <div class="pv c1 m-light" data-m="light"><div class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="wm">KNOW IDEA</span></div>
+   <div class="mrow"><button type="button" class="b-pri">主のボタン</button><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>選択中</span></div>
+   <div class="app"><span class="apptile"><svg class="ico " width="36" height="36" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg></span><small>アプリのアイコンとしての置き方。この 1 か所だけ角丸の面に載せる</small></div></div><div class="pv c1 m-dark" data-m="dark"><div class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="wm">KNOW IDEA</span></div>
+   <div class="mrow"><button type="button" class="b-pri">主のボタン</button><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>選択中</span></div>
+   <div class="app"><span class="apptile"><svg class="ico " width="36" height="36" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg></span><small>アプリのアイコンとしての置き方。この 1 か所だけ角丸の面に載せる</small></div></div>
+ </div>
+</div></section>
+
+<section class="sec" id="colors"><div class="wrap">
+ <h2>主の色の候補</h2>
+ <p class="lead">主の色は主のボタンと今いる所だけに使う。状態の色(成功の緑、注意の琥珀、誤りの赤)とは色相を離し、状態のタグには必ず形(丸、三角、四角)と字を付けるので、色だけでは区別しない。色相の差は各案の中に書いた。</p>
+ <div class="cands"><article class="cand" id="color-1">
+ <header class="chead"><span class="no">色 1</span><h3>青碧(せいへき)<span class="en"> Teal</span></h3></header>
+ <p class="why">青でも緑でもなく、問いの色にも答えの色にも寄らない中間。「分からない」と「試す」のあいだにある色として選んだ。海の底の暗さから、試して見えてくる水面の明るさへ。</p>
+ <dl class="meta"><div><dt>基準の色相と彩度</dt><dd><code>oklch(0.560 0.125 195)</code></dd></div>
+ <div><dt>ライトの主</dt><dd><code>oklch(0.481 0.082 195)</code></dd></div>
+ <div><dt>ダークの主</dt><dd><code>oklch(0.740 0.103 195)</code></dd></div>
+ <div><dt>状態の色との色相の差</dt><dd><code>成功 40° / 注意 130° / 誤り 168° / 今の青 55°</code></dd></div></dl>
+ <h4>11 段(明るさは 3 色でそろえている)</h4><ol class="ramp" aria-label="青碧(せいへき)の11段"><li style="--sw:#eefaf9"><i style="background:#eefaf9"></i><b>50</b><code>#eefaf9</code><code class="ok">L 0.975<br>C 0.013</code></li><li style="--sw:#d9f3f2"><i style="background:#d9f3f2"></i><b>100</b><code>#d9f3f2</code><code class="ok">L 0.945<br>C 0.028</code></li><li style="--sw:#b3e6e5"><i style="background:#b3e6e5"></i><b>200</b><code>#b3e6e5</code><code class="ok">L 0.890<br>C 0.052</code></li><li style="--sw:#86d4d4"><i style="background:#86d4d4"></i><b>300</b><code>#86d4d4</code><code class="ok">L 0.820<br>C 0.077</code></li><li style="--sw:#4cbfbf"><i style="background:#4cbfbf"></i><b>400</b><code>#4cbfbf</code><code class="ok">L 0.740<br>C 0.102</code></li><li style="--sw:#07a4a4"><i style="background:#07a4a4"></i><b>500</b><code>#07a4a4</code><code class="ok">L 0.650<br>C 0.110</code></li><li style="--sw:#038586"><i style="background:#038586"></i><b>600</b><code>#038586</code><code class="ok">L 0.560<br>C 0.095</code></li><li style="--sw:#016c6c"><i style="background:#016c6c"></i><b>700</b><code>#016c6c</code><code class="ok">L 0.480<br>C 0.082</code></li><li style="--sw:#005353"><i style="background:#005353"></i><b>800</b><code>#005353</code><code class="ok">L 0.400<br>C 0.068</code></li><li style="--sw:#003b3b"><i style="background:#003b3b"></i><b>900</b><code>#003b3b</code><code class="ok">L 0.320<br>C 0.054</code></li><li style="--sw:#002525"><i style="background:#002525"></i><b>950</b><code>#002525</code><code class="ok">L 0.240<br>C 0.041</code></li></ol>
+ <h4>ライトとダークの値</h4><table class="vt"><thead><tr><th>役</th><th>ライト</th><th>ダーク</th></tr></thead><tbody>
+<tr><td>主(面)</td><td><span class="sw" style="background:#016c6c"></span><code>#016c6c</code></td><td><span class="sw" style="background:#4cbfbf"></span><code>#4cbfbf</code></td></tr><tr><td>主(押す間)</td><td><span class="sw" style="background:#005353"></span><code>#005353</code></td><td><span class="sw" style="background:#86d4d4"></span><code>#86d4d4</code></td></tr><tr><td>主の上の文字</td><td><span class="sw" style="background:#ffffff"></span><code>#ffffff</code></td><td><span class="sw" style="background:#001313"></span><code>#001313</code></td></tr><tr><td>今いる所の文字</td><td><span class="sw" style="background:#016c6c"></span><code>#016c6c</code></td><td><span class="sw" style="background:#86d4d4"></span><code>#86d4d4</code></td></tr><tr><td>focus の輪</td><td><span class="sw" style="background:#016c6c"></span><code>#016c6c</code></td><td><span class="sw" style="background:#86d4d4"></span><code>#86d4d4</code></td></tr></tbody></table>
+ <h4>コントラスト比(ページの script が計算)</h4><div class="cts"><table class="ct"><caption>ライト</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#ffffff" data-b="#016c6c" data-min="4.5"><td><span class="pair"><i style="background:#ffffff"></i><i style="background:#016c6c"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#016c6c" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#016c6c"></i><i style="background:#fdfdff"></i></span>ボタンの面 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#016c6c" data-b="#fdfdff" data-min="4.5"><td><span class="pair"><i style="background:#016c6c"></i><i style="background:#fdfdff"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#016c6c" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#016c6c"></i><i style="background:#fdfdff"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table><table class="ct"><caption>ダーク</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#001313" data-b="#4cbfbf" data-min="4.5"><td><span class="pair"><i style="background:#001313"></i><i style="background:#4cbfbf"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#4cbfbf" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#4cbfbf"></i><i style="background:#1d1e20"></i></span>ボタンの面 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#86d4d4" data-b="#1d1e20" data-min="4.5"><td><span class="pair"><i style="background:#86d4d4"></i><i style="background:#1d1e20"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#86d4d4" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#86d4d4"></i><i style="background:#1d1e20"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table></div>
+ <h4>B の部品に当てたとき</h4><div class="minis"><div class="mini c1 m-light" data-m="light">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div><div class="mini c1 m-dark" data-m="dark">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div></div>
+ </article>
+<article class="cand" id="color-2">
+ <header class="chead"><span class="no">色 2</span><h3>躑躅(つつじ)<span class="en"> Magenta</span></h3></header>
+ <p class="why">赤紫は誤りの赤(色相 約 25)と紫の既定(約 290)のどちらからも離れる。「答えはまだ無い」という空白に、1 点だけ強く立つ色。試す手が止まらないように、静かな画面で目に入る。</p>
+ <dl class="meta"><div><dt>基準の色相と彩度</dt><dd><code>oklch(0.560 0.190 340)</code></dd></div>
+ <div><dt>ライトの主</dt><dd><code>oklch(0.480 0.181 340)</code></dd></div>
+ <div><dt>ダークの主</dt><dd><code>oklch(0.739 0.156 340)</code></dd></div>
+ <div><dt>状態の色との色相の差</dt><dd><code>成功 175° / 注意 85° / 誤り 47° / 今の青 90°</code></dd></div></dl>
+ <h4>11 段(明るさは 3 色でそろえている)</h4><ol class="ramp" aria-label="躑躅(つつじ)の11段"><li style="--sw:#fff3fa"><i style="background:#fff3fa"></i><b>50</b><code>#fff3fa</code><code class="ok">L 0.975<br>C 0.016</code></li><li style="--sw:#ffe4f5"><i style="background:#ffe4f5"></i><b>100</b><code>#ffe4f5</code><code class="ok">L 0.945<br>C 0.037</code></li><li style="--sw:#ffc7eb"><i style="background:#ffc7eb"></i><b>200</b><code>#ffc7eb</code><code class="ok">L 0.890<br>C 0.078</code></li><li style="--sw:#f7a6dc"><i style="background:#f7a6dc"></i><b>300</b><code>#f7a6dc</code><code class="ok">L 0.820<br>C 0.118</code></li><li style="--sw:#ea80c9"><i style="background:#ea80c9"></i><b>400</b><code>#ea80c9</code><code class="ok">L 0.740<br>C 0.156</code></li><li style="--sw:#d757b3"><i style="background:#d757b3"></i><b>500</b><code>#d757b3</code><code class="ok">L 0.650<br>C 0.190</code></li><li style="--sw:#b83997"><i style="background:#b83997"></i><b>600</b><code>#b83997</code><code class="ok">L 0.560<br>C 0.190</code></li><li style="--sw:#9a227d"><i style="background:#9a227d"></i><b>700</b><code>#9a227d</code><code class="ok">L 0.480<br>C 0.180</code></li><li style="--sw:#7b0f62"><i style="background:#7b0f62"></i><b>800</b><code>#7b0f62</code><code class="ok">L 0.400<br>C 0.162</code></li><li style="--sw:#5a0547"><i style="background:#5a0547"></i><b>900</b><code>#5a0547</code><code class="ok">L 0.320<br>C 0.133</code></li><li style="--sw:#3c002e"><i style="background:#3c002e"></i><b>950</b><code>#3c002e</code><code class="ok">L 0.240<br>C 0.105</code></li></ol>
+ <h4>ライトとダークの値</h4><table class="vt"><thead><tr><th>役</th><th>ライト</th><th>ダーク</th></tr></thead><tbody>
+<tr><td>主(面)</td><td><span class="sw" style="background:#9a227d"></span><code>#9a227d</code></td><td><span class="sw" style="background:#ea80c9"></span><code>#ea80c9</code></td></tr><tr><td>主(押す間)</td><td><span class="sw" style="background:#7b0f62"></span><code>#7b0f62</code></td><td><span class="sw" style="background:#f7a6dc"></span><code>#f7a6dc</code></td></tr><tr><td>主の上の文字</td><td><span class="sw" style="background:#ffffff"></span><code>#ffffff</code></td><td><span class="sw" style="background:#220019"></span><code>#220019</code></td></tr><tr><td>今いる所の文字</td><td><span class="sw" style="background:#9a227d"></span><code>#9a227d</code></td><td><span class="sw" style="background:#f7a6dc"></span><code>#f7a6dc</code></td></tr><tr><td>focus の輪</td><td><span class="sw" style="background:#9a227d"></span><code>#9a227d</code></td><td><span class="sw" style="background:#f7a6dc"></span><code>#f7a6dc</code></td></tr></tbody></table>
+ <h4>コントラスト比(ページの script が計算)</h4><div class="cts"><table class="ct"><caption>ライト</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#ffffff" data-b="#9a227d" data-min="4.5"><td><span class="pair"><i style="background:#ffffff"></i><i style="background:#9a227d"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#9a227d" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#9a227d"></i><i style="background:#fdfdff"></i></span>ボタンの面 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#9a227d" data-b="#fdfdff" data-min="4.5"><td><span class="pair"><i style="background:#9a227d"></i><i style="background:#fdfdff"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#9a227d" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#9a227d"></i><i style="background:#fdfdff"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table><table class="ct"><caption>ダーク</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#220019" data-b="#ea80c9" data-min="4.5"><td><span class="pair"><i style="background:#220019"></i><i style="background:#ea80c9"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#ea80c9" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#ea80c9"></i><i style="background:#1d1e20"></i></span>ボタンの面 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#f7a6dc" data-b="#1d1e20" data-min="4.5"><td><span class="pair"><i style="background:#f7a6dc"></i><i style="background:#1d1e20"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#f7a6dc" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#f7a6dc"></i><i style="background:#1d1e20"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table></div>
+ <h4>B の部品に当てたとき</h4><div class="minis"><div class="mini c2 m-light" data-m="light">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div><div class="mini c2 m-dark" data-m="dark">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div></div>
+ </article>
+<article class="cand" id="color-3">
+ <header class="chead"><span class="no">色 3</span><h3>若芽(わかめ)<span class="en"> Chartreuse</span></h3></header>
+ <p class="why">芽は答えが出る前の、まだ小さな試し。明るい黄緑は他社の青・紫と重ならず、暗い面でも明るい面でも立つ。成功の緑(色相 約 155)と 30° 以上離し、ボタンを明るい面にして暗い字を載せる形で分ける。</p>
+ <dl class="meta"><div><dt>基準の色相と彩度</dt><dd><code>oklch(0.560 0.190 124)</code></dd></div>
+ <div><dt>ライトの主</dt><dd><code>oklch(0.819 0.117 124)</code></dd></div>
+ <div><dt>ダークの主</dt><dd><code>oklch(0.741 0.156 124)</code></dd></div>
+ <div><dt>状態の色との色相の差</dt><dd><code>成功 31° / 注意 59° / 誤り 97° / 今の青 126°</code></dd></div></dl>
+ <h4>11 段(明るさは 3 色でそろえている)</h4><ol class="ramp" aria-label="若芽(わかめ)の11段"><li style="--sw:#f4f9eb"><i style="background:#f4f9eb"></i><b>50</b><code>#f4f9eb</code><code class="ok">L 0.975<br>C 0.019</code></li><li style="--sw:#e7f2d4"><i style="background:#e7f2d4"></i><b>100</b><code>#e7f2d4</code><code class="ok">L 0.945<br>C 0.042</code></li><li style="--sw:#d0e4aa"><i style="background:#d0e4aa"></i><b>200</b><code>#d0e4aa</code><code class="ok">L 0.890<br>C 0.080</code></li><li style="--sw:#b4d17a"><i style="background:#b4d17a"></i><b>300</b><code>#b4d17a</code><code class="ok">L 0.820<br>C 0.118</code></li><li style="--sw:#97bb3d"><i style="background:#97bb3d"></i><b>400</b><code>#97bb3d</code><code class="ok">L 0.740<br>C 0.156</code></li><li style="--sw:#7b9e02"><i style="background:#7b9e02"></i><b>500</b><code>#7b9e02</code><code class="ok">L 0.650<br>C 0.161</code></li><li style="--sw:#648100"><i style="background:#648100"></i><b>600</b><code>#648100</code><code class="ok">L 0.560<br>C 0.139</code></li><li style="--sw:#506801"><i style="background:#506801"></i><b>700</b><code>#506801</code><code class="ok">L 0.480<br>C 0.118</code></li><li style="--sw:#3d5000"><i style="background:#3d5000"></i><b>800</b><code>#3d5000</code><code class="ok">L 0.400<br>C 0.099</code></li><li style="--sw:#2b3900"><i style="background:#2b3900"></i><b>900</b><code>#2b3900</code><code class="ok">L 0.320<br>C 0.079</code></li><li style="--sw:#192400"><i style="background:#192400"></i><b>950</b><code>#192400</code><code class="ok">L 0.240<br>C 0.059</code></li></ol>
+ <h4>ライトとダークの値</h4><table class="vt"><thead><tr><th>役</th><th>ライト</th><th>ダーク</th></tr></thead><tbody>
+<tr><td>主(面)</td><td><span class="sw" style="background:#b4d17a"></span><code>#b4d17a</code></td><td><span class="sw" style="background:#97bb3d"></span><code>#97bb3d</code></td></tr><tr><td>主(押す間)</td><td><span class="sw" style="background:#97bb3d"></span><code>#97bb3d</code></td><td><span class="sw" style="background:#b4d17a"></span><code>#b4d17a</code></td></tr><tr><td>主の上の文字</td><td><span class="sw" style="background:#0c1200"></span><code>#0c1200</code></td><td><span class="sw" style="background:#0c1200"></span><code>#0c1200</code></td></tr><tr><td>今いる所の文字</td><td><span class="sw" style="background:#3d5000"></span><code>#3d5000</code></td><td><span class="sw" style="background:#b4d17a"></span><code>#b4d17a</code></td></tr><tr><td>focus の輪</td><td><span class="sw" style="background:#3d5000"></span><code>#3d5000</code></td><td><span class="sw" style="background:#b4d17a"></span><code>#b4d17a</code></td></tr></tbody></table>
+ <h4>コントラスト比(ページの script が計算)</h4><div class="cts"><table class="ct"><caption>ライト</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#0c1200" data-b="#b4d17a" data-min="4.5"><td><span class="pair"><i style="background:#0c1200"></i><i style="background:#b4d17a"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#3d5000" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#3d5000"></i><i style="background:#fdfdff"></i></span>ボタンの縁 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#3d5000" data-b="#fdfdff" data-min="4.5"><td><span class="pair"><i style="background:#3d5000"></i><i style="background:#fdfdff"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#3d5000" data-b="#fdfdff" data-min="3"><td><span class="pair"><i style="background:#3d5000"></i><i style="background:#fdfdff"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table><table class="ct"><caption>ダーク</caption><thead><tr><th>組</th><th class="num">比</th><th class="num">基準</th><th>判定</th></tr></thead><tbody><tr data-a="#0c1200" data-b="#97bb3d" data-min="4.5"><td><span class="pair"><i style="background:#0c1200"></i><i style="background:#97bb3d"></i></span>主ボタンの文字 / ボタンの面</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#97bb3d" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#97bb3d"></i><i style="background:#1d1e20"></i></span>ボタンの面 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr><tr data-a="#b4d17a" data-b="#1d1e20" data-min="4.5"><td><span class="pair"><i style="background:#b4d17a"></i><i style="background:#1d1e20"></i></span>今いる所の文字 / 背景</td><td class="num r">-</td><td class="num">4.5:1</td><td class="v">-</td></tr><tr data-a="#b4d17a" data-b="#1d1e20" data-min="3"><td><span class="pair"><i style="background:#b4d17a"></i><i style="background:#1d1e20"></i></span>focus の輪 / 背景</td><td class="num r">-</td><td class="num">3:1</td><td class="v">-</td></tr></tbody></table></div>
+ <h4>B の部品に当てたとき</h4><div class="minis"><div class="mini c3 m-light" data-m="light">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div><div class="mini c3 m-dark" data-m="dark">
+ <div class="mtop"><svg class="ico " width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="mb">KNOW IDEA</span>
+  <nav class="mnav"><a href="#" class="cur" aria-current="page" data-noop>会社の状態</a><a href="#" data-noop>オーナー待ち</a><a href="#" data-noop>稼働</a></nav></div>
+ <div class="mbody">
+  <div class="mrow"><button type="button" class="b-pri">主のボタン</button><button type="button" class="b-pri hov">押している間</button><button type="button" class="b-sec">副のボタン</button></div>
+  <div class="mrow"><button type="button" class="b-sec focus">focus の輪</button><button type="button" class="b-pri" disabled>無効</button></div>
+  <div class="mrow tags"><span class="tag t-ok"><svg class="gl" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/></svg>稼働中</span><span class="tag t-warn"><svg class="gl" viewBox="0 0 12 12"><path d="M6 1.5L11 10.5H1Z"/></svg>注意</span><span class="tag t-err"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8"/></svg>失敗</span><span class="tag t-off"><svg class="gl" viewBox="0 0 12 12"><path d="M2 6h8" stroke="currentColor" stroke-width="2" fill="none"/></svg>停止中</span><span class="tag t-pri"><svg class="gl" viewBox="0 0 12 12"><rect x="2" y="2" width="8" height="8" transform="rotate(45 6 6)" /></svg>選択中</span></div>
+ </div></div></div>
+ </article></div>
+</div></section>
+
+<section class="sec" id="icons"><div class="wrap">
+ <h2>会社のアイコンの案</h2>
+ <p class="lead">1 色の塗りだけで描いた。16px から 128px まで同じ図形で、主の色、黒、白のどれでも成り立つ。右に付く文字は IBM Plex Mono の KNOW IDEA。</p>
+ <div class="icons"><article class="icard" id="icon-a">
+ <header class="chead"><span class="no">アイコン ア</span><h3>問いの形</h3></header>
+ <p class="why">曲がった線は「分からない」の迷い。線は途切れ、下に点が 1 つ置かれる。問いのあとに、試しの一手を置く形。</p>
+ <div class="sizes"><figure><svg class="ico " width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><figcaption>16px</figcaption></figure><figure><svg class="ico " width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><figcaption>32px</figcaption></figure><figure><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><figcaption>64px</figcaption></figure><figure><svg class="ico " width="128" height="128" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><figcaption>128px</figcaption></figure></div>
+ <div class="tones"><div class="tone t-pri"><span class="c1"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg></span><small>主の色</small></div><div class="tone t-blk"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><small>黒</small></div><div class="tone t-wht"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><small>白</small></div></div>
+ <div class="locks"><div class="lk l"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="wm">KNOW IDEA</span></span></div><div class="lk d"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-a"/></svg><span class="wm">KNOW IDEA</span></span></div></div>
+ </article>
+<article class="icard" id="icon-i">
+ <header class="chead"><span class="no">アイコン イ</span><h3>黙字の K</h3></header>
+ <p class="why">Know の K は読まない。だから Know idea と No idea は耳では同じ。K の腕を幹から離し、字では見えて耳では聞こえない部分を隙間にした。</p>
+ <div class="sizes"><figure><svg class="ico " width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><figcaption>16px</figcaption></figure><figure><svg class="ico " width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><figcaption>32px</figcaption></figure><figure><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><figcaption>64px</figcaption></figure><figure><svg class="ico " width="128" height="128" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><figcaption>128px</figcaption></figure></div>
+ <div class="tones"><div class="tone t-pri"><span class="c1"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg></span><small>主の色</small></div><div class="tone t-blk"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><small>黒</small></div><div class="tone t-wht"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><small>白</small></div></div>
+ <div class="locks"><div class="lk l"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><span class="wm">KNOW IDEA</span></span></div><div class="lk d"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-i"/></svg><span class="wm">KNOW IDEA</span></span></div></div>
+ </article>
+<article class="icard" id="icon-u">
+ <header class="chead"><span class="no">アイコン ウ</span><h3>空の段</h3></header>
+ <p class="why">試しを一段ずつ積む階段。最後の一段は面を塗らず、枠だけ。答えの場所はまだ空いている。</p>
+ <div class="sizes"><figure><svg class="ico " width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><figcaption>16px</figcaption></figure><figure><svg class="ico " width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><figcaption>32px</figcaption></figure><figure><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><figcaption>64px</figcaption></figure><figure><svg class="ico " width="128" height="128" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><figcaption>128px</figcaption></figure></div>
+ <div class="tones"><div class="tone t-pri"><span class="c1"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg></span><small>主の色</small></div><div class="tone t-blk"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><small>黒</small></div><div class="tone t-wht"><svg class="ico " width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><small>白</small></div></div>
+ <div class="locks"><div class="lk l"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><span class="wm">KNOW IDEA</span></span></div><div class="lk d"><span class="lock"><svg class="ico " width="33" height="33" viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-u"/></svg><span class="wm">KNOW IDEA</span></span></div></div>
+ </article></div>
+ <p class="note" style="margin-top:16px">電球、脳、星のきらめき、吹き出しなど、AI の記号は使っていない。</p>
+</div></section>
+
+<script>
+(function(){
+ function lin(c){return c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4)}
+ function lum(h){var v=[1,3,5].map(function(i){return lin(parseInt(h.slice(i,i+2),16)/255)});return 0.2126*v[0]+0.7152*v[1]+0.0722*v[2]}
+ function cr(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+0.05)/(Math.min(x,y)+0.05)}
+ document.querySelectorAll('.ct tbody tr').forEach(function(tr){
+  var r=cr(tr.dataset.a,tr.dataset.b),min=parseFloat(tr.dataset.min);
+  tr.querySelector('.r').textContent=r.toFixed(2)+':1';
+  var v=tr.querySelector('.v');v.textContent=r>=min?'合格':'不足';v.className='v '+(r>=min?'pass':'fail');
+ });
+ var root=document.documentElement,btn=document.getElementById('theme');
+ function cur(){var t=root.getAttribute('data-theme');if(t)return t;return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+ function sync(){var d=cur()==='dark';btn.textContent=d?'ライトにする':'ダークにする';btn.setAttribute('aria-pressed',d)}
+ btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);sync()});sync();
+ document.querySelectorAll('[data-noop]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault()})});
+ // picker
+ var prev=document.getElementById('prev');
+ function apply(){var c=document.querySelector('input[name=col]:checked').value,i=document.querySelector('input[name=ico]:checked').value;
+  document.querySelectorAll('.mtop use').forEach(function(u){u.setAttribute('href','#ic-'+i)});prev.querySelectorAll('.pv').forEach(function(p){p.className='pv c'+c+' m-'+p.dataset.m;p.querySelectorAll('use').forEach(function(u){u.setAttribute('href','#ic-'+i)})});}
+ document.querySelectorAll('.picker input').forEach(function(x){x.addEventListener('change',apply)});
+ // mini sample nav icon follows the first icon
+})();
+</script>
+</body>
+</html>
