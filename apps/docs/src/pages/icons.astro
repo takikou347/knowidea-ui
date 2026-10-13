@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import icons from "icons/dist/icons.json" with { type: "json" };
+import { svg } from "icons/dist/render.mjs";
+const sets = [["phosphor", "Phosphor regular"], ["tabler", "Tabler outline"], ["lucide", "Lucide"]];
+const html = (set, role, size) => svg(icons, set, role, size);
+---
+<Base title="アイコン" description="UI のアイコン 3 組の比較">
+  <h1>アイコン</h1>
+  <p>管理アプリで要る 16 個を、20px と 16px で 3 組並べる。おすすめは Phosphor の regular。選んだ理由は <code>packages/icons/README.md</code>。</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>役</th>{sets.map(([, label]) => <th colspan="2">{label}</th>)}</tr>
+        <tr><th></th>{sets.map(() => (<><th>20px</th><th>16px</th></>))}</tr>
+      </thead>
+      <tbody>
+        {icons.roles.map((r) => (
+          <tr>
+            <td>{r.ja}</td>
+            {sets.map(([s]) => (
+              <>
+                <td><span class="ic" set:html={html(s, r.role, 20)} title={icons[s].icons[r.role].name}></span></td>
+                <td><span class="ic" set:html={html(s, r.role, 16)}></span></td>
+              </>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <h2>使い方</h2>
+  <p>色は <code>currentColor</code>。文字と同じ色になる。枠や丸で囲まない。押せる所に使うときは、ボタンの大きさを 44px にする(アイコンの大きさではない)。</p>
+</Base>
+<style>
+  .ic { display: inline-flex; color: var(--color-text); }
+</style>

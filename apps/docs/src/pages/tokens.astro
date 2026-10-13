@@ -1,0 +1,114 @@
+---
+import Base from "../layouts/Base.astro";
+import { colorNames, value, oklchStr, hex, themeStyle, pairs, pairRatio, ratio, core } from "../lib/theme.mjs";
+import { primitive, color } from "tokens/scripts/contrast.mjs";
+
+const themes = [["light", "ライト"], ["dark", "ダーク"]];
+const cand = ["a", "b", "c"].map((k) => ({
+  k,
+  light: color(primitive, `ref.success.${k}.fg`),
+  dark: color(primitive, `ref.success.${k}.fgDark`),
+}));
+const against = (c, theme) =>
+  (theme === "light"
+    ? [ratio(c, [1, 0, 0]), ratio(c, value("light", "surface"))]
+    : ["bg", "surface", "surface-2"].map((b) => ratio(c, value("dark", b)))
+  ).map((r) => r.toFixed(2)).join(" / ");
+const px = (t) => `${t.$value.value}${t.$value.unit}`;
+const sizes = Object.entries(core.font.size).map(([k, t]) => [k, px(t), core.font.lineHeight[k].$value]);
+const spaces = Object.entries(core.space).map(([k, t]) => [k, px(t)]);
+const radii = Object.entries(core.radius).map(([k, t]) => [k, px(t)]);
+---
+<Base title="トークン" description="色、字、余白、角丸、動き">
+  <h1>トークン</h1>
+  <p><code>tokens/dist/tokens.css</code> を読む。部品は下の semantic の名前だけを使う。</p>
+
+  <h2>色</h2>
+  <div class="panels">
+    {themes.map(([t, label]) => (
+      <div class="panel" style={themeStyle(t)}>
+        <h3>{label}</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>名前</th><th>OKLCH</th><th>HEX</th></tr></thead>
+            <tbody>
+              {colorNames.map((k) => (
+                <tr>
+                  <td><span class="sw" style={`background: var(--color-${k})`}></span><code>{k}</code></td>
+                  <td class="num">{oklchStr(value(t, k))}</td>
+                  <td class="num">{hex(value(t, k))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <h2>コントラスト比</h2>
+  <p>本文は 4.5:1 以上、線と focus の輪は 3:1 以上。<code>pnpm --filter tokens check</code> が同じ計算で判定する。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>前景</th><th>背景</th><th class="num">必要</th><th class="num">ライト</th><th class="num">ダーク</th></tr></thead>
+      <tbody>
+        {pairs.map(([fg, bg, need]) => {
+          const l = pairRatio("light", fg, bg), d = pairRatio("dark", fg, bg);
+          return (
+            <tr>
+              <td><code>{fg}</code></td><td><code>{bg}</code></td><td class="num">{need}:1</td>
+              <td class={l >= need ? "num ok" : "num ng"}>{l.toFixed(2)}</td>
+              <td class={d >= need ? "num ok" : "num ng"}>{d.toFixed(2)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>成功の色</h2>
+  <p>今の成功(#026337)は主の色(色相 195)と近い。色相を離した候補を 3 つ作った。採用は a(色相 145)。b と c は比べるために残す。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>候補</th><th>色相</th><th>ライト</th><th class="num">白 / surface</th><th>ダーク</th><th class="num">bg / surface / surface-2</th></tr></thead>
+      <tbody>
+        {cand.map((c) => (
+          <tr>
+            <td><code>{c.k}</code>{c.k === "a" ? "(採用)" : ""}</td>
+            <td class="num">{c.light[2]}</td>
+            <td class="num"><span class="sw" style={`background: ${oklchStr(c.light)}`}></span>{hex(c.light)}</td>
+            <td class="num">{against(c.light, "light")}</td>
+            <td class="num"><span class="sw" style={`background: ${oklchStr(c.dark)}`}></span>{hex(c.dark)}</td>
+            <td class="num">{against(c.dark, "dark")}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>字</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>段</th><th class="num">大きさ</th><th class="num">行の高さ</th><th>見え方</th></tr></thead>
+      <tbody>
+        {sizes.map(([k, s, l]) => (
+          <tr><td><code>font-size-{k}</code></td><td class="num">{s}</td><td class="num">{l}</td><td style={`font-size: ${s}; line-height: ${l}`}>ログを確かめる 1234567890</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">書体は <code>--font-sans</code>(IBM Plex Sans JP)と <code>--font-mono</code>(IBM Plex Mono、数字とコード)。本文は 400、強調は 600。</p>
+
+  <h2>余白と角丸</h2>
+  <div class="panels">
+    <div class="table-wrap"><table>
+      <thead><tr><th>余白</th><th class="num">値</th><th>見え方</th></tr></thead>
+      <tbody>{spaces.map(([k, v]) => <tr><td><code>space-{k}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:12px;width:${v};background:var(--color-primary)`}></span></td></tr>)}</tbody>
+    </table></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>角丸</th><th class="num">値</th><th>見え方</th></tr></thead>
+      <tbody>{radii.map(([k, v]) => <tr><td><code>radius-{k}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:24px;width:48px;border:1px solid var(--color-line-strong);background:var(--color-surface-2);border-radius:${v}`}></span></td></tr>)}</tbody>
+    </table></div>
+  </div>
+  <p class="muted" style="margin-top: var(--space-3)">押せる所は <code>--size-hit</code>(44px)。動きは <code>--motion-duration-fast</code>(120ms)、<code>--motion-duration-state</code>(160ms)、<code>--motion-ease</code>。影は <code>--shadow-pop</code> の 1 つ。</p>
+</Base>

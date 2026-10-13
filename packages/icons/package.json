@@ -1,0 +1,17 @@
+{
+  "name": "icons",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "@phosphor-icons/core": "2.1.1",
+    "@tabler/icons": "3.49.0",
+    "lucide-static": "1.55.0"
+  },
+  "exports": {
+    "./dist/*": "./dist/*"
+  }
+}

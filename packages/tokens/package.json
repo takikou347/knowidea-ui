@@ -9,5 +9,10 @@
   },
   "devDependencies": {
     "style-dictionary": "5.6.1"
+  },
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./scripts/*": "./scripts/*",
+    "./src/*": "./src/*"
   }
 }

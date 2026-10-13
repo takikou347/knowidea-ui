@@ -1,0 +1,102 @@
+---
+import Base from "../../layouts/Base.astro";
+import Button from "../../components/Button.astro";
+import { themeStyle } from "../../lib/theme.mjs";
+const states = [
+  ["通常", {}],
+  ["hover", { force: "hover" }],
+  ["focus", { force: "focus" }],
+  ["無効", { disabled: true }],
+  ["読み込み", { loading: true }],
+];
+const props = [
+  ["variant", '"primary" | "secondary"', '"primary"', "主は 1 画面に 1 つ。ほかは secondary"],
+  ["loading", "boolean", "false", "押せなくなり、aria-busy になる。ラベルはそのまま"],
+  ["disabled", "boolean", "false", "押せない。focus も入らない"],
+  ["type", '"button" | "submit" | "reset"', '"button"', "form の中では submit を明示する"],
+];
+const vars = [
+  ["--color-primary", "主のボタンの背景と枠"],
+  ["--color-primary-hover", "主のボタンの hover"],
+  ["--color-on-primary", "主のボタンの文字"],
+  ["--color-surface、--color-surface-2、--color-line-strong", "secondary の背景、hover、枠"],
+  ["--color-focus", "focus の輪(2px)"],
+  ["--radius-2", "角丸"],
+  ["--space-2、--space-4", "中の間隔、左右の余白"],
+  ["--size-hit", "最小の高さ(44px)"],
+];
+---
+<Base title="ボタン" description="ボタンのデモ、状態、API、テーマ">
+  <h1>ボタン</h1>
+  <p>操作を実行する。ナビゲーションには使わない(リンクを使う)。</p>
+
+  <h2>デモ</h2>
+  <div class="panel demo">
+    <Button>承認する</Button>
+    <Button variant="secondary">否認する</Button>
+  </div>
+
+  <h2>5 つの状態</h2>
+  <p>hover と focus は見本のため固定で出している。実物は操作で変わる。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>状態</th><th>primary</th><th>secondary</th></tr></thead>
+      <tbody>
+        {states.map(([label, p]) => (
+          <tr>
+            <td>{label}</td>
+            <td><Button {...p}>送る</Button></td>
+            <td><Button variant="secondary" {...p}>送る</Button></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>API</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>props</th><th>型</th><th>既定</th><th>説明</th></tr></thead>
+      <tbody>{props.map((r) => <tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td><td><code>{r[2]}</code></td><td>{r[3]}</td></tr>)}</tbody>
+    </table>
+  </div>
+  <p style="margin-top: var(--space-4)">読む CSS 変数。semantic の変数だけで、素の値は読まない。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>変数</th><th>使う所</th></tr></thead>
+      <tbody>{vars.map((r) => <tr><td><code>{r[0]}</code></td><td>{r[1]}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <h2>テーマ</h2>
+  <p>ライトとダークは変数の値が変わるだけで、部品は同じ。アプリが変数を上書きすると主の色や角丸が変わる。サイドの「テーマ」で、ページ全体も切り替えられる。</p>
+  <div class="panels">
+    <div class="panel" style={themeStyle("light")}>
+      <h3>ライト</h3>
+      <div class="demo"><Button>承認する</Button><Button variant="secondary">否認する</Button></div>
+    </div>
+    <div class="panel" style={themeStyle("dark")}>
+      <h3>ダーク</h3>
+      <div class="demo"><Button>承認する</Button><Button variant="secondary">否認する</Button></div>
+    </div>
+    <div class="panel" style="--color-primary: oklch(0.46 0.12 255); --color-primary-hover: oklch(0.4 0.12 255); --color-focus: oklch(0.46 0.12 255); --radius-2: 8px;">
+      <h3>上書き: 主の色を青、角丸 8px</h3>
+      <div class="demo"><Button>承認する</Button><Button variant="secondary">否認する</Button></div>
+    </div>
+    <div class="panel" style="--space-4: 12px; --size-hit: 36px; --radius-2: 2px;">
+      <h3>上書き: 詰める(高さ 36px)</h3>
+      <div class="demo"><Button>承認する</Button><Button variant="secondary">否認する</Button></div>
+    </div>
+  </div>
+  <pre class="code"><code>{`.admin-app {
+  --color-primary: oklch(0.46 0.12 255);
+  --color-primary-hover: oklch(0.4 0.12 255);
+  --color-focus: oklch(0.46 0.12 255);
+  --radius-2: 8px;
+}`}</code></pre>
+</Base>
+<style>
+  .demo { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .code { margin: var(--space-4) 0 0; padding: var(--space-3); background: var(--color-surface-2); border-radius: var(--radius-2); overflow-x: auto; }
+  .panels { margin-top: var(--space-3); }
+</style>

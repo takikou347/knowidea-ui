@@ -1,0 +1,18 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "prebuild": "pnpm --filter tokens build && pnpm --filter icons build",
+    "predev": "pnpm --filter tokens build && pnpm --filter icons build"
+  },
+  "dependencies": {
+    "astro": "7.3.8",
+    "icons": "workspace:*",
+    "tokens": "workspace:*"
+  }
+}

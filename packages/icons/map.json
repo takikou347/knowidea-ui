@@ -1,0 +1,18 @@
+[
+  { "role": "home", "ja": "ホーム", "phosphor": "house", "tabler": "home", "lucide": "house" },
+  { "role": "actor", "ja": "Claude と人", "phosphor": "user", "tabler": "user", "lucide": "user" },
+  { "role": "proposal", "ja": "提案", "phosphor": "lightbulb", "tabler": "bulb", "lucide": "lightbulb" },
+  { "role": "thread", "ja": "スレッド", "phosphor": "chats", "tabler": "messages", "lucide": "messages-square" },
+  { "role": "pr", "ja": "PR", "phosphor": "git-pull-request", "tabler": "git-pull-request", "lucide": "git-pull-request" },
+  { "role": "approve", "ja": "承認", "phosphor": "check", "tabler": "check", "lucide": "check" },
+  { "role": "reject", "ja": "否認", "phosphor": "x", "tabler": "x", "lucide": "x" },
+  { "role": "comment", "ja": "コメント", "phosphor": "chat-text", "tabler": "message", "lucide": "message-square" },
+  { "role": "send", "ja": "送る", "phosphor": "paper-plane-tilt", "tabler": "send", "lucide": "send" },
+  { "role": "stop", "ja": "止める", "phosphor": "stop", "tabler": "player-stop", "lucide": "square" },
+  { "role": "resume", "ja": "再開", "phosphor": "play", "tabler": "player-play", "lucide": "play" },
+  { "role": "warning", "ja": "警告", "phosphor": "warning", "tabler": "alert-triangle", "lucide": "triangle-alert" },
+  { "role": "error", "ja": "失敗", "phosphor": "x-circle", "tabler": "circle-x", "lucide": "circle-x" },
+  { "role": "settings", "ja": "設定", "phosphor": "gear", "tabler": "settings", "lucide": "settings" },
+  { "role": "external", "ja": "外へのリンク", "phosphor": "arrow-square-out", "tabler": "external-link", "lucide": "external-link" },
+  { "role": "refresh", "ja": "更新", "phosphor": "arrow-clockwise", "tabler": "refresh", "lucide": "refresh-cw" }
+]

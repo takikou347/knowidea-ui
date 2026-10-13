@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="はじめに" description="KNOW IDEA のトークン、アイコン、部品の見本">
+  <h1>KNOW IDEA のデザイン</h1>
+  <p>管理アプリ、Logru、Ruleru のサイトが同じ土台を使う。アプリは CSS 変数を上書きして、主の色、角丸、密度を変える。</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ページ</th><th>中身</th></tr></thead>
+      <tbody>
+        <tr><td><a href="/tokens/">トークン</a></td><td>色(ライトとダーク、コントラスト比)、字、余白、角丸、動き</td></tr>
+        <tr><td><a href="/icons/">アイコン</a></td><td>3 組の比較と、会社で使う 16 個</td></tr>
+        <tr><td><a href="/components/button/">ボタン</a></td><td>デモ、5 つの状態、API、テーマの切り替え</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>ページの足し方</h2>
+  <p><code>src/pages/components/&lt;名前&gt;.astro</code> を作り、<code>src/nav.mjs</code> に 1 行足す。1 部品に 1 ページ。</p>
+</Base>
