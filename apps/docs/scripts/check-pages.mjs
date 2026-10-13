@@ -88,6 +88,7 @@ async function kb(name, path, fn) {
 }
 const inside = (page, sel) => page.evaluate((s) => !!document.activeElement?.closest(s), sel);
 const assert = (c, m) => { if (!c) throw new Error(m); };
+const press = async (page, key) => { await page.keyboard.press(key); await page.waitForTimeout(120); };
 
 await kb("ダイアログ(閉じ込め、Esc)", "/components/dialog/", async (page) => {
   const trigger = page.getByRole("button", { name: "ダイアログを開く" }).first();
@@ -96,11 +97,11 @@ await kb("ダイアログ(閉じ込め、Esc)", "/components/dialog/", async (pa
   const dlg = page.getByRole("dialog").first();
   await dlg.waitFor({ state: "visible" });
   for (let i = 0; i < 8; i++) {
-    await page.keyboard.press("Tab");
+    await press(page, "Tab");
     assert(await inside(page, '[role="dialog"]'), `Tab ${i + 1} 回目で focus がダイアログの外に出た`);
   }
   for (let i = 0; i < 8; i++) {
-    await page.keyboard.press("Shift+Tab");
+    await press(page, "Shift+Tab");
     assert(await inside(page, '[role="dialog"]'), `Shift+Tab ${i + 1} 回目で focus が外に出た`);
   }
   await page.keyboard.press("Escape");
@@ -119,30 +120,32 @@ await kb("タブ(矢印、Tab で中身へ)", "/components/tabs/", async (page) 
   const tabs = page.getByRole("tab");
   await tabs.first().focus();
   assert((await tabs.first().getAttribute("aria-selected")) === "true", "初めのタブが選ばれていない");
-  await page.keyboard.press("ArrowRight");
-  assert((await tabs.nth(1).getAttribute("aria-selected")) === "true", "ArrowRight で次のタブに移らない");
-  assert(await tabs.nth(1).evaluate((el) => el === document.activeElement), "ArrowRight で focus が移らない");
-  await page.keyboard.press("Tab");
+  await press(page, "ArrowRight");
+  assert(await tabs.nth(1).evaluate((el) => el === document.activeElement), "ArrowRight で focus が次のタブに移らない");
+  await press(page, "Enter");
+  assert((await tabs.nth(1).getAttribute("aria-selected")) === "true", "Enter で選べない");
+  await press(page, "Tab");
   assert(await page.evaluate(() => document.activeElement?.getAttribute("role") === "tabpanel"), "Tab で選んだタブの中身へ入らない");
-  await page.keyboard.press("Shift+Tab");
-  await page.keyboard.press("Home");
-  assert((await tabs.first().getAttribute("aria-selected")) === "true", "Home で先頭に戻らない");
+  await press(page, "Shift+Tab");
+  await press(page, "Home");
+  await press(page, "Enter");
+  assert((await tabs.first().getAttribute("aria-selected")) === "true", "Home と Enter で先頭に戻らない");
 });
 
 await kb("メニュー(矢印、Esc)", "/components/menu/", async (page) => {
   const trigger = page.getByRole("button", { name: "操作" }).first();
   await trigger.focus();
   await page.keyboard.press("Enter");
-  const menu = page.getByRole("menu").first();
+  const menu = page.locator('.ki-menu__positioner [role="menu"]').first();
   await menu.waitFor({ state: "visible" });
-  await page.keyboard.press("ArrowDown");
+  await press(page, "ArrowDown");
   assert(await page.evaluate(() => document.activeElement?.getAttribute("role") === "menuitem"), "矢印で項目に focus が入らない");
   const first = await page.evaluate(() => document.activeElement?.textContent);
-  await page.keyboard.press("ArrowDown");
+  await press(page, "ArrowDown");
   const second = await page.evaluate(() => document.activeElement?.textContent);
   assert(first !== second, "ArrowDown で次の項目に移らない");
-  await page.keyboard.press("Escape");
-  await menu.waitFor({ state: "hidden" });
+  await press(page, "Escape");
+  await menu.waitFor({ state: "detached" });
   assert(await page.evaluate(() => document.activeElement?.textContent?.includes("操作")), "閉じた後に focus が開いたボタンへ戻らない");
 });
 

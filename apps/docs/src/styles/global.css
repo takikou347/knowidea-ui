@@ -70,3 +70,7 @@ td.num, th.num { font-variant-numeric: tabular-nums; }
   .panels { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* 見本のための固定の状態(部品のコードには入れない) */
+.force-row-hover .ki-table tbody tr:first-child { background: var(--color-surface-2); }
+.force-focus .ki-table-wrap { outline: 2px solid var(--color-focus); outline-offset: 2px; }

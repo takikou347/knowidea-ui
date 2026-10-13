@@ -16,3 +16,4 @@
 .ki-tabs__panel, .ki-tabs [role="tabpanel"] { padding: var(--space-4) 0; }
 .ki-tabs__panel:focus-visible, .ki-tabs [role="tabpanel"]:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .ki-tabs__panel[hidden], .ki-tabs [role="tabpanel"][hidden] { display: none; }
+.ki-tabs.is-focus .ki-tabs__tab[data-active] { outline: 2px solid var(--color-focus); outline-offset: -2px; }
