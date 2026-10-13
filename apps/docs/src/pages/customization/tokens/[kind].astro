@@ -5,12 +5,12 @@ import { colorNames, value, oklchStr, hex, themeStyle, pairs, pairRatio, core } 
 import { links } from "../../../lib/paths.mjs";
 
 const kinds = {
-  color: { ja: "色", lead: "役割の名前の変数だけを読む。ライトとダークは別に決めていて、反転で作らない。" },
-  typography: { ja: "字", lead: "書体は本文と見出し(IBM Plex Sans JP)と、数字とコード(IBM Plex Mono)の 2 つ。大きさは 5 段。" },
-  spacing: { ja: "余白", lead: "4px を単位にした 7 段。部品の間隔は、この段から選ぶ。" },
-  radius: { ja: "角丸", lead: "小さな角丸を 3 段。全部に同じ大きな角丸は使わない。" },
-  shadow: { ja: "影", lead: "影は浮かぶ物(メニュー、ダイアログ、貼り付いた帯)だけに使う。" },
-  motion: { ja: "動き", lead: "状態が変わる時だけ動かす。prefers-reduced-motion では止める。" },
+  color: { name: "Color", lead: "役割を表す名前の変数だけを参照する。ライトとダークは別々に決めており、反転では作らない。" },
+  typography: { name: "Typography", lead: "書体は、本文と見出し用の IBM Plex Sans JP と、数字とコード用の IBM Plex Mono の 2 つ。サイズは 5 段階。" },
+  spacing: { name: "Spacing", lead: "4px を単位とした 7 段階。コンポーネントの間隔は、この段階から選択する。" },
+  radius: { name: "Radius", lead: "小さな角丸を 3 段階で用意している。すべてに同じ大きな角丸は使わない。" },
+  shadow: { name: "Shadow", lead: "影は、浮かび上がる要素(メニュー、ダイアログ、画面に固定されたバー)にだけ使う。" },
+  motion: { name: "Motion", lead: "状態が変わるときだけ動かす。prefers-reduced-motion では動きを止める。" },
 };
 export function getStaticPaths() {
   return ["color", "typography", "spacing", "radius", "shadow", "motion"].map((kind) => ({ params: { kind } }));
@@ -19,28 +19,29 @@ const { kind } = Astro.params;
 const k = kinds[kind];
 const { href } = links(Astro.url.pathname);
 
-const modes = [["light", "ライト"], ["dark", "ダーク"]];
+const modes = [["light", "Light"], ["dark", "Dark"]];
 const px = (t) => `${t.$value.value}${t.$value.unit}`;
 const sizes = Object.entries(core.font.size).map(([n, t]) => [n, px(t), core.font.lineHeight[n].$value]);
 const spaces = Object.entries(core.space).map(([n, t]) => [n, px(t)]);
 const radii = Object.entries(core.radius).map(([n, t]) => [n, px(t)]);
-const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t), t.$description]);
+const durationUse = { fast: "ホバー、フォーカス", state: "状態が変わるとき", spin: "スピナーの 1 回転" };
+const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t), durationUse[n] ?? t.$description]);
 ---
-<Base title={`トークン: ${k.ja}`} description={`トークンの${k.ja}`}>
-  <h1>トークン: {k.ja}</h1>
+<Base title={`${k.name} tokens`} description={`${k.name} のトークン`}>
+  <h1>{k.name} tokens</h1>
   <p class="lead">{k.lead}</p>
-  <p>トークンは CSS 変数。<code>@knowidea/tokens/tokens.css</code> を読むと使える。部品は役割の名前の変数だけを参照し、素の値は参照しない。上書きは<a href={href("customization/theme")}>テーマ</a>と<a href={href("customization/overriding")}>部品の上書き</a>。</p>
+  <p>トークンは CSS 変数で、<code>@knowidea/tokens/tokens.css</code> を読み込むと使える。コンポーネントは役割を表す名前の変数だけを参照し、素の値は参照しない。変更の方法は <a href={href("customization/theme")}>Theme</a> と <a href={href("customization/overriding")}>Overriding</a> を参照。</p>
 
   {kind === "color" && (
     <>
-      <h2 id="colors">色の一覧</h2>
+      <h2 id="colors">Colors</h2>
       <div class="panels">
         {modes.map(([t, label]) => (
           <div class="panel" style={themeStyle(t)}>
             <h3>{label}</h3>
             <div class="table-wrap">
               <table class="docs-table">
-                <thead><tr><th>名前</th><th>OKLCH</th><th>HEX</th></tr></thead>
+                <thead><tr><th>Name</th><th>OKLCH</th><th>HEX</th></tr></thead>
                 <tbody>
                   {colorNames.map((n) => (
                     <tr>
@@ -55,33 +56,33 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
           </div>
         ))}
       </div>
-      <h2 id="roles">役割</h2>
+      <h2 id="roles">Roles</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>変数</th><th>使う所</th></tr></thead>
+          <thead><tr><th>Variable</th><th>Usage</th></tr></thead>
           <tbody>
-            <tr><td><code>--color-bg</code>、<code>--color-surface</code>、<code>--color-surface-2</code></td><td>画面の背景、カードや入力の面、hover と沈んだ面</td></tr>
-            <tr><td><code>--color-text</code>、<code>--color-text-muted</code></td><td>本文、補足(どちらも 4.5:1 以上)</td></tr>
-            <tr><td><code>--color-line</code>、<code>--color-line-strong</code></td><td>区切り、操作できる物の枠(3:1 以上)</td></tr>
-            <tr><td><code>--color-primary</code>、<code>-hover</code>、<code>--color-on-primary</code></td><td>主のボタンと今いる所。主の面に載せる文字</td></tr>
-            <tr><td><code>--color-focus</code></td><td>focus の輪(2px)</td></tr>
-            <tr><td><code>--color-info</code>、<code>success</code>、<code>warn</code>、<code>error</code>(と <code>-soft</code>)</td><td>意味の色。字と面の組。アイコンと字を必ず添える</td></tr>
+            <tr><td><code>--color-bg</code>、<code>--color-surface</code>、<code>--color-surface-2</code></td><td>画面の背景、カードや入力欄の背景、ホバー時や無効状態の背景</td></tr>
+            <tr><td><code>--color-text</code>、<code>--color-text-muted</code></td><td>本文、補足(どちらもコントラスト比 4.5:1 以上)</td></tr>
+            <tr><td><code>--color-line</code>、<code>--color-line-strong</code></td><td>区切り線、操作できる要素の枠線(3:1 以上)</td></tr>
+            <tr><td><code>--color-primary</code>、<code>-hover</code>、<code>--color-on-primary</code></td><td>プライマリボタンと現在地。プライマリ面に載せる文字色</td></tr>
+            <tr><td><code>--color-focus</code></td><td>フォーカスリング(2px)</td></tr>
+            <tr><td><code>--color-info</code>、<code>success</code>、<code>warn</code>、<code>error</code>(と <code>-soft</code>)</td><td>意味を表す色。文字と背景の組になっている。必ずアイコンと文字を添える</td></tr>
           </tbody>
         </table>
       </div>
-      <h2 id="contrast">コントラスト比</h2>
-      <p>本文は 4.5:1 以上、線と focus の輪は 3:1 以上。<code>pnpm --filter @knowidea/tokens check</code> が同じ計算で判定する。</p>
+      <h2 id="contrast">Contrast ratios</h2>
+      <p>本文は 4.5:1 以上、線とフォーカスリングは 3:1 以上。<code>pnpm --filter @knowidea/tokens check</code> が同じ計算で判定する。</p>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>前景</th><th>背景</th><th class="num">必要</th><th class="num">ライト</th><th class="num">ダーク</th></tr></thead>
+          <thead><tr><th>Foreground</th><th>Background</th><th class="num">Required</th><th class="num">Light</th><th class="num">Dark</th></tr></thead>
           <tbody>
             {pairs.map(([fg, bg, need]) => {
               const l = pairRatio("light", fg, bg), d = pairRatio("dark", fg, bg);
               return (
                 <tr>
                   <td><code>{fg}</code></td><td><code>{bg}</code></td><td class="num">{need}:1</td>
-                  <td class={l >= need ? "num ok" : "num ng"}>{l.toFixed(2)}{l >= need ? " 合格" : " 不合格"}</td>
-                  <td class={d >= need ? "num ok" : "num ng"}>{d.toFixed(2)}{d >= need ? " 合格" : " 不合格"}</td>
+                  <td class={l >= need ? "num ok" : "num ng"}>{l.toFixed(2)}{l >= need ? " Pass" : " Fail"}</td>
+                  <td class={d >= need ? "num ok" : "num ng"}>{d.toFixed(2)}{d >= need ? " Pass" : " Fail"}</td>
                 </tr>
               );
             })}
@@ -93,21 +94,21 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
 
   {kind === "typography" && (
     <>
-      <h2 id="families">書体</h2>
+      <h2 id="families">Font families</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>変数</th><th>書体</th><th>使う所</th></tr></thead>
+          <thead><tr><th>Variable</th><th>Typeface</th><th>Usage</th></tr></thead>
           <tbody>
             <tr><td><code>--font-sans</code></td><td>IBM Plex Sans JP、BIZ UDPGothic、Noto Sans CJK JP ほか</td><td>見出し、本文、日本語</td></tr>
             <tr><td><code>--font-mono</code></td><td>IBM Plex Mono、JetBrains Mono、ui-monospace ほか</td><td>数字、コード</td></tr>
           </tbody>
         </table>
       </div>
-      <p>本文は 400、見出しと強調は 600(<code>--font-weight-regular</code>、<code>--font-weight-strong</code>)。数字は等幅で桁をそろえる(<code>font-variant-numeric: tabular-nums</code>)。</p>
-      <h2 id="sizes">大きさ</h2>
+      <p>本文のウェイトは 400、見出しと強調は 600(<code>--font-weight-regular</code>、<code>--font-weight-strong</code>)。数字は等幅にして桁をそろえる(<code>font-variant-numeric: tabular-nums</code>)。</p>
+      <h2 id="sizes">Sizes</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>段</th><th class="num">大きさ</th><th class="num">行の高さ</th><th>見え方</th></tr></thead>
+          <thead><tr><th>Step</th><th class="num">Size</th><th class="num">Line height</th><th>Preview</th></tr></thead>
           <tbody>
             {sizes.map(([n, s, l]) => (
               <tr><td><code>--font-size-{n}</code></td><td class="num">{s}</td><td class="num">{l}</td><td style={`font-size: ${s}; line-height: ${l}`}>ひらがなと漢字、abcXYZ <span style="font-family: var(--font-mono)">1234567890</span></td></tr>
@@ -115,65 +116,65 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
           </tbody>
         </table>
       </div>
-      <p class="muted">本文は 3 段(14px)。<a href={href("customization/theme")}>テーマ</a>の fontSize で、5 段が本文を元にまとめて変わる。</p>
+      <p class="muted">本文は 3 段目(14px)。<a href={href("customization/theme")}>Theme</a> の fontSize を変えると、5 段階すべてが本文を基準にまとめて変わる。</p>
     </>
   )}
 
   {kind === "spacing" && (
     <>
-      <h2 id="scale">段</h2>
+      <h2 id="scale">Scale</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>変数</th><th class="num">値</th><th>見え方</th></tr></thead>
+          <thead><tr><th>Variable</th><th class="num">Value</th><th>Preview</th></tr></thead>
           <tbody>{spaces.map(([n, v]) => <tr><td><code>--space-{n}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:12px;width:${v};background:var(--color-primary)`}></span></td></tr>)}</tbody>
         </table>
       </div>
-      <p>Stack と Grid の <code>gap</code> は、この段の番号(1〜7)で渡す。押せる所の最小は <code>--size-hit</code>(44px)。</p>
-      <p class="muted">密度を comfortable にすると、2〜6 の段が少し広がる(<a href={href("customization/theme")}>テーマ</a>)。</p>
+      <p>Stack と Grid の <code>gap</code> には、この段階の番号(1〜7)を渡す。タップ領域の最小サイズは <code>--size-hit</code>(44px)。</p>
+      <p class="muted">密度を comfortable にすると、2〜6 段目の余白が少し広がる(<a href={href("customization/theme")}>Theme</a>)。</p>
     </>
   )}
 
   {kind === "radius" && (
     <>
-      <h2 id="scale">段</h2>
+      <h2 id="scale">Scale</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>変数</th><th class="num">値</th><th>見え方</th><th>使う所</th></tr></thead>
+          <thead><tr><th>Variable</th><th class="num">Value</th><th>Preview</th><th>Usage</th></tr></thead>
           <tbody>
-            {radii.map(([n, v]) => <tr><td><code>--radius-{n}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:24px;width:48px;border:1px solid var(--color-line-strong);background:var(--color-surface-2);border-radius:${v}`}></span></td><td>{n === "1" ? "札、印、小さな要素" : n === "2" ? "ボタン、入力、メニュー" : "カード、ダイアログ、表の枠"}</td></tr>)}
+            {radii.map(([n, v]) => <tr><td><code>--radius-{n}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:24px;width:48px;border:1px solid var(--color-line-strong);background:var(--color-surface-2);border-radius:${v}`}></span></td><td>{n === "1" ? "バッジ、ステータス、小さな要素" : n === "2" ? "ボタン、入力欄、メニュー" : "カード、ダイアログ、表の枠"}</td></tr>)}
           </tbody>
         </table>
       </div>
-      <p>テーマの radius は中(<code>--radius-2</code>)の値で、小は半分、大は 1.5 倍になる。</p>
+      <p>Theme の radius は中(<code>--radius-2</code>)の値で、小は半分、大は 1.5 倍になる。</p>
     </>
   )}
 
   {kind === "shadow" && (
     <>
-      <h2 id="pop">浮かぶ物の影</h2>
+      <h2 id="pop">Elevated surfaces</h2>
       <div class="demo"><div class="demo-stage"><div style="width: 200px; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-3); box-shadow: var(--shadow-pop)">--shadow-pop</div></div></div>
-      <p>影は 1 段だけ(<code>--shadow-pop</code>)。メニュー、ダイアログ、貼り付いた SelectionBar に使う。ライトは 14%、ダークは 50% の黒。影と枠と色の面を重ねて、同じ物を飾らない。</p>
+      <p>影は 1 段階だけ(<code>--shadow-pop</code>)。メニュー、ダイアログ、画面に固定された SelectionBar に使う。ライトでは黒の 14%、ダークでは黒の 50%。影と枠線と背景色を重ねて、同じ要素を飾らない。</p>
     </>
   )}
 
   {kind === "motion" && (
     <>
-      <h2 id="durations">時間と曲線</h2>
+      <h2 id="durations">Durations and easing</h2>
       <div class="table-wrap">
         <table class="docs-table">
-          <thead><tr><th>変数</th><th class="num">値</th><th>使う所</th></tr></thead>
+          <thead><tr><th>Variable</th><th class="num">Value</th><th>Usage</th></tr></thead>
           <tbody>
             {durations.map(([n, v, d]) => <tr><td><code>--motion-duration-{n}</code></td><td class="num">{v}</td><td>{d}</td></tr>)}
-            <tr><td><code>--motion-ease</code></td><td class="num">cubic-bezier(0.2, 0, 0, 1)</td><td>すべての動きの曲線</td></tr>
+            <tr><td><code>--motion-ease</code></td><td class="num">cubic-bezier(0.2, 0, 0, 1)</td><td>すべての動きに共通のイージング</td></tr>
           </tbody>
         </table>
       </div>
-      <p>動くのは hover、focus、状態が変わる時だけ。終わらない脈動、数字のカウントアップ、全部の節に同じ出現の動きは使わない。<code>prefers-reduced-motion: reduce</code> では、回転も含めて止める。</p>
+      <p>動かすのは、ホバー、フォーカス、状態が変わるときだけ。終わらない脈動、数字のカウントアップ、すべてのセクションに同じ出現アニメーションを付けることは避ける。<code>prefers-reduced-motion: reduce</code> では、回転も含めてすべて止める。</p>
     </>
   )}
 
-  <h2 id="use">使い方</h2>
-  <Code lang="css" label="CSS の例" code={`.my-panel {
+  <h2 id="use">Usage</h2>
+  <Code lang="css" label="CSS example" code={`.my-panel {
   padding: var(--space-4);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-3);

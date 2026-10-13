@@ -17,10 +17,10 @@ export function Shapes() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", na: "仮の形は読み込み中だけ出る" },
-    { label: "読み込み", node: <Text />, note: "動かさない(終わらない脈動は使わない)。包む側に aria-busy を付ける" },
-    { label: "失敗", na: "失敗したら仮の形をやめて、Alert や空の状態に切り替える" },
-    { label: "無効", na: "無効を持たない" },
-    { label: "focus", na: "仮の形は押せないので focus を受けない" },
+    { label: "Empty", na: "プレースホルダーは、ローディング中だけ表示する" },
+    { label: "Loading", node: <Text />, note: "動かさない(終わらない脈動は使わない)。ラッパーに aria-busy を付ける" },
+    { label: "Error", na: "取得に失敗したら、プレースホルダーをやめて、Alert か Empty state に切り替える" },
+    { label: "Disabled", na: "無効状態を持たない" },
+    { label: "Focus", na: "プレースホルダーは操作できないため、フォーカスを受けない" },
   ];
 }

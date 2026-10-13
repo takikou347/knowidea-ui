@@ -10,9 +10,9 @@ export function Kinds() {
       <Status kind="warn" label="注意" />
       <Status kind="error" label="失敗" />
       <Status kind="working" label="処理中" />
-      <Status kind="paused" label="待っている" />
+      <Status kind="paused" label="待機中" />
       <Status kind="pending" label="予定" />
-      <Status kind="stopped" label="止めた" />
+      <Status kind="stopped" label="停止" />
     </>
   );
 }
@@ -33,11 +33,11 @@ export function Custom() {
 const kinds: StatusKind[] = ["neutral", "info", "success", "warn", "error"];
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <Status kind="neutral" label="状態なし" />, note: "状態が無いときは中立の印で「状態なし」と字で示す" },
-    { label: "読み込み", node: <Status kind="working" label="確かめている" /> },
-    { label: "失敗", node: <Status kind="error" label="失敗" /> },
-    { label: "無効", node: <Status kind="stopped" label="停止中" /> },
-    { label: "focus", na: "状態の印は押せないので focus を受けない" },
-    { label: "全ての色", node: kinds.map((k) => <Status key={k} kind={k} label={k} />) },
+    { label: "Empty", node: <Status kind="neutral" label="状態なし" />, note: "状態がないときは、neutral のマークと「状態なし」の文字で示す" },
+    { label: "Loading", node: <Status kind="working" label="確認中" /> },
+    { label: "Error", node: <Status kind="error" label="失敗" /> },
+    { label: "Disabled", node: <Status kind="stopped" label="停止中" /> },
+    { label: "Focus", na: "Status は操作できないため、フォーカスを受けない" },
+    { label: "All tones", node: kinds.map((k) => <Status key={k} kind={k} label={k} />) },
   ];
 }

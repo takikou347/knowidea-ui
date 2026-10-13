@@ -4,20 +4,19 @@ import { categories, components } from "../../lib/registry.mjs";
 import { links } from "../../lib/paths.mjs";
 const { href } = links(Astro.url.pathname);
 ---
-<Base title="部品" description="部品の一覧" toc={false}>
-  <h1>部品</h1>
-  <p class="lead">{components.length} 個の部品。どのアプリにも属さず、7 つの分類に分けている。名前は上の欄でも探せる。</p>
+<Base title="Components" description="コンポーネントの一覧" toc={false}>
+  <h1>Components</h1>
+  <p class="lead">{components.length} 個のコンポーネントを、{categories.length} つのカテゴリに分けている。どのアプリにも属さない汎用のコンポーネントで、名前は上部の検索でも探せる。</p>
   {categories.map((cat) => (
     <>
-      <h2 id={cat.id}>{cat.ja}</h2>
+      <h2 id={cat.id}>{cat.name}</h2>
       <div class="table-wrap">
         <table class="docs-table link-table">
-          <thead><tr><th>名前</th><th>日本語</th><th>中身</th></tr></thead>
+          <thead><tr><th>Name</th><th>Description</th></tr></thead>
           <tbody>
             {components.filter((c) => c.cat === cat.id).map((c) => (
               <tr>
                 <td><a href={href("components/" + c.slug)}><code>{c.name}</code></a></td>
-                <td>{c.ja}</td>
                 <td>{(c.lead ?? "").split("。")[0]}。</td>
               </tr>
             ))}

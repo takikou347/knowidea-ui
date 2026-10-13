@@ -1,31 +1,31 @@
 import { categories } from "./registry.mjs";
 
-// 目次。href は links().href に渡す道(拡張子なし)。children を持つ物は 1 つ下の分類。
+// サイドメニュー。href は links().href に渡すパス(拡張子なし)。children を持つ項目は 1 つ下の階層。
 export const nav = [
-  { label: "はじめに", items: [
-    { href: "", label: "概要" },
-    { href: "getting-started/install", label: "入れ方" },
-    { href: "getting-started/react", label: "使い方 React" },
-    { href: "getting-started/html", label: "素の HTML で使う" },
-    { href: "getting-started/tailwind", label: "Tailwind v4 で使う" },
+  { label: "Getting started", items: [
+    { href: "", label: "Overview" },
+    { href: "getting-started/install", label: "Installation" },
+    { href: "getting-started/react", label: "Usage with React" },
+    { href: "getting-started/html", label: "Plain HTML" },
+    { href: "getting-started/tailwind", label: "Tailwind v4" },
   ] },
-  { label: "カスタマイズ", items: [
-    { href: "customization/theme", label: "テーマ" },
-    { label: "トークン", children: [
-      { href: "customization/tokens/color", label: "色" },
-      { href: "customization/tokens/typography", label: "字" },
-      { href: "customization/tokens/spacing", label: "余白" },
-      { href: "customization/tokens/radius", label: "角丸" },
-      { href: "customization/tokens/shadow", label: "影" },
-      { href: "customization/tokens/motion", label: "動き" },
+  { label: "Customization", items: [
+    { href: "customization/theme", label: "Theme" },
+    { label: "Tokens", children: [
+      { href: "customization/tokens/color", label: "Color" },
+      { href: "customization/tokens/typography", label: "Typography" },
+      { href: "customization/tokens/spacing", label: "Spacing" },
+      { href: "customization/tokens/radius", label: "Radius" },
+      { href: "customization/tokens/shadow", label: "Shadow" },
+      { href: "customization/tokens/motion", label: "Motion" },
     ] },
-    { href: "customization/dark-mode", label: "ダークモード" },
-    { href: "customization/overriding", label: "部品の上書き" },
+    { href: "customization/dark-mode", label: "Dark mode" },
+    { href: "customization/overriding", label: "Overriding" },
   ] },
-  { label: "部品", href: "components", items: categories.map((c) => ({ label: c.ja, id: c.id, children: c.list.map((x) => ({ href: "components/" + x.slug, label: x.ja, en: x.name })) })) },
-  { label: "アイコン", items: [{ href: "icons", label: "アイコン" }] },
-  { label: "見本の画面", items: [
-    { href: "templates/dashboard", label: "ダッシュボード" },
-    { href: "templates/list", label: "一覧と一括の操作" },
+  { label: "Components", href: "components", items: categories.map((c) => ({ label: c.name, id: c.id, children: c.list.map((x) => ({ href: "components/" + x.slug, label: x.name })) })) },
+  { label: "Icons", items: [{ href: "icons", label: "Icons" }] },
+  { label: "Templates", items: [
+    { href: "templates/dashboard", label: "Dashboard" },
+    { href: "templates/list", label: "List" },
   ] },
 ];

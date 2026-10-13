@@ -25,21 +25,21 @@ export function WithIcon() {
   return (
     <>
       <Button icon={<Icon name="check" />}>完了にする</Button>
-      <Button variant="secondary" icon={<Icon name="download" />}>書き出す</Button>
+      <Button variant="secondary" icon={<Icon name="download" />}>エクスポート</Button>
     </>
   );
 }
 
 const variants: ButtonVariant[] = ["primary", "secondary", "quiet", "danger"];
 export function states(): StateRow[] {
-  const row = (props: Record<string, unknown>) => variants.map((v) => <Button key={v} variant={v} {...props}>送る</Button>);
+  const row = (props: Record<string, unknown>) => variants.map((v) => <Button key={v} variant={v} {...props}>送信</Button>);
   return [
-    { label: "空", na: "ラベルの無いボタンは作らない。アイコンだけのときはアイコンボタンを使う" },
-    { label: "読み込み", node: row({ loading: true }) },
-    { label: "失敗", na: "ボタン自身は失敗を持たない。押した結果の失敗は、近くの Alert か欄の誤りで示す" },
-    { label: "無効", node: row({ disabled: true }) },
-    { label: "focus", node: row({ className: "is-focus" }) },
-    { label: "hover", node: row({ className: "is-hover" }) },
-    { label: "押した時", node: row({ className: "is-active" }) },
+    { label: "Empty", na: "ラベルのないボタンは作らない。アイコンだけのときは IconButton を使う" },
+    { label: "Loading", node: row({ loading: true }) },
+    { label: "Error", na: "Button 自身はエラー状態を持たない。押した結果のエラーは、近くの Alert か Field のエラーメッセージで示す" },
+    { label: "Disabled", node: row({ disabled: true }) },
+    { label: "Focus", node: row({ className: "is-focus" }) },
+    { label: "Hover", node: row({ className: "is-hover" }) },
+    { label: "Active", node: row({ className: "is-active" }) },
   ];
 }

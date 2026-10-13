@@ -5,19 +5,19 @@ export function Basic() {
   return (
     <div style={{ display: "grid", gap: "var(--space-1)" }}>
       <Switch label="自動で更新する" defaultChecked />
-      <Switch label="通知を出す" />
+      <Switch label="通知を表示する" />
     </div>
   );
 }
 
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <Switch label="切っている" /> },
-    { label: "読み込み", node: <Switch label="反映している" loading defaultChecked /> },
-    { label: "失敗", na: "切り替えが失敗したら、近くの Alert で理由を示し、スイッチは元の位置に戻す" },
-    { label: "無効", node: <><Switch label="無効(切っている)" disabled /><Switch label="無効(入れている)" disabled defaultChecked /></> },
-    { label: "focus", node: <Switch label="focus" className="is-focus" defaultChecked /> },
-    { label: "hover", node: <Switch label="hover" className="is-hover" /> },
-    { label: "押した時", na: "押すと切り替わる。押している間だけの見た目は無い" },
+    { label: "Empty", node: <Switch label="オフ" /> },
+    { label: "Loading", node: <Switch label="反映中" loading defaultChecked /> },
+    { label: "Error", na: "切り替えに失敗したら、近くの Alert で理由を伝え、Switch を元の位置に戻す" },
+    { label: "Disabled", node: <><Switch label="無効(オフ)" disabled /><Switch label="無効(オン)" disabled defaultChecked /></> },
+    { label: "Focus", node: <Switch label="フォーカス" className="is-focus" defaultChecked /> },
+    { label: "Hover", node: <Switch label="ホバー" className="is-hover" /> },
+    { label: "Active", na: "押すと切り替わる。押している間だけの見た目はない" },
   ];
 }

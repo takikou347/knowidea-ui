@@ -6,14 +6,14 @@ type Row = { id: string; name: string; status: string; runs: number; size: numbe
 const data: Row[] = [
   { id: "a", name: "項目 A", status: "完了", runs: 24, size: 182400 },
   { id: "b", name: "項目 B", status: "完了", runs: 7, size: 96250 },
-  { id: "c", name: "項目 C", status: "止まった", runs: 3, size: 41800 },
+  { id: "c", name: "項目 C", status: "停止", runs: 3, size: 41800 },
   { id: "d", name: "項目 D", status: "完了", runs: 12, size: 12350 },
 ];
 const columns: Column<Row>[] = [
   { key: "name", header: "名前", sortable: true },
   { key: "status", header: "状態", render: (r) => <Badge tone={r.status === "完了" ? "success" : "warn"}>{r.status}</Badge> },
   { key: "runs", header: "回数", numeric: true, sortable: true },
-  { key: "size", header: "大きさ", numeric: true, sortable: true, render: (r) => r.size.toLocaleString("ja-JP") },
+  { key: "size", header: "サイズ", numeric: true, sortable: true, render: (r) => r.size.toLocaleString("ja-JP") },
 ];
 
 export function Sortable() {
@@ -29,7 +29,7 @@ export function Sortable() {
     <div style={{ width: "100%", minWidth: 0 }}>
       <Table label="項目の一覧" columns={columns} rows={rows} rowKey={(r) => r.id}
         sort={sort} onSortChange={setSort} selectable selected={sel} onSelectedChange={setSel} rowLabel={(r) => r.name} />
-      <p className="muted" style={{ marginTop: "var(--space-2)" }}>{sel.length} 行を選んでいる</p>
+      <p className="muted" style={{ marginTop: "var(--space-2)" }}>{sel.length} 行を選択中</p>
     </div>
   );
 }
@@ -40,12 +40,12 @@ export function states(): StateRow[] {
     <Table label="状態の例" columns={columns} rows={rows} rowKey={(r) => r.id} {...p} />
   );
   return [
-    { label: "空", node: <Box>{t({ emptyTitle: "項目が無い", emptyText: "項目を作ると、ここに並ぶ。", emptyAction: <Button variant="secondary">項目を作る</Button> }, [])}</Box> },
-    { label: "読み込み", node: <Box>{t({ loading: true }, [])}</Box> },
-    { label: "失敗", node: <Box>{t({ error: "一覧を読み込めなかった。", onRetry: () => {} }, [])}</Box> },
-    { label: "無効", node: <Box>{t({ selectable: true, selected: ["a"] })}</Box>, note: "選べる表で選び済みの行。行ごとの無効は列の中身で示す" },
-    { label: "focus", node: <Box cls="force-focus">{t({ selectable: true })}</Box>, note: "表の領域は Tab で入り、矢印で横に動かせる" },
-    { label: "hover", node: <Box cls="force-row-hover">{t({})}</Box> },
-    { label: "押した時", na: "行は押せない。並べ替えと選ぶ枠は押すと切り替わる" },
+    { label: "Empty", node: <Box>{t({ emptyTitle: "項目がない", emptyText: "項目を作成すると、ここに表示される。", emptyAction: <Button variant="secondary">項目を作成</Button> }, [])}</Box> },
+    { label: "Loading", node: <Box>{t({ loading: true }, [])}</Box> },
+    { label: "Error", node: <Box>{t({ error: "一覧を読み込めなかった。", onRetry: () => {} }, [])}</Box> },
+    { label: "Disabled", node: <Box>{t({ selectable: true, selected: ["a"] })}</Box>, note: "選択できる表で、選択済みの行。行ごとの無効は列の内容で示す" },
+    { label: "Focus", node: <Box cls="force-focus">{t({ selectable: true })}</Box>, note: "表の領域には Tab で移り、矢印キーで横にスクロールできる" },
+    { label: "Hover", node: <Box cls="force-row-hover">{t({})}</Box> },
+    { label: "Active", na: "行は操作できない。並べ替えとチェックボックスは、押すと切り替わる" },
   ];
 }

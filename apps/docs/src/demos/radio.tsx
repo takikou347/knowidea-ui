@@ -13,12 +13,12 @@ export function Basic() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <RadioGroup legend="何も選んでいない" options={options} /> },
-    { label: "読み込み", na: "選択肢が揃うまでは Skeleton で場所を取る。個々のラジオに読み込みは無い" },
-    { label: "失敗", node: <RadioGroup legend="選んでいない(必須)" options={options} invalid /> },
-    { label: "無効", node: <RadioGroup legend="無効" options={options} disabled defaultValue="push" /> },
-    { label: "focus", node: <RadioGroup legend="focus は選んでいる 1 つに入る" options={options} defaultValue="email" /> },
-    { label: "hover", na: "選ぶ丸の枠の色が変わる" },
-    { label: "押した時", na: "押すと選びが移る" },
+    { label: "Empty", node: <RadioGroup legend="未選択" options={options} /> },
+    { label: "Loading", na: "選択肢が揃うまでは Skeleton で場所を確保する。個々のラジオにローディング状態はない" },
+    { label: "Error", node: <RadioGroup legend="未選択(必須)" options={options} invalid /> },
+    { label: "Disabled", node: <RadioGroup legend="無効" options={options} disabled defaultValue="push" /> },
+    { label: "Focus", node: <RadioGroup legend="フォーカスは選択中の 1 つに移る" options={options} defaultValue="email" /> },
+    { label: "Hover", note: "丸の枠線の色が変わる" },
+    { label: "Active", na: "押すと選択が移る" },
   ];
 }

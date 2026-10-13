@@ -18,10 +18,10 @@ export function Basic() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", na: "項目の無いナビは作らない" },
-    { label: "読み込み", na: "項目は先に決まっているので、読み込みを持たない" },
-    { label: "失敗", na: "失敗を持たない" },
-    { label: "無効", node: <div style={{ width: "min(100%, 390px)", border: "1px solid var(--color-line)" }}><BottomNavigation items={[items[0]!, { ...items[1]!, disabled: true }, items[2]!]} current="home" /></div> },
-    { label: "focus", node: <div style={{ width: "min(100%, 390px)", border: "1px solid var(--color-line)" }}><BottomNavigation items={items.slice(0, 3)} current="list" /></div>, note: "項目に Tab で入ると、2px の輪が出る" },
+    { label: "Empty", na: "項目のないナビゲーションは作らない" },
+    { label: "Loading", na: "項目は先に決まっているため、ローディング状態を持たない" },
+    { label: "Error", na: "エラー状態を持たない" },
+    { label: "Disabled", node: <div style={{ width: "min(100%, 390px)", border: "1px solid var(--color-line)" }}><BottomNavigation items={[items[0]!, { ...items[1]!, disabled: true }, items[2]!]} current="home" /></div> },
+    { label: "Focus", node: <div style={{ width: "min(100%, 390px)", border: "1px solid var(--color-line)" }}><BottomNavigation items={items.slice(0, 3)} current="list" /></div>, note: "項目に Tab で移ると、2px のリングが表示される" },
   ];
 }

@@ -12,10 +12,10 @@ export function Basic() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", na: "中身の無いツールチップは作らない" },
-    { label: "読み込み", na: "ツールチップは短い補足で、読み込みを持たない" },
-    { label: "失敗", na: "失敗の説明はツールチップに入れず、近くの文か Alert に書く" },
-    { label: "無効", na: "無効なボタンは focus も hover も受けないので出ない。理由は隣の文で書く" },
-    { label: "focus", node: <Tooltip content="focus で出る"><Button variant="secondary" className="is-focus">focus</Button></Tooltip>, note: "ポインタを置くか、Tab で focus を入れると出る。Esc で閉じる" },
+    { label: "Empty", na: "中身のない Tooltip は作らない" },
+    { label: "Loading", na: "Tooltip は短い補足なので、ローディング状態を持たない" },
+    { label: "Error", na: "エラーの説明は Tooltip に入れず、近くの文章か Alert に書く" },
+    { label: "Disabled", na: "無効なボタンはフォーカスもホバーも受けないため、Tooltip は表示されない。理由は隣の文章で伝える" },
+    { label: "Focus", node: <Tooltip content="フォーカスで表示される"><Button variant="secondary" className="is-focus">フォーカス</Button></Tooltip>, note: "ポインターを置くか、Tab でフォーカスを移すと表示される。Esc で閉じる" },
   ];
 }

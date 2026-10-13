@@ -17,8 +17,8 @@ interface Props {
 }
 
 /**
- * 画面の骨組み。枠の幅(container query)で組み替える。
- * 広い: 左に Drawer(permanent)。狭い: 上に AppBar と開閉の Drawer、下に BottomNavigation。
+ * 画面の骨組み。コンテナの幅(container query)でレイアウトを切り替える。
+ * 広い: 左に Drawer(permanent)。狭い: 上に AppBar と開閉式の Drawer、下に BottomNavigation。
  */
 export default function Shell({ title, current, meta, actions, children }: Props) {
   const [open, setOpen] = useState(false);
@@ -28,12 +28,12 @@ export default function Shell({ title, current, meta, actions, children }: Props
       if (a) { e.preventDefault(); setOpen(false); }
     }}>
       <div className="tpl-grid">
-        <div className="tpl-side"><Drawer brand={{ name: "見本", sub: "サイドの目次" }} items={navItems} current={current} /></div>
+        <div className="tpl-side"><Drawer brand={{ name: "サンプル", sub: "サイドナビゲーション" }} items={navItems} current={current} /></div>
         <div className="tpl-main">
           <AppBar
             title={title}
             headingLevel={2}
-            leading={<span className="tpl-menu"><IconButton label="目次を開く" icon={<Icon name="menu" />} onClick={() => setOpen(true)} /></span>}
+            leading={<span className="tpl-menu"><IconButton label="メニューを開く" icon={<Icon name="menu" />} onClick={() => setOpen(true)} /></span>}
             meta={meta}
             actions={actions}
           />
@@ -41,7 +41,7 @@ export default function Shell({ title, current, meta, actions, children }: Props
           <div className="tpl-bottom"><BottomNavigation items={navItems} current={current} /></div>
         </div>
       </div>
-      <Drawer variant="temporary" open={open} onOpenChange={setOpen} brand={{ name: "見本" }} items={navItems} current={current} />
+      <Drawer variant="temporary" open={open} onOpenChange={setOpen} brand={{ name: "サンプル" }} items={navItems} current={current} />
     </div>
   );
 }

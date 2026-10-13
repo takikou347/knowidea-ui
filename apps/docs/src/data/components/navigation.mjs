@@ -1,42 +1,42 @@
-// 移動の部品。
+// Navigation カテゴリのコンポーネント。
 export const navigation = [
   {
-    slug: "link", name: "Link", ja: "リンク", imports: ["Link"],
+    slug: "link", name: "Link", imports: ["Link"],
     demos: [
-      { fn: "Basic", title: "文中", text: "文中のリンクは下線で見分ける。" },
-      { fn: "Standalone", title: "単独", text: "文の外に置くときは高さ 44px。外のサイトは別のタブで開き、読み上げる文を足す。" },
+      { fn: "Basic", title: "Inline", text: "文中のリンクは、下線で見分けられるようにする。" },
+      { fn: "Standalone", title: "Standalone", text: "文の外に単独で置くときは、高さを 44px にする。外部サイトは別のタブで開き、その旨をスクリーンリーダーに伝える。" },
     ],
-    a11y: ["<a> で描く。操作を実行するときは Button を使う", "色だけに頼らず下線を付ける。外のサイトは「(新しいタブで開く)」を読み上げる"],
+    a11y: ["<a> 要素として描画する。操作を実行するときは Button を使う", "色だけに頼らず、下線を付ける。外部サイトでは「(新しいタブで開く)」を読み上げる"],
   },
   {
-    slug: "tabs", name: "Tabs", ja: "タブ", imports: ["Tabs"],
+    slug: "tabs", name: "Tabs", imports: ["Tabs"],
     demos: [
-      { fn: "Basic", title: "基本", text: "選んだタブの下に主の色の線。無効なタブは選べない。", block: true },
-      { fn: "Many", title: "多いタブ", text: "狭い幅では一覧が横に動く。", block: true },
+      { fn: "Basic", title: "Basic", text: "選択中のタブの下に、プライマリカラーの線を引く。無効なタブは選択できない。", block: true },
+      { fn: "Many", title: "Many tabs", text: "幅が狭いときは、タブの一覧が横にスクロールする。", block: true },
     ],
-    a11y: ["矢印キーでタブの間を移り、Tab で選んだタブの中身へ入る", "Home と End で先頭と末尾へ。label がタブ一覧の名前"],
+    a11y: ["矢印キーでタブ間を移動し、Tab で選択中のタブの内容に入る", "Home と End で先頭と末尾に移動する。label がタブ一覧の名前になる"],
   },
   {
-    slug: "menu", name: "Menu", ja: "メニュー", imports: ["Menu", "Button", "Icon"],
+    slug: "menu", name: "Menu", imports: ["Menu", "Button", "Icon"],
     demos: [
-      { fn: "Basic", title: "ボタンから開く" },
-      { fn: "IconTrigger", title: "アイコンボタンから開く", text: "右端に置くときは align=\"end\"。" },
+      { fn: "Basic", title: "From a button" },
+      { fn: "IconTrigger", title: "From an icon button", text: "右端に置くときは、align=\"end\" を指定する。" },
     ],
-    a11y: ["矢印で項目を動かし、Enter で決め、Esc で閉じて開いたボタンに focus が戻る", "危ない項目は tone=\"danger\" にし、実行の前に ConfirmDialog で確かめる"],
+    a11y: ["矢印キーで項目を移動し、Enter で決定し、Esc で閉じる。閉じると開いたボタンにフォーカスが戻る", "危険な項目は tone=\"danger\" にし、実行の前に ConfirmDialog で確認する"],
   },
   {
-    slug: "breadcrumbs", name: "Breadcrumbs", ja: "パンくず", imports: ["Breadcrumbs"],
-    lead: "今いる所までの道を、上の階層から順に示す。最後は今いる所で、リンクにしない。",
+    slug: "breadcrumbs", name: "Breadcrumbs", imports: ["Breadcrumbs"],
+    lead: "現在のページまでの階層を、上位から順に示す。最後は現在のページで、リンクにしない。",
     demos: [
-      { fn: "Basic", title: "基本", block: true },
-      { fn: "Long", title: "長い道", text: "狭い幅では折り返す。", block: true },
+      { fn: "Basic", title: "Basic", block: true },
+      { fn: "Long", title: "Long path", text: "幅が狭いときは折り返す。", block: true },
     ],
     props: [
-      ["items", "{ label, href? }[]", "-", "上の階層から順に。最後が今いる所"],
+      ["items", "{ label, href? }[]", "-", "上位の階層から順に並べる。最後が現在のページ"],
       ["label", "string", '"現在地"', "nav の名前"],
     ],
-    classes: [[".ki-breadcrumbs", "nav。中は ol"], ["[aria-current=\"page\"]", "今いる所(文字のまま)"]],
-    vars: [["--color-text-muted、--color-text", "リンクと今いる所"], ["--size-hit", "リンクの高さ"], ["--color-focus", "focus の輪"]],
+    classes: [[".ki-breadcrumbs", "nav。内部は ol"], ["[aria-current=\"page\"]", "現在のページ(リンクにしない)"]],
+    vars: [["--color-text-muted、--color-text", "リンクと現在のページの色"], ["--size-hit", "リンクの高さ"], ["--color-focus", "フォーカスリング"]],
     html: `<nav class="ki-breadcrumbs" aria-label="現在地">
   <ol>
     <li><a href="#">ホーム</a></li>
@@ -44,89 +44,89 @@ export const navigation = [
     <li><span aria-current="page">通知</span></li>
   </ol>
 </nav>`,
-    a11y: ["<nav aria-label=\"現在地\"> と <ol>。今いる所は aria-current=\"page\"", "区切りは CSS の飾りで、読み上げない"],
+    a11y: ["<nav aria-label=\"現在地\"> と <ol> を使う。現在のページには aria-current=\"page\" を付ける", "区切りは CSS による装飾で、読み上げない"],
   },
   {
-    slug: "pagination", name: "Pagination", ja: "ページ送り", imports: ["Pagination"],
+    slug: "pagination", name: "Pagination", imports: ["Pagination"],
     demos: [
-      { fn: "Basic", title: "ボタン" },
-      { fn: "Links", title: "リンク", text: "ページごとに URL があるときは getHref を渡す。" },
+      { fn: "Basic", title: "Buttons" },
+      { fn: "Links", title: "Links", text: "ページごとに URL があるときは、getHref を渡す。" },
     ],
-    a11y: ["<nav> の中に番号。今のページは aria-current=\"page\"", "前へ、次へは先頭と最後で押せなくなる"],
+    a11y: ["<nav> の中にページ番号を並べる。現在のページには aria-current=\"page\" が付く", "最初のページでは「前へ」、最後のページでは「次へ」が無効になる"],
   },
   {
-    slug: "app-bar", name: "AppBar", ja: "上のバー", imports: ["AppBar", "IconButton", "Icon"],
-    lead: "画面の上のバー。題(h1)、左の物、右の操作、小さな補足を持つ。上に貼り付けることもできる。",
+    slug: "app-bar", name: "AppBar", imports: ["AppBar", "IconButton", "Icon"],
+    lead: "画面上部のバー。タイトル(h1)、左側の要素、右側の操作、小さな補足を持つ。上部に固定することもできる。",
     demos: [
-      { fn: "Basic", title: "基本", text: "左に目次を開くボタン、右に操作。補足は右に寄せる。", block: true },
-      { fn: "Plain", title: "長い題", text: "題は 1 行に収め、末尾を省く。", block: true },
+      { fn: "Basic", title: "Basic", text: "左にナビゲーションを開くボタン、右に操作を置く。補足は右寄せにする。", block: true },
+      { fn: "Plain", title: "Long title", text: "タイトルは 1 行に収め、はみ出す分は省略記号で省く。", block: true },
     ],
     props: [
-      ["title", "ReactNode", "-", "題(h1)。必須"],
-      ["leading", "ReactNode", "-", "題の左に置く物。目次を開くボタン、戻るボタン"],
-      ["actions", "ReactNode", "-", "右に置く操作。IconButton を並べる"],
-      ["meta", "ReactNode", "-", "右に寄せた小さな補足。2 行まで"],
-      ["headingLevel", "1 | 2 | 3", "1", "題の見出しの段。ほかの見出しと並ぶ所では 2"],
-      ["position", '"static" | "sticky"', '"static"', "sticky で上に貼り付く"],
+      ["title", "ReactNode", "-", "タイトル(h1)。必須"],
+      ["leading", "ReactNode", "-", "タイトルの左に置く要素。ナビゲーションを開くボタンや戻るボタン"],
+      ["actions", "ReactNode", "-", "右側に置く操作。IconButton を並べる"],
+      ["meta", "ReactNode", "-", "右寄せの小さな補足。2 行まで"],
+      ["headingLevel", "1 | 2 | 3", "1", "タイトルの見出しレベル。ほかの見出しと並ぶ場所では 2 にする"],
+      ["position", '"static" | "sticky"', '"static"', "sticky を指定すると上部に固定される"],
     ],
-    classes: [[".ki-appbar", "本体。data-position"], [".ki-appbar__leading、__brand、__title、__meta、__actions", "中の部品"]],
-    vars: [["--color-bg、--color-line", "面と下の線"], ["--font-size-4", "題の大きさ"], ["--size-hit", "最低の高さの元"]],
+    classes: [[".ki-appbar", "本体。data-position"], [".ki-appbar__leading、__brand、__title、__meta、__actions", "内部の要素"]],
+    vars: [["--color-bg、--color-line", "背景と下線"], ["--font-size-4", "タイトルのフォントサイズ"], ["--size-hit", "最小の高さの基準"]],
     html: `<header class="ki-appbar">
   <h1 class="ki-appbar__title">ホーム</h1>
   <div class="ki-appbar__actions"><button type="button" class="ki-button ki-icon-button" data-variant="quiet" aria-label="更新"><svg class="ki-icon" aria-hidden="true"><use href="#refresh"/></svg></button></div>
 </header>`,
-    a11y: ["<header> の中に h1 を 1 つ。1 画面に 1 つの AppBar", "右の操作は IconButton。名前(label)を必ず付ける"],
+    a11y: ["<header> の中に h1 を 1 つ置く。AppBar は 1 画面に 1 つだけ使う", "右側の操作には IconButton を使い、名前(label)を必ず付ける"],
   },
   {
-    slug: "drawer", name: "Drawer", ja: "サイドの目次", imports: ["Drawer", "Button", "Icon"],
-    lead: "サイドの目次。広い幅ではその場に置き(permanent)、狭い幅では開け閉めする引き出し(temporary)にする。",
+    slug: "drawer", name: "Drawer", imports: ["Drawer", "Button", "Icon"],
+    lead: "サイドナビゲーション。広い幅ではその場所に常に表示し(permanent)、狭い幅では開閉する引き出し(temporary)にする。",
     demos: [
-      { fn: "Permanent", title: "その場に置く", text: "今いる所は aria-current=\"page\" と主の色の線。件数の印も付けられる。" },
-      { fn: "Temporary", title: "引き出し", text: "開くと focus が中に入り、Esc か外を押して閉じる。" },
+      { fn: "Permanent", title: "Permanent", text: "現在のページは aria-current=\"page\" とプライマリカラーの線で示す。件数のバッジも付けられる。" },
+      { fn: "Temporary", title: "Temporary", text: "開くとフォーカスが中に移り、Esc か外側のクリックで閉じる。" },
     ],
     props: [
       ["items / groups", "NavItem[] / { label?, items }[]", "-", "項目、または分類ごとの項目。NavItem は { id, label, icon?, href, count?, disabled? }"],
-      ["current", "string", "-", "今いる所の id"],
-      ["brand", "{ name, sub? }", "-", "上の見出し"],
-      ["variant", '"permanent" | "temporary"', '"permanent"', "その場に置くか、引き出しにするか"],
+      ["current", "string", "-", "現在のページの id"],
+      ["brand", "{ name, sub? }", "-", "上部の見出し"],
+      ["variant", '"permanent" | "temporary"', '"permanent"', "常に表示するか、引き出しにするか"],
       ["open / defaultOpen / onOpenChange", "boolean / boolean / (open) => void", "-", "temporary の開閉"],
       ["label / closeLabel", "string", '"目次" / "目次を閉じる"', "nav の名前、閉じるボタンの名前"],
-      ["footer", "ReactNode", "-", "下に置く物"],
+      ["footer", "ReactNode", "-", "下部に置く要素"],
     ],
     classes: [
       [".ki-drawer", "本体。data-variant: permanent | temporary"],
-      [".ki-drawer__head、__brand、__group、__list、__item", "中の部品。__item の aria-current=\"page\" が今いる所"],
+      [".ki-drawer__head、__brand、__group、__list、__item", "内部の要素。__item の aria-current=\"page\" が現在のページ"],
       ["<dialog class=\"ki-drawer\" data-variant=\"temporary\">", "素の HTML の引き出し。data-ki-dialog-open で開く(ki.js)"],
     ],
-    vars: [["--color-bg、--color-line", "面と境の線"], ["--color-primary", "今いる所の色と線"], ["--color-surface-2", "hover"], ["--shadow-pop", "引き出しの影"], ["--motion-duration-state", "出入り(reduced-motion で止まる)"]],
+    vars: [["--color-bg、--color-line", "背景と境界線"], ["--color-primary", "現在のページの色と線"], ["--color-surface-2", "ホバー時の背景"], ["--shadow-pop", "引き出しの影"], ["--motion-duration-state", "表示と非表示のアニメーション(prefers-reduced-motion で止まる)"]],
     html: `<aside class="ki-drawer" data-variant="permanent">
-  <nav aria-label="目次">
+  <nav aria-label="サイドナビゲーション">
     <ul class="ki-drawer__list">
       <li><a class="ki-drawer__item" href="#" aria-current="page"><svg class="ki-icon" aria-hidden="true"><use href="#home"/></svg>ホーム</a></li>
       <li><a class="ki-drawer__item" href="#"><svg class="ki-icon" aria-hidden="true"><use href="#list"/></svg>一覧</a></li>
     </ul>
   </nav>
 </aside>`,
-    a11y: ["<nav aria-label=\"目次\">。今いる所は aria-current=\"page\"", "temporary は Dialog。focus を閉じ込め、Esc で閉じ、閉じたら開いたボタンに戻る", "項目の高さは 44px"],
+    a11y: ["<nav> に aria-label を付ける。現在のページには aria-current=\"page\" を付ける", "temporary は Dialog として動作する。フォーカスを閉じ込め、Esc で閉じ、閉じると開いたボタンにフォーカスが戻る", "項目の高さは 44px"],
   },
   {
-    slug: "bottom-navigation", name: "BottomNavigation", ja: "下のナビ", imports: ["BottomNavigation"],
-    lead: "狭い幅の主な移動。アイコンと短い字を 3〜5 個並べる。",
-    demos: [{ fn: "Basic", title: "基本", text: "件数の印は項目の右上に出る。", block: true }],
+    slug: "bottom-navigation", name: "BottomNavigation", imports: ["BottomNavigation"],
+    lead: "狭い幅での主要な移動手段。アイコンと短い文字を 3〜5 個並べる。",
+    demos: [{ fn: "Basic", title: "Basic", text: "件数のバッジは、項目の右上に表示される。", block: true }],
     props: [
       ["items", "NavItem[]", "-", "3〜5 個。{ id, label, icon?, href, count?, disabled? }"],
-      ["current", "string", "-", "今いる所の id"],
+      ["current", "string", "-", "現在のページの id"],
       ["label", "string", '"画面の切り替え"', "nav の名前"],
-      ["position", '"static" | "sticky"', '"static"', "sticky で下に貼り付く"],
+      ["position", '"static" | "sticky"', '"static"', "sticky を指定すると下部に固定される"],
     ],
-    classes: [[".ki-bottomnav", "nav。data-position"], [".ki-bottomnav__list、__item", "並び、項目(aria-current=\"page\" が今いる所)"]],
-    vars: [["--color-surface、--color-line", "面と上の線"], ["--color-primary", "今いる所"], ["--size-hit", "項目の高さの元(52px)"]],
+    classes: [[".ki-bottomnav", "nav。data-position"], [".ki-bottomnav__list、__item", "リストと項目(aria-current=\"page\" が現在のページ)"]],
+    vars: [["--color-surface、--color-line", "背景と上の線"], ["--color-primary", "現在のページ"], ["--size-hit", "項目の高さの基準(52px)"]],
     html: `<nav class="ki-bottomnav" aria-label="画面の切り替え">
   <ul class="ki-bottomnav__list">
     <li><a class="ki-bottomnav__item" href="#" aria-current="page"><svg class="ki-icon" aria-hidden="true"><use href="#home"/></svg>ホーム</a></li>
     <li><a class="ki-bottomnav__item" href="#"><svg class="ki-icon" aria-hidden="true"><use href="#list"/></svg>一覧</a></li>
   </ul>
 </nav>`,
-    a11y: ["<nav> と <ul>。今いる所は aria-current=\"page\"", "項目の高さは 52px(44px 以上)。件数の印は aria-label で件数を読む"],
+    a11y: ["<nav> と <ul> を使う。現在のページには aria-current=\"page\" を付ける", "項目の高さは 52px(44px 以上)。件数のバッジは aria-label で件数を読み上げる"],
   },
 ];

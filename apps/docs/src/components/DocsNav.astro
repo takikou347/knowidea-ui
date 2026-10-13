@@ -4,7 +4,7 @@ const { href, current } = Astro.props.l;
 const isCur = (h) => h === current;
 const openIf = (children) => children.some((c) => isCur(c.href));
 ---
-<nav aria-label="目次" class="dn">
+<nav aria-label="Documentation" class="dn">
   {nav.map((g) => (
     <section class="dn-group">
       <h2 class="dn-title">{g.href !== undefined ? <a href={href(g.href)} aria-current={isCur(g.href) ? "page" : undefined}>{g.label}</a> : g.label}</h2>

@@ -23,10 +23,10 @@ export function Auto() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", na: "並べるだけの部品なので、子が無いと何も出ない" },
-    { label: "読み込み", na: "読み込みを持たない" },
-    { label: "失敗", na: "失敗を持たない" },
-    { label: "無効", na: "無効を持たない" },
-    { label: "focus", na: "Grid 自身は focus を受けない" },
+    { label: "Empty", na: "並べるだけのコンポーネントなので、子要素がなければ何も表示されない" },
+    { label: "Loading", na: "ローディング状態を持たない" },
+    { label: "Error", na: "エラー状態を持たない" },
+    { label: "Disabled", na: "無効状態を持たない" },
+    { label: "Focus", na: "Grid 自身はフォーカスを受けない" },
   ];
 }

@@ -19,11 +19,11 @@ export function Spark() {
 const W = ({ children }: { children: React.ReactNode }) => <div style={{ width: "min(100%, 240px)" }}>{children}</div>;
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <W><Stat label="件数" icon="list" value={null} delta={{ dir: "none" }} /></W>, note: "数が無いときは「不明」と出す" },
-    { label: "読み込み", node: <W><Stat label="件数" icon="list" value={null} state="loading" /></W> },
-    { label: "失敗", node: <W><Stat label="件数" icon="list" value={null} state="error" error="取れなかった" /></W> },
-    { label: "無効", na: "数の表示は押せないので無効を持たない。古い数は stale で印を付ける" },
-    { label: "古い数", node: <W><Stat label="件数" icon="list" value={1280} unit="件" asOf="10/12 09:28" stale /></W> },
-    { label: "focus", na: "数の表示は押せないので focus を受けない" },
+    { label: "Empty", node: <W><Stat label="件数" icon="list" value={null} delta={{ dir: "none" }} /></W>, note: "数値がないときは「不明」と表示する" },
+    { label: "Loading", node: <W><Stat label="件数" icon="list" value={null} state="loading" /></W> },
+    { label: "Error", node: <W><Stat label="件数" icon="list" value={null} state="error" error="取得できなかった" /></W> },
+    { label: "Disabled", na: "Stat は操作できないため、無効状態を持たない。古い数値には stale でマークを付ける" },
+    { label: "Stale", node: <W><Stat label="件数" icon="list" value={1280} unit="件" asOf="10/12 09:28" stale /></W> },
+    { label: "Focus", na: "Stat は操作できないため、フォーカスを受けない" },
   ];
 }

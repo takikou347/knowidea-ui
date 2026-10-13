@@ -17,10 +17,10 @@ export function Sizes() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", na: "幅を絞るだけの部品なので、子が無いと何も出ない" },
-    { label: "読み込み", na: "読み込みを持たない" },
-    { label: "失敗", na: "失敗を持たない" },
-    { label: "無効", na: "無効を持たない" },
-    { label: "focus", na: "Container 自身は focus を受けない" },
+    { label: "Empty", na: "幅を制限するだけのコンポーネントなので、子要素がなければ何も表示されない" },
+    { label: "Loading", na: "ローディング状態を持たない" },
+    { label: "Error", na: "エラー状態を持たない" },
+    { label: "Disabled", na: "無効状態を持たない" },
+    { label: "Focus", na: "Container 自身はフォーカスを受けない" },
   ];
 }

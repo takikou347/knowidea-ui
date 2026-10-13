@@ -18,35 +18,35 @@ export function Example() {
   );
 }`;
 ---
-<Base title="概要" description="KNOW IDEA の UI ライブラリ">
+<Base title="Overview" description="KNOW IDEA の UI ライブラリ">
   <h1>KNOW IDEA UI</h1>
-  <p class="lead">どのアプリにも属さない、1 つの UI ライブラリ。詰めた、灰色、小さな角丸、等幅の数字。主の色は 1 つで、テーマで変えられる。</p>
-  <p>React の部品(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つに分かれている。部品の土台は Base UI で、キーボードとスクリーンリーダーの挙動はそちらに任せている。</p>
+  <p class="lead">どのアプリにも属さない、1 つの UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。プライマリカラーは 1 色で、テーマによって変更できる。</p>
+  <p>React コンポーネント(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つのパッケージで構成される。コンポーネントの土台は Base UI で、キーボード操作とスクリーンリーダーの挙動は Base UI に任せている。</p>
 
-  <h2 id="contents">中身</h2>
+  <h2 id="contents">Contents</h2>
   <div class="table-wrap">
     <table class="docs-table link-table">
-      <thead><tr><th>ページ</th><th>中身</th></tr></thead>
+      <thead><tr><th>Page</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td><a href={href("getting-started/install")}>はじめに</a></td><td>入れ方。React、素の HTML、Tailwind v4 での使い方</td></tr>
-        <tr><td><a href={href("customization/theme")}>カスタマイズ</a></td><td>テーマ(主の色、角丸、密度、字の大きさ)、トークン、ダークモード、部品の上書き</td></tr>
-        <tr><td><a href={href("components")}>部品</a></td><td>{components.length} 個。{categories.map((c) => c.ja).join("、")}</td></tr>
-        <tr><td><a href={href("icons")}>アイコン</a></td><td>{all.icons.length} 個。名前で探し、太さを選び、import か SVG を写せる</td></tr>
-        <tr><td><a href={href("templates/dashboard")}>見本の画面</a></td><td>ダッシュボードと、一覧と一括の操作。幅 390px と 1024px</td></tr>
+        <tr><td><a href={href("getting-started/install")}>Getting started</a></td><td>インストール方法と、React、素の HTML、Tailwind v4 での使い方</td></tr>
+        <tr><td><a href={href("customization/theme")}>Customization</a></td><td>テーマ(プライマリカラー、角丸、密度、フォントサイズ)、トークン、ダークモード、コンポーネントのオーバーライド</td></tr>
+        <tr><td><a href={href("components")}>Components</a></td><td>{components.length} 個。{categories.map((c) => c.name).join("、")}</td></tr>
+        <tr><td><a href={href("icons")}>Icons</a></td><td>{all.icons.length} 個。名前で検索し、ウェイトを選択し、import 文か SVG をコピーできる</td></tr>
+        <tr><td><a href={href("templates/dashboard")}>Templates</a></td><td>ダッシュボードと、一覧からの一括操作。幅 390px と 1024px のサンプル</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h2 id="quick">最小の例</h2>
-  <p>CSS を 2 つ読み、部品を import する。</p>
-  <CodeBlock client:load language="tsx" label="最小の例" code={quick} />
+  <h2 id="quick">Quick start</h2>
+  <p>CSS を 2 つ読み込み、コンポーネントを import する。</p>
+  <CodeBlock client:load language="tsx" label="Quick start" code={quick} />
 
-  <h2 id="principles">決めていること</h2>
+  <h2 id="principles">Principles</h2>
   <ul class="plain">
-    <li>部品はアプリの名前を持たない。画面の用途は、部品の組み合わせで作る(<a href={href("templates/dashboard")}>見本の画面</a>)</li>
-    <li>全部の部品に、空、読み込み、失敗、無効、focus の 5 つの状態がある</li>
-    <li>押せる所は 44px 以上。focus の輪は 2px で、隣の色と 3:1 以上</li>
-    <li>色はライトとダークを別に決める。本文は 4.5:1 以上</li>
-    <li>色、角丸、余白、字は役割の名前の CSS 変数で読む。アプリは変数を上書きする</li>
+    <li>コンポーネントはアプリの名前を持たない。画面の用途は、コンポーネントの組み合わせで作る(<a href={href("templates/dashboard")}>Templates</a>)</li>
+    <li>すべてのコンポーネントが、Empty、Loading、Error、Disabled、Focus の 5 つの状態を備える</li>
+    <li>タップ領域は 44px 以上。フォーカスリングは 2px で、隣り合う色とのコントラスト比は 3:1 以上</li>
+    <li>色はライトとダークを別々に決める。本文のコントラスト比は 4.5:1 以上</li>
+    <li>色、角丸、余白、フォントは、役割を表す名前の CSS 変数から読む。アプリはその変数をオーバーライドする</li>
   </ul>
 </Base>

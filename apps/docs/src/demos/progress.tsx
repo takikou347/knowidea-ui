@@ -21,8 +21,8 @@ export function Running() {
   }, [v]);
   return (
     <Stack gap={3} style={{ width: "min(100%, 360px)" }}>
-      <Progress label="書き出し" value={v} />
-      <div><Button variant="secondary" disabled={v != null && v < 100} onClick={() => setV(0)}>{v == null ? "始める" : v >= 100 ? "もう一度" : "進行中"}</Button></div>
+      <Progress label="エクスポート" value={v} />
+      <div><Button variant="secondary" disabled={v != null && v < 100} onClick={() => setV(0)}>{v == null ? "開始" : v >= 100 ? "もう一度" : "実行中"}</Button></div>
     </Stack>
   );
 }
@@ -30,10 +30,10 @@ export function Running() {
 const W = ({ children }: { children: React.ReactNode }) => <div style={{ width: "min(100%, 360px)" }}>{children}</div>;
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <W><Progress label="始まっていない" value={0} /></W> },
-    { label: "読み込み", node: <W><Progress label="進み具合は不明" value={null} /></W>, note: "不明のときは動かさず、破線の枠の線で示す" },
-    { label: "失敗", node: <W><Progress label="書き出し(止まった)" value={60} tone="error" /></W> },
-    { label: "無効", node: <W><Progress label="書き出し(待機中)" value={30} disabled /></W> },
-    { label: "focus", na: "進み具合は押せないので focus を受けない" },
+    { label: "Empty", node: <W><Progress label="未開始" value={0} /></W> },
+    { label: "Loading", node: <W><Progress label="進捗は不明" value={null} /></W>, note: "不明のときは動かさず、破線の枠のバーで示す" },
+    { label: "Error", node: <W><Progress label="エクスポート(停止)" value={60} tone="error" /></W> },
+    { label: "Disabled", node: <W><Progress label="エクスポート(待機中)" value={30} disabled /></W> },
+    { label: "Focus", na: "Progress は操作できないため、フォーカスを受けない" },
   ];
 }

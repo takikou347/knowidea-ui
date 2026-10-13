@@ -21,12 +21,12 @@ export function states(): StateRow[] {
   const row = (props: Record<string, unknown>) =>
     variants.map((v) => <IconButton key={v} variant={v} label="コピー" icon={<Icon name="copy" />} {...props} />);
   return [
-    { label: "空", na: "名前(label)の無いアイコンボタンは作らない" },
-    { label: "読み込み", node: row({ loading: true }) },
-    { label: "失敗", na: "ボタン自身は失敗を持たない" },
-    { label: "無効", node: row({ disabled: true }) },
-    { label: "focus", node: row({ className: "is-focus" }) },
-    { label: "hover", node: row({ className: "is-hover" }) },
-    { label: "押した時", node: row({ className: "is-active" }) },
+    { label: "Empty", na: "名前(label)のない IconButton は作らない" },
+    { label: "Loading", node: row({ loading: true }) },
+    { label: "Error", na: "ボタン自身はエラー状態を持たない" },
+    { label: "Disabled", node: row({ disabled: true }) },
+    { label: "Focus", node: row({ className: "is-focus" }) },
+    { label: "Hover", node: row({ className: "is-hover" }) },
+    { label: "Active", node: row({ className: "is-active" }) },
   ];
 }

@@ -1,12 +1,12 @@
-// 上のバーの動き: テーマの切り替え、部品の検索、右の見出しの一覧、引き出しの閉じ方。
+// 上のバーの動き: テーマの切り替え、コンポーネントの検索、右側のページ内目次、ドロワーの閉じ方。
 const root = document.documentElement;
 
-// テーマ: 自動 -> ライト -> ダーク
+// テーマ: Auto -> Light -> Dark
 const tb = document.getElementById("theme-toggle");
 const order = ["auto", "light", "dark"];
-const label = { auto: "自動", light: "ライト", dark: "ダーク" };
+const label = { auto: "Auto", light: "Light", dark: "Dark" };
 const cur = () => (root.dataset.theme === "light" || root.dataset.theme === "dark" ? root.dataset.theme : "auto");
-const show = () => { if (tb) tb.textContent = "テーマ: " + label[cur()]; };
+const show = () => { if (tb) tb.textContent = "Theme: " + label[cur()]; };
 tb?.addEventListener("click", () => {
   const next = order[(order.indexOf(cur()) + 1) % 3];
   if (next === "auto") delete root.dataset.theme; else root.dataset.theme = next;
@@ -15,7 +15,7 @@ tb?.addEventListener("click", () => {
 });
 show();
 
-// 検索
+// コンポーネントの検索
 const q = document.getElementById("docs-q");
 const list = document.getElementById("docs-q-list");
 const status = document.getElementById("docs-q-status");
@@ -27,7 +27,7 @@ function render() {
   list.textContent = "";
   active = -1;
   if (!t) { list.hidden = true; q.setAttribute("aria-expanded", "false"); status.textContent = ""; return; }
-  const hits = index.filter((c) => norm(c.n).includes(t) || norm(c.j).includes(t)).slice(0, 8);
+  const hits = index.filter((c) => norm(c.n).includes(t)).slice(0, 8);
   for (const [i, c] of hits.entries()) {
     const li = document.createElement("li");
     li.setAttribute("role", "option");
@@ -39,7 +39,7 @@ function render() {
     name.textContent = c.n;
     const sub = document.createElement("span");
     sub.className = "docs-results-sub";
-    sub.textContent = `${c.j}(${c.c})`;
+    sub.textContent = c.c;
     a.append(name, sub);
     li.append(a);
     list.append(li);
@@ -47,12 +47,12 @@ function render() {
   if (!hits.length) {
     const li = document.createElement("li");
     li.className = "docs-results-none";
-    li.textContent = "見つからない";
+    li.textContent = "No results";
     list.append(li);
   }
   list.hidden = false;
   q.setAttribute("aria-expanded", "true");
-  status.textContent = hits.length ? `${hits.length} 件` : "見つからない";
+  status.textContent = hits.length ? `${hits.length} results` : "No results";
 }
 function mark(n) {
   const items = [...list.querySelectorAll('[role="option"]')];
@@ -77,17 +77,17 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "") && !document.activeElement?.isContentEditable) { e.preventDefault(); q.focus(); }
 });
 
-// 引き出しの中のリンクを押したら閉じる
+// ドロワーの中のリンクをクリックしたら閉じる
 document.getElementById("docs-drawer")?.addEventListener("click", (e) => {
   if (e.target.closest("a")) e.currentTarget.close();
 });
-// 引き出しが開いたままで広い幅になったら閉じる
+// ドロワーが開いたまま幅が広くなったら閉じる
 matchMedia("(min-width: 1024px)").addEventListener("change", (m) => { if (m.matches) document.getElementById("docs-drawer")?.close(); });
 
-// 右の見出しの一覧。h2 と h3 から作り、今読んでいる所に印を付ける
+// 右側のページ内目次。h2 と h3 から作り、表示中の見出しに印を付ける
 const tocList = document.getElementById("docs-toc-list");
 if (tocList) {
-  const heads = [...document.querySelectorAll("#main h2, #main h3")].filter((h) => !h.closest(".demo, .states-table, .tpl"));
+  const heads = [...document.querySelectorAll("#main h2, #main h3")].filter((h) => !h.closest(".demo, .states-table, .tpl, .tc-pane, .tc-live"));
   const used = new Set();
   for (const h of heads) {
     if (!h.id) {

@@ -41,10 +41,10 @@ export function Toggle() {
 const W = ({ children }: { children: React.ReactNode }) => <div style={{ width: "100%" }}>{children}</div>;
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <W><Chart data={[]} state="empty" ariaLabel="空" emptyText="記録なし" /></W> },
-    { label: "読み込み", node: <W><Chart data={[]} state="loading" ariaLabel="読み込み" /></W> },
-    { label: "失敗", na: "取れなかったときは、グラフを描かず、近くの Alert で理由を示す" },
-    { label: "無効", na: "グラフは無効を持たない。数の無い点は「記録なし」と出す(上のデモの 9/30)" },
-    { label: "focus", node: <W><Chart data={days.slice(-7)} ariaLabel="focus" /></W>, note: "棒に Tab で入り、矢印で選びが移る。Home と End で先頭と末尾" },
+    { label: "Empty", node: <W><Chart data={[]} state="empty" ariaLabel="空" emptyText="記録なし" /></W> },
+    { label: "Loading", node: <W><Chart data={[]} state="loading" ariaLabel="読み込み" /></W> },
+    { label: "Error", na: "データを取得できなかったときは、グラフを描かず、近くの Alert で理由を示す" },
+    { label: "Disabled", na: "グラフは無効状態を持たない。値のない点は「記録なし」と表示する(上のデモの 9/30)" },
+    { label: "Focus", node: <W><Chart data={days.slice(-7)} ariaLabel="フォーカス" /></W>, note: "棒に Tab で移り、矢印キーで選択を移動する。Home と End で先頭と末尾に移動する" },
   ];
 }

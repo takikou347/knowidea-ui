@@ -16,29 +16,29 @@ const dialog = `<button type="button" class="ki-button" data-ki-dialog-open="con
   ...
 </dialog>`;
 ---
-<Base title="素の HTML で使う" description="CSS だけで使う">
-  <h1>素の HTML で使う</h1>
-  <p class="lead">React も Tailwind も無しで使える。CSS を 2 つ読み、<code>ki-</code> のクラスを付ける。</p>
-  <h2 id="files">置くファイル</h2>
+<Base title="Plain HTML" description="CSS だけで使う">
+  <h1>Plain HTML</h1>
+  <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。</p>
+  <h2 id="files">Files</h2>
   <div class="table-wrap">
     <table class="docs-table">
-      <thead><tr><th>ファイル</th><th>場所(パッケージの中)</th></tr></thead>
+      <thead><tr><th>File</th><th>Location (in the package)</th></tr></thead>
       <tbody>
         <tr><td><code>tokens.css</code></td><td><code>@knowidea/tokens/dist/tokens.css</code></td></tr>
         <tr><td><code>ki.css</code></td><td><code>@knowidea/css/dist/ki.css</code></td></tr>
-        <tr><td><code>ki.js</code></td><td><code>@knowidea/css/dist/ki.js</code>(任意。dialog の開閉と、写すボタン)</td></tr>
+        <tr><td><code>ki.js</code></td><td><code>@knowidea/css/dist/ki.js</code>(任意。dialog の開閉とコピーボタン用)</td></tr>
         <tr><td><code>sprite.svg</code></td><td><code>@knowidea/icons/dist/sprite.svg</code>(アイコンを使うとき)</td></tr>
       </tbody>
     </table>
   </div>
-  <h2 id="head">head に書く</h2>
-  <Code code={head} lang="html" label="head の例" />
-  <h2 id="body">クラスと属性で書く</h2>
-  <p>見た目のちがいは <code>data-variant</code>、<code>data-tone</code> などの属性で選ぶ。クラスと属性は、各部品のページの「CSS のクラスと変数」に書いてある。</p>
-  <Code code={body} lang="html" label="素の HTML の例" />
+  <h2 id="head">Add to head</h2>
+  <Code code={head} lang="html" label="head example" />
+  <h2 id="body">Classes and attributes</h2>
+  <p>見た目の違いは <code>data-variant</code>、<code>data-tone</code> などの属性で指定する。クラスと属性は、各コンポーネントのページの CSS セクションに記載している。</p>
+  <Code code={body} lang="html" label="Plain HTML example" />
   <h2 id="enhance">ki.js</h2>
-  <p>JavaScript が要る動き(dialog の開閉、背景を押して閉じる、写すボタン)は、<code>data-ki-dialog-open</code> のような属性で呼ぶ。メニューやタブのような複雑な動きは React の部品を使う。</p>
-  <Code code={dialog} lang="html" label="dialog の例" />
-  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、ファイル(<code>file://</code>)では外部参照が効かない。静的サーバーで開く。</p>
-  <p>テーマは CSS 変数の上書きだけでできる。<a href={href("customization/overriding")}>部品の上書き</a>を見る。</p>
+  <p>JavaScript が必要な動作(dialog の開閉、背景のクリックで閉じる、コピーボタン)は、<code>data-ki-dialog-open</code> のような属性で呼び出す。メニューやタブのような複雑な動作には、React のコンポーネントを使う。</p>
+  <Code code={dialog} lang="html" label="dialog example" />
+  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、<code>file://</code> で開くと外部参照が効かない。静的サーバーで開く。</p>
+  <p>テーマの変更は、CSS 変数のオーバーライドだけでできる。<a href={href("customization/overriding")}>Overriding</a> を参照。</p>
 </Base>

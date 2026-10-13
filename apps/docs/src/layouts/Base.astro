@@ -10,7 +10,7 @@ import ui from "@knowidea/ui/package.json";
 const { title, description = "", toc = true } = Astro.props;
 const l = links(Astro.url.pathname);
 const { href, rel } = l;
-const index = components.map((c) => ({ n: c.name, j: c.ja, c: c.catJa, h: href("components/" + c.slug) }));
+const index = components.map((c) => ({ n: c.name, c: c.catName, h: href("components/" + c.slug) }));
 const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${name}"/></svg>`;
 ---
 <!doctype html>
@@ -33,9 +33,9 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
     </script>
   </head>
   <body>
-    <a class="skip" href="#main">本文へ</a>
+    <a class="skip" href="#main">Skip to content</a>
     <header class="docs-top">
-      <button type="button" class="ki-button ki-icon-button docs-menu" data-variant="quiet" data-ki-dialog-open="docs-drawer" aria-label="目次を開く">
+      <button type="button" class="ki-button ki-icon-button docs-menu" data-variant="quiet" data-ki-dialog-open="docs-drawer" aria-label="Open navigation">
         <Fragment set:html={icon("menu")} />
       </button>
       <a class="docs-brand" href={href("")}>
@@ -45,31 +45,31 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
         <span class="docs-ver"><code>@knowidea/ui</code> v{ui.version}</span>
       </a>
       <div class="docs-search" role="search">
-        <label class="ki-sr-only" for="docs-q">部品を名前で探す</label>
-        <input id="docs-q" class="ki-input" type="search" placeholder="部品を名前で探す" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="docs-q-list" aria-autocomplete="list" />
-        <ul id="docs-q-list" class="docs-results" role="listbox" aria-label="探した部品" hidden></ul>
+        <label class="ki-sr-only" for="docs-q">Search components</label>
+        <input id="docs-q" class="ki-input" type="search" placeholder="Search components" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="docs-q-list" aria-autocomplete="list" />
+        <ul id="docs-q-list" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
         <span class="ki-sr-only" id="docs-q-status" role="status"></span>
       </div>
-      <button type="button" class="ki-button docs-theme" data-variant="secondary" id="theme-toggle" aria-label="表示の切り替え">テーマ: 自動</button>
+      <button type="button" class="ki-button docs-theme" data-variant="secondary" id="theme-toggle" aria-label="Toggle theme">Theme: Auto</button>
     </header>
     <div class="docs-body" data-toc={toc ? "" : undefined}>
-      <aside class="docs-nav" aria-label="目次の欄">
+      <aside class="docs-nav" aria-label="Site navigation">
         <DocsNav l={l} />
       </aside>
       <main id="main" class="docs-main">
         <slot />
       </main>
       {toc && (
-        <aside class="docs-toc" aria-label="このページの見出し">
-          <p class="docs-toc-title">このページの見出し</p>
+        <aside class="docs-toc" aria-label="On this page">
+          <p class="docs-toc-title">On this page</p>
           <ul id="docs-toc-list"></ul>
         </aside>
       )}
     </div>
-    <dialog id="docs-drawer" class="ki-drawer" data-variant="temporary" aria-label="目次">
+    <dialog id="docs-drawer" class="ki-drawer" data-variant="temporary" aria-label="Navigation">
       <div class="ki-drawer__head">
         <p class="ki-drawer__brand"><b>KNOW IDEA UI</b><span>v{ui.version}</span></p>
-        <button type="button" class="ki-button ki-icon-button" data-variant="quiet" data-ki-dialog-close aria-label="目次を閉じる"><Fragment set:html={icon("close")} /></button>
+        <button type="button" class="ki-button ki-icon-button" data-variant="quiet" data-ki-dialog-close aria-label="Close navigation"><Fragment set:html={icon("close")} /></button>
       </div>
       <DocsNav l={l} />
     </dialog>

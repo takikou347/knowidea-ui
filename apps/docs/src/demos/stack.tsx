@@ -17,7 +17,7 @@ export function Row() {
   return (
     <Stack direction="row" gap={2} wrap align="center" style={{ width: "100%" }}>
       <Button>保存する</Button>
-      <Button variant="secondary">やめる</Button>
+      <Button variant="secondary">キャンセル</Button>
       <Chip label="下書き" />
     </Stack>
   );
@@ -34,10 +34,10 @@ export function Between() {
 
 export function states(): StateRow[] {
   return [
-    { label: "空", node: <Stack style={{ width: "100%" }}><span className="muted">子が無いと高さも無い</span></Stack> },
-    { label: "読み込み", na: "並べるだけの部品なので、読み込みを持たない" },
-    { label: "失敗", na: "失敗を持たない" },
-    { label: "無効", na: "無効を持たない" },
-    { label: "focus", na: "Stack 自身は focus を受けない。子の順で Tab が進む" },
+    { label: "Empty", node: <Stack style={{ width: "100%" }}><span className="muted">子要素がなければ高さもない</span></Stack> },
+    { label: "Loading", na: "並べるだけのコンポーネントなので、ローディング状態を持たない" },
+    { label: "Error", na: "エラー状態を持たない" },
+    { label: "Disabled", na: "無効状態を持たない" },
+    { label: "Focus", na: "Stack 自身はフォーカスを受けない。子要素の順に Tab が進む" },
   ];
 }
