@@ -53,12 +53,12 @@ function Nav({ groups, current, label }: { groups: DrawerGroup[]; current?: stri
 }
 
 /** サイドの目次。permanent はその場に、temporary は Esc や外を押して閉じる引き出しになる。 */
-export function Drawer({ items, groups, current, brand, label = "目次", variant = "permanent", open, defaultOpen, onOpenChange, closeLabel = "目次を閉じる", footer, className }: DrawerProps) {
+export function Drawer({ items, groups, current, brand, label = "ナビゲーション", variant = "permanent", open, defaultOpen, onOpenChange, closeLabel = "ナビゲーションを閉じる", footer, className }: DrawerProps) {
   const g = groups ?? [{ items: items ?? [] }];
   const head = brand ? <p className="ki-drawer__brand"><b>{brand.name}</b>{brand.sub ? <span>{brand.sub}</span> : null}</p> : null;
   if (variant === "permanent") {
     return (
-      <aside className={cx("ki-drawer", className)} data-variant="permanent" aria-label={label === "目次" ? undefined : label}>
+      <aside className={cx("ki-drawer", className)} data-variant="permanent" aria-label={label === "ナビゲーション" ? undefined : label}>
         {head ? <div className="ki-drawer__head">{head}</div> : null}
         <Nav groups={g} current={current} label={label} />
         {footer}

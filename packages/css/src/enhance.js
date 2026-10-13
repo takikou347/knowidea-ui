@@ -10,7 +10,7 @@ document.addEventListener("click", (e) => {
     const label = copy.querySelector("[data-ki-copy-label]") || copy;
     const text = src ? src.textContent : "";
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(
-      () => { const old = label.textContent; label.textContent = "写した"; setTimeout(() => (label.textContent = old), 1600); },
+      () => { const old = label.textContent; label.textContent = "コピーした"; setTimeout(() => (label.textContent = old), 1600); },
       () => { const old = label.textContent; label.textContent = "写せない"; setTimeout(() => (label.textContent = old), 1600); }
     );
   }

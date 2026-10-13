@@ -58,7 +58,7 @@ export interface ListProps {
   state?: "ready" | "loading" | "empty" | "error";
   /** 一覧の上に出す文(例: 8 件) */
   summary?: ReactNode;
-  /** 全部を選ぶ枠の文。選んだ数があれば {count} が数になる */
+  /** すべて選択枠の文。選んだ数があれば {count} が数になる */
   selectAllLabel?: string;
   selectedLabel?: string;
   emptyText?: string;
@@ -69,7 +69,7 @@ export interface ListProps {
 
 /** 行の一覧。選べる行(左のチェック)、2 行目のメタ、末尾の操作。幅で組み替える。 */
 export function List({
-  label, items, selected = [], onSelectedChange, state = "ready", summary, selectAllLabel = "全部を選ぶ", selectedLabel = "{count} 件を選んだ",
+  label, items, selected = [], onSelectedChange, state = "ready", summary, selectAllLabel = "すべて選択", selectedLabel = "{count} 件を選択中",
   emptyText = "一覧は空", errorText = "一覧を取れなかった。", loadingText = "読み込み中", className,
 }: ListProps) {
   const sel = new Set(selected);

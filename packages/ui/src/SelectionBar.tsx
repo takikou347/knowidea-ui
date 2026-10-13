@@ -7,13 +7,13 @@ import { cx } from "./utils.js";
 export interface SelectionBarProps {
   /** 選んだ数 */
   count: number;
-  /** 件数の文。{count} が数になる。既定「{count} 件を選んでいる」 */
+  /** 件数の文。{count} が数になる。既定「{count} 件を選択中」 */
   countLabel?: string;
   /** 件数の下の 1 行(進み方、注意)。state が error なら失敗の理由 */
   note?: ReactNode;
   /** 一括の操作。Button を並べる */
   actions?: ReactNode;
-  /** 選びを解く。渡すと「選びを解く」ボタンが出る */
+  /** 選択を解除。渡すと「選択を解除」ボタンが出る */
   onClear?: () => void;
   clearLabel?: string;
   /** 画面の下に貼り付く */
@@ -29,8 +29,8 @@ export interface SelectionBarProps {
 
 /** 選んだ物への一括の操作の帯。件数、操作、選びの解除。 */
 export function SelectionBar({
-  count, countLabel = "{count} 件を選んでいる", note, actions, onClear, clearLabel = "選びを解く", sticky, whenEmpty = "hint",
-  emptyHint = "一覧で選ぶと、ここに操作が出る。", state = "ready", label = "選んだ物への操作", className,
+  count, countLabel = "{count} 件を選択中", note, actions, onClear, clearLabel = "選択を解除", sticky, whenEmpty = "hint",
+  emptyHint = "項目を選択すると、ここに操作が表示される。", state = "ready", label = "選択した項目への操作", className,
 }: SelectionBarProps) {
   if (count === 0 && whenEmpty === "hide" && state === "ready") return null;
   const [before, after] = countLabel.split("{count}");

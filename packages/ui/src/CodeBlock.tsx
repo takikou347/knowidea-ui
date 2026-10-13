@@ -20,7 +20,7 @@ export function CodeBlock({ code, language, lineNumbers, copy = true, label = "�
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   const doCopy = async () => {
-    let msg = "写した";
+    let msg = "コピーした";
     try { await navigator.clipboard.writeText(code); } catch { msg = "写せない"; }
     setStatus(msg);
     if (timer.current) clearTimeout(timer.current);
@@ -36,7 +36,7 @@ export function CodeBlock({ code, language, lineNumbers, copy = true, label = "�
           {copy ? (
             <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--space-2)" }}>
               <span className="ki-code__status" role="status">{status}</span>
-              <button type="button" className="ki-button ki-icon-button" data-variant="quiet" aria-label="コードを写す" onClick={doCopy}>
+              <button type="button" className="ki-button ki-icon-button" data-variant="quiet" aria-label="コードをコピー" onClick={doCopy}>
                 <Icon name="copy" />
               </button>
             </span>

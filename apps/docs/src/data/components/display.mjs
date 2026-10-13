@@ -129,7 +129,7 @@ export const display = [
       ["selected / onSelectedChange", "string[] / (ids) => void", "-", "両方を渡すと、選択できる一覧になる"],
       ["state", '"ready" | "loading" | "empty" | "error"', '"ready"', "状態"],
       ["summary", "ReactNode", "-", "チェックボックスの横に表示するテキスト(件数など)"],
-      ["selectAllLabel / selectedLabel", "string", '"全部を選ぶ" / "{count} 件を選んだ"', "上部のチェックボックスの文言"],
+      ["selectAllLabel / selectedLabel", "string", '"すべて選択" / "{count} 件を選択中"', "上部のチェックボックスの文言"],
       ["emptyText / errorText / loadingText", "string", "-", "各状態のメッセージ"],
     ],
     classes: [

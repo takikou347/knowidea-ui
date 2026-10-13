@@ -90,7 +90,7 @@ export const navigation = [
       ["brand", "{ name, sub? }", "-", "上部の見出し"],
       ["variant", '"permanent" | "temporary"', '"permanent"', "常に表示するか、引き出しにするか"],
       ["open / defaultOpen / onOpenChange", "boolean / boolean / (open) => void", "-", "temporary の開閉"],
-      ["label / closeLabel", "string", '"目次" / "目次を閉じる"', "nav の名前、閉じるボタンの名前"],
+      ["label / closeLabel", "string", '"ナビゲーション" / "ナビゲーションを閉じる"', "nav の名前、閉じるボタンの名前"],
       ["footer", "ReactNode", "-", "下部に置く要素"],
     ],
     classes: [

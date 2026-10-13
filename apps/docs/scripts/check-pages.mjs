@@ -298,7 +298,7 @@ await kb("「コードを見る」と写す(部品のページ)", "components/bu
   const clip = await page.evaluate(() => navigator.clipboard.readText());
   const shown = await d.locator("pre").first().textContent();
   const norm = (t) => t.replace(/[\s\u200b]/g, "");
-  assert(norm(clip) === norm(shown) && clip.includes("Button"), "写した文字が表示と違う");
+  assert(norm(clip) === norm(shown) && clip.includes("Button"), "コピーした文字が表示と違う");
 });
 
 await kb("見本の画面(一覧: 選んでアーカイブ、元に戻す)", "templates/list.html", async (page) => {
