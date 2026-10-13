@@ -2,40 +2,56 @@
 import Base from "../../layouts/Base.astro";
 import Code from "../../components/Code.astro";
 import { links } from "../../lib/paths.mjs";
+import { react, install } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
-const basic = `import "@knowidea/tokens/tokens.css";
-import "@knowidea/css/index.css";
-import { Button, Alert, Stack } from "@knowidea/ui";
-
-export function Example() {
-  return (
-    <Stack gap={3}>
-      <Alert tone="info">保存した。</Alert>
-      <Button>完了にする</Button>
-    </Stack>
-  );
-}`;
-const theme = `import { ThemeProvider } from "@knowidea/ui";
-
-<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
-  <App />
-</ThemeProvider>`;
-const icons = `import { Icon } from "@knowidea/icons/react";
-
-<Icon name="calendar" />`;
 ---
-<Base title="Usage with React" description="React コンポーネントを使う">
+<Base title="Usage with React" description="Vite の雛形から、部品を表示するまで">
   <h1>Usage with React</h1>
-  <p class="lead">React 19 で使う。コンポーネントの挙動は Base UI に任せ、見た目は <code>@knowidea/css</code> が担う。</p>
-  <h2 id="basic">Using components</h2>
-  <Code code={basic} label="Minimal React example" />
+  <p class="lead">React 19 と Vite で、新しいプロジェクトから部品を表示するまでを、上から順に写せば動く形で書く。コンポーネントの挙動は Base UI に任せ、見た目は <code>@knowidea/css</code> が担う。</p>
+  <p>先に<a href={href("getting-started/install")}>Installation</a>の 1 を終えて、<code>release/</code> に tarball を作っておく。</p>
+
+  <h2 id="create">1. Create a project</h2>
+  <Code code={react.create.pnpm} lang="bash" label="Create a Vite project with pnpm" />
+  <p>npm の場合:</p>
+  <Code code={react.create.npm} lang="bash" label="Create a Vite project with npm" />
+
+  <h2 id="install">2. Add the packages</h2>
+  <p>Installation の 2 と同じ。tarball を <code>vendor/</code> に置いて、4 つ全部を入れる。</p>
+  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+  <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
+  <p>npm なら <code>{install.npm}</code>。</p>
+
+  <h2 id="entry">3. Load the CSS</h2>
+  <p>Vite の雛形の <code>src/index.css</code> と <code>src/App.css</code> は、<code>body</code> を中央寄せの横並びにするなど、この CSS と食い違う。消してから、<code>src/main.tsx</code> を次の内容にする。</p>
+  <Code code={react.clean} lang="bash" label="Remove the template CSS" />
+  <Code code={react.main} label="src/main.tsx" />
+  <p>書体を足す場合は、Installation の<a href={href("getting-started/install") + "#fonts"}>Fonts</a>にある <code>&lt;link&gt;</code> を <code>index.html</code> に入れる。</p>
+
+  <h2 id="basic">4. Use components</h2>
+  <p><code>src/App.tsx</code> を次の内容にする。<code>pnpm dev</code> で開くと、情報の Alert とプライマリのボタンが出る。</p>
+  <Code code={react.basic} label="src/App.tsx" />
+  <p>部品ごとのコードは、<a href={href("components")}>Components</a> の各ページの Demos にある。どれも、import を含めてそのまま写せる。</p>
+
   <h2 id="theme">Applying a theme</h2>
-  <p><code>ThemeProvider</code> の内側でだけ、プライマリカラー、角丸、密度、フォントサイズが変わる。ライトとダークの両方が生成される。</p>
-  <Code code={theme} label="ThemeProvider example" />
+  <p><code>ThemeProvider</code> の内側でだけ、プライマリカラー、角丸、密度、フォントサイズが変わる。ライトとダークの両方が生成される。Dialog、Menu、Select、Tooltip、Toast、Drawer のように画面の最上位に描かれる部品にも届く。</p>
+  <Code code={react.theme} label="ThemeProvider example" />
   <p>値を試しながら決めたい場合は、<a href={href("customization/theme")}>Theme</a> の Try it セクションを使う。</p>
+
+  <h2 id="toast">Toast</h2>
+  <p>Toast だけは、アプリの根に <code>ToastProvider</code> が要る。<code>useToast</code> はその内側で呼ぶ。</p>
+  <Code code={react.toast} label="Toast example" />
+
   <h2 id="icons">Icons</h2>
-  <Code code={icons} label="Icon example" />
+  <p><code>@knowidea/ui</code> の <code>Icon</code> は、文字と同じ色で 1.25em に描く。名前は型で補完される。名前ごとのコンポーネントは <code>@knowidea/icons/react</code> から取れる。</p>
+  <Code code={react.icons} label="Icon example" />
   <p>一覧は <a href={href("icons")}>Icons</a> を参照。</p>
+
+  <h2 id="dark">Dark mode</h2>
+  <p>何もしなくても OS の設定に従う。ボタンで切り替えたいときは、<code>&lt;html&gt;</code> の <code>data-theme</code> を変える。</p>
+  <Code code={react.colorMode} label="Color mode button" />
+  <p>仕組みは <a href={href("customization/dark-mode")}>Dark mode</a> を参照。</p>
+
   <h2 id="ssr">Server-side rendering</h2>
   <p>コンポーネントには <code>"use client"</code> を付けていない。Next.js の App Router では、使う側のファイルに <code>"use client"</code> を書く。Astro では <code>client:load</code> か <code>client:visible</code> を付ける。</p>
+  <Code code={react.ssr} label="use client" />
 </Base>

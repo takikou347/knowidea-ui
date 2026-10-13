@@ -2,43 +2,48 @@
 import Base from "../../layouts/Base.astro";
 import Code from "../../components/Code.astro";
 import { links } from "../../lib/paths.mjs";
+import { html, install, theme } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
-const head = `<link rel="stylesheet" href="/vendor/tokens.css" />
-<link rel="stylesheet" href="/vendor/ki.css" />
-<script type="module" src="/vendor/ki.js"></script>`;
-const body = `<div class="ki-alert" data-tone="info">
-  <span class="ki-alert__icon"><svg class="ki-icon" aria-hidden="true"><use href="/vendor/sprite.svg#info"/></svg></span>
-  <div class="ki-alert__body"><p class="ki-alert__text">保存した。</p></div>
-</div>
-<button type="button" class="ki-button" data-variant="primary">完了にする</button>`;
-const dialog = `<button type="button" class="ki-button" data-ki-dialog-open="confirm">削除する</button>
-<dialog id="confirm" class="ki-dialog" aria-labelledby="confirm-title">
-  ...
-</dialog>`;
 ---
 <Base title="Plain HTML" description="CSS だけで使う">
   <h1>Plain HTML</h1>
-  <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。</p>
-  <h2 id="files">Files</h2>
+  <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。Node は、テーマの CSS を作るときしか要らない。</p>
+
+  <h2 id="files">1. Take the files out of the tarballs</h2>
+  <p><a href={href("getting-started/install")}>Installation</a>の 1 で作った tarball を、プロジェクトの <code>vendor/</code> に置く。そこから、使う 4 つのファイルを <code>assets/</code> に取り出す。</p>
+  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+  <Code code={html.extract} lang="bash" label="Extract the files" />
   <div class="table-wrap">
     <table class="docs-table">
-      <thead><tr><th>File</th><th>Location (in the package)</th></tr></thead>
+      <thead><tr><th>File</th><th>Contents</th></tr></thead>
       <tbody>
-        <tr><td><code>tokens.css</code></td><td><code>@knowidea/tokens/dist/tokens.css</code></td></tr>
-        <tr><td><code>ki.css</code></td><td><code>@knowidea/css/dist/ki.css</code></td></tr>
-        <tr><td><code>ki.js</code></td><td><code>@knowidea/css/dist/ki.js</code>(任意。dialog の開閉とコピーボタン用)</td></tr>
-        <tr><td><code>sprite.svg</code></td><td><code>@knowidea/icons/dist/sprite.svg</code>(アイコンを使うとき)</td></tr>
+        <tr><td><code>tokens.css</code></td><td>CSS 変数(色、フォント、余白、角丸)。ライトとダーク</td></tr>
+        <tr><td><code>ki.css</code></td><td>部品の見た目と、<code>body</code> の既定</td></tr>
+        <tr><td><code>ki.js</code></td><td>任意。dialog の開閉とコピーボタン用</td></tr>
+        <tr><td><code>sprite.svg</code></td><td>アイコンを使うとき</td></tr>
       </tbody>
     </table>
   </div>
-  <h2 id="head">Add to head</h2>
-  <Code code={head} lang="html" label="head example" />
-  <h2 id="body">Classes and attributes</h2>
+
+  <h2 id="head">2. Add to head</h2>
+  <Code code={html.head} lang="html" label="head example" />
+  <p>書体は、Installation の<a href={href("getting-started/install") + "#fonts"}>Fonts</a>の <code>&lt;link&gt;</code> を足す。</p>
+
+  <h2 id="body">3. Classes and attributes</h2>
   <p>見た目の違いは <code>data-variant</code>、<code>data-tone</code> などの属性で指定する。クラスと属性は、各コンポーネントのページの CSS セクションに記載している。</p>
-  <Code code={body} lang="html" label="Plain HTML example" />
+  <Code code={html.body} lang="html" label="Plain HTML example" />
+  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、<code>file://</code> で開くと外部参照が効かない。静的サーバーで開く(例: <code>npx serve .</code>)。<code>assets/</code> の場所を変えたときは、<code>href</code> のパスも合わせる。</p>
+
   <h2 id="enhance">ki.js</h2>
-  <p>JavaScript が必要な動作(dialog の開閉、背景のクリックで閉じる、コピーボタン)は、<code>data-ki-dialog-open</code> のような属性で呼び出す。メニューやタブのような複雑な動作には、React のコンポーネントを使う。</p>
-  <Code code={dialog} lang="html" label="dialog example" />
-  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、<code>file://</code> で開くと外部参照が効かない。静的サーバーで開く。</p>
-  <p>テーマの変更は、CSS 変数のオーバーライドだけでできる。<a href={href("customization/overriding")}>Overriding</a> を参照。</p>
+  <p>JavaScript が必要な動作(dialog の開閉、背景のクリックで閉じる、コピーボタン)は、<code>data-ki-dialog-open</code> のような属性で呼び出す。Esc でも閉じる(<code>&lt;dialog&gt;</code> の標準の動き)。メニューやタブの切り替えのように複雑な動作は、素の HTML では用意していない。React のコンポーネントを使う。</p>
+  <Code code={html.dialog} lang="html" label="dialog example" />
+
+  <h2 id="dark">Dark mode</h2>
+  <p>何もしなくても OS の設定に従う。ボタンで切り替えるときは、<a href={href("customization/dark-mode")}>Dark mode</a> の <code>setTheme</code> を使い、保存した値を <code>&lt;head&gt;</code> の先頭で先に適用する(ちらつきを防ぐ)。</p>
+  <Code code={html.colorMode} lang="html" label="Apply the saved mode" />
+
+  <h2 id="theme">Theme</h2>
+  <p>プライマリカラーなどの変更は、CSS 変数のオーバーライドだけでできる。ライトとダークの値は、コマンドで作る。tarball を指せば、プロジェクトに Node のパッケージを入れなくても動く。</p>
+  <Code code={theme.cliTgz} lang="bash" label="Generate the theme CSS" />
+  <p>作った <code>assets/brand.css</code> を <code>ki.css</code> の後に読み込み、変えたい範囲に <code>class="brand"</code> を付ける。詳しくは <a href={href("customization/theme")}>Theme</a> を参照。</p>
 </Base>

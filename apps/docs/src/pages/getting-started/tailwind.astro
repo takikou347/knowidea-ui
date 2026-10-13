@@ -2,24 +2,39 @@
 import Base from "../../layouts/Base.astro";
 import Code from "../../components/Code.astro";
 import { links } from "../../lib/paths.mjs";
+import { tailwind, install } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
-const css = `@import "tailwindcss";
-@import "@knowidea/tokens/theme.css";    /* @theme に色、フォント、余白、角丸を渡す */
-@import "@knowidea/tokens/tokens.css";   /* ダークモードの値と、実際の変数 */
-@import "@knowidea/css/index.css";       /* コンポーネントの見た目 */`;
-const use = `<div class="rounded-2 bg-surface border border-line p-4 text-text">
-  <button class="ki-button" data-variant="primary">完了にする</button>
-</div>`;
 ---
 <Base title="Tailwind v4" description="トークンを Tailwind のユーティリティとして使う">
   <h1>Tailwind v4</h1>
-  <p class="lead">トークンを <code>@theme</code> に渡すため、<code>bg-surface</code> や <code>text-text-muted</code> のようなユーティリティが、同じ CSS 変数を参照する。</p>
-  <h2 id="css">CSS</h2>
-  <Code code={css} lang="css" label="Tailwind CSS" />
-  <h2 id="use">Usage</h2>
-  <Code code={use} lang="html" label="Usage with Tailwind" />
+  <p class="lead">トークンを <code>@theme</code> に渡すため、<code>bg-surface</code> や <code>text-text-muted</code> のようなユーティリティが、同じ CSS 変数を参照する。Vite と React で、新しいプロジェクトから動くまでを書く。</p>
+  <p>先に<a href={href("getting-started/install")}>Installation</a>の 1 を終えて、<code>release/</code> に tarball を作っておく。</p>
+
+  <h2 id="create">1. Create a project</h2>
+  <Code code={tailwind.create.pnpm} lang="bash" label="Create a project with pnpm" />
+  <p>npm の場合:</p>
+  <Code code={tailwind.create.npm} lang="bash" label="Create a project with npm" />
+
+  <h2 id="install">2. Add the packages</h2>
+  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+  <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
+  <p>npm なら <code>{install.npm}</code>。</p>
+
+  <h2 id="vite">3. Vite config</h2>
+  <p><code>vite.config.ts</code> に Tailwind のプラグインを足す。</p>
+  <Code code={tailwind.vite} label="vite.config.ts" />
+
+  <h2 id="css">4. CSS</h2>
+  <p><code>src/index.css</code> を次の内容に置き換える(雛形の中身は消す)。<code>src/App.css</code> も要らないので消す。</p>
+  <Code code={tailwind.css} lang="css" label="src/index.css" />
+  <p><code>layer(components)</code> が大事。ki- の CSS は層に入っていないため、これを付けないと <code>px-8</code> のようなユーティリティが ki- の指定に負ける。</p>
+  <Code code={tailwind.main} label="src/main.tsx" />
+
+  <h2 id="use">5. Usage</h2>
+  <Code code={tailwind.use} label="src/App.tsx" />
   <p>ダークモードの値は <code>tokens.css</code> が同じ変数を再定義するため、<code>dark:</code> を書き足す必要はない。</p>
+
   <h2 id="theme">Theme</h2>
-  <p>クラスを 1 つ作り、変数をオーバーライドする。CSS の生成には、<a href={href("customization/theme")}>Theme</a> の Try it セクションを使える。</p>
+  <p>クラスを 1 つ作り、変数をオーバーライドする。CSS の生成には、<a href={href("customization/theme")}>Theme</a> の Try it セクションか、<code>knowidea-theme</code> コマンドを使う。</p>
   <p>動作するサンプルは、リポジトリの <code>examples/tailwind</code> にある。</p>
 </Base>

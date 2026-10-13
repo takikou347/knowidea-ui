@@ -7,6 +7,14 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 | `pnpm --filter tokens build` | `dist/tokens.css`(CSS 変数。ライトは `:root`、ダークは `prefers-color-scheme` と `data-theme="dark"`)と `dist/theme.css`(Tailwind v4 の `@theme`)を作る |
 | `pnpm --filter @knowidea/tokens check` | 色の組み合わせをライトとダークで検査する。本文は 4.5:1、線とフォーカスリングは 3:1。基準を満たさなければ exit 1 で終了する |
 
+## テーマの CSS を作るコマンド
+
+`knowidea-theme` が、`createTheme` と同じ CSS を標準出力に出す。React を使わないページと、ビルドの前に CSS を作りたいときに使う。警告は標準エラーに出る(`--strict` で終了コード 1)。
+
+```sh
+npx knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > brand.css
+```
+
 ## 分け方
 
 | ファイル | 中身 |

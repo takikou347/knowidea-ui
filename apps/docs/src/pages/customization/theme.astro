@@ -4,27 +4,13 @@ import Code from "../../components/Code.astro";
 import ThemeCreator from "../../components/ThemeCreator.tsx";
 import { themeStyle, colorNames, value, oklchStr } from "../../lib/theme.mjs";
 import { links } from "../../lib/paths.mjs";
+import { theme } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
 const toObj = (theme) => Object.fromEntries(colorNames.map((k) => [`--color-${k}`, oklchStr(value(theme, k))]));
 const baseLight = toObj("light");
 const baseDark = toObj("dark");
 
-const provider = `import { ThemeProvider } from "@knowidea/ui";
-
-<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
-  <App />
-</ThemeProvider>`;
-const create = `import { createTheme } from "@knowidea/tokens/create-theme";
-
-const t = createTheme({ primary: "#016C6C", radius: 4 });
-t.css(".brand");   // CSS 変数をオーバーライドする文字列(ライトとダーク)
-t.warnings;       // コントラスト比が 4.5:1 に届かない組み合わせ(プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合。ライトとダークそれぞれ)`;
-const plain = `.brand {
-  --color-primary: oklch(0.4811 0.0819 194.7749);
-  --color-primary-hover: oklch(0.4111 0.0707 194.7749);
-  --color-on-primary: oklch(0.9946 0.0026 286.4);
-  --radius-2: 6px;
-}`;
+const { provider, cli, cliTgz, script, makeUse, plain } = theme;
 const rows = [
   ["primary", "string", "プライマリカラー。#rrggbb か oklch(L C h) で指定する", "ブランドカラー #016C6C"],
   ["primaryDark", "string", "ダークモードのプライマリカラー。省略すると、同じ色相で明るくして自動的に生成する", "自動"],
@@ -55,8 +41,15 @@ const rows = [
   <h2 id="plain">CSS only</h2>
   <p>React を使わない場合は、変数を書き換えるだけでよい。クラスでも <code>[data-theme]</code> でも、好きなセレクターで指定できる。</p>
   <Code code={plain} lang="css" label="CSS variable overrides" />
-  <p>ダークモードの値も必要になるため、CSS の生成は <code>createTheme(...).css(".brand")</code> に任せるのが早い。</p>
-  <Code code={create} label="createTheme example" />
+  <p>ダークモードの値も必要になるため、CSS の生成は <code>knowidea-theme</code> コマンドに任せるのが早い。<code>@knowidea/tokens</code> を入れたプロジェクトで流す。</p>
+  <Code code={cli} lang="bash" label="knowidea-theme command" />
+  <p>出力はライトとダークの両方を持つ CSS で、警告(コントラスト比が足りない組み合わせ)は標準エラーに出る。<code>--strict</code> を付けると、警告があれば終了コード 1 になる。指定できる項目は <code>--primary</code>、<code>--primary-dark</code>、<code>--radius</code>、<code>--density</code>、<code>--font-size</code>、<code>--selector</code>。</p>
+  <p>プロジェクトに入れていない(素の HTML など)ときは、tarball を指す。</p>
+  <Code code={cliTgz} lang="bash" label="knowidea-theme from a tarball" />
+  <p>できた CSS を読み込み、変えたい範囲にクラスを付ける。</p>
+  <Code code={makeUse} label="Use the generated CSS" />
+  <p>コードの中で作るときは <code>createTheme</code> を直接呼べる。</p>
+  <Code code={script} label="createTheme example" />
 
   <h2 id="derive">How colors are derived</h2>
   <ul class="plain">
