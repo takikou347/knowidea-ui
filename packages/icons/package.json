@@ -4,14 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs && node build-set.mjs",
+    "check": "node check.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "2.1.1",
     "@tabler/icons": "3.49.0",
-    "lucide-static": "1.55.0"
+    "lucide-static": "1.55.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
   },
   "exports": {
-    "./dist/*": "./dist/*"
+    "./dist/*": "./dist/*",
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "default": "./dist/react/index.js"
+    }
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
   }
 }
