@@ -27,7 +27,7 @@ export function Example() {
   <p>現在の版は <span class="num">{ui.version}</span>(<a href={href("changelog")}>Changelog</a>)。React コンポーネント(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つのパッケージで構成される。コンポーネントの土台は Base UI で、キーボード操作とスクリーンリーダーの挙動は Base UI に任せている。</p>
 
   <h2 id="install">Installation</h2>
-  <p>npm など外部の公開先にはまだ出していない。公開先は未決で、決まるまでは tarball(<code>.tgz</code>)で配る。そのため <code>pnpm add @knowidea/ui</code> のようにパッケージ名だけでは入らない。次の 3 つの手順で入れる。詳しくは <a href={href("getting-started/install")}>Installation</a> を参照。</p>
+  <p>npm など外部の公開先にはまだ出していない。公開先は未決で、決まるまでは tarball(<code>.tgz</code>)で配る。そのため <code>pnpm add @knowidea/ui</code> のようにパッケージ名だけでは入らない。次の 4 つの手順で入れる。詳しくは <a href={href("getting-started/install")}>Installation</a> を参照。</p>
   <ol class="steps">
     <li>
       <h3>Build the tarballs</h3>
@@ -44,6 +44,11 @@ export function Example() {
       <h3>Load the CSS</h3>
       <p>アプリの入口で、2 つの CSS を読み込む。</p>
       <Code code={install.css} lang="ts" label="CSS imports" />
+    </li>
+    <li>
+      <h3>Load the fonts</h3>
+      <p>書体はパッケージに入れていない。<code>index.html</code> の <code>&lt;head&gt;</code> に次の行を足す。足さなくても動き、その場合は端末の書体が使われる。</p>
+      <Code code={install.fonts} lang="html" label="Google Fonts" />
     </li>
   </ol>
   <p>入れたあとは、コンポーネントを import して使う。</p>

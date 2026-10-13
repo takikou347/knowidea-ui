@@ -164,12 +164,14 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 .panel > h3 { margin: 0 0 var(--space-3); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
 @media (max-width: 800px) { .panels { grid-template-columns: minmax(0, 1fr); } }
 .link-table td:first-child { white-space: nowrap; }
+/* リンクの行の高さ(44px)に、ほかの列の文字をそろえる */
+.link-table td { vertical-align: middle; }
 
 /* ページの終わり: 前後の移動、編集のリンク、版 */
 .docs-foot { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--color-line); display: grid; gap: var(--space-4); }
 .docs-pn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
 .docs-pn a { display: grid; gap: 2px; align-content: center; min-height: calc(var(--size-hit) + var(--space-3)); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-line-strong); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text); text-decoration: none; min-width: 0; }
-.docs-pn a:hover { border-color: var(--color-primary); }
+.docs-pn a:hover { background: var(--color-surface-2); }
 .docs-pn-next { text-align: right; grid-column: 2; }
 .docs-pn-dir { color: var(--color-text-muted); font-size: var(--font-size-2); }
 .docs-pn-name { font-weight: var(--font-weight-strong); overflow-wrap: anywhere; }
@@ -183,7 +185,7 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 /* 手順 */
 .steps { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; gap: var(--space-5); counter-reset: step; max-width: 68ch; }
 .steps > li { counter-increment: step; margin: 0; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0 var(--space-3); }
-.steps > li::before { content: counter(step); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: var(--font-weight-strong); color: var(--color-primary); }
+.steps > li::before { content: counter(step); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: var(--font-weight-strong); color: var(--color-text-muted); }
 .steps > li > * { grid-column: 2; min-width: 0; }
 .steps h3 { margin: 0 0 var(--space-1); }
 .steps .code-gap { margin-top: var(--space-2); }
