@@ -61,7 +61,7 @@ export default {
     htmlNote: "ローディング中のスピナーには ki-spinner を使う。",
   },
   checkbox: {
-    lead: "独立したオンとオフを切り替える。ラベルを含めた領域が 44px 以上のタップ領域になる。複数の項目から選択するときは並べて使い、1 つだけ選択するときは RadioGroup を使う。",
+    lead: "1 つの項目のオンとオフを切り替える。ラベルを含めた領域が 44px 以上のタップ領域になる。複数の項目から選択するときは並べて使い、1 つだけ選択するときは RadioGroup を使う。",
     props: [
       ["label", "ReactNode", "-", "ラベル。ない場合は aria-label を付ける"],
       ["checked / defaultChecked / onCheckedChange", "boolean", "-", "制御と非制御"],
@@ -314,7 +314,7 @@ export default {
     props: [
       ["trigger", "ReactElement", "-", "メニューを開くボタン。要素 1 つ"],
       ["items", "MenuEntry[]", "-", "{ label, icon?, tone?, disabled?, onSelect?, href? }、{ type: \"separator\" }、{ type: \"label\", label }"],
-      ["align", "\"start\" | \"center\" | \"end\"", "\"start\"", "ボタンに対する揃え位置"],
+      ["align", "\"start\" | \"center\" | \"end\"", "\"start\"", "ボタンに対するそろえる位置"],
     ],
     classes: [
       [".ki-menu__popup、__item、__separator、__label", "Base UI の Popup と Item に当てる。素の HTML では見た目だけを提供する(開閉の動作は持たない)"],
@@ -423,7 +423,7 @@ export default {
     props: [
       ["options", "{ value, label, disabled? }[]", "-", "選択肢。必須"],
       ["value / defaultValue / onValueChange", "string | null", "-", "制御と非制御"],
-      ["placeholder", "string", "\"選ぶ\"", "未選択のときに表示する文言"],
+      ["placeholder", "string", "\"選択\"", "未選択のときに表示する文言"],
       ["invalid", "boolean", "false", "エラー状態の枠線"],
       ["loading", "boolean", "false", "開けなくなり、スピナーと「読み込み中」を表示する"],
       ["disabled", "boolean", "false", "操作できない"],
@@ -471,7 +471,7 @@ export default {
     htmlNote: null,
   },
   spinner: {
-    lead: "小さなスピナー。ボタンや入力欄の中で、短い待ち時間を示す。大きさは周囲の文字サイズ(1em)に合わせる。prefers-reduced-motion では回転させず、点線の輪にする。",
+    lead: "短い待ち時間を示す、小さな回転の印。ボタンや入力欄の中で、短い待ち時間を示す。大きさは周囲の文字サイズ(1em)に合わせる。prefers-reduced-motion では回転させず、点線の輪にする。",
     props: [
       ["label", "string", "-", "スクリーンリーダーが読み上げる文言。なければ装飾として扱う"],
       ["className", "string", "-", "追加のクラス"],
@@ -516,7 +516,7 @@ export default {
       ["sort / onSortChange", "{ key, direction } | null", "-", "並べ替え。見出しを押すと、昇順、降順、解除の順に切り替わる。実際の並べ替え処理は呼び出し側が行う"],
       ["selectable / selected / onSelectedChange", "boolean / string[] / fn", "false", "行の選択。見出しのチェックボックスで全選択する"],
       ["loading", "boolean", "false", "仮の行を 3 つ表示する。aria-busy が付く"],
-      ["error / onRetry", "ReactNode / () => void", "-", "エラーの表示と「もう一度」ボタン"],
+      ["error / onRetry", "ReactNode / () => void", "-", "エラーの表示と「再試行」ボタン"],
       ["emptyTitle / emptyText / emptyAction", "-", "-", "行が 0 件のときの Empty state"],
     ],
     classes: [
@@ -588,7 +588,7 @@ export default {
     ],
     vars: [
       ["--color-surface、--color-line-strong、--color-error、--color-focus", "背景、枠線、エラー、フォーカス"],
-      ["--size-hit、--space-2、--space-3、--radius-2", "最小の高さ(2 倍)、余白、角丸"],
+      ["--size-hit、--space-2、--space-3、--radius-2", "最小の高さ(--size-hit の 2 倍)、余白、角丸"],
     ],
     html: `<textarea class="ki-textarea" rows="3" aria-label="メモ" placeholder="メモを入力"></textarea>`,
     htmlNote: null,
@@ -617,7 +617,7 @@ export default {
     htmlNote: "トーストを消す動作は自分で実装する。",
   },
   tooltip: {
-    lead: "要素に触れたときに、短い補足を表示する。ホバーとフォーカスで開き、Esc で閉じる。操作要素や重要な文章は入れない(タッチ端末では表示されないため)。アイコンだけのボタンの名前は aria-label で付け、Tooltip は補足にとどめる。",
+    lead: "ポインターを置いたときやフォーカスしたときに、短い補足を表示する。ホバーとフォーカスで開き、Esc で閉じる。操作要素や重要な文章は入れない(タッチ端末では表示されないため)。アイコンだけのボタンの名前は aria-label で付け、Tooltip は補足にとどめる。",
     props: [
       ["content", "ReactNode", "-", "補足の文。短くする"],
       ["children", "ReactElement", "-", "対象の要素 1 つ"],
@@ -636,7 +636,7 @@ export default {
   <button type="button" class="ki-button" data-variant="secondary" aria-describedby="tt1">集計</button>
   <span id="tt1" role="tooltip" class="ki-tooltip">日付は日本時間の 0 時で区切る</span>
 </span>`,
-    htmlNote: "素の HTML では、触れたときに表示されるだけ。",
+    htmlNote: "素の HTML では、ホバーとフォーカスで表示するだけ(Esc では閉じない)。",
   },
   alert: {
     vars: [

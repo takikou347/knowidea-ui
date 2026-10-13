@@ -18,6 +18,6 @@ export function states(): StateRow[] {
     { label: "Loading", node: <W><Timeline items={[]} state="loading" /></W> },
     { label: "Error", node: <W><Timeline items={[]} state="error" /></W> },
     { label: "Disabled", na: "イベントの履歴は書き換えない。無効の行を持たない" },
-    { label: "Focus", na: "リンクのある行では、リンクにフォーカスが移る(リングは 2px)。上のデモを Tab で確認する" },
+    { label: "Focus", text: "リンクのある行では、リンクにフォーカスが移る(リングは 2px)。上のデモを Tab で確認する" },
   ];
 }

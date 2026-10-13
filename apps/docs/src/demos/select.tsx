@@ -11,7 +11,7 @@ const options = [
 export function Basic() {
   return (
     <div style={{ width: "min(100%, 240px)" }}>
-      <Select aria-label="間隔" options={options} placeholder="間隔を選ぶ" />
+      <Select aria-label="間隔" options={options} placeholder="間隔を選択" />
     </div>
   );
 }
@@ -27,7 +27,7 @@ export function Selected() {
 const W = ({ children }: { children: React.ReactNode }) => <div style={{ width: "min(100%, 240px)" }}>{children}</div>;
 export function states(): StateRow[] {
   return [
-    { label: "Empty", node: <W><Select aria-label="空" options={options} placeholder="間隔を選ぶ" /></W> },
+    { label: "Empty", node: <W><Select aria-label="空" options={options} placeholder="間隔を選択" /></W> },
     { label: "Loading", node: <W><Select aria-label="読み込み中" options={options} loading /></W> },
     { label: "Error", node: <W><Select aria-label="エラー" options={options} invalid /></W> },
     { label: "Disabled", node: <W><Select aria-label="無効" options={options} disabled defaultValue="daily" /></W> },

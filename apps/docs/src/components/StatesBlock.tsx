@@ -14,7 +14,7 @@ export default function StatesBlock({ slug }: { slug: string }) {
             <tr key={r.label}>
               <td>{r.label}</td>
               <td>
-                {r.na ? <span className="muted">対象外。{r.na}</span> : (
+                {r.na ? <span className="muted">対象外。{r.na}</span> : r.text ? <span className="muted">{r.text}</span> : (
                   <div className="state-cell">{r.node}{r.note ? <p className="state-note">{r.note}</p> : null}</div>
                 )}
               </td>

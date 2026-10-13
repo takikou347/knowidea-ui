@@ -25,7 +25,7 @@ export interface SelectProps {
 }
 
 export function Select({
-  options, value, defaultValue, onValueChange, placeholder = "選ぶ", disabled, invalid, loading, name, className, ...rest
+  options, value, defaultValue, onValueChange, placeholder = "選択", disabled, invalid, loading, name, className, ...rest
 }: SelectProps) {
   return (
     <BaseSelect.Root

@@ -8,7 +8,7 @@ const kinds = {
   color: { name: "Color", lead: "役割を表す名前の変数だけを参照する。ライトとダークは別々に決めており、反転では作らない。" },
   typography: { name: "Typography", lead: "書体は、本文と見出し用の IBM Plex Sans JP と、数字とコード用の IBM Plex Mono の 2 つ。サイズは 5 段階。" },
   spacing: { name: "Spacing", lead: "4px を単位とした 7 段階。コンポーネントの間隔は、この段階から選択する。" },
-  radius: { name: "Radius", lead: "小さな角丸を 3 段階で用意している。すべてに同じ大きな角丸は使わない。" },
+  radius: { name: "Radius", lead: "小さな角丸を 3 段階で用意している。大きな角丸を一律には使わない。" },
   shadow: { name: "Shadow", lead: "影は、浮かび上がる要素(メニュー、ダイアログ、画面に固定されたバー)にだけ使う。" },
   motion: { name: "Motion", lead: "状態が変わるときだけ動かす。prefers-reduced-motion では動きを止める。" },
 };
@@ -153,7 +153,7 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
     <>
       <h2 id="pop">Elevated surfaces</h2>
       <div class="demo"><div class="demo-stage"><div style="width: 200px; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-3); box-shadow: var(--shadow-pop)">--shadow-pop</div></div></div>
-      <p>影は 1 段階だけ(<code>--shadow-pop</code>)。メニュー、ダイアログ、画面に固定された SelectionBar に使う。ライトでは黒の 14%、ダークでは黒の 50%。影と枠線と背景色を重ねて、同じ要素を飾らない。</p>
+      <p>影は 1 段階だけ(<code>--shadow-pop</code>)。メニュー、ダイアログ、画面に固定された SelectionBar に使う。ライトでは黒の 14%、ダークでは黒の 50%。1 つの要素に、影、枠線、背景色を重ねて飾らない。</p>
     </>
   )}
 

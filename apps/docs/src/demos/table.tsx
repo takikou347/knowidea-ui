@@ -29,7 +29,7 @@ export function Sortable() {
     <div style={{ width: "100%", minWidth: 0 }}>
       <Table label="項目の一覧" columns={columns} rows={rows} rowKey={(r) => r.id}
         sort={sort} onSortChange={setSort} selectable selected={sel} onSelectedChange={setSel} rowLabel={(r) => r.name} />
-      <p className="muted" style={{ marginTop: "var(--space-2)" }}>{sel.length} 行を選択中</p>
+      <p className="muted" style={{ marginTop: "var(--space-2)" }}>{sel.length} 件を選択中</p>
     </div>
   );
 }

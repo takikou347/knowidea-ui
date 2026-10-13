@@ -101,7 +101,7 @@ export const input = [
   },
   {
     slug: "switch", name: "Switch", imports: ["Switch"],
-    demos: [{ fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定にはチェックボックスを使う。" }],
+    demos: [{ fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定には Checkbox を使う。" }],
     a11y: ["role=\"switch\" を持つ。Space で切り替える", "状態は位置だけで示さず、ラベルで何を切り替えるのかを書く"],
   },
   {

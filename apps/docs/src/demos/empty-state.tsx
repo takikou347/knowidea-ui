@@ -23,7 +23,7 @@ export function states(): StateRow[] {
   return [
     { label: "Empty", node: <Basic />, note: "このコンポーネント自身が、Empty 状態を示すためのもの" },
     { label: "Loading", na: "ローディング中は Skeleton を表示し、Empty state は表示しない(先に空だと思わせない)" },
-    { label: "Error", node: <div style={{ width: "100%" }}><EmptyState title="一覧を取得できなかった" icon={<Icon name="warning" />} action={<Button variant="secondary">再試行</Button>}>通信を確認してから、もう一度試す。</EmptyState></div> },
+    { label: "Error", node: <div style={{ width: "100%" }}><EmptyState title="一覧を取得できなかった" icon={<Icon name="warning" />} action={<Button variant="secondary">再試行</Button>}>接続を確認して、もう一度試す。</EmptyState></div> },
     { label: "Disabled", na: "無効状態を持たない。操作のボタンが無効になるだけ" },
     { label: "Focus", na: "操作のボタンにフォーカスが移る" },
   ];

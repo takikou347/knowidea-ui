@@ -24,6 +24,6 @@ export const charts = [
     ],
     classes: [[".ki-chart", "本体。data-state: loading | empty"], [".ki-chart__readout、__plot、__svg、__col、__bar、__dot、__line、__ref、__break", "内部の要素。__col[data-selected] が選択中の点"]],
     vars: [["--color-line-strong、--color-primary、--color-primary-hover", "棒、選択中の棒、選択中かつホバー時の棒"], ["--color-line、--color-text-muted", "目盛りの線と文字"], ["--color-warn", "基準線"], ["--font-mono", "数値と目盛りのフォント"]],
-    a11y: ["各点が role=\"button\"、aria-pressed、aria-label(日付と値)を持つ。矢印キー、Home、End で移動する", "選択した点の値は aria-live で読み上げ、内訳は表のように文字で表示する。色だけに頼らない", "30 本の棒は 44px に収まらないため、タップ領域は前後のボタン(44px)で補う"],
+    a11y: ["各点が role=\"button\"、aria-pressed、aria-label(日付と値)を持つ。矢印キー、Home、End で移動する", "選択した点の値は aria-live で読み上げ、内訳は表のように文字で表示する。色だけに頼らない", "棒 1 本の幅が 44px に満たないため、タップ領域は前後のボタン(44px)で補う"],
   },
 ];

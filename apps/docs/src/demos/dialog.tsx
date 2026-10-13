@@ -69,6 +69,6 @@ export function states(): StateRow[] {
     { label: "Disabled", node: <Button variant="secondary" disabled>ダイアログを開く</Button> },
     { label: "Focus", node: <Button variant="secondary" className="is-focus">ダイアログを開く</Button>, note: "開くと最初の要素にフォーカスが移る。確認ダイアログではキャンセル側が先" },
     { label: "Hover", na: "ダイアログ自体は変わらない。中のボタンが変わる" },
-    { label: "Active", na: "開くボタンは押すとダイアログが開く。確認ダイアログは「キャンセル」と「削除する」で閉じる" },
+    { label: "Active", na: "押したときの見た目は、開くボタン(Button)のものを使う。確認ダイアログは「キャンセル」と「削除する」で閉じる" },
   ];
 }

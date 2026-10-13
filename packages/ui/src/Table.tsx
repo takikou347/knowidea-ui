@@ -97,7 +97,7 @@ export function Table<T extends Record<string, unknown>>({
         <tbody>
           {error ? (
             <tr><td colSpan={span} className="ki-table__state">
-              <Alert tone="error" action={onRetry ? <Button variant="secondary" onClick={onRetry}>もう一度</Button> : undefined}>{error}</Alert>
+              <Alert tone="error" action={onRetry ? <Button variant="secondary" onClick={onRetry}>再試行</Button> : undefined}>{error}</Alert>
             </td></tr>
           ) : loading ? (
             [0, 1, 2].map((i) => (

@@ -28,6 +28,6 @@ export function states(): StateRow[] {
     { label: "Loading", na: "トーストは結果を伝えるものなので、処理中は Alert か Progress で示す" },
     { label: "Error", node: <Tones />, note: "「エラー」のボタンを押すと、エラーのトーストが表示される(5 秒で消える。閉じるボタンでも消せる)" },
     { label: "Disabled", na: "トーストは操作を受けない。閉じるボタンだけを持つ" },
-    { label: "Focus", na: "表示されたトーストの閉じるボタンには、Tab で移れる。F6 でトーストの領域に移れる" },
+    { label: "Focus", text: "表示されたトーストの閉じるボタンには、Tab で移れる。F6 でトーストの領域に移れる" },
   ];
 }

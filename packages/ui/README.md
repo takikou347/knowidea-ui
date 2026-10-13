@@ -1,6 +1,6 @@
 # @knowidea/ui
 
-KNOW IDEA の UI ライブラリの React 19 コンポーネント。どのアプリにも属さない。見た目は `@knowidea/css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer)は `@base-ui/react` 1.9.0 をベースに実装している。
+KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定のアプリに依存しない。見た目は `@knowidea/css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer)は `@base-ui/react` 1.9.0 をベースに実装している。
 
 | コマンド | 中身 |
 | --- | --- |

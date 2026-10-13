@@ -2,7 +2,7 @@
 export const surface = [
   {
     slug: "card", name: "Card", imports: ["Card"],
-    lead: "見出し、メタ情報、本文、操作を 1 つの枠にまとめる。入れ子にはしない。クリックできるカードでは、見出しのリンクが枠全体に広がる。",
+    lead: "見出し、メタ情報、本文、操作を 1 つの枠にまとめる。入れ子にはしない。リンクのあるカードでは、見出しのリンクのクリック領域が枠全体に広がる。",
     sample: true,
     demos: [
       { fn: "Basic", title: "Clickable and with actions", text: "メタ情報は名前と値のペアで、2 列に並ぶ。値は等幅で表示する。", block: true },

@@ -22,7 +22,7 @@ export function Running() {
   return (
     <Stack gap={3} style={{ width: "min(100%, 360px)" }}>
       <Progress label="エクスポート" value={v} />
-      <div><Button variant="secondary" disabled={v != null && v < 100} onClick={() => setV(0)}>{v == null ? "開始" : v >= 100 ? "もう一度" : "実行中"}</Button></div>
+      <div><Button variant="secondary" disabled={v != null && v < 100} onClick={() => setV(0)}>{v == null ? "開始" : v >= 100 ? "再試行" : "実行中"}</Button></div>
     </Stack>
   );
 }

@@ -14,7 +14,7 @@ export function Basic() {
 export function states(): StateRow[] {
   return [
     { label: "Empty", node: <RadioGroup legend="未選択" options={options} /> },
-    { label: "Loading", na: "選択肢が揃うまでは Skeleton で場所を確保する。個々のラジオにローディング状態はない" },
+    { label: "Loading", na: "選択肢がそろうまでは Skeleton で場所を確保する。個々のラジオにローディング状態はない" },
     { label: "Error", node: <RadioGroup legend="未選択(必須)" options={options} invalid /> },
     { label: "Disabled", node: <RadioGroup legend="無効" options={options} disabled defaultValue="push" /> },
     { label: "Focus", node: <RadioGroup legend="フォーカスは選択中の 1 つに移る" options={options} defaultValue="email" /> },

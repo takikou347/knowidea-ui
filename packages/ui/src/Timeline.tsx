@@ -30,8 +30,8 @@ export interface TimelineProps {
   className?: string;
 }
 
-/** 新しい順の出来事の一覧。 */
-export function Timeline({ items, state = "ready", emptyText = "まだ出来事は無い", errorText = "出来事を取れなかった。", loadingText = "読み込み中", className }: TimelineProps) {
+/** 新しい順のイベントの一覧。 */
+export function Timeline({ items, state = "ready", emptyText = "まだイベントはない", errorText = "イベントを取得できなかった。", loadingText = "読み込み中", className }: TimelineProps) {
   if (state === "empty") return <EmptyState title={emptyText} icon={<Icon name="pulse" />} />;
   if (state === "error") return <EmptyState title={errorText} icon={<Icon name="warning" />} />;
   if (state === "loading") {

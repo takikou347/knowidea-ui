@@ -46,9 +46,9 @@ export interface StatProps {
   sub?: string;
   spark?: number[];
   sparkLabel?: string;
-  /** いつの数か(例: 10/13 09:28)。時刻は等幅で出る */
+  /** いつ時点の値か(例: 10/13 09:28)。時刻は等幅で出る */
   asOf?: string;
-  /** asOf の前後の文。{time} が asOf に変わる。既定は「{time} の数」 */
+  /** asOf の前後の文。{time} が asOf に変わる。既定は「{time} 時点」 */
   asOfFormat?: string;
   /** 数が取れなかった・無いときに出す語 */
   fallback?: string;
@@ -62,7 +62,7 @@ export interface StatProps {
 }
 
 export function Stat({
-  label, icon, value, unit, delta, deltaLabel = "前回比", sub, spark, sparkLabel, asOf, asOfFormat = "{time} の数", fallback = "不明", stale, staleLabel = "古い数", state = "ready", error, className,
+  label, icon, value, unit, delta, deltaLabel = "前回比", sub, spark, sparkLabel, asOf, asOfFormat = "{time} 時点", fallback = "不明", stale, staleLabel = "古い値", state = "ready", error, className,
 }: StatProps) {
   const loading = state === "loading";
   const failed = state === "error";
@@ -85,7 +85,7 @@ export function Stat({
               {delta ? (
                 <p className="ki-stat__delta" data-dir={delta.dir}>
                   {delta.dir === "up" ? <Icon name="arrow-up" /> : delta.dir === "down" ? <Icon name="arrow-down" /> : null}
-                  <span>{deltaLabel} {delta.dir === "none" ? "無し" : delta.dir === "flat" ? "変わらず" : delta.text}</span>
+                  <span>{deltaLabel} {delta.dir === "none" ? "なし" : delta.dir === "flat" ? "変わらず" : delta.text}</span>
                 </p>
               ) : <span />}
               {spark ? <span className="ki-stat__spark"><Sparkline data={spark} label={sparkLabel ?? `${label}の推移`} /></span> : null}

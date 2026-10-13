@@ -6,7 +6,7 @@ const { href } = links(Astro.url.pathname);
 ---
 <Base title="Components" description="コンポーネントの一覧" toc={false}>
   <h1>Components</h1>
-  <p class="lead">{components.length} 個のコンポーネントを、{categories.length} つのカテゴリに分けている。どのアプリにも属さない汎用のコンポーネントで、名前は上部の検索でも探せる。</p>
+  <p class="lead">{components.length} 個のコンポーネントを、{categories.length} つのカテゴリに分けている。特定のアプリに依存しない汎用のコンポーネントで、名前は上部の検索でも探せる。</p>
   {categories.map((cat) => (
     <>
       <h2 id={cat.id}>{cat.name}</h2>

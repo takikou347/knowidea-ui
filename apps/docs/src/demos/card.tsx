@@ -11,14 +11,14 @@ export function Basic() {
         href="#export"
         meta={[{ label: "最終実行", value: "10/13 09:28" }, { label: "今日の件数", value: "1,280" }]}
       >
-        <p>見出しがリンクで、クリックできる範囲はカード全体に広がる。</p>
+        <p>見出しがリンクで、クリック領域はカード全体に広がる。</p>
       </Card>
       <Card
         title="公開前の確認"
-        badge={<Status kind="paused" label="待機中" />}
+        badge={<Status kind="paused" label="待ち" />}
         actions={<><Button variant="secondary" icon={<Icon name="check" />}>承認</Button><Button variant="quiet">あとで</Button></>}
       >
-        <p>操作つきのカード。操作はカードのリンクより前面に表示され、リンクとは別にクリックできる。</p>
+        <p>操作つきのカード。操作はカードのリンクより前面に表示され、リンクとは別に操作できる。</p>
       </Card>
     </Grid>
   );

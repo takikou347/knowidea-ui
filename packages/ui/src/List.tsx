@@ -58,7 +58,7 @@ export interface ListProps {
   state?: "ready" | "loading" | "empty" | "error";
   /** 一覧の上に出す文(例: 8 件) */
   summary?: ReactNode;
-  /** すべて選択枠の文。選んだ数があれば {count} が数になる */
+  /** 「すべて選択」の文言。選んだ数があれば {count} が数になる */
   selectAllLabel?: string;
   selectedLabel?: string;
   emptyText?: string;
