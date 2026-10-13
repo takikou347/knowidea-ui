@@ -77,31 +77,80 @@ async function open(ctx, path, errors) {
   return page;
 }
 
-// 1. 幅とコンソール
+// 1. 幅とコンソール。スマホ(360、390、430)、iPad(768、820 の縦、1024、1180 の横)、PC(1280 ダーク)。
+//    横にはみ出さない、画面の外に出る物が無い、押せる物どうしが重ならない、コンソールの誤りが 0
 const matrix = [
-  ["390 ライト", { viewport: { width: 390, height: 844 }, colorScheme: "light" }],
-  ["1280 ダーク", { viewport: { width: 1280, height: 800 }, colorScheme: "dark" }],
+  ["360 ライト", { viewport: { width: 360, height: 740 }, colorScheme: "light", hasTouch: true }, true],
+  ["390 ライト", { viewport: { width: 390, height: 844 }, colorScheme: "light", hasTouch: true }, true],
+  ["430 ライト", { viewport: { width: 430, height: 932 }, colorScheme: "light", hasTouch: true }, true],
+  ["768 iPad 縦", { viewport: { width: 768, height: 1024 }, colorScheme: "light", hasTouch: true }, true],
+  ["820 iPad 縦", { viewport: { width: 820, height: 1180 }, colorScheme: "light", hasTouch: true }, true],
+  ["1024 iPad 横", { viewport: { width: 1024, height: 768 }, colorScheme: "light", hasTouch: true }, true],
+  ["1180 iPad 横", { viewport: { width: 1180, height: 820 }, colorScheme: "dark", hasTouch: true }, true],
+  ["1280 ダーク", { viewport: { width: 1280, height: 800 }, colorScheme: "dark" }, false],
 ];
-for (const [name, opts] of process.env.ONLY ? [] : matrix) {
+// ページの中の、見える押せる物の一覧。inert、hidden、sr-only は除く
+const tappable = () => {
+  const out = [];
+  for (const el of document.querySelectorAll('a[href], button, [role="tab"], [role="button"], input, select, textarea, summary')) {
+    const cs = getComputedStyle(el);
+    if (cs.visibility === "hidden" || cs.display === "none" || el.closest("[hidden], [aria-hidden='true'], [inert]")) continue;
+    const closed = el.closest("details:not([open])"); // 閉じた details の中身は見えない(summary だけ見える)
+    if (closed && !(el.tagName === "SUMMARY" && el.parentElement === closed)) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width < 2 || r.height < 2 || el.classList.contains("skip")) continue; // sr-only、スキップリンク
+    // 横に流す枠や overflow: hidden の外に隠れた部分は、見えていないので除く
+    let vis = { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+    for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+      const c = getComputedStyle(p);
+      if (/(auto|scroll|hidden|clip)/.test(c.overflowX + c.overflowY)) {
+        const q = p.getBoundingClientRect();
+        vis = { left: Math.max(vis.left, q.left), right: Math.min(vis.right, q.right), top: Math.max(vis.top, q.top), bottom: Math.min(vis.bottom, q.bottom) };
+      }
+    }
+    out.push({ el, r, v: vis });
+  }
+  return out;
+};
+const only = (list) => (process.env.PAGES ? list.filter((x) => new RegExp(process.env.PAGES).test(x)) : list);
+const widthOk = (w) => !process.env.WIDTHS || process.env.WIDTHS.split(",").includes(String(w));
+for (const [name, opts, touch] of process.env.ONLY ? [] : matrix.filter(([, o]) => widthOk(o.viewport.width))) {
   const ctx = await browser.newContext(opts);
-  for (const path of pages) {
+  for (const path of only(pages)) {
     const errors = [];
     const page = await open(ctx, path, errors);
-    const { sw, iw, broken } = await page.evaluate(() => ({
-      sw: document.documentElement.scrollWidth, iw: window.innerWidth,
-      broken: [...document.images].filter((i) => i.offsetParent !== null && !i.naturalWidth).map((i) => i.getAttribute("src")),
-    }));
+    const { sw, iw, broken, off, overlap } = await page.evaluate((fnSrc) => {
+      const items = new Function("return (" + fnSrc + ")")()();
+      const scrolls = (el) => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === "auto" || o === "scroll" || o === "hidden" || o === "clip") return true; } return false; };
+      const off = items.filter(({ el, r }) => (r.right > innerWidth + 1 || r.left < -1) && !scrolls(el) && !el.closest("dialog:not([open])")).map(({ el, r }) => `${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]} ${Math.round(r.left)}..${Math.round(r.right)}`);
+      // 押せる物どうしの重なり(入れ子、::after で広げたリンクと同じカードの中の物は除く)
+      const overlap = [];
+      const box = items.filter(({ el }) => !el.closest(".ki-chart__col") && !el.closest("dialog:not([open])") && !(getComputedStyle(el, "::after").position === "absolute") && getComputedStyle(el).display !== "inline"); // 文中のリンクは、折り返すと外接の箱が重なって見える
+      for (let i = 0; i < box.length && overlap.length < 3; i++) for (let j = i + 1; j < box.length; j++) {
+        const a = box[i], b = box[j];
+        if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
+        const w = Math.min(a.v.right, b.v.right) - Math.max(a.v.left, b.v.left), h = Math.min(a.v.bottom, b.v.bottom) - Math.max(a.v.top, b.v.top);
+        if (w > 4 && h > 4) { overlap.push(`${a.el.tagName.toLowerCase()}「${(a.el.getAttribute("aria-label") || a.el.textContent).trim().slice(0, 10)}」と${b.el.tagName.toLowerCase()}「${(b.el.getAttribute("aria-label") || b.el.textContent).trim().slice(0, 10)}」`); break; }
+      }
+      return {
+        sw: document.documentElement.scrollWidth, iw: window.innerWidth, off: off.slice(0, 3), overlap,
+        broken: [...document.images].filter((i) => i.offsetParent !== null && !i.naturalWidth).map((i) => i.getAttribute("src")),
+      };
+    }, tappable.toString());
     if (broken.length) errors.push("読めない画像: " + broken.join(", "));
+    if (off.length) errors.push("画面の外に出る: " + off.join(", "));
+    if (overlap.length) errors.push("重なる: " + overlap.join(", "));
     report(sw <= iw && errors.length === 0, `${name} ${path} scrollWidth ${sw} / ${iw}${errors.length ? "  " + errors.slice(0, 3).join(" | ") : ""}`);
     await page.close();
   }
   await ctx.close();
 }
 
-// 1b. 押せる所の大きさ(390px)。除く: 文中の inline のリンク(行の高さで決まり、44px にできない)、sr-only の隠した物
+// 1b. 押せる所の大きさ(指で触る幅: 360、390、768、1024)。除く: 文中の inline のリンク(行の高さで決まり、44px にできない)、sr-only の隠した物
 if (!process.env.ONLY) {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: "light" });
-  for (const path of pages) {
+  for (const w of [360, 390, 768, 1024].filter(widthOk)) {
+  const ctx = await browser.newContext({ viewport: { width: w, height: w >= 768 ? 1024 : 844 }, colorScheme: "light", hasTouch: true });
+  for (const path of only(pages)) {
     const page = await open(ctx, path, []);
     const small = await page.evaluate(() => {
       const out = [];
@@ -124,10 +173,11 @@ if (!process.env.ONLY) {
       }
       return out;
     });
-    report(small.length === 0, `390 押せる所 44px ${path}${small.length ? "  " + small.slice(0, 4).join(" | ") + (small.length > 4 ? ` ほか ${small.length - 4}` : "") : ""}`);
+    report(small.length === 0, `${w} 押せる所 44px ${path}${small.length ? "  " + small.slice(0, 4).join(" | ") + (small.length > 4 ? ` ほか ${small.length - 4}` : "") : ""}`);
     await page.close();
   }
   await ctx.close();
+  }
 }
 
 // 2. 操作
@@ -283,7 +333,7 @@ await kb("検索(/ で開く、日本語と英語、矢印、Enter で移る、E
 await kb("検索(日本語の語、節への移動、深い場所でも索引を読む)", "components/button.html", async (page) => {
   await page.getByRole("button", { name: "Search" }).click();
   await page.locator("#docs-sd").waitFor({ state: "visible" });
-  await page.getByRole("combobox", { name: "Search" }).fill("履歴");
+  await page.getByRole("combobox", { name: "Search" }).fill("ダーク");
   await page.getByRole("option").first().waitFor({ state: "visible" });
   await page.getByRole("combobox", { name: "Search" }).fill("changelog");
   const first = page.getByRole("option").first();
@@ -306,11 +356,11 @@ await kb("前後の移動(Previous / Next)", "components/button.html", async (pa
   await page.waitForURL((u) => u.pathname.endsWith("/components/button.html"));
 });
 
-await kb("前後の移動(先頭は Next だけ、末尾は Previous だけ)", "index.html", async (page) => {
+await kb("前後の移動(先頭は Next だけ、末尾は Previous だけ)", "getting-started/install.html", async (page) => {
   const nav = page.getByRole("navigation", { name: "Previous and next pages" });
   assert((await nav.getByRole("link", { name: /Previous/ }).count()) === 0, "先頭に Previous がある");
   assert((await nav.getByRole("link", { name: /Next/ }).count()) === 1, "先頭に Next が無い");
-  await page.goto(page.url().replace("index.html", "changelog.html"));
+  await page.goto(page.url().replace("getting-started/install.html", "changelog.html"));
   const n2 = page.getByRole("navigation", { name: "Previous and next pages" });
   assert((await n2.getByRole("link", { name: /Next/ }).count()) === 0, "末尾に Next がある");
 });
@@ -345,6 +395,88 @@ await kb("404(検索が深い場所でも開く)", "components/nope/deeper/missi
   await page.locator("#docs-sd").waitFor({ state: "visible" });
   await page.getByRole("combobox", { name: "Search" }).fill("Dialog");
   await page.getByRole("option").first().waitFor({ state: "visible" });
+});
+
+await kb("トップ(サイドメニューが無い、上のバーの 6 つのリンク、トップのレイアウト)", "index.html", async (page) => {
+  assert((await page.locator(".docs-nav").count()) === 0, "トップにサイドメニューが出ている");
+  const bar = page.getByRole("navigation", { name: "Main" });
+  for (const n of ["Docs", "Components", "Icons", "Templates", "Changelog"]) assert((await bar.getByRole("link", { name: n, exact: true }).count()) === 1, "上のバーに " + n + " が無い");
+  assert((await page.locator(".docs-top .docs-gh").count()) === 1, "上のバーに GitHub が無い");
+  assert((await page.getByRole("link", { name: "Get started" }).count()) === 1 && (await page.getByRole("link", { name: "Browse components" }).count()) >= 1, "Get started と Browse components が無い");
+  assert((await page.locator("h1").textContent()).length > 10, "h1 が無い");
+  assert((await page.locator(".hl-cell").count()) >= 12, "動く部品の格子が少ない");
+  assert((await page.locator(".features-grid li").count()) === 4, "特長が 4 つでない");
+  await bar.getByRole("link", { name: "Docs", exact: true }).click();
+  await page.waitForURL(/getting-started\/install\.html/);
+  assert((await page.locator('.docs-topnav a[aria-current]').textContent()) === "Docs", "今いる所の印が Docs に付かない");
+});
+
+await kb("トップの動く見本(主の色、角丸、密度、ダーク、範囲、タブ、並べ替え、部品の格子)", "index.html", async (page) => {
+  const btn = page.getByRole("button", { name: "Export", exact: true });
+  const props = () => btn.evaluate((el) => { const cs = getComputedStyle(el); return { bg: cs.backgroundColor, r: cs.borderTopLeftRadius, h: el.getBoundingClientRect().height }; });
+  const before = await props();
+  assert(before.r === "8px", "既定の Button の角丸が 8px でない: " + before.r);
+  await page.getByRole("button", { name: "Blue" }).click();
+  await page.waitForTimeout(400); // 色の変わり目の動きが終わるまで
+  const blue = await props();
+  assert(blue.bg !== before.bg, "主の色を変えても Button の色が変わらない");
+  await page.getByRole("button", { name: "Large" }).click();
+  assert((await props()).r === "12px", "角丸を Large にしても Button が 12px にならない");
+  await page.getByRole("button", { name: "None" }).click();
+  assert((await props()).r === "0px", "角丸を None にしても Button が 0px にならない");
+  const cardR = await page.locator(".hl-stage .ki-stat").first().evaluate((el) => getComputedStyle(el).borderTopLeftRadius);
+  assert(cardR === "0px", "角丸 None で Stat が角丸のまま: " + cardR);
+  await page.getByRole("button", { name: "Medium" }).click();
+  const tall = (await page.locator(".hl-stage").boundingBox()).height;
+  await page.getByRole("button", { name: "Comfortable" }).click();
+  assert((await page.locator(".hl-stage").boundingBox()).height > tall, "密度を変えても画面が広がらない");
+  const total = () => page.locator(".hl-stage .ki-stat").first().textContent();
+  const t0 = await total();
+  await page.getByRole("combobox", { name: "Range" }).click();
+  await page.getByRole("option", { name: "Last 7 days" }).click();
+  assert((await total()) !== t0, "範囲を変えても合計が変わらない");
+  await page.getByRole("tab", { name: "Recent" }).click();
+  const names = () => page.locator(".hl-stage tbody tr td:nth-child(1)").allTextContents();
+  const n0 = await names();
+  await page.getByRole("button", { name: /Name/ }).click();
+  assert(JSON.stringify(await names()) !== JSON.stringify(n0), "並べ替えても行の順が変わらない");
+  await page.getByRole("switch", { name: "Dark" }).click();
+  assert((await page.evaluate(() => document.documentElement.dataset.theme)) === "dark", "Dark で表示がダークにならない");
+  await page.locator(".hl-cell").filter({ hasText: "Checkbox" }).getByRole("checkbox").first().click();
+  await page.locator(".hl-cell").filter({ hasText: "Tabs" }).getByRole("tab").nth(1).click();
+});
+
+await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
+  assert((await page.locator(".cp").count()) === 44, "カードが 44 枚でない");
+  assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
+  assert((await page.locator(".cp-fit").count()) === 44, "見本が 44 個でない");
+  // 見本は触れる: Switch を押すと切り替わる
+  const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
+  await sw.scrollIntoViewIfNeeded();
+  const before = await sw.getAttribute("aria-checked");
+  await sw.click();
+  assert((await sw.getAttribute("aria-checked")) !== before, "見本の Switch が切り替わらない");
+  const card = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Button$/ }) });
+  await card.getByRole("button", { name: "Code for Button" }).click();
+  const dlg = page.locator("#cp-dialog");
+  await dlg.waitFor({ state: "visible" });
+  assert((await page.locator("#cp-code").textContent()).includes("<Button"), "React のコードが出ない");
+  await dlg.getByRole("tab", { name: "HTML" }).click();
+  assert((await page.locator("#cp-code").textContent()).includes("ki-button"), "HTML のコードが出ない");
+  await dlg.getByRole("button", { name: "Copy" }).click();
+  assert((await page.evaluate(() => navigator.clipboard.readText())).includes("ki-button"), "コードがコピーされない");
+  await page.keyboard.press("Escape");
+  await dlg.waitFor({ state: "hidden" });
+  assert(await page.evaluate(() => document.activeElement?.getAttribute("aria-label") === "Code for Button"), "閉じた後に focus が Code のボタンへ戻らない");
+  await page.locator(".cp-link", { hasText: /^Card$/ }).click();
+  await page.waitForURL(/components\/card\.html/);
+});
+
+await kb("角丸の段(小 4px、ボタンと入力 8px、面 12px、Chip は丸)", "components/chip.html", async (page) => {
+  const v = await page.evaluate(() => { const s = getComputedStyle(document.documentElement); return [1, 2, 3].map((n) => s.getPropertyValue("--radius-" + n).trim()).concat(s.getPropertyValue("--radius-pill").trim()); });
+  assert(v.slice(0, 3).join() === "4px,8px,12px" && v[3] === "999px", "角丸のトークンが違う: " + v);
+  const chip = await page.locator(".ki-chip").first().evaluate((el) => getComputedStyle(el).borderTopLeftRadius);
+  assert(chip === "999px", "Chip が丸くない: " + chip);
 });
 
 await kb("ダークとライトの切り替え", "index.html", async (page) => {
@@ -402,14 +534,15 @@ await kb("「コードを見る」と写す(部品のページ)", "components/bu
   assert(norm(clip) === norm(shown) && clip.includes("Button"), "コピーした文字が表示と違う");
 });
 
-await kb("見本の画面(一覧: 選んでアーカイブ、元に戻す)", "templates/list.html", async (page) => {
+await kb("見本の画面(ダッシュボード: 表で選んでアーカイブ、元に戻す)", "templates/dashboard.html", async (page) => {
   const bar = page.getByRole("button", { name: "アーカイブする" });
   assert(await bar.isDisabled(), "選ぶ前にアーカイブできる");
-  await page.getByRole("checkbox", { name: "デザインの見直し を選択" }).click();
+  await page.getByRole("checkbox", { name: "項目 A を選択" }).click();
   assert(!(await bar.isDisabled()), "選んでもアーカイブできない");
   await bar.click();
-  await page.getByText("1 件をアーカイブした。").waitFor({ state: "visible" });
+  assert((await page.getByRole("checkbox", { name: "項目 A を選択" }).count()) === 0, "アーカイブしても行が消えない");
   await page.getByRole("button", { name: "元に戻す" }).click();
+  assert((await page.getByRole("checkbox", { name: "項目 A を選択" }).count()) === 1, "元に戻しても行が戻らない");
 });
 
 await browser.close();

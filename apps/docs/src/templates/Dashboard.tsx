@@ -1,4 +1,5 @@
-import { Alert, Card, Chart, Grid, IconButton, Icon, List, Stat, Status, Timeline, type ChartPoint, type ListEntry, type TimelineEntry } from "@knowidea/ui";
+import { useState } from "react";
+import { Alert, Button, Card, Chart, Grid, IconButton, Icon, List, SelectionBar, Stat, Status, Table, Timeline, type ChartPoint, type Column, type ListEntry, type TimelineEntry } from "@knowidea/ui";
 import Shell from "./Shell";
 
 // 数値はすべてサンプル。
@@ -21,7 +22,23 @@ const waiting: ListEntry[] = [
   { id: "w2", title: "アイコンの整理", href: "#w2", meta: <><Status kind="paused" label="待機中" /><span>10/12 18:02</span></> },
 ];
 
+type Row = { id: string; name: string; status: string; runs: number };
+const rows: Row[] = [
+  { id: "a", name: "項目 A", status: "完了", runs: 24 },
+  { id: "b", name: "項目 B", status: "待機中", runs: 7 },
+  { id: "c", name: "項目 C", status: "停止", runs: 3 },
+  { id: "d", name: "項目 D", status: "完了", runs: 12 },
+];
+const columns: Column<Row>[] = [
+  { key: "name", header: "名前" },
+  { key: "status", header: "状態" },
+  { key: "runs", header: "回数", numeric: true },
+];
+
 export default function Dashboard() {
+  const [sel, setSel] = useState<string[]>([]);
+  const [archived, setArchived] = useState<string[]>([]);
+  const shown = rows.filter((r) => !archived.includes(r.id));
   return (
     <Shell
       title="ダッシュボード"
@@ -43,6 +60,16 @@ export default function Dashboard() {
         <Card title="最近のイベント" headingLevel={3}><Timeline items={events} /></Card>
         <Card title="確認待ち" headingLevel={3}><List label="確認待ちの項目" items={waiting} /></Card>
       </Grid>
+      <Card title="項目の一覧(サンプル値)" headingLevel={3}>
+        <Table label="項目の一覧" columns={columns} rows={shown} rowKey={(r) => r.id} selectable selected={sel} onSelectedChange={setSel} rowLabel={(r) => r.name}
+          emptyTitle="項目がない" emptyText="アーカイブしていない項目は、ここに表示される。" />
+        <SelectionBar
+          count={sel.length}
+          actions={<Button variant="secondary" disabled={sel.length === 0} onClick={() => { setArchived([...archived, ...sel]); setSel([]); }}>アーカイブする</Button>}
+          onClear={() => setSel([])}
+        />
+        {archived.length > 0 && <Button variant="quiet" onClick={() => setArchived([])}>元に戻す</Button>}
+      </Card>
     </Shell>
   );
 }
