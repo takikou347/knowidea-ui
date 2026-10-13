@@ -75,9 +75,12 @@ export function Table<T extends Record<string, unknown>>({
   const bodyRef = useRef<HTMLTableSectionElement>(null);
   const handles = useRef(new Map<string, HTMLButtonElement>());
   const focusKey = useRef<string | null>(null);
-  const origin = useRef<{ y: number; mids: number[] }>({ y: 0, mids: [] });
+  const origin = useRef<{ y: number; h: number; mids: number[] }>({ y: 0, h: 0, mids: [] });
   const [drag, setDrag] = useState<Drag | null>(null);
-  const [live, setLive] = useState("");
+  const [liveText, setLiveText] = useState("");
+  const liveN = useRef(0);
+  // 同じ文が続いても読み上げられるよう、文の終わりを入れ替える(見た目は変わらない)
+  const setLive = (t: string) => { liveN.current += 1; setLiveText(t + (liveN.current % 2 ? "" : "\u00a0")); };
   const dragRef = useRef<Drag | null>(null);
   dragRef.current = drag;
   const enabled = canReorder && !loading && !error && rows.length > 1;
@@ -111,7 +114,7 @@ export function Table<T extends Record<string, unknown>>({
   const onHandleDown = (e: PointerEvent<HTMLButtonElement>, index: number) => {
     if (!enabled || (e.pointerType === "mouse" && e.button !== 0)) return;
     const trs = [...(bodyRef.current?.querySelectorAll<HTMLTableRowElement>(":scope > tr") ?? [])];
-    origin.current = { y: e.clientY, mids: trs.map((tr) => { const r = tr.getBoundingClientRect(); return r.top + r.height / 2; }) };
+    origin.current = { y: e.clientY, h: trs[index]?.getBoundingClientRect().height ?? 0, mids: trs.map((tr) => { const r = tr.getBoundingClientRect(); return r.top + r.height / 2; }) };
     e.currentTarget.setPointerCapture(e.pointerId);
     setDrag({ mode: "pointer", from: index, to: index, slot: index, dy: 0 });
     setLive(`${nameOf(rows[index] as T)} を掴んだ。${index + 1} 行目`);
@@ -238,10 +241,11 @@ export function Table<T extends Record<string, unknown>>({
               const k = rowKey(row);
               const isSel = selected.includes(k);
               const picked = !!drag && i === drag.from;
-              let drop: "before" | "after" | undefined;
-              if (drag?.mode === "pointer" && drag.to !== drag.from) {
-                if (drag.slot === i) drop = "before";
-                else if (drag.slot === rows.length && i === rows.length - 1) drop = "after";
+              // 指やマウスで動かす間は、間の行を 1 行ぶんずらして、落とす所に空きを作る
+              let shift = 0;
+              if (drag?.mode === "pointer") {
+                if (drag.to > drag.from && i > drag.from && i <= drag.to) shift = -origin.current.h;
+                else if (drag.to < drag.from && i >= drag.to && i < drag.from) shift = origin.current.h;
               }
               const lifted = drag?.mode === "key" && picked;
               return (
@@ -249,8 +253,8 @@ export function Table<T extends Record<string, unknown>>({
                   key={k}
                   aria-selected={selectable ? isSel : undefined}
                   data-dragging={picked ? "" : undefined}
-                  data-drop={drop}
-                  style={drag?.mode === "pointer" && picked ? { transform: `translateY(${drag.dy}px)` } : undefined}
+                  data-shift={shift ? "" : undefined}
+                  style={drag?.mode === "pointer" ? (picked ? { transform: `translateY(${drag.dy}px)` } : shift ? { transform: `translateY(${shift}px)` } : undefined) : undefined}
                 >
                   {canReorder ? (
                     <td data-handle="">
@@ -258,7 +262,7 @@ export function Table<T extends Record<string, unknown>>({
                         type="button"
                         className="ki-table__handle"
                         ref={(el) => { if (el) handles.current.set(k, el); else handles.current.delete(k); }}
-                        aria-label={`${nameOf(row)} を並べ替える(${i + 1} 行目)`}
+                        aria-label={`${nameOf(row)} を並べ替える(${(drag?.mode === "pointer" && picked ? drag.to : pos) + 1} 行目)`}
                         aria-describedby={hintId}
                         aria-pressed={lifted ? true : undefined}
                         disabled={!enabled}
@@ -298,7 +302,7 @@ export function Table<T extends Record<string, unknown>>({
       {canReorder ? (
         <>
           <span id={hintId} className="ki-sr-only">Space で持ち上げ、上下の矢印で動かし、Space か Enter で置く。Esc で戻す。マウスや指では、押したまま動かす</span>
-          <span className="ki-sr-only" role="status" aria-live="polite">{live}</span>
+          <span className="ki-sr-only" role="status" aria-live="polite">{liveText}</span>
         </>
       ) : null}
       {loading ? <span className="ki-sr-only" role="status"><Spinner />読み込み中</span> : null}

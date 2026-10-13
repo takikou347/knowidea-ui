@@ -494,11 +494,14 @@ await kb("表の行の並べ替え(マウス、キーボード、Esc、aria-live
   await page.mouse.move(from.x, from.y + 20, { steps: 3 });
   await page.mouse.move(from.x, c.y + c.height - 4, { steps: 6 });
   assert((await demo.locator("tr[data-dragging]").count()) === 1, "掴んでいる行に印が付かない");
-  assert((await demo.locator("tr[data-drop]").count()) === 1, "落とす位置の線が出ない");
+  assert((await demo.locator("tr[data-shift]").count()) === 2, "間の行がずれない(項目 B と C がずれるはず)");
+  const gapTop = await demo.locator("tbody tr:nth-child(1)").boundingBox();
+  const shifted = await demo.locator("tr[data-shift]").first().boundingBox();
+  assert(shifted.y < gapTop.y + gapTop.height + 1, "ずれた行が最初の行の下に来ない(空きが落とす所へ動いていない)");
   assert((await demo.locator("tr[data-dragging]").evaluate((el) => getComputedStyle(el).filter)) !== "none", "持ち上げた行に影が無い");
   await page.mouse.up();
   assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 C", "項目 A", "項目 D"]), "マウスで動かした後の順が違う: " + (await rowNames(page)));
-  assert((await demo.locator("tr[data-dragging], tr[data-drop]").count()) === 0, "終わっても印が残る");
+  assert((await demo.locator("tr[data-dragging], tr[data-shift]").count()) === 0, "終わっても印が残る");
   assert((await demo.getByRole("status").filter({ hasText: "移した" }).textContent()).includes("1 行目から 3 行目へ移した"), "aria-live の文が違う");
   // Esc でやめる(マウス)
   const f2 = await center(handleOf(page, "項目 D"));
@@ -511,6 +514,7 @@ await kb("表の行の並べ替え(マウス、キーボード、Esc、aria-live
   await page.keyboard.press("Space");
   assert((await handleOf(page, "項目 D").getAttribute("aria-pressed")) === "true", "持ち上げても aria-pressed にならない");
   for (let i = 0; i < 3; i++) await page.keyboard.press("ArrowUp");
+  assert(((await handleOf(page, "項目 D").getAttribute("aria-label")) ?? "").includes("1 行目"), "動かしても掴む所の名前の行番号が変わらない");
   assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 D", "項目 B", "項目 C", "項目 A"]), "矢印で動かしている間の見た目の順が違う: " + (await rowNames(page)));
   assert(await handleOf(page, "項目 D").evaluate((el) => document.activeElement === el), "動かしても focus が掴む所から外れる");
   await page.keyboard.press("Space");
@@ -577,6 +581,25 @@ await kb("ダッシュボードの Stat が iPad 縦で 3+1 にならない", "t
   const rows = new Set(tops).size;
   assert(rows === 2 || rows === 1, "Stat が 3+1 などに分かれた: " + tops);
 }, { width: 820, height: 1180 });
+
+await kb("Table の Error と Empty が 360px で重ならない", "components/table.html", async (page) => {
+  const st = page.locator(".ki-table__state");
+  const n = await st.count();
+  assert(n >= 2, "状態のセルが無い");
+  for (let i = 0; i < n; i++) {
+    const cell = st.nth(i);
+    await cell.scrollIntoViewIfNeeded();
+    const ws = await cell.evaluate((el) => getComputedStyle(el).whiteSpace);
+    assert(ws === "normal", "状態のセルが折り返さない: " + ws);
+    const btn = cell.getByRole("button");
+    if (await btn.count()) {
+      const text = cell.locator(".ki-alert__body, [class*='ki-alert'] > :not(button)").first();
+      const bb = await btn.first().boundingBox();
+      const tb = await cell.locator("p, span, div").filter({ hasText: /読み込めなかった|行がない|項目がない/ }).last().boundingBox();
+      assert(!tb || tb.x + tb.width <= bb.x + 1 || tb.y + tb.height <= bb.y + 1 || bb.y + bb.height <= tb.y + 1, `文が「再試行」の下に潜る: 文の右端 ${Math.round(tb.x + tb.width)}、ボタンの左端 ${Math.round(bb.x)}`);
+    }
+  }
+}, { width: 360, height: 740 });
 
 await kb("角丸の段(小 4px、ボタンと入力 8px、面 12px、Chip は丸)", "components/chip.html", async (page) => {
   const v = await page.evaluate(() => { const s = getComputedStyle(document.documentElement); return [1, 2, 3].map((n) => s.getPropertyValue("--radius-" + n).trim()).concat(s.getPropertyValue("--radius-pill").trim()); });
