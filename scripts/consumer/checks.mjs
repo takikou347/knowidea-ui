@@ -140,6 +140,12 @@ export async function checkReactApp(page, rec, { primary, tailwind = false }) {
   const toast = await page.evaluate(() => { const v = document.querySelector(".ki-toast-viewport"), t = document.querySelector(".ki-toast"); if (!t) return null; const r = t.getBoundingClientRect(); return { vpPos: v ? getComputedStyle(v).position : null, inView: r.bottom <= innerHeight + 1 && r.right <= innerWidth + 1 && r.top >= 0, w: r.width }; });
   ok("Toast: 画面に固定され、画面の中に収まる", toast && toast.vpPos === "fixed" && toast.inView, JSON.stringify(toast));
 
+  // --- ToastProvider が ThemeProvider の外にある場合
+  await page.getByRole("button", { name: "外の Provider から出す" }).click();
+  await page.waitForFunction(() => [...document.querySelectorAll(".ki-toast")].some((t) => t.textContent.includes("外の Provider")), null, { timeout: 3000 }).catch(() => {});
+  const outer = await page.evaluate(() => { const t = [...document.querySelectorAll(".ki-toast")].find((x) => x.textContent.includes("外の Provider")); if (!t) return null; const h = window.__h; return { attr: t.getAttribute("data-ki-theme"), p: h.rgb(getComputedStyle(t).getPropertyValue("--color-primary").trim()), want: h.rgb("#7a3db8") }; });
+  ok("Toast: ToastProvider が ThemeProvider の外でも、呼んだ所のテーマが当たる", outer && outer.attr && outer.p && outer.p.slice(0, 3).every((v, i) => Math.abs(v - outer.want[i]) <= 3), JSON.stringify(outer));
+
   // --- Table
   const tbl = await page.evaluate(() => { const t = document.querySelector("#ex-table .ki-table"); if (!t) return null; const th = t.querySelector("thead th"); const cs = getComputedStyle(th); const h = window.__h; return { rows: t.querySelectorAll("tbody tr").length, thBg: h.near(h.rgb(cs.backgroundColor), h.varRgb("--color-surface-2", th)), thBorder: cs.borderBottomWidth, pad: cs.paddingLeft }; });
   ok("Table: ある", tbl);
@@ -176,6 +182,8 @@ export async function checkReactApp(page, rec, { primary, tailwind = false }) {
   });
   ok("Overriding 1: .my-app { --color-primary } で Button の色が変わる", ov.bg && Math.abs(ov.bg[0] - ov.want[0]) <= 3 && Math.abs(ov.bg[2] - ov.want[2]) <= 3, JSON.stringify(ov));
   ok("Overriding 2: .my-list { --ki-gap } で Stack の間隔が変わる(24px)", ov.gap === "24px", ov.gap);
+  const nest = await page.evaluate(() => { const o = document.querySelector("#ex-nest > .ki-stack"); if (!o) return null; const [i, g] = o.children; return { outer: getComputedStyle(o).rowGap, inner: getComputedStyle(i).rowGap, grid: getComputedStyle(g).rowGap, align: getComputedStyle(i).alignItems }; });
+  ok("入れ子: gap を省いた内側の Stack と Grid は外側の値を受け継がず 12px", nest && nest.outer === "32px" && nest.inner === "12px" && nest.grid === "12px" && nest.align === "stretch", JSON.stringify(nest));
   ok("Overriding 3: .save-button.ki-button { min-width: 8rem } と style の minWidth", ov.minW === "128px" && ov.styleMin === "8rem", JSON.stringify(ov));
 
   if (tailwind) {

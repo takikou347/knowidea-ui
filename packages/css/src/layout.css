@@ -1,4 +1,6 @@
 /* レイアウト。Stack(1 方向に並べる)、Grid(格子)、Container(幅を絞る)。間隔は --space-* の段(1〜7)を --ki-gap で渡す。 */
+/* 既定の値を要素ごとに置く。置かないと、入れ子の Stack と Grid が外側の値を受け継ぐ。:where なので、クラスや style の指定が勝つ */
+:where(.ki-stack, .ki-grid) { --ki-gap: var(--space-3); --ki-align: stretch; --ki-justify: flex-start; --ki-cols: 2; --ki-min: 240px; }
 .ki-stack {
   display: flex; flex-direction: column; min-width: 0;
   gap: var(--ki-gap, var(--space-3)); align-items: var(--ki-align, stretch); justify-content: var(--ki-justify, flex-start);

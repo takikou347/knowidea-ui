@@ -73,7 +73,16 @@ import { IconsPageExample } from "./docs/IconsPage";
 import { ColorModeButton } from "./docs/ColorMode";
 import { Buttons as OverrideButtons } from "./docs/Overriding";
 ${tw ? 'import { TailwindUse } from "./docs/TailwindUse";\n' : ""}${imp}
-import { Button, Stack } from "@knowidea/ui";
+import { Button, Stack, Grid, ToastProvider, useToast } from "@knowidea/ui";
+
+// ToastProvider を ThemeProvider の外に置いても、useToast を呼んだ所のテーマが当たるか
+function OuterToastButton() {
+  const toast = useToast();
+  return <Button onClick={() => toast.show({ title: "外の Provider" })}>外の Provider から出す</Button>;
+}
+function OuterToast() {
+  return <ToastProvider><ThemeProvider theme={{ primary: "#7a3db8" }}><OuterToastButton /></ThemeProvider></ToastProvider>;
+}
 
 const All = lazy(() => import("./all"));
 
@@ -90,7 +99,9 @@ export default function App() {
         <section id="ex-icons-page"><IconsPageExample /></section>
         <section id="ex-overriding"><div className="my-app"><OverrideButtons /></div></section>
         <section id="ex-gap"><Stack className="my-list"><span>a</span><span>b</span></Stack></section>
+        <section id="ex-nest"><Stack gap={6} align="center"><Stack><span>a</span><span>b</span></Stack><Grid><span>c</span><span>d</span></Grid></Stack></section>
         <section id="ex-brand"><div className="brand"><Button>brand</Button></div></section>
+        <section id="ex-toast-outer"><OuterToast /></section>
 ${tw ? '        <section id="ex-tailwind"><TailwindUse /></section>\n' : ""}${sections}
       </main>
     </ThemeProvider>
