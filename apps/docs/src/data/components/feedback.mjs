@@ -38,6 +38,48 @@ export const feedback = [
     a11y: ["Base UI の Dialog を使う。フォーカスを閉じ込め、Esc で閉じ、閉じると開いたボタンにフォーカスが戻る", "title がスクリーンリーダー向けの名前になる。必須", "確認ダイアログは alertdialog になる。最初のフォーカスはキャンセル側に置かれ、Enter で誤って実行することがない"],
   },
   {
+    slug: "sheet", name: "Sheet", imports: ["Sheet", "SheetClose"],
+    lead: "画面の下から出る面。スマホと iPad で、指の届く所に操作を置く。下へ指で引くか、Esc か、外を押すと閉じる。Dialog と同じく、フォーカスは中に閉じ込められ、閉じると開いたボタンに戻る。取り消せない操作の確認には、Sheet ではなく ConfirmDialog を使う。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "設定のような、今の画面に付いた短い操作に使う。上の印(ハンドル)を下へ引くと閉じる。" },
+      { fn: "WithForm", title: "With form", text: "入力を求める例。open と onOpenChange で開け閉めを持つ。" },
+    ],
+    props: [
+      ["trigger", "ReactElement", "-", "シートを開くボタン。要素 1 つ"],
+      ["title", "ReactNode", "-", "タイトル。必須。スクリーンリーダー向けの名前になる"],
+      ["description", "ReactNode", "-", "説明。1〜2 文"],
+      ["children", "ReactNode", "-", "本文。長いときはシートの中がスクロールする(高さは画面の 85% まで)"],
+      ["actions", "ReactNode", "-", "下部の操作。SheetClose を使うと閉じる"],
+      ["loading", "boolean", "false", "本文の代わりに、本文の形をまねた Skeleton を出す"],
+      ["closeLabel", "string", "\"閉じる\"", "右上の閉じるボタンの名前"],
+      ["open / defaultOpen / onOpenChange", "boolean", "-", "制御と非制御"],
+    ],
+    classes: [
+      [".ki-sheet", "面。素の HTML では <dialog> に付けて showModal() で開く(指で引いて閉じる動きは無い)"],
+      [".ki-sheet__handle、__head、__title、__description、__body、__actions", "引く所の印、見出しの行、タイトル、説明、本文、操作"],
+      [".ki-sheet__viewport、__backdrop", "Base UI の Viewport と Backdrop に当てる"],
+      ["[data-swiping]", "指で引いている間。指に付いて動き、動きの時間は 0 になる"],
+    ],
+    vars: [
+      ["--color-surface、--color-line、--shadow-pop", "背景、枠線、影"],
+      ["--radius-3", "上の 2 つの角だけを丸める"],
+      ["--motion-duration-enter", "出入りの動き(240ms)。prefers-reduced-motion で 0 になる。指に付いて動くのは操作なので残る"],
+      ["--drawer-swipe-movement-y、--drawer-swipe-progress", "Base UI が指の動きに合わせて書く。背面の暗さも引いた分だけ薄くなる"],
+    ],
+    html: `<button type="button" class="ki-button" data-variant="secondary" data-ki-dialog-open="s1">シートを開く</button>
+<dialog id="s1" class="ki-sheet" aria-labelledby="s1-t">
+  <span class="ki-sheet__handle" aria-hidden="true"></span>
+  <div class="ki-sheet__head">
+    <h2 id="s1-t" class="ki-sheet__title">表示の設定</h2>
+  </div>
+  <p class="ki-sheet__description">この画面の表示だけが変わる。</p>
+  <div class="ki-sheet__actions">
+    <button type="button" class="ki-button" data-variant="secondary" data-ki-dialog-close>閉じる</button>
+  </div>
+</dialog>`,
+    a11y: ["Base UI の Drawer を使う。中身は dialog になり、フォーカスを閉じ込め、Esc で閉じ、閉じると開いたボタンにフォーカスが戻る", "指で引けない人のために、右上に閉じるボタンを必ず置く", "title がスクリーンリーダー向けの名前になる。必須"],
+  },
+  {
     slug: "progress", name: "Progress", imports: ["Progress"],
     lead: "処理の進捗を、バーと文字で示す。値が分からないときは、動かさずに「不明」と表示する。",
     demos: [

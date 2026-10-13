@@ -30,7 +30,9 @@ import * as dProgress from "./progress";
 import * as dQuote from "./quote";
 import * as dRadio from "./radio";
 import * as dSelect from "./select";
+import * as dSegmentedControl from "./segmented-control";
 import * as dSelectionBar from "./selection-bar";
+import * as dSheet from "./sheet";
 import * as dSkeleton from "./skeleton";
 import * as dSpinner from "./spinner";
 import * as dStack from "./stack";
@@ -76,7 +78,9 @@ export const demos = {
   "quote": dQuote,
   "radio": dRadio,
   "select": dSelect,
+  "segmented-control": dSegmentedControl,
   "selection-bar": dSelectionBar,
+  "sheet": dSheet,
   "skeleton": dSkeleton,
   "spinner": dSpinner,
   "stack": dStack,

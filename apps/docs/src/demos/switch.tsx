@@ -10,6 +10,16 @@ export function Basic() {
   );
 }
 
+export function Settings() {
+  return (
+    <div style={{ display: "grid", width: "min(100%, 420px)" }}>
+      <Switch label="通知を表示する" description="予定の 10 分前に知らせる" placement="end" defaultChecked />
+      <Switch label="自動で更新する" description="開いている間、1 分ごとに読み直す" placement="end" />
+      <Switch label="音を鳴らす" placement="end" disabled />
+    </div>
+  );
+}
+
 export function states(): StateRow[] {
   return [
     { label: "Empty", node: <Switch label="オフ" /> },

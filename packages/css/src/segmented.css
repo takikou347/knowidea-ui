@@ -1,0 +1,46 @@
+/* 表示の切り替え(SegmentedControl)。素の HTML は role="radiogroup" の中に <label class="ki-segmented__item"><input type="radio">。
+   React は Base UI の RadioGroup。選んだ印(__thumb)は、選んだ項目の位置へ滑る。位置は :has で決めるので、項目は 6 個まで。
+   --ki-seg-count に項目の数を入れる(React は自動で入れる)。 */
+.ki-segmented {
+  --ki-seg-pad: 3px;
+  position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; align-items: stretch;
+  max-width: 100%; min-height: var(--size-hit); padding: 0; box-sizing: border-box;
+  border-radius: var(--radius-2); background: var(--color-surface-2); box-shadow: inset 0 0 0 1px var(--color-line);
+}
+.ki-segmented[data-full-width] { display: grid; width: 100%; }
+.ki-segmented__item {
+  position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-width: var(--size-hit); min-height: var(--size-hit); padding: 0 var(--space-4);
+  border-radius: var(--radius-2); cursor: pointer; user-select: none;
+  color: var(--color-text-muted); font-size: var(--font-size-3); white-space: nowrap;
+  transition: color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-segmented__item > .ki-icon { flex: none; width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+/* 素の HTML の radio は見えなくし、label 全体で押す */
+.ki-segmented__item > input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: inherit; }
+.ki-segmented__item:is([data-checked], :has(:checked)) { color: var(--color-text); font-weight: var(--font-weight-strong); }
+.ki-segmented__item.is-hover { color: var(--color-text); }
+@media (hover: hover) {
+  .ki-segmented__item:hover { color: var(--color-text); }
+}
+.ki-segmented__item:is(:focus-visible, :has(:focus-visible), .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-segmented__item:is([data-disabled], :has(:disabled)) { color: var(--color-text-muted); cursor: not-allowed; opacity: 0.6; }
+.ki-segmented:is([data-disabled], :has(> .ki-segmented__item > input:disabled):not(:has(> .ki-segmented__item > input:enabled))) .ki-segmented__thumb { background: var(--color-surface-2); border-color: var(--color-line); }
+
+/* 選んだ印。項目は台いっぱいの高さ(44px)で押せ、印だけを内側に描く。項目の幅は同じなので、位置は 番号 x (印の幅 + 余白 2 つ) */
+.ki-segmented__thumb {
+  position: absolute; z-index: 0; top: var(--ki-seg-pad); bottom: var(--ki-seg-pad); left: var(--ki-seg-pad);
+  width: calc(100% / var(--ki-seg-count, 2) - var(--ki-seg-pad) * 2);
+  border: 1px solid var(--color-line-strong); border-radius: calc(var(--radius-2) - var(--ki-seg-pad)); box-sizing: border-box;
+  background: var(--color-surface);
+  transform: translateX(calc((100% + var(--ki-seg-pad) * 2) * var(--ki-seg-index, 0)));
+  transition: transform var(--motion-duration-state) var(--motion-ease);
+}
+.ki-segmented:not(:has(> .ki-segmented__item:is([data-checked], :has(:checked)))) > .ki-segmented__thumb { opacity: 0; }
+.ki-segmented:has(> :nth-child(2 of .ki-segmented__item):is([data-checked], :has(:checked))) { --ki-seg-index: 1; }
+.ki-segmented:has(> :nth-child(3 of .ki-segmented__item):is([data-checked], :has(:checked))) { --ki-seg-index: 2; }
+.ki-segmented:has(> :nth-child(4 of .ki-segmented__item):is([data-checked], :has(:checked))) { --ki-seg-index: 3; }
+.ki-segmented:has(> :nth-child(5 of .ki-segmented__item):is([data-checked], :has(:checked))) { --ki-seg-index: 4; }
+.ki-segmented:has(> :nth-child(6 of .ki-segmented__item):is([data-checked], :has(:checked))) { --ki-seg-index: 5; }
+
+@media (prefers-reduced-motion: reduce) { .ki-segmented__thumb { transition: none; } }
