@@ -24,7 +24,7 @@ const px = (t) => `${t.$value.value}${t.$value.unit}`;
 const sizes = Object.entries(core.font.size).map(([n, t]) => [n, px(t), core.font.lineHeight[n].$value]);
 const spaces = Object.entries(core.space).map(([n, t]) => [n, px(t)]);
 const radii = Object.entries(core.radius).map(([n, t]) => [n, px(t)]);
-const durationUse = { fast: "ホバー、フォーカス", state: "状態が変わるとき", spin: "スピナーの 1 回転" };
+const durationUse = { fast: "ホバー、フォーカス", state: "状態が変わるとき", enter: "大きな面(Sheet、引き出しの Drawer)の出入り", spin: "スピナーの 1 回転" };
 const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t), durationUse[n] ?? t.$description]);
 ---
 <Base title={`${k.name} tokens`} description={`${k.name} のトークン`}>
@@ -170,6 +170,7 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
         </table>
       </div>
       <p>動かすのは、ホバー、フォーカス、状態が変わるときだけ。終わらない脈動、数字のカウントアップ、すべてのセクションに同じ出現アニメーションを付けることは避ける。<code>prefers-reduced-motion: reduce</code> では、回転も含めてすべて止める。</p>
+      <p>Sheet と引き出しの Drawer は、指で引くと指に付いて動く。これは操作そのものなので、動きを減らす設定でも残す。指を離した後に閉じる動きと戻る動きは、<code>--motion-duration-enter</code> が 0ms になって止まる。</p>
     </>
   )}
 

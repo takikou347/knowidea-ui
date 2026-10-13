@@ -1,0 +1,49 @@
+/* 下から出る面(Sheet)。素の HTML は <dialog class="ki-sheet"> と showModal()。React は Base UI の Drawer(下へ引いて閉じる)。
+   --drawer-swipe-movement-y と --drawer-swipe-progress は Base UI が指の動きに合わせて書く。素の HTML では 0 のまま。
+   下の --ki-sheet-bleed は、上へ引きすぎた時に面の下が見えないよう、画面の外まで伸ばす分。 */
+.ki-sheet {
+  --ki-sheet-bleed: var(--space-7);
+  box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-3);
+  width: min(100%, calc(var(--space-7) * 12)); max-width: none; max-height: calc(85dvh + var(--ki-sheet-bleed));
+  margin: 0 auto calc(-1 * var(--ki-sheet-bleed));
+  padding: var(--space-2) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom, 0px) + var(--ki-sheet-bleed));
+  border: 1px solid var(--color-line); border-bottom: 0; border-radius: var(--radius-3) var(--radius-3) 0 0;
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop); outline: 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  transform: translateY(var(--drawer-swipe-movement-y, 0px));
+  transition: transform var(--motion-duration-enter) var(--motion-ease);
+}
+.ki-sheet[data-swiping] { transition-duration: 0ms; user-select: none; }
+.ki-sheet[data-starting-style], .ki-sheet[data-ending-style] { transform: translateY(calc(100% - var(--ki-sheet-bleed) + 2px)); }
+/* 指で払って閉じた時は、払った強さで速くなる */
+.ki-sheet[data-ending-style] { transition-duration: calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-enter)); }
+
+.ki-sheet__viewport { position: fixed; inset: 0; z-index: 31; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; }
+.ki-sheet__viewport > .ki-sheet { pointer-events: auto; }
+.ki-sheet__backdrop {
+  position: fixed; inset: 0; z-index: 30; min-height: 100dvh;
+  background: color-mix(in oklch, var(--color-bg) 70%, transparent);
+  opacity: calc(1 - var(--drawer-swipe-progress, 0));
+  transition: opacity var(--motion-duration-enter) var(--motion-ease);
+}
+.ki-sheet__backdrop[data-swiping] { transition-duration: 0ms; }
+.ki-sheet__backdrop[data-starting-style], .ki-sheet__backdrop[data-ending-style] { opacity: 0; }
+.ki-sheet__backdrop[data-ending-style] { transition-duration: calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-enter)); }
+
+/* 引く所の印。線ではなく、触れる所の目印。押す物ではない */
+.ki-sheet__handle { flex: none; align-self: center; width: var(--space-6); height: var(--space-1); border-radius: var(--radius-1); background: var(--color-line-strong); }
+.ki-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--size-hit); margin-right: calc(-1 * var(--space-2)); }
+.ki-sheet__title { margin: 0; font-size: var(--font-size-4); line-height: var(--font-line-height-4); font-weight: var(--font-weight-strong); }
+.ki-sheet__description { margin: 0; color: var(--color-text-muted); font-size: var(--font-size-3); line-height: var(--font-line-height-3); }
+.ki-sheet__body { display: grid; gap: var(--space-3); }
+.ki-sheet__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-2); }
+.ki-sheet__loading { display: grid; }
+@media (max-width: 480px) { .ki-sheet__actions { flex-direction: column-reverse; } .ki-sheet__actions > * { width: 100%; } }
+
+/* 素の HTML の <dialog>。開く時だけ下から出る(@starting-style)。指で引いて閉じる動きは無い */
+dialog.ki-sheet { position: fixed; inset: auto 0 0; height: auto; }
+dialog.ki-sheet:not([open]) { display: none; }
+dialog.ki-sheet::backdrop { background: color-mix(in oklch, var(--color-bg) 70%, transparent); }
+@starting-style { dialog.ki-sheet[open] { transform: translateY(100%); } }
+
+@media (prefers-reduced-motion: reduce) { .ki-sheet, .ki-sheet__backdrop { transition: none; } }

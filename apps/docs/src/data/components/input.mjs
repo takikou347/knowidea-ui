@@ -100,8 +100,45 @@ export const input = [
     a11y: ["矢印キーで選択が移動し、Tab はグループの外へ移る", "legend がグループの名前になる"],
   },
   {
+    slug: "segmented-control", name: "SegmentedControl", imports: ["SegmentedControl"],
+    lead: "2〜5 個の表示を切り替える。選ぶとすぐに切り替わり、選んだ印が選んだ所へ滑る。保存してから反映される選択には RadioGroup を、6 個以上なら Select を使う。項目の幅はそろう。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "期間や表示の形のように、同じ中身の見せ方を切り替える。" },
+      { fn: "WithIcons", title: "With icons and full width", text: "アイコンは字の前に置く。fullWidth で親の幅いっぱいに広げる。字は省かない。" },
+    ],
+    props: [
+      ["label", "string", "-", "何を切り替えるか。必須(スクリーンリーダー向けの名前)"],
+      ["options", "{ value, label, icon?, disabled? }[]", "-", "選択肢。2〜5 個"],
+      ["value / defaultValue / onValueChange", "string", "先頭", "制御と非制御。どちらも無いときは先頭を選ぶ"],
+      ["fullWidth", "boolean", "false", "親の幅いっぱいに広げる"],
+      ["disabled", "boolean", "false", "全部を無効にする"],
+    ],
+    classes: [
+      [".ki-segmented", "本体。role=\"radiogroup\"。style に --ki-seg-count(項目の数)を入れる。data-full-width"],
+      [".ki-segmented__item", "項目。素の HTML では <label> の中に <input type=\"radio\">"],
+      [".ki-segmented__thumb", "選んだ印。位置は :has で決まる(6 個まで)"],
+      ["[data-checked]、:has(:checked)", "選んだ項目"],
+    ],
+    vars: [
+      ["--color-surface-2、--color-line", "台の背景と枠線"],
+      ["--color-surface、--color-line-strong", "選んだ印の背景と枠線"],
+      ["--radius-2、--size-hit", "角丸と高さ(44px)"],
+      ["--motion-duration-state", "印の滑る動き。prefers-reduced-motion で止まる"],
+    ],
+    html: `<div class="ki-segmented" role="radiogroup" aria-label="表示する期間" style="--ki-seg-count: 3">
+  <span class="ki-segmented__thumb" aria-hidden="true"></span>
+  <label class="ki-segmented__item"><input type="radio" name="range" value="day" />日</label>
+  <label class="ki-segmented__item"><input type="radio" name="range" value="week" checked />週</label>
+  <label class="ki-segmented__item"><input type="radio" name="range" value="month" />月</label>
+</div>`,
+    a11y: ["ラジオのグループ。矢印キーで選び直し、Tab はグループの外へ移る", "label がグループの名前になる。必須", "選んだことは、印の位置だけでなく、字の太さと色でも示す"],
+  },
+  {
     slug: "switch", name: "Switch", imports: ["Switch"],
-    demos: [{ fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定には Checkbox を使う。" }],
+    demos: [
+      { fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定には Checkbox を使う。" },
+      { fn: "Settings", title: "Settings list", text: "placement=\"end\" で、ラベルを左、Switch を右端に置く。行の全体が押せる。description は補足で、Switch の説明として読み上げられる。" },
+    ],
     a11y: ["role=\"switch\" を持つ。Space で切り替える", "状態は位置だけで示さず、ラベルで何を切り替えるのかを書く"],
   },
   {
