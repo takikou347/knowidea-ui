@@ -3,6 +3,9 @@ import Base from "../layouts/Base.astro";
 import { CodeBlock } from "@knowidea/ui";
 import { links } from "../lib/paths.mjs";
 import { components, categories } from "../lib/registry.mjs";
+import Code from "../components/Code.astro";
+import { install } from "../data/examples.mjs";
+import ui from "@knowidea/ui/package.json";
 import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
 const { href } = links(Astro.url.pathname);
 const quick = `import "@knowidea/tokens/tokens.css";
@@ -18,10 +21,50 @@ export function Example() {
   );
 }`;
 ---
-<Base title="Overview" description="KNOW IDEA の UI ライブラリ">
+<Base title="Overview" description="特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。">
   <h1>KNOW IDEA UI</h1>
   <p class="lead">特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。プライマリカラーは 1 色で、テーマによって変更できる。</p>
-  <p>React コンポーネント(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つのパッケージで構成される。コンポーネントの土台は Base UI で、キーボード操作とスクリーンリーダーの挙動は Base UI に任せている。</p>
+  <p>現在の版は <span class="num">{ui.version}</span>(<a href={href("changelog")}>Changelog</a>)。React コンポーネント(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つのパッケージで構成される。コンポーネントの土台は Base UI で、キーボード操作とスクリーンリーダーの挙動は Base UI に任せている。</p>
+
+  <h2 id="install">Installation</h2>
+  <p>npm など外部の公開先にはまだ出していない。公開先は未決で、決まるまでは tarball(<code>.tgz</code>)で配る。そのため <code>pnpm add @knowidea/ui</code> のようにパッケージ名だけでは入らない。次の 3 つの手順で入れる。詳しくは <a href={href("getting-started/install")}>Installation</a> を参照。</p>
+  <ol class="steps">
+    <li>
+      <h3>Build the tarballs</h3>
+      <p>このリポジトリで 4 つの tarball を作る。Node 20 以上と pnpm が要る。</p>
+      <Code code={install.pack} lang="bash" label="Build the tarballs" />
+    </li>
+    <li>
+      <h3>Add to your project</h3>
+      <p>使う側のプロジェクトの <code>vendor/</code> に置き、4 つ全部を入れる。</p>
+      <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+      <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
+    </li>
+    <li>
+      <h3>Load the CSS</h3>
+      <p>アプリの入口で、2 つの CSS を読み込む。</p>
+      <Code code={install.css} lang="ts" label="CSS imports" />
+    </li>
+  </ol>
+  <p>入れたあとは、コンポーネントを import して使う。</p>
+  <CodeBlock client:load language="tsx" label="Quick start" code={quick} />
+
+  <h2 id="components">Components</h2>
+  <p><a href={href("components")}>{components.length} 個のコンポーネント</a>を、{categories.length} つのカテゴリに分けている。名前は検索(<kbd class="docs-kbd">/</kbd>)でも探せる。</p>
+  <div class="table-wrap">
+    <table class="docs-table link-table">
+      <thead><tr><th>Category</th><th class="num">Count</th><th>Components</th></tr></thead>
+      <tbody>
+        {categories.map((c) => (
+          <tr>
+            <td><a href={href("components") + "#" + c.id}>{c.name}</a></td>
+            <td class="num">{c.list.length}</td>
+            <td>{c.list.slice(0, 6).map((x) => x.name).join("、")}{c.list.length > 6 ? " ほか" : ""}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
 
   <h2 id="contents">Contents</h2>
   <div class="table-wrap">
@@ -33,13 +76,10 @@ export function Example() {
         <tr><td><a href={href("components")}>Components</a></td><td>{components.length} 個。{categories.map((c) => c.name).join("、")}</td></tr>
         <tr><td><a href={href("icons")}>Icons</a></td><td>{all.icons.length} 個。名前で検索し、ウェイトを選択し、import 文か SVG をコピーできる</td></tr>
         <tr><td><a href={href("templates/dashboard")}>Templates</a></td><td>ダッシュボードと、一覧からの一括操作。幅 390px と 1024px のサンプル</td></tr>
+        <tr><td><a href={href("changelog")}>Changelog</a></td><td>版ごとの変更の履歴</td></tr>
       </tbody>
     </table>
   </div>
-
-  <h2 id="quick">Quick start</h2>
-  <p>CSS を 2 つ読み込み、コンポーネントを import する。</p>
-  <CodeBlock client:load language="tsx" label="Quick start" code={quick} />
 
   <h2 id="principles">Principles</h2>
   <ul class="plain">
