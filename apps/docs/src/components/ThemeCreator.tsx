@@ -110,7 +110,7 @@ export default function ThemeCreator({ baseLight, baseDark }: Props) {
 
       <h3 id="tc-contrast">Contrast ratios</h3>
       <div className="table-wrap" tabIndex={0} role="region" aria-label="Contrast ratios table">
-        <table className="docs-table" data-testid="contrast">
+        <table className="docs-table" data-testid="contrast" data-keep="">
           <thead><tr><th>Mode</th><th>Pair</th><th className="num">Ratio</th><th>Result</th></tr></thead>
           <tbody>
             {rows.map((r, i) => (

@@ -49,8 +49,9 @@ JS はモジュールなので、`file://` では動かない。静的サーバ�
 
 | 場所 | 内容 |
 | --- | --- |
-| `src/layouts/Base.astro` | 上部のバー(ロゴ、名前とバージョン、検索、テーマの切り替え)。ページの終わりの Previous / Next と Edit this page。OGP とファビコンの meta、左のサイドメニュー、右のページ内目次。幅 390px ではサイドメニューが開閉式のドロワーになる |
-| `src/lib/nav.mjs` | サイドメニュー。Getting started、Customization、Components、Icons、Templates |
+| `src/layouts/Base.astro` | 上部のバー(ロゴ、Docs、Components、Icons、Templates、Changelog、検索、テーマの切り替え、GitHub。トップ `home` ではサイドメニューを出さない)。ページの終わりの Previous / Next と Edit this page。OGP とファビコンの meta、左のサイドメニュー、右のページ内目次。幅 1024px 未満(スマホと iPad の縦)ではサイドメニューが開閉式のドロワーになる |
+| `src/components/HomeLive.tsx`、`ComponentThumb.tsx` | トップの動く見本(主の色、角丸、密度、ダーク、ダッシュボード、部品の格子)と、Components の一覧の見本のカード(inert) |
+| `src/lib/nav.mjs` | サイドメニューと上のバー(`topNav`)。Getting started、Customization、Components、Icons、Templates(Dashboard の 1 つ) |
 | `src/lib/registry.mjs`、`src/data/` | コンポーネントのページの元データ。`data/components/*.mjs`(カテゴリごと)と `data/seed.mjs`(Props、クラス、変数、素の HTML の例) |
 | `src/demos/<コンポーネント>.tsx` | デモの実体。関数を 1 つ書けば、表示されるデモと "Show code" のコードが同じ元から生成される(`lib/snippet.mjs` が関数の本体を切り出す)。`states()` が States の表になる |
 | `src/pages/components/[slug].astro` | コンポーネントのページの型。名前と 1 行の説明、import、Demos、States、API の表、CSS のクラスと変数、Accessibility |
