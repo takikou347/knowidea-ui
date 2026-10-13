@@ -13,7 +13,7 @@ export const site = {
   branch: process.env.SITE_BRANCH || "main",
   // リポジトリの中での、このサイトの場所
   docsDir: "apps/docs/",
-  description: "特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。",
+  description: "特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は控えめで、数字は等幅で表示する。",
 };
 
 // サイトの URL のパス部分(例: /design-system/)。404 ページの <base> だけがこれを使う

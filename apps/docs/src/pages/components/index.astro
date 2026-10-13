@@ -1,28 +1,41 @@
 ---
 import Base from "../../layouts/Base.astro";
+import ComponentThumb from "../../components/ComponentThumb.tsx";
 import { categories, components } from "../../lib/registry.mjs";
 import { links } from "../../lib/paths.mjs";
+import { pick, tileCode } from "../../lib/tiles.mjs";
 const { href } = links(Astro.url.pathname);
+const raws = import.meta.glob("../../demos/*.tsx", { query: "?raw", import: "default", eager: true });
+const first = (s) => ((s ?? "").split("。")[0] ?? "") + "。";
+const code = Object.fromEntries(components.map((c) => {
+  const t = tileCode(c, raws[`../../demos/${c.slug}.tsx`], pick[c.slug].fn);
+  const imp = `import { ${c.imports.join(", ")} } from "@knowidea/ui";\n\n`;
+  return [c.slug, { react: t.react, html: t.html }];
+}));
 ---
-<Base title="Components" description="コンポーネントの一覧" toc={false}>
+<Base title="Components" description="コンポーネントの一覧。触れる見本と、コードのコピーつき" toc={false}>
   <h1>Components</h1>
-  <p class="lead">{components.length} 個のコンポーネントを、{categories.length} つのカテゴリに分けている。特定のアプリに依存しない汎用のコンポーネントで、名前は上部の検索でも探せる。</p>
+  <p class="lead">{components.length} 個のコンポーネントを、{categories.length} つのカテゴリに分けている。見本は本物の部品で、そのまま操作できる。Code で React と HTML のコードを開いてコピーできる。名前は上部の検索でも探せる。</p>
+  <nav class="cp-cats" aria-label="Categories">
+    {categories.map((c) => <a href={"#" + c.id}>{c.name}<span class="num">{c.list.length}</span></a>)}
+  </nav>
   {categories.map((cat) => (
-    <>
+    <section aria-labelledby={cat.id}>
       <h2 id={cat.id}>{cat.name}</h2>
-      <div class="table-wrap">
-        <table class="docs-table link-table">
-          <thead><tr><th>Name</th><th>Description</th></tr></thead>
-          <tbody>
-            {components.filter((c) => c.cat === cat.id).map((c) => (
-              <tr>
-                <td><a href={href("components/" + c.slug)}><code>{c.name}</code></a></td>
-                <td>{(c.lead ?? "").split("。")[0]}。</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+      <ul class="cp-grid">
+        {components.filter((c) => c.cat === cat.id).map((c) => (
+          <li class="cp" data-wide={pick[c.slug].wide ? "" : undefined}>
+            <div class="cp-view"><ComponentThumb client:visible slug={c.slug} /></div>
+            <div class="cp-body">
+              <div class="cp-text">
+                <h3 class="cp-name"><a class="cp-link" href={href("components/" + c.slug)}>{c.name}</a></h3>
+                <p class="cp-desc">{first(c.lead)}</p>
+              </div>
+              <button type="button" class="ki-button cp-codebtn" data-variant="secondary" data-cp-code={c.name} data-cp-react={code[c.slug].react} data-cp-html={code[c.slug].html} aria-label={`Code for ${c.name}`}>Code</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
   ))}
 </Base>

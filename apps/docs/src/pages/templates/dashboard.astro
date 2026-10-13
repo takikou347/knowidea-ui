@@ -19,7 +19,7 @@ const use = `<Shell title="ダッシュボード" current="home" actions={<IconB
 ---
 <Base title="Dashboard" description="数値、推移、イベント、待ち状態を 1 画面に並べたサンプル">
   <h1>Dashboard</h1>
-  <p class="lead">Stat、Chart、Timeline、List を Card に載せて並べた画面。特定のアプリではなく、コンポーネントの組み合わせのサンプル。</p>
+  <p class="lead">Stat、Chart、Timeline、List、Table、SelectionBar を Card に載せて並べた画面。特定のアプリではなく、コンポーネントの組み合わせのサンプル。</p>
   <p>画面の骨組み(<code>Shell</code>)は、このサイト用の小さなコンポーネント。コンテナの幅が 720px 以上なら左に <a href={href("components/drawer")}>Drawer</a> を置き、それより狭ければ、上部の <a href={href("components/app-bar")}>AppBar</a> から開く Drawer と、下部の <a href={href("components/bottom-navigation")}>BottomNavigation</a> に切り替わる。</p>
   <p class="muted">数値はすべてサンプルであり、実際の値ではない。</p>
   <Dashboard client:load />
@@ -30,6 +30,7 @@ const use = `<Shell title="ダッシュボード" current="home" actions={<IconB
     <li>推移: <a href={href("components/chart")}>Chart</a>(クリックすると内訳を表示。矢印キーで点を移動)</li>
     <li>背景の枠: <a href={href("components/card")}>Card</a>、レイアウト: <a href={href("components/grid")}>Grid</a></li>
     <li>イベントと待ち状態: <a href={href("components/timeline")}>Timeline</a>、<a href={href("components/list")}>List</a></li>
+    <li>選んで操作する表: <a href={href("components/table")}>Table</a>、<a href={href("components/selection-bar")}>SelectionBar</a>(選んだ項目をアーカイブし、元に戻せる)</li>
   </ul>
   <h2 id="code">Composition</h2>
   <Code code={use} label="Dashboard composition" />

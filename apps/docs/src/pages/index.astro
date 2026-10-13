@@ -1,97 +1,77 @@
 ---
 import Base from "../layouts/Base.astro";
+import HomeLive from "../components/HomeLive.tsx";
 import { CodeBlock } from "@knowidea/ui";
 import { links } from "../lib/paths.mjs";
 import { components, categories } from "../lib/registry.mjs";
-import Code from "../components/Code.astro";
-import { install } from "../data/examples.mjs";
+import { pick, tileCode } from "../lib/tiles.mjs";
 import ui from "@knowidea/ui/package.json";
 import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
-const { href } = links(Astro.url.pathname);
-const quick = `import "@knowidea/tokens/tokens.css";
-import "@knowidea/css/index.css";
-import { Button, Alert } from "@knowidea/ui";
+const { href, rel } = links(Astro.url.pathname);
+const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${n}"/></svg>`;
 
-export function Example() {
-  return (
-    <>
-      <Alert tone="info">保存した。</Alert>
-      <Button>完了にする</Button>
-    </>
-  );
-}`;
+// 動く部品の格子に置くもの。どれもデモのページと同じ部品
+const picks = [
+  ["button", "Variants"], ["text-field", "Basic"], ["select", "Basic"], ["checkbox", "Basic"], ["switch", "Basic"], ["radio", "Basic"],
+  ["chip", "Filter"], ["badge", "Tones"], ["tabs", "Basic"], ["accordion", "Basic"], ["progress", "Basic"], ["alert", "Closable"],
+  ["pagination", "Basic"], ["menu", "Basic"], ["dialog", "Basic"], ["tooltip", "Basic"], ["breadcrumbs", "Basic"], ["avatar", "Sizes"],
+];
+const raws = import.meta.glob("../demos/*.tsx", { query: "?raw", import: "default", eager: true });
+const cells = picks.map(([slug, fn]) => {
+  const c = components.find((x) => x.slug === slug);
+  const t = tileCode(c, raws[`../demos/${slug}.tsx`], fn);
+  return { slug, fn, name: c.name, href: href("components/" + slug), react: t.react, html: t.html };
+});
+const features = [
+  { icon: "settings", title: "Theming", text: "プライマリカラー、角丸、密度、字の大きさを createTheme で変える。変わるのは CSS 変数だけで、コンポーネントのコードには触らない。", to: "customization/theme", link: "Theme" },
+  { icon: "eye", title: "Accessibility", text: "押せる所は 44px 以上。focus の輪は 2px で、本文のコントラスト比は 4.5:1 以上。キーボード操作は Base UI に任せている。", to: "components", link: "Components" },
+  { icon: "moon", title: "Dark mode", text: "ライトを反転せず、ダークは別に決めた値を持つ。OS の設定にも、data-theme にも従う。", to: "customization/dark-mode", link: "Dark mode" },
+  { icon: "star", title: "Icons", text: `${all.icons.length} 個のアイコンを regular と bold で用意している。SVG、sprite、React のコンポーネントから使える。`, to: "icons", link: "Icons" },
+];
 ---
-<Base title="Overview" description="特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。">
-  <h1>KNOW IDEA UI</h1>
-  <p class="lead">特定のアプリに依存しない UI ライブラリ。高密度で、グレーを基調とし、角丸は小さく、数字は等幅で表示する。プライマリカラーは 1 色で、テーマによって変更できる。</p>
-  <p>現在の版は <span class="num">{ui.version}</span>(<a href={href("changelog")}>Changelog</a>)。React コンポーネント(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つのパッケージで構成される。コンポーネントの土台は Base UI で、キーボード操作とスクリーンリーダーの挙動は Base UI に任せている。</p>
+<Base title="KNOW IDEA UI" description="Base UI を土台にした React のコンポーネントと、色、角丸、密度を変えられるトークン。特定のアプリに依存しない。" home toc={false}>
+  <div class="home-in">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <h1 id="hero-title">React components for dense, themeable interfaces</h1>
+        <p class="hero-lead">Base UI を土台にした {components.length} 個のコンポーネントと、色、角丸、密度を変えられるトークン。特定のアプリに依存しない。</p>
+        <div class="hero-actions">
+          <a class="ki-button" href={href("getting-started/install")}>Get started</a>
+          <a class="ki-button" data-variant="secondary" href={href("components")}>Browse components</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <CodeBlock client:load language="bash" code="pnpm add ./vendor/knowidea-*.tgz" label="Install" />
+        <p class="hero-note">外部の公開先にはまだ出していない。tarball で配る(<a href={href("getting-started/install")}>Installation</a>)。現在の版は <span class="num">v{ui.version}</span>。</p>
+      </div>
+    </section>
 
-  <h2 id="install">Installation</h2>
-  <p>npm など外部の公開先にはまだ出していない。公開先は未決で、決まるまでは tarball(<code>.tgz</code>)で配る。そのため <code>pnpm add @knowidea/ui</code> のようにパッケージ名だけでは入らない。次の 4 つの手順で入れる。詳しくは <a href={href("getting-started/install")}>Installation</a> を参照。</p>
-  <ol class="steps">
-    <li>
-      <h3>Build the tarballs</h3>
-      <p>このリポジトリで 4 つの tarball を作る。Node 20 以上と pnpm が要る。</p>
-      <Code code={install.pack} lang="bash" label="Build the tarballs" />
-    </li>
-    <li>
-      <h3>Add to your project</h3>
-      <p>使う側のプロジェクトの <code>vendor/</code> に置き、4 つ全部を入れる。</p>
-      <Code code={install.copy} lang="bash" label="Copy the tarballs" />
-      <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
-    </li>
-    <li>
-      <h3>Load the CSS</h3>
-      <p>アプリの入口で、2 つの CSS を読み込む。</p>
-      <Code code={install.css} lang="ts" label="CSS imports" />
-    </li>
-    <li>
-      <h3>Load the fonts</h3>
-      <p>書体はパッケージに入れていない。<code>index.html</code> の <code>&lt;head&gt;</code> に次の行を足す。足さなくても動き、その場合は端末の書体が使われる。</p>
-      <Code code={install.fonts} lang="html" label="Google Fonts" />
-    </li>
-  </ol>
-  <p>入れたあとは、コンポーネントを import して使う。</p>
-  <CodeBlock client:load language="tsx" label="Quick start" code={quick} />
+    <section class="live" aria-labelledby="live-title">
+      <h2 id="live-title">Live components</h2>
+      <p class="live-lead">色、角丸、密度、ダークを切り替えると、下の画面と部品がその場で変わる。部品はどれも本物で、そのまま操作できる。</p>
+      <HomeLive client:load cells={cells} />
+    </section>
 
-  <h2 id="components">Components</h2>
-  <p><a href={href("components")}>{components.length} 個のコンポーネント</a>を、{categories.length} つのカテゴリに分けている。名前は検索(<kbd class="docs-kbd">/</kbd>)でも探せる。</p>
-  <div class="table-wrap">
-    <table class="docs-table link-table">
-      <thead><tr><th>Category</th><th class="num">Count</th><th>Components</th></tr></thead>
-      <tbody>
-        {categories.map((c) => (
-          <tr>
-            <td><a href={href("components") + "#" + c.id}>{c.name}</a></td>
-            <td class="num">{c.list.length}</td>
-            <td>{c.list.slice(0, 6).map((x) => x.name).join("、")}{c.list.length > 6 ? " ほか" : ""}</td>
-          </tr>
+    <section class="features" aria-labelledby="features-title">
+      <h2 id="features-title">Features</h2>
+      <ul class="features-grid">
+        {features.map((f) => (
+          <li>
+            <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
+            <p>{f.text}</p>
+            <a href={href(f.to)}>{f.link}</a>
+          </li>
         ))}
-      </tbody>
-    </table>
-  </div>
+      </ul>
+    </section>
 
-  <h2 id="contents">Contents</h2>
-  <div class="table-wrap">
-    <table class="docs-table link-table">
-      <thead><tr><th>Page</th><th>Description</th></tr></thead>
-      <tbody>
-        <tr><td><a href={href("getting-started/install")}>Getting started</a></td><td>インストール方法と、React、素の HTML、Tailwind v4 での使い方</td></tr>
-        <tr><td><a href={href("customization/theme")}>Customization</a></td><td>テーマ(プライマリカラー、角丸、密度、フォントサイズ)、トークン、ダークモード、コンポーネントのオーバーライド</td></tr>
-        <tr><td><a href={href("components")}>Components</a></td><td>{components.length} 個。{categories.map((c) => c.name).join("、")}</td></tr>
-        <tr><td><a href={href("icons")}>Icons</a></td><td>{all.icons.length} 個。名前で検索し、ウェイトを選択し、import 文か SVG をコピーできる</td></tr>
-        <tr><td><a href={href("templates/dashboard")}>Templates</a></td><td>ダッシュボードと、一覧からの一括操作。幅 390px と 1024px のサンプル</td></tr>
-        <tr><td><a href={href("changelog")}>Changelog</a></td><td>版ごとの変更の履歴</td></tr>
-      </tbody>
-    </table>
+    <section class="entry" aria-labelledby="entry-title">
+      <h2 id="entry-title">Components</h2>
+      <p>{components.length} 個を {categories.length} つのカテゴリに分けている。各部品のページに、デモ、5 つの状態、props、CSS 変数、アクセシビリティの注意がある。</p>
+      <ul class="entry-cats">
+        {categories.map((c) => <li><a href={href("components") + "#" + c.id}>{c.name}<span class="num">{c.list.length}</span></a></li>)}
+      </ul>
+      <a class="ki-button" data-variant="secondary" href={href("components")}>Browse components</a>
+    </section>
   </div>
-
-  <h2 id="principles">Principles</h2>
-  <ul class="plain">
-    <li>コンポーネントはアプリの名前を持たない。画面の用途は、コンポーネントの組み合わせで作る(<a href={href("templates/dashboard")}>Templates</a>)</li>
-    <li>すべてのコンポーネントが、Empty、Loading、Error、Disabled、Focus の 5 つの状態を備える</li>
-    <li>タップ領域は 44px 以上。フォーカスリングは 2px で、隣り合う色とのコントラスト比は 3:1 以上</li>
-    <li>色はライトとダークを別々に決める。本文のコントラスト比は 4.5:1 以上</li>
-    <li>色、角丸、余白、フォントは、役割を表す名前の CSS 変数から読む。アプリはその変数をオーバーライドする</li>
-  </ul>
 </Base>

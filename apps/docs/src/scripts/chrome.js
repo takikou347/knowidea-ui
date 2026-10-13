@@ -6,7 +6,15 @@ const tb = document.getElementById("theme-toggle");
 const order = ["auto", "light", "dark"];
 const label = { auto: "Auto", light: "Light", dark: "Dark" };
 const cur = () => (root.dataset.theme === "light" || root.dataset.theme === "dark" ? root.dataset.theme : "auto");
-const show = () => { if (tb) tb.textContent = "Theme: " + label[cur()]; };
+const tl = document.getElementById("theme-label");
+const dark = () => cur() === "dark" || (cur() === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+const show = () => {
+  if (!tb) return;
+  if (tl) tl.textContent = "Theme: " + label[cur()];
+  tb.dataset.mode = dark() ? "dark" : "light";
+  tb.setAttribute("aria-label", "Theme: " + label[cur()] + ". Change theme");
+};
+new MutationObserver(show).observe(root, { attributes: true, attributeFilter: ["data-theme"] }); // 見本の Dark スイッチなど、ほかから変わったときも合わせる
 tb?.addEventListener("click", () => {
   const next = order[(order.indexOf(cur()) + 1) % 3];
   if (next === "auto") delete root.dataset.theme; else root.dataset.theme = next;
@@ -14,6 +22,45 @@ tb?.addEventListener("click", () => {
   show();
 });
 show();
+
+// 部品のタイルの Code: 1 つのダイアログに、React と HTML のコードを出してコピーできる
+const cd = document.getElementById("cp-dialog");
+if (cd) {
+  const pre = document.getElementById("cp-code"), title = document.getElementById("cp-title"), st = document.getElementById("cp-status");
+  const tabs = [...cd.querySelectorAll("[data-cp-tab]")];
+  let cur = { react: "", html: "" }, tab = "react", opener = null;
+  const show = (t) => {
+    tab = t;
+    tabs.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.cpTab === t)));
+    pre.textContent = cur[t] || "(この部品には、この形のコードの例が無い)";
+    st.textContent = "";
+  };
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-cp-code]");
+    if (!b) return;
+    opener = b;
+    cur = { react: b.dataset.cpReact || "", html: b.dataset.cpHtml || "" };
+    title.textContent = b.dataset.cpCode + " code";
+    tabs.find((x) => x.dataset.cpTab === "html").hidden = !cur.html;
+    show("react");
+    cd.showModal();
+  });
+  tabs.forEach((b) => b.addEventListener("click", () => show(b.dataset.cpTab)));
+  cd.querySelector("[data-cp-close]").addEventListener("click", () => cd.close());
+  cd.addEventListener("click", (e) => { if (e.target === cd) cd.close(); });
+  cd.addEventListener("close", () => opener?.focus());
+  cd.querySelector("[data-cp-copy]").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(pre.textContent); st.textContent = "Copied"; } catch { st.textContent = "コピーできなかった。選択してコピーする"; }
+  });
+}
+
+// 狭い幅の表は CSS が塊に組み替える。その見出しを、各セルの data-label に写す(data-keep の表は触らない)
+document.querySelectorAll("table.docs-table:not([data-keep])").forEach((t) => {
+  const heads = [...t.querySelectorAll("thead th")].map((h) => h.textContent.trim());
+  if (!heads.length) return;
+  t.dataset.stack = "";
+  t.querySelectorAll("tbody tr").forEach((tr) => [...tr.children].forEach((td, i) => { if (td.tagName === "TD" && heads[i]) td.dataset.label = heads[i]; }));
+});
 
 // 検索。索引(search-index.json)はビルドのときに作る静的なファイル。開いたときに 1 回だけ読む。
 // 索引が無いとき(dev)は、コンポーネントの名前だけで探す。

@@ -3,7 +3,6 @@ import { categories } from "./registry.mjs";
 // サイドメニュー。href は links().href に渡すパス(拡張子なし)。children を持つ項目は 1 つ下の階層。
 export const nav = [
   { label: "Getting started", items: [
-    { href: "", label: "Overview" },
     { href: "getting-started/install", label: "Installation" },
     { href: "getting-started/react", label: "Usage with React" },
     { href: "getting-started/html", label: "Plain HTML" },
@@ -26,7 +25,6 @@ export const nav = [
   { label: "Icons", items: [{ href: "icons", label: "Icons" }] },
   { label: "Templates", items: [
     { href: "templates/dashboard", label: "Dashboard" },
-    { href: "templates/list", label: "List" },
   ] },
   { label: "Changelog", items: [{ href: "changelog", label: "Changelog" }] },
 ];
@@ -36,3 +34,12 @@ export const flat = nav.flatMap((g) => [
   ...(g.href !== undefined ? [{ href: g.href, label: g.label }] : []),
   ...g.items.flatMap((it) => (it.children ? it.children : [it])),
 ]);
+
+// 上のバー。section は、今いるページがどの項目の下かを決める(パスの先頭)
+export const topNav = [
+  { label: "Docs", href: "getting-started/install", section: ["getting-started", "customization"] },
+  { label: "Components", href: "components", section: ["components"] },
+  { label: "Icons", href: "icons", section: ["icons"] },
+  { label: "Templates", href: "templates/dashboard", section: ["templates"] },
+  { label: "Changelog", href: "changelog", section: ["changelog"] },
+];

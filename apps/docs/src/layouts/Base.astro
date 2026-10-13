@@ -5,13 +5,13 @@ import "../styles/docs.css";
 import DocsNav from "../components/DocsNav.astro";
 import { links } from "../lib/paths.mjs";
 import { components } from "../lib/registry.mjs";
-import { flat } from "../lib/nav.mjs";
+import { flat, topNav } from "../lib/nav.mjs";
 import { editUrl } from "../lib/source.mjs";
 import { site, basePath } from "../site.config.mjs";
 import ui from "@knowidea/ui/package.json";
 
 // notFound: 404 ページ。どの深さの URL でも配られるので、<base> で根を固定する(相対の道がそれを基準にする)
-const { title, description = site.description, toc = true, notFound = false } = Astro.props;
+const { title, description = site.description, toc = true, notFound = false, home = false } = Astro.props;
 const l = links(Astro.url.pathname);
 const { href, rel, current } = l;
 const fullTitle = `${title} | ${site.name}`;
@@ -19,6 +19,7 @@ const pageUrl = notFound ? null : site.url + (current ? current + ".html" : "");
 const pos = notFound ? -1 : flat.findIndex((p) => p.href === current);
 const prev = pos > 0 ? flat[pos - 1] : null;
 const next = pos >= 0 && pos < flat.length - 1 ? flat[pos + 1] : null;
+const sectionOf = (c) => c.split("/")[0];
 const edit = notFound ? null : editUrl(current);
 const baseTag = notFound && import.meta.env.PROD ? basePath : null;
 const index = components.map((c) => ({ n: c.name, c: c.catName, h: href("components/" + c.slug) }));
@@ -60,7 +61,7 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
   </head>
   <body>
     <a class="skip" href={notFound ? "./404.html#main" : "#main"}>Skip to content</a>
-    <header class="docs-top">
+    <header class="docs-top" data-home={home ? "" : undefined}>
       <button type="button" class="ki-button ki-icon-button docs-menu" data-variant="quiet" data-ki-dialog-open="docs-drawer" aria-label="Open navigation">
         <Fragment set:html={icon("menu")} />
       </button>
@@ -68,16 +69,36 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
         <img class="docs-mark docs-mark-light" src="/mark.svg" alt="" width="28" height="28" />
         <img class="docs-mark docs-mark-dark" src="/mark-white.svg" alt="" width="28" height="28" />
         <span class="docs-name">KNOW IDEA UI</span>
-        <span class="docs-ver"><code>@knowidea/ui</code> v{ui.version}</span>
+        <span class="docs-ver"><span class="num">v{ui.version}</span></span>
       </a>
+      <nav class="docs-topnav" aria-label="Main">
+        {topNav.map((t) => <a href={href(t.href)} aria-current={!notFound && t.section.includes(sectionOf(current)) ? "true" : undefined}>{t.label}</a>)}
+      </nav>
       <div class="docs-search">
         <button type="button" class="docs-searchbtn" data-docs-search-open aria-haspopup="dialog" aria-keyshortcuts="/ Control+K">
           <span class="docs-searchbtn-label"><Fragment set:html={icon("search")} />Search</span>
           <kbd class="docs-kbd" aria-hidden="true">/</kbd>
         </button>
       </div>
-      <button type="button" class="ki-button docs-theme" data-variant="secondary" id="theme-toggle" aria-label="Toggle theme">Theme: Auto</button>
+      <button type="button" class="ki-button docs-theme" data-variant="quiet" id="theme-toggle" aria-label="Toggle theme" data-mode="auto">
+        <span class="docs-theme-sun"><Fragment set:html={icon("sun")} /></span>
+        <span class="docs-theme-moon"><Fragment set:html={icon("moon")} /></span>
+        <span class="docs-theme-label" id="theme-label">Theme: Auto</span>
+      </button>
+      <a class="docs-gh" href={site.repo} rel="noopener">GitHub</a>
     </header>
+    {home ? (
+      <main id="main" class="home">
+        <slot />
+        <footer class="docs-foot home-foot">
+          <ul class="docs-meta">
+            <li><a class="docs-meta-link" href={href("changelog")}>Changelog</a></li>
+            <li><a class="docs-meta-link" href={site.repo} rel="noopener">GitHub</a></li>
+            <li class="docs-meta-ver"><code>@knowidea/ui</code> <span class="num">v{ui.version}</span></li>
+          </ul>
+        </footer>
+      </main>
+    ) : (
     <div class="docs-body" data-toc={toc ? "" : undefined}>
       <aside class="docs-nav" aria-label="Site navigation">
         <DocsNav l={l} />
@@ -108,12 +129,14 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
         </aside>
       )}
     </div>
+    )}
     <dialog id="docs-drawer" class="ki-drawer" data-variant="temporary" aria-label="Navigation">
       <div class="ki-drawer__head">
         <p class="ki-drawer__brand"><b>KNOW IDEA UI</b><span>v{ui.version}</span></p>
         <button type="button" class="ki-button ki-icon-button" data-variant="quiet" data-ki-dialog-close aria-label="Close navigation"><Fragment set:html={icon("close")} /></button>
       </div>
       <DocsNav l={l} />
+      <p class="docs-drawer-foot"><a href={site.repo} rel="noopener">GitHub</a></p>
     </dialog>
     <dialog id="docs-sd" class="docs-sd" aria-label="Search" data-index={rel + "search-index.json"}>
       <div class="docs-sd-bar">
@@ -124,6 +147,21 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
       <ul id="docs-q-list" class="docs-results" role="listbox" aria-label="Search results"></ul>
       <p id="docs-q-hint" class="docs-sd-hint">ページと見出しを探す。<kbd class="docs-kbd">/</kbd> か <kbd class="docs-kbd">Ctrl</kbd> <kbd class="docs-kbd">K</kbd> でどのページからも開く。</p>
       <p class="ki-sr-only" id="docs-q-status" role="status"></p>
+    </dialog>
+    <dialog id="cp-dialog" class="docs-sd cp-dialog" aria-labelledby="cp-title">
+      <div class="cp-dialog-head">
+        <h2 class="cp-dialog-title" id="cp-title">Code</h2>
+        <button type="button" class="ki-button ki-icon-button" data-variant="quiet" data-cp-close aria-label="Close code"><Fragment set:html={icon("close")} /></button>
+      </div>
+      <div class="cp-dialog-bar">
+        <div role="tablist" aria-label="Language" class="cp-tabs" style="display:flex;gap:var(--space-2)">
+          <button type="button" role="tab" class="ki-button" data-variant="secondary" data-cp-tab="react" aria-selected="true">React</button>
+          <button type="button" role="tab" class="ki-button" data-variant="secondary" data-cp-tab="html" aria-selected="false">HTML</button>
+        </div>
+        <button type="button" class="ki-button cp-copy" data-variant="secondary" data-cp-copy>Copy</button>
+      </div>
+      <pre class="ki-code__pre" tabindex="0" aria-label="Code"><code id="cp-code"></code></pre>
+      <p class="cp-dialog-status" id="cp-status" role="status"></p>
     </dialog>
     <script define:vars={{ index }} is:inline>
       window.__docsIndex = index;
