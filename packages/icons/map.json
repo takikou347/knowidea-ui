@@ -1,9 +1,9 @@
 [
   { "role": "home", "ja": "ホーム", "phosphor": "house", "tabler": "home", "lucide": "house" },
-  { "role": "actor", "ja": "Claude と人", "phosphor": "user", "tabler": "user", "lucide": "user" },
-  { "role": "proposal", "ja": "提案", "phosphor": "lightbulb", "tabler": "bulb", "lucide": "lightbulb" },
-  { "role": "thread", "ja": "スレッド", "phosphor": "chats", "tabler": "messages", "lucide": "messages-square" },
-  { "role": "pr", "ja": "PR", "phosphor": "git-pull-request", "tabler": "git-pull-request", "lucide": "git-pull-request" },
+  { "role": "actor", "ja": "人", "phosphor": "user", "tabler": "user", "lucide": "user" },
+  { "role": "idea", "ja": "ひらめき", "phosphor": "lightbulb", "tabler": "bulb", "lucide": "lightbulb" },
+  { "role": "chats", "ja": "会話のまとまり", "phosphor": "chats", "tabler": "messages", "lucide": "messages-square" },
+  { "role": "pull-request", "ja": "変更の取り込み依頼", "phosphor": "git-pull-request", "tabler": "git-pull-request", "lucide": "git-pull-request" },
   { "role": "approve", "ja": "承認", "phosphor": "check", "tabler": "check", "lucide": "check" },
   { "role": "reject", "ja": "否認", "phosphor": "x", "tabler": "x", "lucide": "x" },
   { "role": "comment", "ja": "コメント", "phosphor": "chat-text", "tabler": "message", "lucide": "message-square" },

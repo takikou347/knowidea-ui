@@ -13,7 +13,7 @@ body{margin:0;padding:24px;font:14px sans-serif;background:${theme === "dark" ? 
 table{border-collapse:collapse}td,th{padding:10px 16px;text-align:left;vertical-align:middle;border-bottom:1px solid ${theme === "dark" ? "#3a4048" : "#e3e6e8"}}svg{display:block}</style>
 <table><tr><th>名前</th><th>太さ</th><th>96px</th><th>40px</th><th>20px</th><th>16px</th></tr>
 ${custom.flatMap((n) => ["regular", "bold"].map((w) => `<tr><td>${n}</td><td>${w}</td>${row(n, w)}</tr>`)).join("")}
-${["usage", "thread", "comment", "review"].map((n) => `<tr><td>${n}(Phosphor)</td><td>regular</td>${row(n, "regular")}</tr>`).join("")}
+${["usage", "chats", "comment", "review"].map((n) => `<tr><td>${n}(Phosphor)</td><td>regular</td>${row(n, "regular")}</tr>`).join("")}
 </table>`;
 const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 for (const theme of ["light", "dark"]) {

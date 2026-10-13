@@ -38,9 +38,9 @@ Phosphor の regular を使う。
 | --- | --- | --- | --- | --- |
 | home | ホーム | `house` | `home` | `house` |
 | actor | 人 | `user` | `user` | `user` |
-| proposal | 提案 | `lightbulb` | `bulb` | `lightbulb` |
-| thread | スレッド | `chats` | `messages` | `messages-square` |
-| pr | PR | `git-pull-request` | `git-pull-request` | `git-pull-request` |
+| idea | ひらめき | `lightbulb` | `bulb` | `lightbulb` |
+| chats | 会話のまとまり | `chats` | `messages` | `messages-square` |
+| pull-request | 変更の取り込み依頼 | `git-pull-request` | `git-pull-request` | `git-pull-request` |
 | approve | 承認 | `check` | `check` | `check` |
 | reject | 否認 | `x` | `x` | `x` |
 | comment | コメント | `chat-text` | `message` | `message-square` |
@@ -57,11 +57,11 @@ Phosphor の regular を使う。
 
 ## 全アイコン(1c)
 
-`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに分ける(方向と移動、操作、状態と通知、もの、会話、開発、データ、日付、文字、メディア、会社の自作)。各行は名前、Phosphor の名前、日本語。アプリごとの区分は持たない。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
+`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに分ける(方向と移動、操作、状態と通知、もの、会話、開発、データ、日付、文字、メディア)。各行は名前、Phosphor の名前、日本語。アプリごとの区分は持たない。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
 
 | 決まり | 中身 |
 | --- | --- |
-| 名前 | 用途の名前(`chevron-right`、`routine`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
+| 名前 | 用途の名前(`chevron-right`、`clock-clockwise`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
 | 足し方 | `icons.json` に 1 行足して `pnpm --filter @knowidea/icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
 | 使う者の上書き | 使う側は、自分で使う名前の部品を選ぶ。形を変えたいときは `icons.json` に自作を足し、同じ名前で上書きする |
 
@@ -69,10 +69,10 @@ Phosphor の regular を使う。
 
 | 名前 | 役 | 自作の理由 |
 | --- | --- | --- |
-| `token` | 使用量のトークン | 六角形に 2 本の文字の線。Phosphor の `coins` は金銭に読めてしまい、費用(`cost`)と区別できない |
-| `session` | 作業の 1 回分 | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、頼んだ 1 回の作業とは違う |
+| `hex-lines` | 六角形に 2 本の線 | 使用量の単位などに使う。Phosphor の `coins` は金銭に読めてしまい、費用(`cost`)と区別できない |
+| `chat-prompt` | 吹き出しにプロンプト | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、頼んだ 1 回の作業とは違う |
 
-`routine` は `clock-clockwise`、`model` は `cpu`、`proposal` は `lightbulb`、オーナー待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `token` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。他社のロゴは写していない。
+周期のくり返しは `clock-clockwise`、チップは `cpu`、ひらめきは `lightbulb`、待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `hex-lines` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。他社のロゴは写していない。
 
 ## 出す形
 
@@ -96,7 +96,7 @@ import { Icon, SearchIcon } from "icons/react";
 
 ## ライセンス
 
-大半のアイコンは Phosphor Icons(MIT、Copyright (c) 2023 Phosphor Icons、`@phosphor-icons/core` 2.1.1)から取り出した。全文は `dist/LICENSE-phosphor.txt`(出どころは `node_modules/@phosphor-icons/core/LICENSE`)。自作の `token`、`session` は KNOW IDEA のもの。
+大半のアイコンは Phosphor Icons(MIT、Copyright (c) 2023 Phosphor Icons、`@phosphor-icons/core` 2.1.1)から取り出した。全文は `dist/LICENSE-phosphor.txt`(出どころは `node_modules/@phosphor-icons/core/LICENSE`)。自作の `hex-lines`、`chat-prompt` は KNOW IDEA のもの。
 
 ## 比較用の作り方(1b)
 
