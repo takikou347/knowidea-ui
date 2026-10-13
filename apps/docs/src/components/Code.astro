@@ -1,0 +1,9 @@
+---
+// 静的なコードブロック。コピーボタン付き。
+import { CodeBlock } from "@knowidea/ui";
+const { code, lang = "tsx", label = "Code" } = Astro.props;
+---
+<div class="code-gap"><CodeBlock client:load code={code} language={lang} label={label} /></div>
+<style>
+  .code-gap { margin: 0 0 var(--space-4); }
+</style>

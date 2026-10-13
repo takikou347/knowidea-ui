@@ -1,0 +1,16 @@
+/* 状態の印。色だけでなく、形(アイコン)と字で伝える。
+   data-tone: neutral(既定) | info | success | warn | error。data-size: lg(一目で分かる大きさ)。 */
+.ki-status {
+  display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--space-5); padding: 0 var(--space-2);
+  border-radius: var(--radius-1); background: var(--color-surface-2); color: var(--color-text);
+  font-size: var(--font-size-1); font-weight: var(--font-weight-strong); line-height: 1; white-space: nowrap;
+}
+.ki-status > .ki-icon { width: var(--space-4); height: var(--space-4); }
+.ki-status[data-tone="info"] { background: var(--color-info-soft); color: var(--color-info); }
+.ki-status[data-tone="success"] { background: var(--color-success-soft); color: var(--color-success); }
+.ki-status[data-tone="warn"] { background: var(--color-warn-soft); color: var(--color-warn); }
+.ki-status[data-tone="error"] { background: var(--color-error-soft); color: var(--color-error); }
+.ki-status[data-size="lg"] {
+  gap: var(--space-2); min-height: var(--space-6); padding: 0 var(--space-3); border-radius: var(--radius-2); font-size: var(--font-size-3);
+}
+.ki-status[data-size="lg"] > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }

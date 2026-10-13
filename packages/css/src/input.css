@@ -1,0 +1,31 @@
+/* 入力と複数行の入力。aria-invalid="true" で失敗。読み込み中は .ki-input-group の中で data-loading。 */
+.ki-input, .ki-textarea {
+  display: block; width: 100%; min-height: var(--size-hit);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-2);
+  background: var(--color-surface); color: var(--color-text);
+  font: inherit; font-size: var(--font-size-3); line-height: var(--font-line-height-3);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-textarea { min-height: calc(var(--size-hit) * 2); padding: var(--space-2) var(--space-3); resize: vertical; }
+.ki-input::placeholder, .ki-textarea::placeholder { color: var(--color-text-muted); opacity: 1; }
+.ki-input:is(:hover, .is-hover), .ki-textarea:is(:hover, .is-hover) { border-color: var(--color-text-muted); }
+.ki-input:is(:focus-visible, :focus, .is-focus), .ki-textarea:is(:focus-visible, :focus, .is-focus) {
+  outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-text);
+}
+.ki-input:is([aria-invalid="true"], [data-invalid]), .ki-textarea:is([aria-invalid="true"], [data-invalid]) {
+  border-color: var(--color-error);
+}
+.ki-input:is(:disabled, [aria-disabled="true"]), .ki-textarea:is(:disabled, [aria-disabled="true"]) {
+  background: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-line); cursor: not-allowed;
+}
+.ki-input:read-only:not(:disabled), .ki-textarea:read-only:not(:disabled) { background: var(--color-surface-2); }
+.ki-input[type="number"], .ki-input[data-numeric] { font-family: var(--font-mono); font-size: var(--font-size-2); font-variant-numeric: tabular-nums; }
+
+.ki-input-group { position: relative; display: block; }
+.ki-input-group > .ki-input { padding-right: calc(var(--space-3) + var(--space-5)); }
+.ki-input-group > .ki-input__adornment {
+  position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%);
+  display: inline-flex; color: var(--color-text-muted); pointer-events: none;
+}
+.ki-input-group[data-loading] > .ki-input { cursor: progress; }

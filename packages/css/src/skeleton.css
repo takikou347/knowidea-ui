@@ -1,0 +1,7 @@
+/* 読み込みの仮の形。動かさない(終わらない脈動は使わない)。包む側に aria-busy="true"。 */
+.ki-skeleton { display: block; height: 1em; border-radius: var(--radius-1); background: var(--color-line); }
+.ki-skeleton[data-size="short"] { width: 30%; }
+.ki-skeleton[data-size="medium"] { width: 60%; }
+.ki-skeleton[data-size="long"] { width: 100%; }
+.ki-skeleton[data-shape="block"] { height: calc(var(--space-7) * 2); border-radius: var(--radius-2); }
+.ki-skeleton-stack { display: grid; gap: var(--space-3); }

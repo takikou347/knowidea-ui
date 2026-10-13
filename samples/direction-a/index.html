@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>方向 A 静かな文書</title>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f6f8;
+  --surface: #fcfdfe;
+  --surface-2: #ebeef2;
+  --text: #161c24;
+  --muted: #4e5661;
+  --line: #d0d5d9;
+  --line-strong: #77818c;
+  --primary: #0b517f;
+  --primary-hover: #023c62;
+  --on-primary: #f8fafd;
+  --success: #136239;
+  --warning: #7e4f04;
+  --danger: #aa1f1f;
+  --font-head: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-code: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --fs-1: 0.8125rem;  /* 13 注記、表の見出し */
+  --fs-2: 0.9375rem;  /* 15 本文 */
+  --fs-3: 1.125rem;   /* 18 小見出し、引用 */
+  --fs-4: 1.5rem;     /* 24 節の見出し */
+  --fs-5: 2.125rem;   /* 34 画面の見出し */
+  --lh-body: 1.85;
+  --lh-ui: 1.5;
+  --lh-head: 1.4;
+
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 16px; --sp-4: 24px; --sp-5: 40px; --sp-6: 72px;
+  --r-0: 0;      /* 表、面、コードブロック */
+  --r-1: 2px;    /* ボタン、入力欄、タグ */
+  --hair: 1px;   /* 罫 */
+  --ring: 2px;   /* focus */
+  --shadow-float: 0 2px 10px rgb(20 30 50 / 0.16); /* 浮くもの(通知)だけ */
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --t-fast: 120ms;
+  --t-mid: 180ms;
+  --gutter: clamp(16px, 4vw, 48px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101419;
+    --surface: #181c21;
+    --surface-2: #21262c;
+    --text: #e5e8ec;
+    --muted: #a4acb4;
+    --line: #33383f;
+    --line-strong: #707883;
+    --primary: #72bdf0;
+    --primary-hover: #9cd0f5;
+    --on-primary: #07121e;
+    --success: #77d199;
+    --warning: #e4bb5f;
+    --danger: #ff847d;
+    --shadow-float: 0 2px 12px rgb(0 0 0 / 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101419;
+  --surface: #181c21;
+  --surface-2: #21262c;
+  --text: #e5e8ec;
+  --muted: #a4acb4;
+  --line: #33383f;
+  --line-strong: #707883;
+  --primary: #72bdf0;
+  --primary-hover: #9cd0f5;
+  --on-primary: #07121e;
+  --success: #77d199;
+  --warning: #e4bb5f;
+  --danger: #ff847d;
+  --shadow-float: 0 2px 12px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 var(--fs-2)/var(--lh-body) var(--font-body);
+  font-feature-settings: "palt" 0;
+  overflow-wrap: anywhere;
+}
+h1, h2, h3 { font-family: var(--font-head); font-weight: 600; line-height: var(--lh-head); margin: 0; letter-spacing: 0.04em; }
+h1 { font-size: var(--fs-5); }
+h2 { font-size: var(--fs-4); }
+h3 { font-size: var(--fs-3); font-weight: 500; }
+p { margin: 0 0 var(--sp-3); }
+a { color: var(--primary); text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
+a:hover { color: var(--primary-hover); }
+code, .code { font-family: var(--font-code); font-size: 0.875em; }
+:focus-visible { outline: var(--ring) solid var(--primary); outline-offset: 2px; }
+svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: butt; stroke-linejoin: miter; flex: none; }
+.num { font-family: var(--font-num); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.small { font-size: var(--fs-1); line-height: 1.7; }
+
+/* 上のバー */
+.bar { border-bottom: var(--hair) solid var(--line); background: var(--bg); }
+.bar-in { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter); min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.brand { font-family: var(--font-head); font-weight: 600; font-size: 1.25rem; letter-spacing: 0.22em; color: var(--text); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
+.nav { display: flex; align-items: center; gap: var(--sp-4); }
+.nav a { color: var(--muted); text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; border-bottom: 2px solid transparent; font-size: var(--fs-1); }
+.nav a[aria-current="page"] { color: var(--primary); border-bottom-color: var(--primary); }
+.nav a:hover { color: var(--text); }
+.nav a[aria-current="page"]:hover { color: var(--primary-hover); }
+
+main { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter) var(--sp-6); }
+.sec { padding-top: var(--sp-6); }
+.sec > h2 { padding-top: var(--sp-3); border-top: var(--hair) solid var(--text); margin-bottom: var(--sp-4); }
+.sec > .lead { max-width: 40em; color: var(--text); margin-bottom: var(--sp-4); }
+.sub { margin-top: var(--sp-5); margin-bottom: var(--sp-3); }
+
+/* ボタン */
+.btn { font: 500 var(--fs-2)/var(--lh-ui) var(--font-body); letter-spacing: 0.04em; min-height: 44px; min-width: 44px; padding: 0 var(--sp-4); border-radius: var(--r-1); border: var(--hair) solid transparent; background: transparent; color: var(--text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); text-decoration: none; transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); position: relative; }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover, .btn-primary.is-hover { background: var(--primary-hover); color: var(--on-primary); }
+.btn-secondary { border-color: var(--line-strong); background: var(--surface); }
+.btn-secondary:hover, .btn-secondary.is-hover { border-color: var(--text); }
+.btn-text { color: var(--primary); text-decoration: underline; text-underline-offset: 0.3em; text-decoration-thickness: 1px; padding: 0 var(--sp-3); }
+.btn-text:hover, .btn-text.is-hover { color: var(--primary-hover); text-decoration-thickness: 2px; }
+.btn.is-focus { outline: var(--ring) solid var(--primary); outline-offset: 2px; }
+.btn:disabled, .btn[aria-disabled="true"] { cursor: not-allowed; background: var(--surface-2); color: var(--muted); border-color: var(--line); text-decoration: none; }
+.btn-text:disabled { background: transparent; border-color: transparent; }
+.btn .prog { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: currentColor; }
+
+/* タグ */
+.tag { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 28px; padding: 0 10px; border: var(--hair) solid currentColor; border-radius: var(--r-1); font-size: var(--fs-1); line-height: 1; letter-spacing: 0.04em; white-space: nowrap; color: var(--muted); background: transparent; transition: color var(--t-mid) var(--ease), border-color var(--t-mid) var(--ease), background-color var(--t-mid) var(--ease); }
+.tag::before { content: ""; width: 8px; height: 8px; border: var(--hair) solid currentColor; flex: none; }
+.tag-ok { color: var(--success); }
+.tag-ok::before { background: currentColor; }
+.tag-idle { color: var(--muted); border-color: var(--line-strong); }
+.tag-warn { color: var(--warning); }
+.tag-warn::before { background: currentColor; border: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); width: 9px; height: 8px; }
+.tag-bad { color: var(--danger); }
+.tag-bad::before { background: currentColor; transform: rotate(45deg); width: 7px; height: 7px; }
+.tag-wait { color: var(--primary); }
+.tag-wait::before { box-shadow: inset 4px 0 0 currentColor; }
+
+/* 入力 */
+.field { display: grid; gap: var(--sp-2); max-width: 28em; }
+.field label { font-size: var(--fs-1); color: var(--text); letter-spacing: 0.04em; }
+.input { font: 400 var(--fs-2)/var(--lh-ui) var(--font-body); min-height: 44px; padding: 0 var(--sp-3); border: var(--hair) solid var(--line-strong); border-radius: var(--r-1); background: var(--surface); color: var(--text); width: 100%; }
+.input:hover { border-color: var(--text); }
+.input:disabled { background: var(--surface-2); color: var(--muted); border-color: var(--line); cursor: not-allowed; }
+.input[aria-invalid="true"] { border-color: var(--danger); border-width: 2px; padding: 0 calc(var(--sp-3) - 1px); }
+.hint { font-size: var(--fs-1); line-height: 1.6; color: var(--muted); margin: 0; }
+.err { font-size: var(--fs-1); line-height: 1.6; color: var(--danger); margin: 0; display: flex; gap: var(--sp-2); align-items: flex-start; }
+.err svg.i { width: 18px; height: 18px; margin-top: 1px; }
+
+/* 表 */
+.tw { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: var(--fs-2); }
+caption { text-align: left; font-size: var(--fs-1); color: var(--muted); padding: 0 0 var(--sp-2); }
+thead th { text-align: left; font-weight: 500; font-size: var(--fs-1); letter-spacing: 0.06em; color: var(--text); padding: 10px var(--sp-3) 10px 0; border-top: var(--hair) solid var(--text); border-bottom: var(--hair) solid var(--text); white-space: nowrap; }
+tbody th, tbody td { text-align: left; font-weight: 400; padding: 14px var(--sp-3) 14px 0; border-bottom: var(--hair) solid var(--line); vertical-align: middle; }
+tbody tr:last-child th, tbody tr:last-child td { border-bottom: var(--hair) solid var(--text); }
+.sw { display: inline-block; width: 28px; height: 14px; border: var(--hair) solid var(--line-strong); vertical-align: -2px; margin-right: var(--sp-2); }
+td code, th code { font-size: 0.8125rem; }
+
+/* 画面の見本 */
+.screen { border: var(--hair) solid var(--line-strong); background: var(--surface); }
+.screen .bar { background: var(--surface); }
+.screen .bar-in { padding: 0 var(--sp-4); max-width: none; }
+.screen-body { padding: var(--sp-5) var(--sp-4) var(--sp-5); display: grid; gap: var(--sp-5); }
+.screen-head { display: flex; justify-content: space-between; align-items: end; gap: var(--sp-3); flex-wrap: wrap; }
+.screen-head p { margin: var(--sp-2) 0 0; color: var(--muted); font-size: var(--fs-1); }
+.block > h3 { padding-bottom: var(--sp-2); margin-bottom: var(--sp-3); border-bottom: var(--hair) solid var(--line); display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.block > h3 .num { color: var(--muted); font-family: var(--font-num); font-size: var(--fs-1); }
+.wait-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+.wait-item { display: grid; gap: var(--sp-2); }
+.wait-item .row { display: flex; gap: var(--sp-3); align-items: center; flex-wrap: wrap; }
+.prs { list-style: none; margin: 0; padding: 0; }
+.prs li { display: grid; grid-template-columns: 11em 1fr auto; gap: var(--sp-3); align-items: baseline; padding: 14px 0; border-bottom: var(--hair) solid var(--line); }
+.prs li:last-child { border-bottom: 0; }
+.prs .ref { font-family: var(--font-num); font-size: 0.875rem; }
+.prs .ref a { display: inline-flex; min-height: 44px; align-items: center; }
+.prs p { margin: 0; }
+.prs .note { color: var(--muted); font-size: var(--fs-1); display: block; line-height: 1.7; }
+.ctrl-row { display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center; }
+.state-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-5) var(--sp-4); }
+.state { display: grid; gap: var(--sp-3); align-content: start; }
+.state > h3 { font-size: var(--fs-2); font-family: var(--font-body); font-weight: 500; letter-spacing: 0.04em; padding-bottom: var(--sp-2); border-bottom: var(--hair) solid var(--line); }
+.empty, .failed { display: grid; gap: var(--sp-3); justify-items: start; color: var(--text); }
+.empty svg.i, .failed svg.i { width: 28px; height: 28px; color: var(--muted); }
+.failed svg.i { color: var(--danger); }
+.empty p, .failed p { margin: 0; }
+.skel { display: grid; gap: 12px; }
+.skel i { display: block; height: 12px; background: var(--surface-2); border-top: var(--hair) solid var(--line); border-bottom: var(--hair) solid var(--line); }
+.skel i:nth-child(1) { width: 60%; } .skel i:nth-child(2) { width: 90%; } .skel i:nth-child(3) { width: 75%; }
+
+/* コード、引用 */
+.codeblock { position: relative; background: var(--surface-2); border: var(--hair) solid var(--line); border-radius: var(--r-0); display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-3); }
+.codeblock pre { margin: 0; overflow-x: auto; flex: 1; padding: var(--sp-2) 0; }
+.codeblock code { font-size: 0.875rem; line-height: 1.6; white-space: pre; }
+.toast { position: fixed; left: 50%; bottom: var(--sp-4); transform: translate(-50%, 8px); background: var(--text); color: var(--bg); padding: 10px var(--sp-4); border-radius: var(--r-1); box-shadow: var(--shadow-float); font-size: var(--fs-1); opacity: 0; pointer-events: none; transition: opacity var(--t-mid) var(--ease), transform var(--t-mid) var(--ease); z-index: 10; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+blockquote { margin: 0; padding: var(--sp-3) 0 0; border-top: var(--hair) solid var(--text); max-width: 32em; }
+blockquote p { font-family: var(--font-head); font-weight: 500; font-size: var(--fs-3); line-height: 1.9; margin: 0 0 var(--sp-2); }
+blockquote footer { font-size: var(--fs-1); color: var(--muted); }
+
+/* 型見本 */
+.type-row { display: grid; grid-template-columns: 9em 1fr; gap: var(--sp-3) var(--sp-4); padding: var(--sp-3) 0; border-bottom: var(--hair) solid var(--line); align-items: baseline; }
+.type-row .meta { font-size: var(--fs-1); color: var(--muted); line-height: 1.6; }
+.type-row .meta b { font-weight: 500; color: var(--text); display: block; }
+.space-row { display: grid; grid-template-columns: 9em 1fr; gap: var(--sp-3); align-items: center; padding: 6px 0; font-size: var(--fs-1); }
+.space-bar { height: 10px; background: var(--primary); display: block; }
+.shape-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-4); }
+.shape { display: grid; gap: var(--sp-2); align-content: start; }
+.shape .demo { height: 64px; display: grid; place-items: center; font-size: var(--fs-1); }
+.d-r0 { border: var(--hair) solid var(--line-strong); background: var(--surface); }
+.d-r1 { border: var(--hair) solid var(--line-strong); border-radius: var(--r-1); background: var(--surface); }
+.d-line { border-top: var(--hair) solid var(--text); }
+.d-hair { border-top: var(--hair) solid var(--line); }
+.d-shadow { background: var(--surface); box-shadow: var(--shadow-float); border-radius: var(--r-1); }
+.d-ring { outline: var(--ring) solid var(--primary); outline-offset: 2px; }
+
+.why { max-width: 40em; padding-left: 1.4em; margin: 0; }
+.why li { margin-bottom: var(--sp-2); }
+
+/* 狭い画面 */
+@media (max-width: 640px) {
+  :root { --fs-5: 1.75rem; --fs-4: 1.375rem; }
+  .sec { padding-top: var(--sp-5); }
+  .nav a.hide-s { display: none; }
+  .nav { gap: var(--sp-3); }
+  .bar .brand { letter-spacing: 0.12em; font-size: 1.0625rem; }
+  .brand, .nav a, .bar button { white-space: nowrap; }
+  .screen-body { padding: var(--sp-4) var(--sp-3); gap: var(--sp-4); }
+  .screen .bar-in { padding: 0 var(--sp-3); }
+  .prs li { grid-template-columns: 1fr; gap: var(--sp-1); }
+  .type-row, .space-row { grid-template-columns: 1fr; gap: var(--sp-1); }
+  table.stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  table.stack, table.stack tbody, table.stack tr, table.stack th, table.stack td { display: block; width: 100%; }
+  table.stack caption { display: block; }
+  table.stack .tag { justify-self: start; }
+  .prs .tag { justify-self: start; margin-top: var(--sp-2); }
+  table.stack tr { padding: var(--sp-3) 0; border-bottom: var(--hair) solid var(--line); }
+  table.stack tbody tr:last-child { border-bottom: var(--hair) solid var(--text); }
+  table.stack tbody th, table.stack tbody td { border: 0 !important; padding: 4px 0; display: grid; grid-template-columns: 7em 1fr; gap: var(--sp-3); align-items: center; }
+  table.stack tbody th::before, table.stack tbody td::before { content: attr(data-label); font-size: var(--fs-1); color: var(--muted); }
+  table.stack tbody th[data-label="役"], table.stack tbody th[data-label="組"] { font-weight: 500; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="#top" id="top">KNOW IDEA</a>
+    <div class="nav">
+      <a href="#screen" aria-current="page">会社の状態</a>
+      <a href="#color" class="hide-s">色</a>
+      <a href="#type" class="hide-s">字</a>
+      <a href="#parts" class="hide-s">部品</a>
+      <button class="btn btn-secondary" id="themeBtn" type="button" aria-label="ライトとダークを切り替える">
+        <span class="ic"></span><span class="lbl"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="sec" id="screen" style="padding-top: var(--sp-5)">
+    <h1>方向 A 静かな文書</h1>
+    <p class="lead" style="max-width:40em; margin-top: var(--sp-3)">官報や紙の文書のような静けさを、管理の画面に持ち込む。密度はゆったり、色は冷たい無彩色寄りで、主の色は 1 色だけ。形は直角に近く、線は細い。</p>
+
+    <h2 class="sub" style="border-top:0">画面の見本</h2>
+    <div class="screen" role="group" aria-label="会社の状態の画面の見本">
+      <div class="bar">
+        <div class="bar-in">
+          <span class="brand" style="font-size:1.0625rem">KNOW IDEA</span>
+          <span class="small muted num">2026-10-13 07:50 時点</span>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div class="screen-head">
+          <div>
+            <h2 style="font-size:var(--fs-5)">会社の状態</h2>
+            <p>company/status.md の内容を表示している</p>
+          </div>
+          <div class="ctrl-row">
+            <span class="tag tag-ok">止めた routine 無し</span>
+            <span class="tag tag-ok">遅れた部署 無し</span>
+          </div>
+        </div>
+
+        <section class="block" aria-labelledby="h-wait">
+          <h3 id="h-wait">オーナー待ち <span class="num">1 件</span></h3>
+          <ul class="wait-list">
+            <li class="wait-item">
+              <div class="row"><span class="tag tag-wait">マージ待ち</span><span class="small muted">レビュー部は可(推奨: マージ)</span></div>
+              <p style="margin:0">整合性の見直しのうち、オーナーが決める分。<a href="#">develop-docs #130</a> は docs.html を作るフックを外す。<a href="#">ruleru #61</a> は守りの網と憲法の参照先を直す。</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="h-pr">
+          <h3 id="h-pr">マージを待つ PR <span class="num">2 件</span></h3>
+          <ul class="prs">
+            <li>
+              <span class="ref"><a href="#">develop-docs #130</a></span>
+              <p>整合性の見直し<span class="note">docs.html を作るフックを止め、古い記述を直す</span></p>
+              <span class="tag tag-wait">オーナーのマージ</span>
+            </li>
+            <li>
+              <span class="ref"><a href="#">ruleru #61</a></span>
+              <p>整合性の見直し<span class="note">守りの網と憲法の参照先を今の正本に</span></p>
+              <span class="tag tag-wait">オーナーのマージ</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="h-rt">
+          <h3 id="h-rt">routine</h3>
+          <div class="tw">
+            <table class="stack" id="routineTable">
+              <caption>最後のコミットは日本時間</caption>
+              <thead><tr><th scope="col">routine</th><th scope="col">部署</th><th scope="col">状態</th><th scope="col">最後のコミット</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="color">
+    <h2>色</h2>
+    <p class="lead">冷たい無彩色に、主の青を 1 色だけ。主は主のボタンと今いる所、リンクにだけ使う。ライトとダークは別々に決めてあり、反転ではない。ダークは面を少しずつ持ち上げ、主を明るく淡くする。グラデーションは使わない。</p>
+    <div class="tw">
+      <table class="stack">
+        <caption>役つきのトークン。値は OKLCH(明るさ 色の濃さ 色相)と、CSS に書いた 16 進</caption>
+        <thead><tr><th scope="col">役</th><th scope="col">ライト</th><th scope="col">ダーク</th></tr></thead>
+        <tbody>
+<tr><th scope="row" data-label="役">背景<br><code>--bg</code></th><td data-label="ライト"><span class="sw" style="background:#f4f6f8"></span><code>oklch(0.972 0.004 250)</code><br><code>#f4f6f8</code></td><td data-label="ダーク"><span class="sw" style="background:#101419"></span><code>oklch(0.190 0.012 255)</code><br><code>#101419</code></td></tr>
+<tr><th scope="row" data-label="役">面<br><code>--surface</code></th><td data-label="ライト"><span class="sw" style="background:#fcfdfe"></span><code>oklch(0.994 0.002 250)</code><br><code>#fcfdfe</code></td><td data-label="ダーク"><span class="sw" style="background:#181c21"></span><code>oklch(0.225 0.012 255)</code><br><code>#181c21</code></td></tr>
+<tr><th scope="row" data-label="役">沈んだ面<br><code>--surface-2</code></th><td data-label="ライト"><span class="sw" style="background:#ebeef2"></span><code>oklch(0.948 0.006 250)</code><br><code>#ebeef2</code></td><td data-label="ダーク"><span class="sw" style="background:#21262c"></span><code>oklch(0.265 0.013 255)</code><br><code>#21262c</code></td></tr>
+<tr><th scope="row" data-label="役">文字<br><code>--text</code></th><td data-label="ライト"><span class="sw" style="background:#161c24"></span><code>oklch(0.225 0.018 255)</code><br><code>#161c24</code></td><td data-label="ダーク"><span class="sw" style="background:#e5e8ec"></span><code>oklch(0.930 0.006 250)</code><br><code>#e5e8ec</code></td></tr>
+<tr><th scope="row" data-label="役">弱い文字<br><code>--muted</code></th><td data-label="ライト"><span class="sw" style="background:#4e5661"></span><code>oklch(0.450 0.020 255)</code><br><code>#4e5661</code></td><td data-label="ダーク"><span class="sw" style="background:#a4acb4"></span><code>oklch(0.740 0.014 250)</code><br><code>#a4acb4</code></td></tr>
+<tr><th scope="row" data-label="役">線<br><code>--line</code></th><td data-label="ライト"><span class="sw" style="background:#d0d5d9"></span><code>oklch(0.870 0.008 250)</code><br><code>#d0d5d9</code></td><td data-label="ダーク"><span class="sw" style="background:#33383f"></span><code>oklch(0.340 0.014 255)</code><br><code>#33383f</code></td></tr>
+<tr><th scope="row" data-label="役">強い線<br><code>--line-strong</code></th><td data-label="ライト"><span class="sw" style="background:#77818c"></span><code>oklch(0.600 0.020 250)</code><br><code>#77818c</code></td><td data-label="ダーク"><span class="sw" style="background:#707883"></span><code>oklch(0.570 0.020 255)</code><br><code>#707883</code></td></tr>
+<tr><th scope="row" data-label="役">主<br><code>--primary</code></th><td data-label="ライト"><span class="sw" style="background:#0b517f"></span><code>oklch(0.420 0.100 245)</code><br><code>#0b517f</code></td><td data-label="ダーク"><span class="sw" style="background:#72bdf0"></span><code>oklch(0.770 0.105 240)</code><br><code>#72bdf0</code></td></tr>
+<tr><th scope="row" data-label="役">主(hover)<br><code>--primary-hover</code></th><td data-label="ライト"><span class="sw" style="background:#023c62"></span><code>oklch(0.345 0.085 245)</code><br><code>#023c62</code></td><td data-label="ダーク"><span class="sw" style="background:#9cd0f5"></span><code>oklch(0.835 0.075 240)</code><br><code>#9cd0f5</code></td></tr>
+<tr><th scope="row" data-label="役">主の上の文字<br><code>--on-primary</code></th><td data-label="ライト"><span class="sw" style="background:#f8fafd"></span><code>oklch(0.985 0.004 250)</code><br><code>#f8fafd</code></td><td data-label="ダーク"><span class="sw" style="background:#07121e"></span><code>oklch(0.180 0.030 250)</code><br><code>#07121e</code></td></tr>
+<tr><th scope="row" data-label="役">成功<br><code>--success</code></th><td data-label="ライト"><span class="sw" style="background:#136239"></span><code>oklch(0.440 0.100 155)</code><br><code>#136239</code></td><td data-label="ダーク"><span class="sw" style="background:#77d199"></span><code>oklch(0.790 0.120 155)</code><br><code>#77d199</code></td></tr>
+<tr><th scope="row" data-label="役">注意<br><code>--warning</code></th><td data-label="ライト"><span class="sw" style="background:#7e4f04"></span><code>oklch(0.470 0.100 70)</code><br><code>#7e4f04</code></td><td data-label="ダーク"><span class="sw" style="background:#e4bb5f"></span><code>oklch(0.810 0.120 85)</code><br><code>#e4bb5f</code></td></tr>
+<tr><th scope="row" data-label="役">誤り<br><code>--danger</code></th><td data-label="ライト"><span class="sw" style="background:#aa1f1f"></span><code>oklch(0.480 0.175 27)</code><br><code>#aa1f1f</code></td><td data-label="ダーク"><span class="sw" style="background:#ff847d"></span><code>oklch(0.750 0.150 25)</code><br><code>#ff847d</code></td></tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">コントラスト比</h3>
+    <p class="small muted" style="max-width:40em">relative luminance の式で script が計算した値。本文の組は 4.5 : 1 以上、大きな文字と UI の線、focus の輪は 3 : 1 以上を基準にする。線は区切りの罫で、情報を運ばないので基準を置かない。</p>
+    <div class="tw">
+      <table class="stack">
+        <thead><tr><th scope="col">組</th><th scope="col">ライト</th><th scope="col">ダーク</th><th scope="col">基準</th><th scope="col">判定</th></tr></thead>
+        <tbody>
+<tr><th scope="row" data-label="組">文字 / 背景</th><td class="num" data-label="ライト">15.82 : 1</td><td class="num" data-label="ダーク">15.04 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">文字 / 面</th><td class="num" data-label="ライト">16.82 : 1</td><td class="num" data-label="ダーク">13.93 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">文字 / 沈んだ面</th><td class="num" data-label="ライト">14.72 : 1</td><td class="num" data-label="ダーク">12.40 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">弱い文字 / 背景</th><td class="num" data-label="ライト">6.86 : 1</td><td class="num" data-label="ダーク">8.04 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">弱い文字 / 面</th><td class="num" data-label="ライト">7.29 : 1</td><td class="num" data-label="ダーク">7.45 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">弱い文字 / 沈んだ面</th><td class="num" data-label="ライト">6.38 : 1</td><td class="num" data-label="ダーク">6.63 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">主(文字、リンク) / 面</th><td class="num" data-label="ライト">8.26 : 1</td><td class="num" data-label="ダーク">8.36 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">主 / 背景(focus の輪)</th><td class="num" data-label="ライト">7.76 : 1</td><td class="num" data-label="ダーク">9.02 : 1</td><td class="num" data-label="基準">3.0 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">主の上の文字 / 主</th><td class="num" data-label="ライト">8.04 : 1</td><td class="num" data-label="ダーク">9.20 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">主の上の文字 / 主(hover)</th><td class="num" data-label="ライト">11.00 : 1</td><td class="num" data-label="ダーク">11.45 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">成功 / 面</th><td class="num" data-label="ライト">7.28 : 1</td><td class="num" data-label="ダーク">9.26 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">注意 / 面</th><td class="num" data-label="ライト">6.86 : 1</td><td class="num" data-label="ダーク">9.43 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">誤り / 面</th><td class="num" data-label="ライト">7.05 : 1</td><td class="num" data-label="ダーク">7.21 : 1</td><td class="num" data-label="基準">4.5 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">強い線 / 背景(入力欄の枠)</th><td class="num" data-label="ライト">3.66 : 1</td><td class="num" data-label="ダーク">4.14 : 1</td><td class="num" data-label="基準">3.0 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">強い線 / 面(入力欄の枠)</th><td class="num" data-label="ライト">3.89 : 1</td><td class="num" data-label="ダーク">3.83 : 1</td><td class="num" data-label="基準">3.0 : 1 以上</td><td data-label="判定">満たす</td></tr>
+<tr><th scope="row" data-label="組">線 / 背景(区切りの罫。参考)</th><td class="num" data-label="ライト">1.36 : 1</td><td class="num" data-label="ダーク">1.57 : 1</td><td class="num" data-label="基準">基準なし</td><td data-label="判定">装飾</td></tr>
+
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:var(--sp-3);max-width:40em">状態は色だけで伝えない。タグには、四角(成功)、枠だけの四角(見ない)、三角(注意)、菱形(誤り)、半分塗りの四角(待ち)の印と言葉を付ける。</p>
+  </section>
+
+  <section class="sec" id="type">
+    <h2>字</h2>
+    <p class="lead">見出しは明朝、本文はそれに合うゴシック、数字とコードは等幅。本文の太さは 400、行の高さは 1.85 で、紙の文書の行間に寄せる。</p>
+    <div class="tw">
+      <table class="stack">
+        <thead><tr><th scope="col">役</th><th scope="col">書体</th><th scope="col">太さ</th><th scope="col">理由</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" data-label="役">見出し</th><td data-label="書体">Shippori Mincho</td><td data-label="太さ">500、600</td><td data-label="理由">縦画が細く、官報や紙の文書の静けさが出る</td></tr>
+          <tr><th scope="row" data-label="役">本文</th><td data-label="書体">Zen Kaku Gothic New</td><td data-label="太さ">400、500</td><td data-label="理由">明朝と並べて字面が揃い、小さくても潰れない</td></tr>
+          <tr><th scope="row" data-label="役">数字</th><td data-label="書体">IBM Plex Mono</td><td data-label="太さ">400</td><td data-label="理由">時刻と件数の桁が揃う。表の列で読み比べやすい</td></tr>
+          <tr><th scope="row" data-label="役">コード</th><td data-label="書体">IBM Plex Mono</td><td data-label="太さ">400</td><td data-label="理由">日本語の中に置いても記号が読める</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub">大きさの段</h3>
+    <div>
+      <div class="type-row"><div class="meta"><b>34px(--fs-5)</b>画面の見出し 行 1.4</div><div style="font-family:var(--font-head);font-weight:600;font-size:var(--fs-5);line-height:1.4;letter-spacing:.04em">会社の状態</div></div>
+      <div class="type-row"><div class="meta"><b>24px(--fs-4)</b>節の見出し 行 1.4</div><div style="font-family:var(--font-head);font-weight:600;font-size:var(--fs-4);line-height:1.4;letter-spacing:.04em">マージを待つ PR</div></div>
+      <div class="type-row"><div class="meta"><b>18px(--fs-3)</b>小見出し、引用 行 1.9</div><div style="font-family:var(--font-head);font-weight:500;font-size:var(--fs-3);line-height:1.9">オーナー待ちは 1 件ある</div></div>
+      <div class="type-row"><div class="meta"><b>15px(--fs-2)</b>本文 行 1.85</div><div>整合性の見直しのうち、オーナーが決める分を載せている。本文の太さは 400 で、文字の色は背景に対して 4.5 : 1 を超える。</div></div>
+      <div class="type-row"><div class="meta"><b>13px(--fs-1)</b>注記、表の見出し 行 1.7</div><div class="small">最後のコミットは日本時間 <span class="num">10-13 03:24</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="space">
+    <h2>余白と形</h2>
+    <p class="lead">余白は広く取り、区切りは罫で行う。カードは作らず、面を囲うのは画面の見本の外枠だけにしている。</p>
+    <div>
+      <div class="space-row"><span>--sp-1 4px</span><span class="space-bar" style="width:4px"></span></div>
+      <div class="space-row"><span>--sp-2 8px</span><span class="space-bar" style="width:8px"></span></div>
+      <div class="space-row"><span>--sp-3 16px</span><span class="space-bar" style="width:16px"></span></div>
+      <div class="space-row"><span>--sp-4 24px</span><span class="space-bar" style="width:24px"></span></div>
+      <div class="space-row"><span>--sp-5 40px</span><span class="space-bar" style="width:40px"></span></div>
+      <div class="space-row"><span>--sp-6 72px</span><span class="space-bar" style="width:72px"></span></div>
+    </div>
+    <div class="shape-grid" style="margin-top:var(--sp-5)">
+      <div class="shape"><div class="demo d-r0">角丸 0</div><span class="small muted">--r-0。表、面、コードブロック</span></div>
+      <div class="shape"><div class="demo d-r1">角丸 2px</div><span class="small muted">--r-1。ボタン、入力欄、タグ</span></div>
+      <div class="shape"><div class="demo d-line"></div><span class="small muted">罫 1px(文字色)。表の上下、節の頭</span></div>
+      <div class="shape"><div class="demo d-hair"></div><span class="small muted">罫 1px(線)。行の区切り</span></div>
+      <div class="shape"><div class="demo d-shadow">影</div><span class="small muted">--shadow-float。浮くもの(通知)だけ</span></div>
+      <div class="shape"><div class="demo"><span class="d-ring" style="padding:6px 12px">focus</span></div><span class="small muted">輪 2px(主)、間 2px</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="parts">
+    <h2>部品</h2>
+
+    <h3 class="sub">ボタン</h3>
+    <div class="tw"><table class="stack">
+      <thead><tr><th scope="col">種類</th><th scope="col">通常</th><th scope="col">hover</th><th scope="col">focus</th><th scope="col">無効</th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-label="種類">主</th>
+          <td data-label="通常"><button class="btn btn-primary" type="button">マージを確認</button></td>
+          <td data-label="hover"><button class="btn btn-primary is-hover" type="button">マージを確認</button></td>
+          <td data-label="focus"><button class="btn btn-primary is-focus" type="button">マージを確認</button></td>
+          <td data-label="無効"><button class="btn btn-primary" type="button" disabled>マージを確認</button></td></tr>
+        <tr><th scope="row" data-label="種類">副</th>
+          <td data-label="通常"><button class="btn btn-secondary" type="button">差分を開く</button></td>
+          <td data-label="hover"><button class="btn btn-secondary is-hover" type="button">差分を開く</button></td>
+          <td data-label="focus"><button class="btn btn-secondary is-focus" type="button">差分を開く</button></td>
+          <td data-label="無効"><button class="btn btn-secondary" type="button" disabled>差分を開く</button></td></tr>
+        <tr><th scope="row" data-label="種類">文字だけ</th>
+          <td data-label="通常"><button class="btn btn-text" type="button">あとで見る</button></td>
+          <td data-label="hover"><button class="btn btn-text is-hover" type="button">あとで見る</button></td>
+          <td data-label="focus"><button class="btn btn-text is-focus" type="button">あとで見る</button></td>
+          <td data-label="無効"><button class="btn btn-text" type="button" disabled>あとで見る</button></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 class="sub">入力欄</h3>
+    <div class="state-grid">
+      <div class="field"><label for="f1">routine の名前</label><input class="input" id="f1" value="制作"><p class="hint">status.md の表と同じ名前で書く</p></div>
+      <div class="field"><label for="f2">部署</label><input class="input" id="f2" value="コンテンツ" aria-invalid="true" aria-describedby="e2"><p class="err" id="e2"><svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 18 16.5H2Z M10 8v4 M10 13.8v.7"/></svg><span>部署の名前が表に無い。「コンテンツ部」と書く</span></p></div>
+      <div class="field"><label for="f3">最後のコミット</label><input class="input" id="f3" value="10-13 03:24" disabled><p class="hint">git の記録から入る。直せない</p></div>
+    </div>
+
+    <h3 class="sub">状態のタグ</h3>
+    <div class="ctrl-row">
+      <span class="tag tag-ok">動いている</span>
+      <span class="tag tag-idle">見ない</span>
+      <span class="tag tag-warn">遅れた</span>
+      <span class="tag tag-bad">止めた</span>
+      <span class="tag tag-wait">マージ待ち</span>
+    </div>
+
+    <h3 class="sub">表</h3>
+    <div class="tw"><table class="stack">
+      <caption>画面の見本の表と同じ作り。上下に文字色の罫、行の間は細い線</caption>
+      <thead><tr><th scope="col">routine</th><th scope="col">部署</th><th scope="col">状態</th><th scope="col">最後のコミット</th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-label="routine">制作</th><td data-label="部署">コンテンツ部</td><td data-label="状態"><span class="tag tag-ok">動いている</span></td><td data-label="最後のコミット" class="num">10-13 03:24</td></tr>
+        <tr><th scope="row" data-label="routine">ネタ探し</th><td data-label="部署">本社</td><td data-label="状態"><span class="tag tag-idle">見ない</span></td><td data-label="最後のコミット" class="num">10-13 07:42</td></tr>
+        <tr><th scope="row" data-label="routine">Logru の週の改善</th><td data-label="部署">開発部</td><td data-label="状態"><span class="tag tag-ok">動いている</span></td><td data-label="最後のコミット" class="num">10-12 00:32</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3 class="sub">コードブロック</h3>
+    <div class="codeblock" style="max-width:36em">
+      <pre><code id="codeText">python3 company/scripts/status.py</code></pre>
+      <button class="btn btn-secondary" type="button" id="copyBtn" aria-label="コードをコピーする"><svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 7V2.5h10.5V13H13 M2.5 7H13v10.5H2.5Z"/></svg><span>コピー</span></button>
+    </div>
+
+    <h3 class="sub">引用</h3>
+    <blockquote>
+      <p>「結構しっかり作り込む必要があるのだが、AIぽいのは避けたい。」</p>
+      <footer>オーナーの言葉</footer>
+    </blockquote>
+
+    <h3 class="sub">空、読み込み、失敗</h3>
+    <div class="state-grid">
+      <div class="state">
+        <h3>空</h3>
+        <div class="empty">
+          <svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 11.5h4l1.5 2.5h4l1.5-2.5h4 M2.5 11.5 5 3.5h10l2.5 8v5h-15Z"/></svg>
+          <p>止めた routine は無し</p>
+          <p class="small muted">止まった routine が出ると、ここに並ぶ</p>
+        </div>
+      </div>
+      <div class="state" aria-busy="true">
+        <h3>読み込み</h3>
+        <div class="skel" role="status" aria-label="読み込み中"><i></i><i></i><i></i></div>
+        <p class="small muted" style="margin:0">status.md を読み込み中</p>
+      </div>
+      <div class="state">
+        <h3>失敗</h3>
+        <div class="failed" role="alert">
+          <svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5 18 16.5H2Z M10 8v4 M10 13.8v.7"/></svg>
+          <p>status.md を読み込めない</p>
+          <p class="small muted">ネットワークを確かめて、もう一度読み込む</p>
+          <button class="btn btn-secondary" type="button">もう一度読み込む</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="motion">
+    <h2>動き</h2>
+    <p class="lead">動かすのは状態が変わる時だけ。ボタンを押すと細い線が 800ms で伸びて確認中になり、終わるとタグの色が 180ms で替わる。入退場、脈動、数字の数え上げは使わない。</p>
+    <div class="ctrl-row" style="gap:var(--sp-4)">
+      <span class="small muted">制作(見本)</span>
+      <span class="tag tag-ok" id="demoTag">動いている</span>
+      <button class="btn btn-secondary" type="button" id="demoBtn"><span>状態を切り替える</span><span class="prog" aria-hidden="true"></span></button>
+      <span class="small muted" id="demoLive" aria-live="polite"></span>
+    </div>
+    <div class="tw" style="margin-top:var(--sp-4)"><table class="stack">
+      <thead><tr><th scope="col">対象</th><th scope="col">長さ</th><th scope="col">イージング</th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-label="対象">hover、focus の色</th><td class="num" data-label="長さ">120ms</td><td class="num" data-label="イージング">cubic-bezier(0.2, 0, 0, 1)</td></tr>
+        <tr><th scope="row" data-label="対象">タグの状態の変化、通知</th><td class="num" data-label="長さ">180ms</td><td class="num" data-label="イージング">cubic-bezier(0.2, 0, 0, 1)</td></tr>
+        <tr><th scope="row" data-label="対象">ボタンの確認中の線</th><td class="num" data-label="長さ">800ms(1 回だけ)</td><td class="num" data-label="イージング">linear</td></tr>
+        <tr><th scope="row" data-label="対象">prefers-reduced-motion</th><td class="num" data-label="長さ">0.01ms</td><td data-label="イージング">すべて止める。線は伸びずに確認中の文字だけ出す</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="sec" id="why">
+    <h2>選んだ理由</h2>
+    <ol class="why">
+      <li>この会社の画面は、定款、帳簿、待ちの一覧という文書を読む場所なので、装飾を引いて明朝と細い罫で読ませ、会社名の KNOW IDEA も字間を空けた明朝で置いた。</li>
+      <li>管理の画面は 1 日に何度も開くので、主の青はボタンと今いる所だけに絞り、状態はタグの印と言葉で見分ける。色が減るほど、オーナー待ちの 1 件が目に入る。</li>
+      <li>危うさは、明朝の細さが小さい文字で読みにくいことと、静かすぎて押せる所が見つけにくいこと。見出しにだけ明朝を使い、操作は 44px の枠で示した。</li>
+    </ol>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'know-idea-theme';
+  function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function current() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  var ICON = {
+    sun: '<svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 10a3 3 0 1 0 6 0 3 3 0 0 0-6 0Z M10 2v2.5 M10 15.5V18 M2 10h2.5 M15.5 10H18 M4.3 4.3l1.8 1.8 M13.9 13.9l1.8 1.8 M15.7 4.3l-1.8 1.8 M6.1 13.9l-1.8 1.8"/></svg>',
+    moon: '<svg class="i" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 12.2A7 7 0 0 1 7.8 3.5a7 7 0 1 0 8.7 8.7Z"/></svg>'
+  };
+  var btn = document.getElementById('themeBtn');
+  function paint() {
+    var t = current();
+    btn.querySelector('.ic').innerHTML = t === 'dark' ? ICON.sun : ICON.moon;
+    btn.querySelector('.lbl').textContent = t === 'dark' ? 'ライト' : 'ダーク';
+  }
+  var saved = read();
+  if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  paint();
+  btn.addEventListener('click', function () {
+    var n = current() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n); write(n); paint();
+  });
+
+  var data = [
+    ['制作', 'コンテンツ部', 'ok', '動いている', '10-13 03:24'],
+    ['レビュー', '本社(レビュー部)', 'ok', '動いている', '10-13 04:17'],
+    ['毎日の振り返り', '本社', 'ok', '動いている', '10-13 04:43'],
+    ['ネタ探し', '本社', 'idle', '見ない', '10-13 07:42'],
+    ['経営会議', '本社', 'ok', '動いている', '10-13 05:11'],
+    ['週報', '本社', 'ok', '動いている', '10-12 16:05'],
+    ['ラボ', '本社', 'idle', '見ない', '10-12 19:05'],
+    ['月次', '本社', 'ok', '動いている', '10-12 16:05'],
+    ['Logru の週の改善', '開発部', 'ok', '動いている', '10-12 00:32']
+  ];
+  var tb = document.querySelector('#routineTable tbody');
+  tb.innerHTML = data.map(function (r) {
+    return '<tr><th scope="row" data-label="routine">' + r[0] + '</th><td data-label="部署">' + r[1] +
+      '</td><td data-label="状態"><span class="tag tag-' + r[2] + '">' + r[3] + '</span></td>' +
+      '<td data-label="最後のコミット" class="num">' + r[4] + '</td></tr>';
+  }).join('');
+
+  var toast = document.getElementById('toast'), tt;
+  function say(msg) {
+    toast.textContent = msg; toast.classList.add('on');
+    clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('on'); }, 1800);
+  }
+  var cb = document.getElementById('copyBtn');
+  cb.addEventListener('click', function () {
+    var text = document.getElementById('codeText').textContent;
+    var done = function () { cb.querySelector('span').textContent = 'コピーした'; say('コードをコピーした'); setTimeout(function () { cb.querySelector('span').textContent = 'コピー'; }, 1800); };
+    try {
+      navigator.clipboard.writeText(text).then(done, function () { say('コピーできない。手で選んでコピーする'); });
+    } catch (e) { say('コピーできない。手で選んでコピーする'); }
+  });
+
+  var dBtn = document.getElementById('demoBtn'), dTag = document.getElementById('demoTag'), live = document.getElementById('demoLive');
+  var running = false, on = true;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  dBtn.addEventListener('click', function () {
+    if (running) return;
+    running = true; dBtn.setAttribute('aria-busy', 'true'); dBtn.setAttribute('aria-disabled', 'true');
+    var lbl = dBtn.firstElementChild, prog = dBtn.querySelector('.prog');
+    lbl.textContent = '確認中'; live.textContent = '確認中';
+    prog.style.transition = 'none'; prog.style.width = '0';
+    if (!reduce) { void prog.offsetWidth; prog.style.transition = 'width 800ms linear'; prog.style.width = '100%'; }
+    setTimeout(function () {
+      on = !on;
+      dTag.className = 'tag ' + (on ? 'tag-ok' : 'tag-bad');
+      dTag.textContent = on ? '動いている' : '止めた';
+      lbl.textContent = '状態を切り替える'; prog.style.transition = 'none'; prog.style.width = '0';
+      dBtn.removeAttribute('aria-busy'); dBtn.removeAttribute('aria-disabled');
+      live.textContent = '制作は' + dTag.textContent + '(見本)'; running = false;
+    }, 800);
+  });
+})();
+</script>
+</body>
+</html>

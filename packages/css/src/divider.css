@@ -1,0 +1,6 @@
+/* 区切り。1 本の線。ラベル付きは文の切れ目に。 */
+.ki-divider { display: block; width: 100%; height: 1px; margin: var(--space-4) 0; border: 0; background: var(--color-line); }
+.ki-divider[data-orientation="vertical"] { display: inline-block; width: 1px; height: 1em; margin: 0 var(--space-3); vertical-align: middle; }
+.ki-divider[data-strong] { background: var(--color-line-strong); }
+.ki-divider-label { display: flex; align-items: center; gap: var(--space-3); margin: var(--space-4) 0; color: var(--color-text-muted); font-size: var(--font-size-2); }
+.ki-divider-label::before, .ki-divider-label::after { content: ""; flex: 1; height: 1px; background: var(--color-line); }
