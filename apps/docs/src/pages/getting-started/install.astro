@@ -10,7 +10,7 @@ const { href } = links(Astro.url.pathname);
   <p class="lead">4 つのパッケージを、tarball(<code>.tgz</code>)で配っている。リポジトリで作り、使う側のプロジェクトに入れる。</p>
 
   <h2 id="distribution">How it is distributed</h2>
-  <p>npm など外部の公開先にはまだ出していない。<strong>公開先をどこにするか(npm、GitHub Packages など)は未決で、オーナーが決める</strong>。決まるまでは tarball で配る。パッケージは <code>private: true</code> にしてあり、誤って <code>npm publish</code> しても止まる。</p>
+  <p>npm など外部の公開先にはまだ出していない。<strong>公開先をどこにするか(npm、GitHub Packages など)はまだ決まっていない</strong>。決まるまでは tarball で配る。パッケージは <code>private: true</code> にしてあり、誤って <code>npm publish</code> しても止まる。</p>
   <p>そのため、<code>pnpm add @knowidea/ui</code> のようにパッケージ名だけを書いても入らない(レジストリに無く、404 になる)。次の手順で、tarball のパスを指して入れる。</p>
 
   <h2 id="packages">Packages</h2>

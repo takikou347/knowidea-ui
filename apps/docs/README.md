@@ -14,12 +14,12 @@ tokens、icons、css、ui のビルドは、`pnpm -r build` が先に実行す�
 
 ## 公開先の設定
 
-公開先に関わる値は `src/site.config.mjs` の 1 か所にある。環境変数で上書きできる。公開先のリポジトリ名は未決なので、既定は `takikou347/design-system`。
+公開先に関わる値は `src/site.config.mjs` の 1 か所にある。環境変数で上書きできる。既定は GitHub Pages の `takikou347/knowidea-ui`。
 
 | 値 | 環境変数 | 既定 | 使う所 |
 | --- | --- | --- | --- |
-| サイトの URL | `SITE_URL` | `https://takikou347.github.io/design-system/` | `og:image`、`og:url`、canonical(絶対 URL が要る所だけ)。パス部分は 404 ページの `<base>` |
-| リポジトリの URL | `SITE_REPO` | `https://github.com/takikou347/design-system` | "Edit this page" と GitHub のリンク |
+| サイトの URL | `SITE_URL` | `https://takikou347.github.io/knowidea-ui/` | `og:image`、`og:url`、canonical(絶対 URL が要る所だけ)。パス部分は 404 ページの `<base>` |
+| リポジトリの URL | `SITE_REPO` | `https://github.com/takikou347/knowidea-ui` | "Edit this page" と GitHub のリンク |
 | ブランチ | `SITE_BRANCH` | `main` | "Edit this page" のリンク先 |
 
 例: `SITE_URL=https://example.com/ui/ SITE_REPO=https://github.com/org/ui pnpm --filter @knowidea/docs build`

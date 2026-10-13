@@ -10,7 +10,7 @@ KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定の�
 
 ## 入れ方
 
-npm などには出していない(公開先は未決で、オーナーが決める)。リポジトリの `pnpm release:pack` で `release/` に tarball を作り、使う側で 4 つ全部を入れる。`@knowidea/css`、`@knowidea/icons`、`@knowidea/tokens` は `peerDependencies` なので、同じコマンドで入れないと解決できない。手順は `apps/docs` の Installation。`pnpm test:consumer` が、新しいプロジェクトで手順どおりに動くことを確かめる。
+npm などには出していない(公開先はまだ決まっていない)。リポジトリの `pnpm release:pack` で `release/` に tarball を作り、使う側で 4 つ全部を入れる。`@knowidea/css`、`@knowidea/icons`、`@knowidea/tokens` は `peerDependencies` なので、同じコマンドで入れないと解決できない。手順は `apps/docs` の Installation。`pnpm test:consumer` が、新しいプロジェクトで手順どおりに動くことを確かめる。
 
 ## Components
 

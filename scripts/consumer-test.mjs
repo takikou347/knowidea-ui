@@ -21,7 +21,7 @@ const subst = {
   "vite@latest": "vite@9.2.1",
   "--template react-ts": "--template react-ts --no-interactive",
   "tailwindcss @tailwindcss/vite": "tailwindcss@4.3.3 @tailwindcss/vite@4.3.3",
-  "/path/to/design-system": root.replace(/\/$/, ""),
+  "/path/to/knowidea-ui": root.replace(/\/$/, ""),
 };
 const PRIMARY = "#2255CC";
 const only = process.env.ONLY ? process.env.ONLY.split(",") : null;

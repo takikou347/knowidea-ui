@@ -1,12 +1,12 @@
-# design-system
+# KNOW IDEA UI
 
-KNOW IDEA の共通のデザイン(色、タイポグラフィ、アイコン、コンポーネント、モーション、テーマ)。private。
+特定のアプリに依存しない UI ライブラリ(トークン、アイコン、CSS、React のコンポーネント)。ドキュメントは https://takikou347.github.io/knowidea-ui/ 。
 
 決まりは [DESIGN.md](DESIGN.md)。計画と文書は develop-docs の `company/proposals/20261012-priorities/` と `docs/design/`。
 
 ## 配り方
 
-npm などの公開先は未決で、オーナーが決める。決まるまでは tarball で配る。
+npm などの公開先はまだ決まっていない。決まるまでは tarball で配る。
 
 | コマンド | 中身 |
 | --- | --- |
