@@ -190,7 +190,11 @@ await kb("メニュー(矢印、Esc)", "components/menu.html", async (page) => {
   assert(first !== (await page.evaluate(() => document.activeElement?.textContent)), "ArrowDown で次の項目に移らない");
   await press(page, "Escape");
   await menu.waitFor({ state: "detached" });
-  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("操作")), "閉じた後に focus が開いたボタンへ戻らない");
+  // Base UI は popup を外した後の次のフレームで focus を戻す。detached の直後は body にいる瞬間があるので、戻るまで待つ
+  const back = await page
+    .waitForFunction(() => document.activeElement?.textContent?.includes("操作"), null, { timeout: 2000 })
+    .then(() => true, () => false);
+  assert(back, "閉じた後に focus が開いたボタンへ戻らない");
 });
 
 await kb("アコーディオン(Enter で開く、閉じる)", "components/accordion.html", async (page) => {

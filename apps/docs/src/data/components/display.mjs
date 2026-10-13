@@ -32,7 +32,7 @@ export const display = [
     slug: "chip", name: "Chip", ja: "チップ", imports: ["Chip"],
     lead: "小さな札。ただの印、選べる絞り込み、消せるタグのどれにも使える。",
     demos: [
-      { fn: "Filter", title: "選べる(絞り込み)", text: "押すと選びが切り替わる(aria-pressed)。" },
+      { fn: "Filter", title: "選べる(絞り込み)", text: "押すと選びが切り替わる(aria-pressed)。選んだ状態は、太い枠と先頭のチェックの印で示す。主の色は主のボタンと今いる所だけに使うので、面は塗らない。" },
       { fn: "Removable", title: "消せる(タグ)", text: "右の × で外す。外した後の focus は呼び出し側が次の物へ移す。" },
       { fn: "Static", title: "印だけ", text: "押せない。見た目の高さは 32px。" },
     ],
@@ -51,9 +51,9 @@ export const display = [
       [".ki-chip__main、.ki-chip__remove", "押せる範囲(44px)。見た目の高さ 32px の上下にはみ出す"],
       [".ki-chips", "並べる包み"],
     ],
-    vars: [["--color-surface、--color-line-strong、--color-text", "面、枠、字"], ["--color-primary、--color-on-primary", "選んだ状態"], ["--radius-2、--space-6", "角丸、見た目の高さ"], ["--size-hit", "押せる範囲"]],
+    vars: [["--color-surface、--color-line-strong、--color-text", "面、枠、字"], ["--color-text", "選んだ状態の枠と印"], ["--radius-2、--space-6", "角丸、見た目の高さ"], ["--size-hit", "押せる範囲"]],
     html: `<span class="ki-chip"><span class="ki-chip__label">下書き</span></span>
-<span class="ki-chip" data-selected><button type="button" class="ki-chip__main" aria-pressed="true">すべて</button></span>`,
+<span class="ki-chip" data-selected><button type="button" class="ki-chip__main" aria-pressed="true"><svg class="ki-icon" aria-hidden="true"><use href="#check"/></svg>すべて</button></span>`,
     a11y: ["見た目は 32px でも、押せる範囲は 44px(ボタンが上下にはみ出す)", "選べるチップは aria-pressed。消すボタンの名前に何を外すかを入れる"],
   },
   {

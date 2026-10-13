@@ -16,9 +16,9 @@
 .ki-chip__remove > .ki-icon { width: var(--space-4); height: var(--space-4); }
 .ki-chip__main:is(:hover, .is-hover), .ki-chip__remove:is(:hover, .is-hover) { background: var(--color-surface-2); color: var(--color-text); }
 .ki-chip__main:is(:focus-visible, .is-focus), .ki-chip__remove:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 0; }
-.ki-chip[data-selected] { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); }
-.ki-chip[data-selected] :is(.ki-icon, .ki-chip__remove) { color: var(--color-on-primary); }
-.ki-chip[data-selected] :is(.ki-chip__main, .ki-chip__remove):is(:hover, .is-hover) { background: var(--color-primary-hover); color: var(--color-on-primary); }
+/* 選んだ状態は主の色の面にせず、太い枠と先頭のチェックの印で示す(主の色は主のボタンと今いる所だけ) */
+.ki-chip[data-selected] { border-color: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-text); }
+.ki-chip[data-selected] .ki-chip__main > .ki-icon { color: var(--color-text); }
 .ki-chip[data-disabled] { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); }
 .ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove) { cursor: not-allowed; }
 .ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove):is(:hover, .is-hover) { background: transparent; }

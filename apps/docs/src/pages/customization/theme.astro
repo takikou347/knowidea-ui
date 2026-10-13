@@ -18,7 +18,7 @@ const create = `import { createTheme } from "@knowidea/tokens/create-theme";
 
 const t = createTheme({ primary: "#016C6C", radius: 4 });
 t.css(".brand");   // CSS 変数の上書きの文字列(ライトとダーク)
-t.warnings;       // コントラストが足りない組(空なら全部合格)`;
+t.warnings;       // 4.5:1 に届かない組(主の色と hover を bg、surface、surface-2 の上で、主の面の文字を主と hover の上で。ライトとダーク)`;
 const plain = `.brand {
   --color-primary: oklch(0.4811 0.0819 194.7749);
   --color-primary-hover: oklch(0.4111 0.0707 194.7749);
@@ -63,8 +63,8 @@ const rows = [
     <li>hover は明るさ(OKLCH の L)を 0.07 だけ暗くする。暗すぎる色は明るくする</li>
     <li>主の面の文字は、明るい文字と暗い文字の候補から、比が高い方を選ぶ</li>
     <li>ダークは反転せず、同じ色相で明るさ 0.74 以上に持ち上げ、彩度を 1.25 倍にして別に作る</li>
-    <li>色域を出る色は、彩度を下げて収める</li>
-    <li>主の色と背景、主の面と文字のどちらかが 4.5:1 に届かないと、<code>warnings</code> に入る。<code>ThemeProvider</code> は <code>console.warn</code> に出す</li>
+    <li>色域を出る色は、ライトの主の色もダークも、彩度を下げて収める</li>
+    <li>次の組が 4.5:1 に届かないと、<code>warnings</code> に入る(ライトとダークそれぞれ)。主の色と hover の色が bg、surface、surface-2 の上にあるとき。主の面の文字が主の色と hover の色の上にあるとき。ほかの組(状態の色、線など)は見ない。角丸が 8px を超えても入る。<code>ThemeProvider</code> は <code>console.warn</code> に出す</li>
   </ul>
   <p>ほかの変数は<a href={href("customization/tokens/color")}>トークン</a>、ダークの扱いは<a href={href("customization/dark-mode")}>ダークモード</a>を見る。</p>
 </Base>
