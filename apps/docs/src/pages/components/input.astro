@@ -1,0 +1,34 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Input } from "@knowidea/react";
+const html = `<label for="in1">routine 名</label>
+<input id="in1" class="ki-input" placeholder="例: review" />
+<input class="ki-input" aria-invalid="true" value="a b" aria-label="失敗の例" />`;
+---
+<ComponentPage
+  title="入力"
+  lead="1 行の文字を受ける。名前は必ず欄(Field)のラベルか aria-label で付ける。数字は等幅で出せる。"
+  props={[
+    ["invalid", "boolean", "false", "失敗。枠が失敗の色になり、aria-invalid が付く。理由は欄の誤りで書く"],
+    ["loading", "boolean", "false", "右端に回転を出す"],
+    ["numeric", "boolean", "false", "等幅の数字"],
+    ["disabled / readOnly", "boolean", "false", "無効、読み取り専用"],
+    ["...input", "-", "-", "type、value、onChange など input の属性"],
+  ]}
+  attrs={[[".ki-input", "<input> に付ける"], ['aria-invalid="true"', "失敗"], [".ki-input-group[data-loading] > .ki-input__adornment", "読み込み中の回転を右端に置く"], ["data-numeric", "等幅の数字"]]}
+  vars={[["--color-surface、--color-line、--color-line-strong、--color-text-muted", "面、枠、hover の枠、placeholder"], ["--color-error", "失敗の枠"], ["--color-focus", "focus の輪"], ["--size-hit、--radius-2、--space-3", "高さ、角丸、左右の余白"]]}
+  html={html}
+>
+  <Fragment slot="demo"><div class="w"><Input client:load aria-label="routine 名" placeholder="例: review" /></div></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空"><div class="w"><Input client:load aria-label="空" placeholder="例: review" /></div></StateRow>
+    <StateRow label="読み込み"><div class="w"><Input client:load aria-label="読み込み" defaultValue="review" loading readOnly /></div></StateRow>
+    <StateRow label="失敗"><div class="w"><Input client:load aria-label="失敗" defaultValue="a b" invalid /></div></StateRow>
+    <StateRow label="無効"><div class="w"><Input client:load aria-label="無効" defaultValue="review" disabled /></div></StateRow>
+    <StateRow label="focus"><div class="w"><Input client:load aria-label="focus" defaultValue="review" className="is-focus" /></div></StateRow>
+    <StateRow label="hover"><div class="w"><Input client:load aria-label="hover" defaultValue="review" className="is-hover" /></div></StateRow>
+    <StateRow label="押した時" na="入力に押した時の見た目は無い。入力中は focus と同じ" />
+  </Fragment>
+</ComponentPage>
+<style is:global>.w { width: min(100%, 320px); }</style>
