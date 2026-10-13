@@ -32,7 +32,7 @@ npm などには出していない(公開先は未決で、オーナーが決め
 ## Theme
 
 ```tsx
-<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+<ThemeProvider theme={{ primary: "#016C6C", radius: 8, density: "compact", fontSize: 14 }}>
   <App />
 </ThemeProvider>
 ```
