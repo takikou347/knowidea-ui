@@ -1,0 +1,11 @@
+/* 小さな回転。読み込み中の印。意味は aria-busy か role=status の文で伝える。 */
+.ki-spinner {
+  display: inline-block; flex: none;
+  width: 1em; height: 1em; border-radius: 50%;
+  border: 2px solid currentColor; border-right-color: transparent;
+  animation: ki-spin var(--motion-duration-spin) linear infinite;
+}
+@keyframes ki-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .ki-spinner { animation: none; border-right-color: currentColor; border-style: dotted; }
+}

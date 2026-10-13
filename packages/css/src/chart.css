@@ -1,0 +1,40 @@
+/* グラフ(Chart)。自前の SVG の折れ線と棒。灰色の棒、選んだ 1 本だけ主の色。値は読み上げと表にも出す。 */
+.ki-chart { display: grid; gap: var(--space-3); min-width: 0; color: var(--color-text); }
+.ki-chart__readout {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-4); min-height: var(--size-hit);
+}
+.ki-chart__readout-main { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin: 0; }
+.ki-chart__date { font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-chart__value { font-family: var(--font-mono); font-size: var(--font-size-4); line-height: var(--font-line-height-4); font-weight: var(--font-weight-strong); font-variant-numeric: tabular-nums; }
+.ki-chart__unit { font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-chart__nav { display: inline-flex; gap: var(--space-1); }
+.ki-chart__plot { position: relative; width: 100%; min-width: 0; }
+.ki-chart__svg { display: block; width: 100%; overflow: visible; touch-action: pan-y; }
+.ki-chart__grid { stroke: var(--color-line); stroke-width: 1; shape-rendering: crispEdges; }
+.ki-chart__baseline { stroke: var(--color-line-strong); stroke-width: 1; shape-rendering: crispEdges; }
+.ki-chart__tick { fill: var(--color-text-muted); font-family: var(--font-mono); font-size: var(--font-size-1); font-variant-numeric: tabular-nums; }
+.ki-chart__bar { fill: var(--color-line-strong); transition: fill var(--motion-duration-fast) var(--motion-ease); }
+.ki-chart__col[data-selected] .ki-chart__bar { fill: var(--color-primary); }
+.ki-chart__col:hover .ki-chart__bar, .ki-chart__col.is-hover .ki-chart__bar { fill: var(--color-text-muted); }
+.ki-chart__col[data-selected]:hover .ki-chart__bar { fill: var(--color-primary-hover); }
+.ki-chart__hit { fill: transparent; cursor: pointer; }
+.ki-chart__col { outline: none; }
+.ki-chart__col:is(:focus-visible, .is-focus) .ki-chart__hit { stroke: var(--color-focus); stroke-width: 2; }
+.ki-chart__none { stroke: var(--color-line-strong); stroke-width: 2; stroke-linecap: round; }
+.ki-chart__line { fill: none; stroke: var(--color-text-muted); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.ki-chart__dot { fill: var(--color-surface); stroke: var(--color-text-muted); stroke-width: 2; }
+.ki-chart__col[data-selected] .ki-chart__dot { fill: var(--color-primary); stroke: var(--color-primary); }
+.ki-chart__guide { stroke: var(--color-primary); stroke-width: 1; stroke-dasharray: 3 3; }
+.ki-chart__ref { stroke: var(--color-warn); stroke-width: 1; stroke-dasharray: 4 3; }
+.ki-chart__ref-label { fill: var(--color-warn); font-size: var(--font-size-1); font-weight: var(--font-weight-strong); }
+.ki-chart__end-label { fill: var(--color-text); font-family: var(--font-mono); font-size: var(--font-size-1); font-weight: var(--font-weight-strong); }
+.ki-chart__break { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.ki-chart__break-title { margin: 0; font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-chart__break li { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); font-size: var(--font-size-2); }
+.ki-chart__break-bar { display: block; height: var(--space-2); border-radius: var(--radius-1); background: var(--color-line); overflow: hidden; }
+.ki-chart__break-bar > span { display: block; height: 100%; background: var(--color-text-muted); }
+.ki-chart__break-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.ki-chart[data-state="loading"] .ki-chart__plot, .ki-chart[data-state="empty"] .ki-chart__plot {
+  display: grid; place-items: center; min-height: calc(var(--space-7) * 3); border: 1px dashed var(--color-line-strong); border-radius: var(--radius-2); color: var(--color-text-muted);
+}
+@media (prefers-reduced-motion: reduce) { .ki-chart__bar { transition: none; } }

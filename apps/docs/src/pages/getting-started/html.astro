@@ -1,0 +1,44 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const head = `<link rel="stylesheet" href="/vendor/tokens.css" />
+<link rel="stylesheet" href="/vendor/ki.css" />
+<script type="module" src="/vendor/ki.js"></script>`;
+const body = `<div class="ki-alert" data-tone="info">
+  <span class="ki-alert__icon"><svg class="ki-icon" aria-hidden="true"><use href="/vendor/sprite.svg#info"/></svg></span>
+  <div class="ki-alert__body"><p class="ki-alert__text">保存した。</p></div>
+</div>
+<button type="button" class="ki-button" data-variant="primary">完了にする</button>`;
+const dialog = `<button type="button" class="ki-button" data-ki-dialog-open="confirm">削除する</button>
+<dialog id="confirm" class="ki-dialog" aria-labelledby="confirm-title">
+  ...
+</dialog>`;
+---
+<Base title="Plain HTML" description="CSS だけで使う">
+  <h1>Plain HTML</h1>
+  <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。</p>
+  <h2 id="files">Files</h2>
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>File</th><th>Location (in the package)</th></tr></thead>
+      <tbody>
+        <tr><td><code>tokens.css</code></td><td><code>@knowidea/tokens/dist/tokens.css</code></td></tr>
+        <tr><td><code>ki.css</code></td><td><code>@knowidea/css/dist/ki.css</code></td></tr>
+        <tr><td><code>ki.js</code></td><td><code>@knowidea/css/dist/ki.js</code>(任意。dialog の開閉とコピーボタン用)</td></tr>
+        <tr><td><code>sprite.svg</code></td><td><code>@knowidea/icons/dist/sprite.svg</code>(アイコンを使うとき)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="head">Add to head</h2>
+  <Code code={head} lang="html" label="head example" />
+  <h2 id="body">Classes and attributes</h2>
+  <p>見た目の違いは <code>data-variant</code>、<code>data-tone</code> などの属性で指定する。クラスと属性は、各コンポーネントのページの CSS セクションに記載している。</p>
+  <Code code={body} lang="html" label="Plain HTML example" />
+  <h2 id="enhance">ki.js</h2>
+  <p>JavaScript が必要な動作(dialog の開閉、背景のクリックで閉じる、コピーボタン)は、<code>data-ki-dialog-open</code> のような属性で呼び出す。メニューやタブのような複雑な動作には、React のコンポーネントを使う。</p>
+  <Code code={dialog} lang="html" label="dialog example" />
+  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、<code>file://</code> で開くと外部参照が効かない。静的サーバーで開く。</p>
+  <p>テーマの変更は、CSS 変数のオーバーライドだけでできる。<a href={href("customization/overriding")}>Overriding</a> を参照。</p>
+</Base>

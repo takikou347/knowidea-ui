@@ -1,0 +1,70 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import ThemeCreator from "../../components/ThemeCreator.tsx";
+import { themeStyle, colorNames, value, oklchStr } from "../../lib/theme.mjs";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const toObj = (theme) => Object.fromEntries(colorNames.map((k) => [`--color-${k}`, oklchStr(value(theme, k))]));
+const baseLight = toObj("light");
+const baseDark = toObj("dark");
+
+const provider = `import { ThemeProvider } from "@knowidea/ui";
+
+<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+  <App />
+</ThemeProvider>`;
+const create = `import { createTheme } from "@knowidea/tokens/create-theme";
+
+const t = createTheme({ primary: "#016C6C", radius: 4 });
+t.css(".brand");   // CSS 変数をオーバーライドする文字列(ライトとダーク)
+t.warnings;       // コントラスト比が 4.5:1 に届かない組み合わせ(プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合。ライトとダークそれぞれ)`;
+const plain = `.brand {
+  --color-primary: oklch(0.4811 0.0819 194.7749);
+  --color-primary-hover: oklch(0.4111 0.0707 194.7749);
+  --color-on-primary: oklch(0.9946 0.0026 286.4);
+  --radius-2: 6px;
+}`;
+const rows = [
+  ["primary", "string", "プライマリカラー。#rrggbb か oklch(L C h) で指定する", "ブランドカラー #016C6C"],
+  ["primaryDark", "string", "ダークモードのプライマリカラー。省略すると、同じ色相で明るくして自動的に生成する", "自動"],
+  ["radius", "number | \"none\" | \"sm\" | \"md\" | \"lg\" | \"6px\"", "中サイズの角丸。小は半分、大は 1.5 倍になる", "4"],
+  ["density", "\"compact\" | \"comfortable\"", "余白(--space-2〜6)と、本文の行の高さ", "\"compact\""],
+  ["fontSize", "number (12〜20)", "本文のフォントサイズ(px)。小さい文字や見出しのサイズも、これに合わせて変わる", "14"],
+];
+---
+<Base title="Theme" description="プライマリカラー、角丸、密度、フォントサイズを変更する">
+  <h1>Theme</h1>
+  <p class="lead">変更できるのは 4 つ。プライマリカラー、角丸、密度、本文のフォントサイズ。それ以外の色は変更せず、ライトとダークそれぞれに決めた値をそのまま使う。</p>
+  <p>方法は 2 つある。CSS 変数をオーバーライドするか、<code>ThemeProvider</code> に値を渡す。どちらも同じ変数を書き換える。</p>
+
+  <h2 id="creator">Try it</h2>
+  <p>値を動かすと、下のコンポーネントがその場で変わる。下に表示される CSS と <code>ThemeProvider</code> のコードは、そのままコピーして使える。プライマリカラーから、hover の色とプライマリ面に載せる文字色を OKLCH で生成し、コントラスト比が 4.5:1 に届かない場合は警告する。</p>
+  <ThemeCreator client:load baseLight={baseLight} baseDark={baseDark} />
+
+  <h2 id="provider">ThemeProvider</h2>
+  <p>React では、囲んだ範囲にだけ効き、外には影響しない。値が変わると、その場で再描画される。</p>
+  <Code code={provider} label="ThemeProvider example" />
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>Name</th><th>Type</th><th>Description</th><th>Default</th></tr></thead>
+      <tbody>{rows.map((r) => <tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td><td>{r[2]}</td><td>{r[3]}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <h2 id="plain">CSS only</h2>
+  <p>React を使わない場合は、変数を書き換えるだけでよい。クラスでも <code>[data-theme]</code> でも、好きなセレクターで指定できる。</p>
+  <Code code={plain} lang="css" label="CSS variable overrides" />
+  <p>ダークモードの値も必要になるため、CSS の生成は <code>createTheme(...).css(".brand")</code> に任せるのが早い。</p>
+  <Code code={create} label="createTheme example" />
+
+  <h2 id="derive">How colors are derived</h2>
+  <ul class="plain">
+    <li>hover の色は、明るさ(OKLCH の L)を 0.07 下げて作る。暗すぎる色の場合は、逆に明るくする</li>
+    <li>プライマリ面の文字色は、明るい色と暗い色の候補のうち、コントラスト比が高い方を採用する</li>
+    <li>ダークモードのプライマリカラーは、ライトを反転せず、同じ色相で明るさを 0.74 以上に引き上げ、彩度を 1.25 倍にして別に生成する</li>
+    <li>色域を超える色は、ライトのプライマリカラーもダークも、彩度を下げて収める</li>
+    <li>次の組み合わせのコントラスト比が 4.5:1 に届かないと、<code>warnings</code> に追加される(ライトとダークそれぞれ)。プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合である。ほかの組み合わせ(状態を表す色や線など)は検査しない。角丸が 8px を超えた場合も追加される。<code>ThemeProvider</code> は <code>warnings</code> を <code>console.warn</code> に出力する</li>
+  </ul>
+  <p>ほかの変数は <a href={href("customization/tokens/color")}>Tokens</a>、ダークモードの扱いは <a href={href("customization/dark-mode")}>Dark mode</a> を参照。</p>
+</Base>

@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const add = `pnpm add @knowidea/ui @knowidea/css @knowidea/tokens @knowidea/icons
+# React コンポーネントを使わず CSS だけ使う場合は、ui は不要
+pnpm add @knowidea/css @knowidea/tokens @knowidea/icons`;
+const css = `/* エントリの CSS か、アプリの先頭で読み込む */
+import "@knowidea/tokens/tokens.css";   /* 色、フォント、余白、角丸の CSS 変数(ライトとダーク) */
+import "@knowidea/css/index.css";       /* コンポーネントの見た目(ki- のクラス) */`;
+---
+<Base title="Installation" description="4 つのパッケージと、読み込む CSS">
+  <h1>Installation</h1>
+  <p class="lead">4 つのパッケージに分かれている。必要なものだけをインストールする。</p>
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>Package</th><th>Contents</th><th>When needed</th></tr></thead>
+      <tbody>
+        <tr><td><code>@knowidea/tokens</code></td><td>CSS 変数(色、フォント、余白、角丸、影、モーション)と <code>createTheme</code></td><td>常に</td></tr>
+        <tr><td><code>@knowidea/css</code></td><td>コンポーネントの見た目。<code>ki-</code> のクラスと <code>data-*</code> 属性。素の HTML でも動く</td><td>常に</td></tr>
+        <tr><td><code>@knowidea/ui</code></td><td>React コンポーネント。土台は Base UI</td><td>React を使うとき</td></tr>
+        <tr><td><code>@knowidea/icons</code></td><td>SVG アイコン、スプライト、React コンポーネント</td><td>アイコンを使うとき</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="add">Add the packages</h2>
+  <Code code={add} lang="bash" label="Install command" />
+  <p>まだ公開していないため、現時点では pnpm のワークスペース(<code>workspace:*</code>)経由で使う。</p>
+  <h2 id="css">Load the CSS</h2>
+  <Code code={css} lang="ts" label="CSS imports" />
+  <p>この 2 行で足りる。プライマリカラーを変更したい場合は、<a href={href("customization/theme")}>Theme</a> を参照。</p>
+  <h2 id="next">Next steps</h2>
+  <ul class="plain links">
+    <li><a href={href("getting-started/react")}>Usage with React</a></li>
+    <li><a href={href("getting-started/html")}>Plain HTML</a></li>
+    <li><a href={href("getting-started/tailwind")}>Tailwind v4</a></li>
+  </ul>
+</Base>

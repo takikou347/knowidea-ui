@@ -1,0 +1,41 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const vars = `/* 1. 変数を書き換える。最も安全 */
+.my-app { --color-primary: oklch(0.48 0.15 260); --radius-2: 6px; }`;
+const cls = `/* 2. コンポーネントの変数で、1 つだけ変える(レイアウト系のコンポーネントが持つ) */
+.my-list { --ki-gap: var(--space-5); }`;
+const own = `/* 3. クラスを足してオーバーライドする。詳細度をそろえ、@layer か後ろの記述順で勝たせる */
+.save-button.ki-button { min-width: 8rem; }`;
+const react = `import { Button } from "@knowidea/ui";
+
+<Button className="save-button" variant="primary">保存</Button>
+<Button style={{ minWidth: "8rem" }}>保存</Button>`;
+const tw = `<Button className="min-w-32">保存</Button>`;
+---
+<Base title="Overriding" description="変数、className、data 属性で変更する">
+  <h1>Overriding</h1>
+  <p class="lead">影響の小さい順に、3 つの方法がある。上から順に試す。</p>
+  <h2 id="vars">1. Variables</h2>
+  <p>色、角丸、余白、フォントは、どのコンポーネントも役割を表す名前の変数から読む。変数を書き換えれば、すべてのコンポーネントが一緒に変わる。プライマリカラーだけを変えたい場合は、<a href={href("customization/theme")}>Theme</a> が手早い。</p>
+  <Code code={vars} lang="css" label="Variable override" />
+  <h2 id="local">2. Component variables</h2>
+  <p>Stack、Grid のように、間隔などを変数で受け取るコンポーネントがある(<code>--ki-gap</code>、<code>--ki-cols</code> など)。変数の名前は、各コンポーネントのページの CSS セクションに記載している。</p>
+  <Code code={cls} lang="css" label="Component variable override" />
+  <h2 id="class">3. className and style</h2>
+  <p>React のコンポーネントは <code>className</code> と <code>style</code> を受け取る。素の HTML ならクラスを足せばよい。</p>
+  <Code code={react} label="className example" />
+  <Code code={own} lang="css" label="CSS for the added class" />
+  <p>Tailwind のユーティリティも使える。詳細度が同じなら後に読み込んだ方が勝つため、CSS の読み込み順に注意する。</p>
+  <Code code={tw} label="Tailwind example" />
+  <h2 id="variant">Data attributes</h2>
+  <p>見た目の種類は <code>data-variant</code>、<code>data-tone</code>、<code>data-size</code> などの属性で指定する。状態は <code>data-disabled</code>、<code>data-loading</code> のような属性と <code>aria-*</code> で表す。オーバーライドするときも、これらの属性をセレクターに使う。</p>
+  <h2 id="dont">Avoid</h2>
+  <ul class="plain">
+    <li>コンポーネント内部の <code>__</code> を含むクラスを、深いセレクターで書き換えない。更新時に壊れる</li>
+    <li><code>outline</code> を消さない。フォーカスリングは 2px で、色を変えるときも、隣り合う色とのコントラスト比を 3:1 以上にする</li>
+    <li>タップ領域を 44px 未満にしない</li>
+  </ul>
+</Base>

@@ -1,0 +1,16 @@
+/* ツールチップ。補足だけを載せる。押せるものや大事な文は入れない。
+   素の HTML は .ki-tooltip-wrap の hover と focus で出す。React は Base UI。 */
+.ki-tooltip {
+  max-width: calc(var(--space-7) * 5); padding: var(--space-1) var(--space-3); border: 1px solid var(--color-line);
+  border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text);
+  font-size: var(--font-size-2); line-height: var(--font-line-height-2); box-shadow: var(--shadow-pop);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-tooltip[data-starting-style], .ki-tooltip[data-ending-style] { opacity: 0; }
+.ki-tooltip__positioner { z-index: 40; }
+.ki-tooltip-wrap { position: relative; display: inline-flex; }
+.ki-tooltip-wrap > .ki-tooltip {
+  position: absolute; bottom: calc(100% + var(--space-1)); left: 50%; transform: translateX(-50%);
+  width: max-content; visibility: hidden; opacity: 0; pointer-events: none; z-index: 40;
+}
+.ki-tooltip-wrap:is(:hover, :focus-within) > .ki-tooltip, .ki-tooltip-wrap.is-open > .ki-tooltip { visibility: visible; opacity: 1; }

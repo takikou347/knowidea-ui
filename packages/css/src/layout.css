@@ -1,0 +1,20 @@
+/* レイアウト。Stack(1 方向に並べる)、Grid(格子)、Container(幅を絞る)。間隔は --space-* の段(1〜7)を --ki-gap で渡す。 */
+.ki-stack {
+  display: flex; flex-direction: column; min-width: 0;
+  gap: var(--ki-gap, var(--space-3)); align-items: var(--ki-align, stretch); justify-content: var(--ki-justify, flex-start);
+}
+.ki-stack[data-direction="row"] { flex-direction: row; }
+.ki-stack[data-wrap] { flex-wrap: wrap; }
+
+.ki-grid {
+  display: grid; min-width: 0; gap: var(--ki-gap, var(--space-3));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--ki-min, 240px)), 1fr));
+}
+.ki-grid[data-columns] { grid-template-columns: repeat(var(--ki-cols, 2), minmax(0, 1fr)); }
+/* 狭い幅(600px 以下)では 1 列。data-keep で保つ */
+@media (max-width: 600px) { .ki-grid[data-columns]:not([data-keep]) { grid-template-columns: minmax(0, 1fr); } }
+
+.ki-container { width: 100%; min-width: 0; margin-inline: auto; padding-inline: var(--space-4); max-width: 960px; }
+.ki-container[data-size="sm"] { max-width: 640px; }
+.ki-container[data-size="lg"] { max-width: 1200px; }
+.ki-container[data-size="fluid"] { max-width: none; }

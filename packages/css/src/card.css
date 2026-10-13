@@ -1,0 +1,26 @@
+/* カード。見出し、メタ、本文、操作の枠。data-interactive: タイトルのリンクがカード全体に広がる。data-state: loading | error。 */
+.ki-card {
+  position: relative; display: grid; gap: var(--space-3); align-content: start; min-width: 0; padding: var(--space-4);
+  background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-card[data-interactive]:is(:hover, .is-hover) { border-color: var(--color-line-strong); }
+.ki-card:is(.is-focus, :has(:focus-visible)) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ki-card__header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
+.ki-card__heading { display: grid; gap: var(--space-1); min-width: 0; }
+.ki-card__title { margin: 0; min-width: 0; font-size: var(--font-size-3); line-height: var(--font-line-height-3); font-weight: var(--font-weight-strong); overflow-wrap: anywhere; }
+.ki-card__subtitle { margin: 0; font-family: var(--font-mono); font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-card__link { font: inherit; color: inherit; text-decoration: none; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+.ki-card__link:focus-visible { outline: none; }
+.ki-card__link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.ki-card__body { display: grid; gap: var(--space-2); min-width: 0; font-size: var(--font-size-3); line-height: var(--font-line-height-3); }
+.ki-card__body > :where(p) { margin: 0; }
+.ki-card__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin: 0; }
+.ki-card__meta dt { font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-card__meta dd { margin: 0; font-family: var(--font-mono); font-size: var(--font-size-2); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.ki-card__actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.ki-card[data-state="loading"] { border-style: dashed; }
+.ki-card[data-state="error"] { border-color: var(--color-error); }
+.ki-card[data-disabled] { color: var(--color-text-muted); background: var(--color-surface-2); }
+.ki-card__error { display: flex; align-items: flex-start; gap: var(--space-1); margin: 0; font-size: var(--font-size-2); color: var(--color-error); }
+.ki-card__error > .ki-icon { margin-top: 1px; }

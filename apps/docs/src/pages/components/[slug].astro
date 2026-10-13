@@ -1,0 +1,84 @@
+---
+import Base from "../../layouts/Base.astro";
+import ApiTable from "../../components/ApiTable.astro";
+import DemoBlock from "../../components/DemoBlock.tsx";
+import StatesBlock from "../../components/StatesBlock.tsx";
+import { CodeBlock } from "@knowidea/ui";
+import { components } from "../../lib/registry.mjs";
+import { snippet } from "../../lib/snippet.mjs";
+import { links } from "../../lib/paths.mjs";
+
+export function getStaticPaths() {
+  return components.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const { href, rel } = links(Astro.url.pathname);
+
+const raws = import.meta.glob("../../demos/*.tsx", { query: "?raw", import: "default", eager: true });
+const src = raws[`../../demos/${c.slug}.tsx`];
+const demos = c.demos.map((d) => ({ ...d, code: snippet(src, d.fn) }));
+const importLine = `import { ${c.imports.join(", ")} } from "@knowidea/ui";`;
+const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="#${n}"/></svg>`;
+const html = c.html ? c.html.replace(/\$\{icon\("([\w-]+)"\)\}/g, (_, n) => icon(n)) : null;
+const slug = (s) => s.toLowerCase();
+const same = components.filter((x) => x.cat === c.cat && x.slug !== c.slug);
+---
+<Base title={c.name} description={`${c.name} コンポーネントのデモ、状態、API、CSS、アクセシビリティ`}>
+  <h1>{c.name}</h1>
+  <p class="lead">{c.lead}</p>
+  <div class="gap"><CodeBlock client:load code={importLine} language="tsx" label="import" /></div>
+  <p class="muted cat-line">カテゴリ: {c.catName}。{same.length > 0 && <>同じカテゴリ: {same.map((x, i) => <><a href={href("components/" + x.slug)}>{x.name}</a>{i < same.length - 1 ? "、" : ""}</>)}</>}</p>
+
+  <h2 id="demo">Demos</h2>
+  {c.sample && <p class="muted">デモの数値はすべてサンプルであり、実際の値ではない。</p>}
+  {demos.map((d) => (
+    <>
+      <h3 id={"demo-" + slug(d.fn)}>{d.title}</h3>
+      {d.text && <p>{d.text}</p>}
+      <DemoBlock client:load slug={c.slug} fn={d.fn} code={d.code} block={d.block} />
+    </>
+  ))}
+  {html && (
+    <>
+      <h3 id="demo-html">Plain HTML</h3>
+      <p>React を使わないページでは、<code>@knowidea/css</code> の CSS を読み込み、クラスを指定する。{c.htmlNote}</p>
+      <div class="demo">
+        <div class="demo-stage" data-block set:html={html.replace(/<use href="#([\w-]+)"/g, `<use href="${rel}sprite.svg#$1"`)}></div>
+        <details class="demo-code">
+          <summary>Show code</summary>
+          <CodeBlock client:load code={html} language="html" label="HTML example" />
+        </details>
+      </div>
+    </>
+  )}
+
+  <h2 id="states">States</h2>
+  <p>すべてのコンポーネントが、Empty、Loading、Error、Disabled、Focus の 5 つの状態を備える。Hover と Active は、確認用に固定して表示している。そのコンポーネントにあてはまらない状態は「対象外」とし、理由を添える。</p>
+  <StatesBlock client:load slug={c.slug} />
+
+  <h2 id="api">API</h2>
+  {c.props.length > 0 ? <ApiTable rows={c.props} label="Props" /> : <p class="muted">固有のプロパティはない。HTML 属性と、デモで使っているプロパティを受け付ける。型は <code>@knowidea/ui</code> の型定義を参照する。</p>}
+
+  <h2 id="css">CSS</h2>
+  {c.classes.length > 0 && (
+    <>
+      <h3>Classes and data attributes</h3>
+      <ApiTable rows={c.classes} label="Classes and data attributes" heads={["Name", "Description"]} codeCols={[0]} />
+    </>
+  )}
+  {c.vars.length > 0 && (
+    <>
+      <h3>CSS variables</h3>
+      <p>コンポーネントが参照するのは、役割を表す名前の変数だけで、素の値は参照しない。オーバーライドの方法は <a href={href("customization/overriding")}>Overriding</a> を参照。</p>
+      <ApiTable rows={c.vars} label="CSS variables" heads={["Variable", "Usage"]} codeCols={[]} />
+    </>
+  )}
+  {c.classes.length === 0 && c.vars.length === 0 && <p class="muted">専用のクラスはない。</p>}
+
+  <h2 id="a11y">Accessibility</h2>
+  {c.a11y.length > 0 ? <ul class="plain">{c.a11y.map((t) => <li>{t}</li>)}</ul> : <p class="muted">Base UI のコンポーネントの挙動に従う。</p>}
+</Base>
+<style>
+  .gap { margin-bottom: var(--space-3); }
+  .cat-line { font-size: var(--font-size-2); }
+</style>

@@ -1,0 +1,29 @@
+---
+import { nav } from "../lib/nav.mjs";
+const { href, current } = Astro.props.l;
+const isCur = (h) => h === current;
+const openIf = (children) => children.some((c) => isCur(c.href));
+---
+<nav aria-label="Documentation" class="dn">
+  {nav.map((g) => (
+    <section class="dn-group">
+      <h2 class="dn-title">{g.href !== undefined ? <a href={href(g.href)} aria-current={isCur(g.href) ? "page" : undefined}>{g.label}</a> : g.label}</h2>
+      <ul>
+        {g.items.map((it) =>
+          it.children ? (
+            <li>
+              <details open={openIf(it.children) || undefined}>
+                <summary>{it.label}</summary>
+                <ul>
+                  {it.children.map((c) => <li><a href={href(c.href)} aria-current={isCur(c.href) ? "page" : undefined}>{c.label}</a></li>)}
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <li><a href={href(it.href)} aria-current={isCur(it.href) ? "page" : undefined}>{it.label}</a></li>
+          )
+        )}
+      </ul>
+    </section>
+  ))}
+</nav>

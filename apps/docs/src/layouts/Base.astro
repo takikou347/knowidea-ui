@@ -1,0 +1,84 @@
+---
+import "@knowidea/tokens/dist/tokens.css";
+import "@knowidea/css/index.css";
+import "../styles/docs.css";
+import DocsNav from "../components/DocsNav.astro";
+import { links } from "../lib/paths.mjs";
+import { components } from "../lib/registry.mjs";
+import ui from "@knowidea/ui/package.json";
+
+const { title, description = "", toc = true } = Astro.props;
+const l = links(Astro.url.pathname);
+const { href, rel } = l;
+const index = components.map((c) => ({ n: c.name, c: c.catName, h: href("components/" + c.slug) }));
+const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${name}"/></svg>`;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | KNOW IDEA UI</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+JP:wght@400;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      try {
+        var t = localStorage.getItem("ki-docs-theme");
+        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="docs-top">
+      <button type="button" class="ki-button ki-icon-button docs-menu" data-variant="quiet" data-ki-dialog-open="docs-drawer" aria-label="Open navigation">
+        <Fragment set:html={icon("menu")} />
+      </button>
+      <a class="docs-brand" href={href("")}>
+        <img class="docs-mark docs-mark-light" src="/mark.svg" alt="" width="28" height="28" />
+        <img class="docs-mark docs-mark-dark" src="/mark-white.svg" alt="" width="28" height="28" />
+        <span class="docs-name">KNOW IDEA UI</span>
+        <span class="docs-ver"><code>@knowidea/ui</code> v{ui.version}</span>
+      </a>
+      <div class="docs-search" role="search">
+        <label class="ki-sr-only" for="docs-q">Search components</label>
+        <input id="docs-q" class="ki-input" type="search" placeholder="Search components" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="docs-q-list" aria-autocomplete="list" />
+        <ul id="docs-q-list" class="docs-results" role="listbox" aria-label="Search results" hidden></ul>
+        <span class="ki-sr-only" id="docs-q-status" role="status"></span>
+      </div>
+      <button type="button" class="ki-button docs-theme" data-variant="secondary" id="theme-toggle" aria-label="Toggle theme">Theme: Auto</button>
+    </header>
+    <div class="docs-body" data-toc={toc ? "" : undefined}>
+      <aside class="docs-nav" aria-label="Site navigation">
+        <DocsNav l={l} />
+      </aside>
+      <main id="main" class="docs-main">
+        <slot />
+      </main>
+      {toc && (
+        <aside class="docs-toc" aria-label="On this page">
+          <p class="docs-toc-title">On this page</p>
+          <ul id="docs-toc-list"></ul>
+        </aside>
+      )}
+    </div>
+    <dialog id="docs-drawer" class="ki-drawer" data-variant="temporary" aria-label="Navigation">
+      <div class="ki-drawer__head">
+        <p class="ki-drawer__brand"><b>KNOW IDEA UI</b><span>v{ui.version}</span></p>
+        <button type="button" class="ki-button ki-icon-button" data-variant="quiet" data-ki-dialog-close aria-label="Close navigation"><Fragment set:html={icon("close")} /></button>
+      </div>
+      <DocsNav l={l} />
+    </dialog>
+    <script define:vars={{ index }} is:inline>
+      window.__docsIndex = index;
+    </script>
+    <script>
+      import "@knowidea/css/enhance.js";
+      import "../scripts/chrome.js";
+    </script>
+  </body>
+</html>

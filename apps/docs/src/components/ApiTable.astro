@@ -1,0 +1,14 @@
+---
+// [[名前, 型, デフォルト, 説明], ...] を表にする。
+const { rows, label, heads = ["Name", "Type", "Default", "Description"], codeCols = [0, 1, 2] } = Astro.props;
+---
+<div class="table-wrap" role="region" aria-label={label ?? heads[0]} tabindex="0">
+  <table class="docs-table">
+    <thead><tr>{heads.map((h) => <th>{h}</th>)}</tr></thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>{r.map((c, i) => <td>{codeCols.includes(i) && c !== "-" ? <code>{c}</code> : c}</td>)}</tr>
+      ))}
+    </tbody>
+  </table>
+</div>

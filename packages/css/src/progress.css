@@ -1,0 +1,17 @@
+/* 進み具合の線(Progress)。値は文字でも出す。不明のときは動かさず、破線の枠だけの線で示す(終わらない動きは使わない)。 */
+.ki-progress { display: grid; gap: var(--space-1); min-width: 0; }
+.ki-progress__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); font-size: var(--font-size-2); }
+.ki-progress__label { color: var(--color-text); }
+.ki-progress__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--color-text-muted); }
+.ki-progress__track { position: relative; height: var(--space-2); border-radius: var(--radius-1); background: var(--color-line); overflow: hidden; }
+.ki-progress[data-size="lg"] .ki-progress__track { height: var(--space-3); }
+.ki-progress__bar { display: block; height: 100%; border-radius: inherit; background: var(--color-primary); transition: width var(--motion-duration-state) var(--motion-ease); }
+.ki-progress[data-tone="success"] .ki-progress__bar { background: var(--color-success); }
+.ki-progress[data-tone="warn"] .ki-progress__bar { background: var(--color-warn); }
+.ki-progress[data-tone="error"] .ki-progress__bar { background: var(--color-error); }
+.ki-progress[data-tone="error"] .ki-progress__value { color: var(--color-error); }
+.ki-progress[data-indeterminate] .ki-progress__track { background: transparent; box-shadow: inset 0 0 0 1px var(--color-line-strong); border-style: dashed; }
+.ki-progress[data-indeterminate] .ki-progress__bar { width: 0; }
+.ki-progress[data-disabled] .ki-progress__bar { background: var(--color-line-strong); }
+.ki-progress[data-disabled] :is(.ki-progress__label, .ki-progress__value) { color: var(--color-text-muted); }
+@media (prefers-reduced-motion: reduce) { .ki-progress__bar { transition: none; } }

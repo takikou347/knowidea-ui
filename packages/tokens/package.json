@@ -1,0 +1,24 @@
+{
+  "name": "@knowidea/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node scripts/check-contrast.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "5.6.1"
+  },
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./theme.css": "./dist/theme.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./create-theme": {
+      "types": "./src/create-theme.d.ts",
+      "default": "./src/create-theme.mjs"
+    },
+    "./scripts/*": "./scripts/*",
+    "./src/*": "./src/*"
+  }
+}
