@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/copy-brand.mjs && astro dev",
-    "build": "node scripts/copy-brand.mjs && astro build && node scripts/relativize.mjs",
+    "build": "node scripts/copy-brand.mjs && astro build && node scripts/relativize.mjs && node scripts/build-search.mjs",
     "preview": "astro preview",
     "predev": "pnpm --filter @knowidea/tokens build && pnpm --filter @knowidea/icons build",
     "check:pages": "node scripts/check-pages.mjs"
