@@ -1,0 +1,16 @@
+---
+// 状態の 1 行。部品に合わない状態は na に理由を書く。
+const { label, na, note } = Astro.props;
+---
+<tr>
+  <td>{label}</td>
+  <td>
+    {na ? <span class="muted">該当しない。{na}</span> : (
+      <div class="cell"><slot />{note && <p class="muted note">{note}</p>}</div>
+    )}
+  </td>
+</tr>
+<style>
+  .cell { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; min-width: 0; }
+  .note { flex-basis: 100%; margin: 0; }
+</style>

@@ -1,0 +1,102 @@
+---
+// 1 部品 1 ページの型。デモ、状態、API、素の HTML、上書きの例を並べる。
+import Base from "../layouts/Base.astro";
+import { CodeBlock } from "@knowidea/react";
+
+interface Props {
+  title: string;
+  lead: string;
+  /** React の props の表: [名前, 型, 既定, 説明] */
+  props?: string[][];
+  /** 素の HTML のクラスと data 属性: [名前, 説明] */
+  attrs?: string[][];
+  /** 読む CSS 変数: [変数, 使う所] */
+  vars?: string[][];
+  /** 素の HTML の書き方。そのまま描画して、コードも出す */
+  html?: string;
+  htmlNote?: string;
+  /** 上書きの CSS 変数(例: "--radius-2: 8px;") */
+  override?: string;
+  overrideNote?: string;
+}
+const { title, lead, props = [], attrs = [], vars = [], html, htmlNote, override, overrideNote } = Astro.props;
+const defaultOverride = "--color-primary: oklch(0.46 0.12 255); --color-primary-hover: oklch(0.4 0.12 255); --color-focus: oklch(0.46 0.12 255); --radius-2: 8px; --radius-3: 12px;";
+const ov = override ?? defaultOverride;
+const ovCss = `.admin-app {\n${ov.split(";").map((s) => s.trim()).filter(Boolean).map((s) => "  " + s + ";").join("\n")}\n}`;
+const hasOverrideSlot = Astro.slots.has("override");
+---
+<Base title={title} description={`${title}のデモ、状態、API、素の HTML、上書きの例`}>
+  <h1>{title}</h1>
+  <p>{lead}</p>
+
+  <h2>デモ</h2>
+  <div class="panel demo"><slot name="demo" /></div>
+
+  <h2>状態</h2>
+  <p>空、読み込み、失敗、無効、focus に、hover と押した時を足して並べる。hover、focus、押した時は見本のため固定で出している。部品に合わない状態は「該当しない」と理由を書く。</p>
+  <div class="table-wrap">
+    <table class="states">
+      <thead><tr><th>状態</th><th>見え方</th></tr></thead>
+      <tbody><slot name="states" /></tbody>
+    </table>
+  </div>
+
+  <h2>API</h2>
+  {props.length > 0 && (
+    <>
+      <h3>React の props</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>props</th><th>型</th><th>既定</th><th>説明</th></tr></thead>
+          <tbody>{props.map((r) => <tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td><td><code>{r[2]}</code></td><td>{r[3]}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+  {attrs.length > 0 && (
+    <>
+      <h3>クラスと data 属性</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>名前</th><th>説明</th></tr></thead>
+          <tbody>{attrs.map((r) => <tr><td><code>{r[0]}</code></td><td>{r[1]}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+  {vars.length > 0 && (
+    <>
+      <h3>読む CSS 変数</h3>
+      <p>semantic の変数だけ。素の値は読まない。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>変数</th><th>使う所</th></tr></thead>
+          <tbody>{vars.map((r) => <tr><td><code>{r[0]}</code></td><td>{r[1]}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  {html && (
+    <>
+      <h2>素の HTML の書き方</h2>
+      <p>React が無いページ(Ruleru の公開サイトなど)は、<code>packages/css</code> の CSS を読み、クラスを書く。{htmlNote}</p>
+      <div class="panel demo" set:html={html} />
+      <div class="gap"><CodeBlock client:visible code={html} language="html" label="HTML の例" /></div>
+    </>
+  )}
+
+  <h2>上書きの例</h2>
+  <p>{overrideNote ?? "アプリは CSS 変数を上書きする。部品のコードは変えない。下は主の色を青、角丸を大きくした例。"}</p>
+  <div class="panel demo" style={ov}>
+    {hasOverrideSlot ? <slot name="override" /> : <slot name="demo" />}
+  </div>
+  <div class="gap"><CodeBlock client:visible code={ovCss} language="css" label="CSS の例" /></div>
+</Base>
+<style>
+  .demo { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; }
+  .gap { margin-top: var(--space-3); }
+  h3 { margin: var(--space-4) 0 var(--space-2); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
+  .states :global(td:first-child) { width: 7em; white-space: nowrap; }
+  .states :global(td) { vertical-align: top; padding: var(--space-3); }
+</style>

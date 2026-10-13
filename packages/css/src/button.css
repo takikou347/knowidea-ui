@@ -21,11 +21,11 @@
 
 .ki-button[data-variant="danger"] { background: var(--color-error); color: var(--color-bg); border-color: var(--color-error); }
 .ki-button[data-variant="danger"]:is(:hover, .is-hover) {
-  background: color-mix(in oklch, var(--color-error), var(--color-text) 18%);
-  border-color: color-mix(in oklch, var(--color-error), var(--color-text) 18%);
+  background: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
+  border-color: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
 }
 .ki-button[data-variant="danger"]:is(:active, .is-active) {
-  background: color-mix(in oklch, var(--color-error), var(--color-text) 28%);
+  background: color-mix(in oklab, var(--color-error), var(--color-text) 28%);
   border-color: var(--color-text);
 }
 
