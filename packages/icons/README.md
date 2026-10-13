@@ -55,6 +55,49 @@ Phosphor の regular を使う。
 
 「Claude と人」は 1 つの `user`。Claude を人と見分ける印は、アイコンでなく名前の文字で出す。`error`(失敗)は状態の印で、`reject`(否認)は操作。
 
-## 作り方
+## 全アイコン(1c)
 
-`pnpm --filter icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。ここに無いアイコンは 1c で足す(`map.json` に 1 行足す)。
+`icons.json` に 116 個(Phosphor 114、自作 2)。用途ごとに、方向と移動、操作、状態と通知、もの、管理アプリ、Logru、Ruleru のサイト、会社の自作。各行は名前、Phosphor の名前、日本語、使うアプリ。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
+
+| 決まり | 中身 |
+| --- | --- |
+| 名前 | 用途の名前(`chevron-right`、`routine`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
+| 足し方 | `icons.json` に 1 行足して `pnpm --filter icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
+| 使う者の上書き | 各アプリは、自分で使う名前の部品を選ぶ。形を変えたいときは `icons.json` に自作を足し、同じ名前で上書きする |
+
+### 自作(2 個)
+
+| 名前 | 役 | 自作の理由 |
+| --- | --- | --- |
+| `token` | 使用量のトークン | 六角形に 2 本の文字の線。Phosphor の `coins` は金銭に読めてしまい、費用(`cost`)と区別できない |
+| `session` | Claude のセッション | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、Claude に頼んだ 1 回の作業とは違う |
+
+`routine` は `clock-clockwise`、`model` は `cpu`、`proposal` は `lightbulb`、オーナー待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `token` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。Claude や Anthropic、他社のロゴは写していない。
+
+## 出す形
+
+`pnpm --filter icons build` が `dist/` に出す。
+
+| ファイル | 使う所 |
+| --- | --- |
+| `dist/svg/<名前>.svg`、`<名前>-bold.svg` | 1 枚ずつ。`currentColor` |
+| `dist/sprite.svg` | 素の HTML(Ruleru のサイト)。`<svg width="20" height="20"><use href="/sprite.svg#play"/></svg>`。bold は `#play-bold` |
+| `dist/react/` | React 19。`<Icon name="chevron-right" size={20} weight="regular" />`、名前ごとの部品(`ChevronRightIcon`)、型つき(`IconName`) |
+| `dist/icons-data.json` | docs と見本が読む |
+| `dist/LICENSE-phosphor.txt`、`dist/NOTICE.txt` | ライセンス |
+
+```tsx
+import { Icon, SearchIcon } from "icons/react";
+<Icon name="search" />            // 20px、regular、飾り(読み上げない)
+<SearchIcon size={16} weight="bold" title="検索" />   // 16px は bold。title があれば読み上げる
+```
+
+`pnpm --filter icons check` が数、`currentColor`、React の描画、型を確かめる。
+
+## ライセンス
+
+大半のアイコンは Phosphor Icons(MIT、Copyright (c) 2023 Phosphor Icons、`@phosphor-icons/core` 2.1.1)から取り出した。全文は `dist/LICENSE-phosphor.txt`(出どころは `node_modules/@phosphor-icons/core/LICENSE`)。自作の `token`、`session` は KNOW IDEA のもの。
+
+## 比較用の作り方(1b)
+
+`pnpm --filter icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。比較の表だけに使う。全アイコンは上の `build-set.mjs` が作る。
