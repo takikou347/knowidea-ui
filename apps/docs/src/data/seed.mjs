@@ -52,8 +52,8 @@ export default {
       ["--size-hit", "最小の高さ(44px)"],
       ["--font-size-3、--font-weight-strong", "フォントサイズ、太さ"],
     ],
-    html: `<button type="button" class="ki-button">承認する</button>
-<button type="button" class="ki-button" data-variant="secondary">却下する</button>
+    html: `<button type="button" class="ki-button">保存する</button>
+<button type="button" class="ki-button" data-variant="secondary">下書きにする</button>
 <button type="button" class="ki-button" data-variant="quiet">あとで</button>
 <button type="button" class="ki-button" data-variant="danger">削除する</button>
 <button type="button" class="ki-button" data-variant="secondary" data-size="lg">大きいボタン</button>
