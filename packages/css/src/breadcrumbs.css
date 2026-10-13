@@ -1,0 +1,11 @@
+/* パンくず。今いる所は aria-current="page" で文字のまま。区切りは飾り。 */
+.ki-breadcrumbs ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; font-size: var(--font-size-2); }
+.ki-breadcrumbs li { display: inline-flex; align-items: center; min-width: 0; }
+.ki-breadcrumbs li + li::before { content: "/"; margin: 0 var(--space-1); color: var(--color-text-muted); }
+.ki-breadcrumbs a {
+  display: inline-flex; align-items: center; min-height: var(--size-hit); padding: 0 var(--space-2); border-radius: var(--radius-1);
+  color: var(--color-text-muted); text-decoration: underline; text-underline-offset: 3px;
+}
+.ki-breadcrumbs a:is(:hover, .is-hover) { color: var(--color-text); }
+.ki-breadcrumbs a:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 0; }
+.ki-breadcrumbs [aria-current="page"] { padding: 0 var(--space-2); color: var(--color-text); font-weight: var(--font-weight-strong); overflow-wrap: anywhere; }

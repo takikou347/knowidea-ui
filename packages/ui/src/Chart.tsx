@@ -3,21 +3,21 @@ import { Icon } from "./Icon.js";
 import { IconButton } from "./IconButton.js";
 import { cx, formatCompact, formatNumber } from "./utils.js";
 
-export interface TrendBreakdown { label: string; value: number }
-export interface TrendPoint {
+export interface ChartBreakdown { label: string; value: number }
+export interface ChartPoint {
   key: string;
   /** 軸に出す短い名(例: 10/3) */
   label: string;
-  /** 押した時の見出し(例: 10 月 3 日(金))。無ければ label */
+  /** 押した時の見出し(例: 10 月 3 日)。無ければ label */
   detail?: string;
-  /** null は数の無い日。棒を置かず「記録なし」と出す */
+  /** null は数の無い点。棒を置かず emptyText を出す */
   value: number | null;
-  /** 部署などの内訳。押した時に直接ラベルで並べる */
-  breakdown?: TrendBreakdown[];
+  /** 内訳。押した時に直接ラベルで並べる */
+  breakdown?: ChartBreakdown[];
 }
 
-export interface TrendChartProps {
-  data: TrendPoint[];
+export interface ChartProps {
+  data: ChartPoint[];
   type?: "bar" | "line";
   unit?: string;
   /** 軸と棒の高さ(px)。既定 200 */
@@ -25,13 +25,17 @@ export interface TrendChartProps {
   selectedKey?: string;
   defaultSelectedKey?: string;
   onSelect?: (key: string) => void;
-  /** 基準の線(例: 上限)。直接ラベルを付ける */
+  /** 基準の線(例: 目標)。直接ラベルを付ける */
   reference?: { value: number; label: string };
   /** グラフの名前(読み上げ) */
   ariaLabel: string;
   state?: "ready" | "loading" | "empty";
   emptyText?: string;
   breakdownTitle?: string;
+  /** 前後の点へ移るボタンの名前 */
+  prevLabel?: string;
+  nextLabel?: string;
+  loadingText?: string;
   className?: string;
 }
 
@@ -45,10 +49,10 @@ function niceMax(max: number): { max: number; step: number } {
   return { max: step * Math.ceil(max / step), step };
 }
 
-export function TrendChart({
+export function Chart({
   data, type = "bar", unit, height = 200, selectedKey, defaultSelectedKey, onSelect, reference, ariaLabel,
-  state = "ready", emptyText = "記録なし", breakdownTitle = "内訳", className,
-}: TrendChartProps) {
+  state = "ready", emptyText = "記録なし", breakdownTitle = "内訳", prevLabel = "前の点", nextLabel = "次の点", loadingText = "読み込み中", className,
+}: ChartProps) {
   const wrap = useRef<HTMLDivElement>(null);
   const cols = useRef<Array<SVGGElement | null>>([]);
   const [width, setWidth] = useState(560);
@@ -69,7 +73,7 @@ export function TrendChart({
     return (
       <div className={cx("ki-chart", className)} data-state={state === "ready" ? "empty" : state} aria-busy={state === "loading" || undefined}>
         <div className="ki-chart__plot" role={state === "loading" ? "status" : undefined}>
-          {state === "loading" ? "読み込み中" : emptyText}
+          {state === "loading" ? loadingText : emptyText}
         </div>
       </div>
     );
@@ -129,8 +133,8 @@ export function TrendChart({
           )}
         </p>
         <span className="ki-chart__nav">
-          <IconButton variant="secondary" label="前の日" icon={<Icon name="chevron-left" />} disabled={idx === 0} onClick={() => choose(idx - 1)} />
-          <IconButton variant="secondary" label="次の日" icon={<Icon name="chevron-right" />} disabled={idx === n - 1} onClick={() => choose(idx + 1)} />
+          <IconButton variant="secondary" label={prevLabel} icon={<Icon name="chevron-left" />} disabled={idx === 0} onClick={() => choose(idx - 1)} />
+          <IconButton variant="secondary" label={nextLabel} icon={<Icon name="chevron-right" />} disabled={idx === n - 1} onClick={() => choose(idx + 1)} />
         </span>
       </div>
       <div className="ki-chart__plot" ref={wrap}>

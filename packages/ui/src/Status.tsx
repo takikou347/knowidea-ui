@@ -1,47 +1,46 @@
 import { Icon, type IconName } from "./Icon.js";
 import { cx } from "./utils.js";
 
-/** Claude の状態 5 つ。道具の状態 working、blocked、review_ready、completed、failed に当たる(admin の決定 0002) */
-export type ClaudeStatus = "working" | "blocked" | "review" | "done" | "failed";
-/** 提案とプロジェクトの状態 6 つ */
-export type ProposalStatus = "discussing" | "reviewing" | "owner" | "building" | "done" | "dropped";
-type Tone = "neutral" | "info" | "success" | "warn" | "error";
+export type StatusTone = "neutral" | "info" | "success" | "warn" | "error";
+/** 既定の種類。色だけでなく、形(アイコン)と字で伝える */
+export type StatusKind = "neutral" | "info" | "success" | "warn" | "error" | "working" | "paused" | "pending" | "stopped";
 
-interface Def { label: string; icon: IconName; tone: Tone }
-
-export const claudeStatus: Record<ClaudeStatus, Def> = {
-  working: { label: "動いている", icon: "working", tone: "success" },
-  blocked: { label: "待っている", icon: "paused", tone: "warn" },
-  review: { label: "見てほしい", icon: "review", tone: "info" },
-  done: { label: "終わった", icon: "success", tone: "neutral" },
-  failed: { label: "失敗", icon: "error", tone: "error" },
-};
-export const proposalStatus: Record<ProposalStatus, Def> = {
-  discussing: { label: "議論中", icon: "comment", tone: "neutral" },
-  reviewing: { label: "レビュー中", icon: "review", tone: "info" },
-  owner: { label: "オーナー待ち", icon: "owner-wait", tone: "warn" },
-  building: { label: "実装中", icon: "branch", tone: "info" },
-  done: { label: "済み", icon: "success", tone: "success" },
-  dropped: { label: "見送り", icon: "stopped", tone: "neutral" },
+interface Def { icon: IconName; tone: StatusTone }
+/** 種類ごとの既定のアイコンと色。tone と icon を props で渡せば上書きできる */
+export const statusKinds: Record<StatusKind, Def> = {
+  neutral: { icon: "info", tone: "neutral" },
+  info: { icon: "info", tone: "info" },
+  success: { icon: "success", tone: "success" },
+  warn: { icon: "warning", tone: "warn" },
+  error: { icon: "error", tone: "error" },
+  working: { icon: "working", tone: "info" },
+  paused: { icon: "paused", tone: "warn" },
+  pending: { icon: "clock", tone: "neutral" },
+  stopped: { icon: "stopped", tone: "neutral" },
 };
 
-export type StatusMarkProps = (
-  | { kind?: "claude"; status: ClaudeStatus }
-  | { kind: "proposal"; status: ProposalStatus }
-) & {
-  /** lg は提案とプロジェクトのカードの大きさ(一目で分かる) */
+export interface StatusProps {
+  /** 状態の種類。既定は neutral */
+  kind?: StatusKind;
+  /** 字。必須。色だけに頼らない */
+  label: string;
+  /** 種類の既定の色を変える */
+  tone?: StatusTone;
+  /** 種類の既定のアイコンを変える */
+  icon?: IconName;
+  /** lg は一目で分かる大きさ */
   size?: "md" | "lg";
   className?: string;
-};
+}
 
-/** 状態の印。色だけでなく、形(アイコン)と字で伝える。 */
-export function StatusMark(props: StatusMarkProps) {
-  const { size = "md", className } = props;
-  const def: Def = props.kind === "proposal" ? proposalStatus[props.status] : claudeStatus[props.status as ClaudeStatus];
+/** 状態の印。状態の種類は kind で渡し、字は label に書く。 */
+export function Status({ kind = "neutral", label, tone, icon, size = "md", className }: StatusProps) {
+  const def = statusKinds[kind];
+  const t = tone ?? def.tone;
   return (
-    <span className={cx("ki-status", className)} data-tone={def.tone === "neutral" ? undefined : def.tone} data-size={size === "lg" ? "lg" : undefined}>
-      <Icon name={def.icon} />
-      {def.label}
+    <span className={cx("ki-status", className)} data-tone={t === "neutral" ? undefined : t} data-size={size === "lg" ? "lg" : undefined}>
+      <Icon name={icon ?? def.icon} />
+      {label}
     </span>
   );
 }

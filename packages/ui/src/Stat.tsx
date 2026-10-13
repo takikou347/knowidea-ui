@@ -6,12 +6,12 @@ export interface SparklineProps {
   data: number[];
   width?: number;
   height?: number;
-  /** 読み上げる文(例: 直近 7 日の使用量) */
+  /** 読み上げる文(例: 直近 7 日の推移) */
   label: string;
   className?: string;
 }
 
-/** 小さな推移の線。線と最後の点だけ。値は数のカードの数が伝える。 */
+/** 小さな推移の線。線と最後の点だけ。値は Stat の数が伝える。 */
 export function Sparkline({ data, width = 96, height = 28, label, className }: SparklineProps) {
   if (data.length < 2) return null;
   const pad = 3;
@@ -34,20 +34,24 @@ export interface StatDelta {
   text?: string;
 }
 
-export interface StatCardProps {
+export interface StatProps {
   label: string;
   icon?: IconName;
   value: number | string | null;
   unit?: string;
   delta?: StatDelta;
-  /** 差の前に付ける語。既定は「前日比」 */
+  /** 差の前に付ける語。既定は「前回比」 */
   deltaLabel?: string;
   /** 数の下の補足(例: 全体 12) */
   sub?: string;
   spark?: number[];
   sparkLabel?: string;
-  /** いつの数か(日本時間の文) */
+  /** いつの数か(例: 10/13 09:28)。時刻は等幅で出る */
   asOf?: string;
+  /** asOf の前後の文。{time} が asOf に変わる。既定は「{time} の数」 */
+  asOfFormat?: string;
+  /** 数が取れなかった・無いときに出す語 */
+  fallback?: string;
   /** 数が古い。印を付ける */
   stale?: boolean;
   staleLabel?: string;
@@ -57,12 +61,12 @@ export interface StatCardProps {
   className?: string;
 }
 
-export function StatCard({
-  label, icon, value, unit, delta, deltaLabel = "前日比", sub, spark, sparkLabel, asOf, stale, staleLabel = "古い数", state = "ready", error, className,
-}: StatCardProps) {
+export function Stat({
+  label, icon, value, unit, delta, deltaLabel = "前回比", sub, spark, sparkLabel, asOf, asOfFormat = "{time} の数", fallback = "不明", stale, staleLabel = "古い数", state = "ready", error, className,
+}: StatProps) {
   const loading = state === "loading";
   const failed = state === "error";
-  const shown = failed || value == null ? "不明" : typeof value === "number" ? formatNumber(value) : value;
+  const shown = failed || value == null ? fallback : typeof value === "number" ? formatNumber(value) : value;
   return (
     <div className={cx("ki-stat", className)} role="group" aria-label={label} data-state={state === "ready" ? undefined : state} aria-busy={loading || undefined}>
       <p className="ki-stat__head">{icon ? <Icon name={icon} /> : null}{label}</p>
@@ -91,7 +95,7 @@ export function StatCard({
       )}
       {asOf || stale ? (
         <p className="ki-stat__asof">
-          {asOf ? <span>日本時間 <time>{asOf}</time> の数</span> : null}
+          {asOf ? <span>{asOfFormat.split("{time}").map((part, i, a) => <span key={i}>{part}{i < a.length - 1 ? <time>{asOf}</time> : null}</span>)}</span> : null}
           {stale ? <span className="ki-status" data-tone="warn"><Icon name="stale" />{staleLabel}</span> : null}
         </p>
       ) : null}

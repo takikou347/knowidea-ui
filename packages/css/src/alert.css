@@ -1,20 +1,21 @@
-/* 帯。data-tone: info | success | warn | error。文は平叙で短く。 */
-.ki-banner {
+/* 知らせの帯(Alert)。data-tone: info | success | warn | error。文は平叙で短く。 */
+.ki-alert {
   display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-2); background: var(--color-surface-2); color: var(--color-text);
   font-size: var(--font-size-3); line-height: var(--font-line-height-3);
 }
-.ki-banner[data-tone="info"] { background: var(--color-info-soft); }
-.ki-banner[data-tone="success"] { background: var(--color-success-soft); }
-.ki-banner[data-tone="warn"] { background: var(--color-warn-soft); }
-.ki-banner[data-tone="error"] { background: var(--color-error-soft); }
-.ki-banner__icon { flex: none; display: inline-flex; margin-top: var(--space-1); color: var(--color-text-muted); }
-.ki-banner[data-tone="info"] .ki-banner__icon { color: var(--color-info); }
-.ki-banner[data-tone="success"] .ki-banner__icon { color: var(--color-success); }
-.ki-banner[data-tone="warn"] .ki-banner__icon { color: var(--color-warn); }
-.ki-banner[data-tone="error"] .ki-banner__icon { color: var(--color-error); }
-.ki-banner__body { flex: 1; min-width: 0; display: grid; gap: var(--space-1); }
-.ki-banner__title { margin: 0; font-weight: var(--font-weight-strong); }
-.ki-banner__text { margin: 0; }
-.ki-banner__action { flex: none; align-self: center; }
-@media (max-width: 480px) { .ki-banner { flex-wrap: wrap; } .ki-banner__action { margin-left: calc(var(--space-4) + var(--space-1) + var(--space-3)); } }
+.ki-alert[data-tone="info"] { background: var(--color-info-soft); }
+.ki-alert[data-tone="success"] { background: var(--color-success-soft); }
+.ki-alert[data-tone="warn"] { background: var(--color-warn-soft); }
+.ki-alert[data-tone="error"] { background: var(--color-error-soft); }
+.ki-alert__icon { flex: none; display: inline-flex; margin-top: var(--space-1); color: var(--color-text-muted); }
+.ki-alert[data-tone="info"] .ki-alert__icon { color: var(--color-info); }
+.ki-alert[data-tone="success"] .ki-alert__icon { color: var(--color-success); }
+.ki-alert[data-tone="warn"] .ki-alert__icon { color: var(--color-warn); }
+.ki-alert[data-tone="error"] .ki-alert__icon { color: var(--color-error); }
+.ki-alert__body { flex: 1; min-width: 0; display: grid; gap: var(--space-1); }
+.ki-alert__title { margin: 0; font-weight: var(--font-weight-strong); }
+.ki-alert__text { margin: 0; }
+.ki-alert__action { flex: none; align-self: center; }
+@media (max-width: 480px) { .ki-alert { flex-wrap: wrap; } .ki-alert__action { margin-left: calc(var(--space-4) + var(--space-1) + var(--space-3)); } }
+.ki-alert__close { flex: none; margin: calc(var(--space-3) * -1) calc(var(--space-3) * -1) calc(var(--space-3) * -1) 0; }

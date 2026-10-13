@@ -1,4 +1,4 @@
-/* 推移のグラフ。自前の SVG の折れ線と棒。灰色の棒、選んだ 1 本だけ主の色。値は読み上げと表にも出す。 */
+/* グラフ(Chart)。自前の SVG の折れ線と棒。灰色の棒、選んだ 1 本だけ主の色。値は読み上げと表にも出す。 */
 .ki-chart { display: grid; gap: var(--space-3); min-width: 0; color: var(--color-text); }
 .ki-chart__readout {
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-4); min-height: var(--size-hit);

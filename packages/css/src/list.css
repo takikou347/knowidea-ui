@@ -1,0 +1,41 @@
+/* 一覧。行ごとに 題、2 行目のメタ、末尾の操作。data-selectable で選べる行(左にチェック)。.ki-list に container を持たせ、幅で組み替える。 */
+.ki-list {
+  container: ki-list / inline-size; width: 100%; box-sizing: border-box; margin: 0; padding: 0; list-style: none; overflow: hidden;
+  background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+}
+.ki-list__item {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "side";
+  align-items: start; gap: var(--space-1) var(--space-2); padding: var(--space-1) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+.ki-list[data-selectable] .ki-list__item { grid-template-columns: var(--size-hit) minmax(0, 1fr); grid-template-areas: "pick main" ". side"; padding-left: var(--space-1); }
+.ki-list__item:last-child { border-bottom: 0; }
+.ki-list__item[data-selected] { background: color-mix(in oklab, var(--color-primary) 8%, var(--color-surface)); box-shadow: inset 2px 0 0 var(--color-primary); }
+.ki-list__item:is(:hover, .is-hover) { background: var(--color-surface-2); }
+.ki-list__item[data-selected]:is(:hover, .is-hover) { background: color-mix(in oklab, var(--color-primary) 12%, var(--color-surface)); }
+.ki-list__item[data-disabled] { color: var(--color-text-muted); }
+.ki-list__pick { position: relative; z-index: 1; grid-area: pick; display: grid; place-items: center; min-height: var(--size-hit); }
+.ki-list__main { grid-area: main; display: grid; gap: var(--space-1); min-width: 0; }
+.ki-list__title { margin: 0; font-size: var(--font-size-3); line-height: var(--font-line-height-3); font-weight: var(--font-weight-strong); overflow-wrap: anywhere; }
+/* 題のリンクは高さ 44px。::after で行全体も押せる(選ぶ枠と末尾の操作は z-index で上に出す) */
+.ki-list__title a { display: flex; align-items: center; min-height: var(--size-hit); color: inherit; text-decoration: none; }
+.ki-list__title a::after { content: ""; position: absolute; inset: 0; }
+.ki-list__title a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.ki-list__title a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-list__title:not(:has(a)) { display: flex; align-items: center; min-height: var(--size-hit); }
+.ki-list__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); margin: 0; font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-text-muted); }
+.ki-list__meta time, .ki-list__num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.ki-list__side { position: relative; z-index: 1; grid-area: side; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); min-width: 0; }
+@container ki-list (min-width: 560px) {
+  .ki-list__item { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "main side"; align-items: center; padding-bottom: var(--space-1); }
+  .ki-list[data-selectable] .ki-list__item { grid-template-columns: var(--size-hit) minmax(0, 1fr) auto; grid-template-areas: "pick main side"; }
+  .ki-list__side { justify-content: flex-end; max-width: calc(var(--space-7) * 7); }
+}
+.ki-list__head {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-4);
+  padding: var(--space-1) var(--space-4) var(--space-1) var(--space-1); border-bottom: 1px solid var(--color-line); background: var(--color-surface-2);
+  font-size: var(--font-size-2); color: var(--color-text-muted);
+}
+.ki-list__state { padding: var(--space-4); }
+.ki-list__item[data-state="loading"] { grid-template-areas: "main"; grid-template-columns: minmax(0, 1fr); padding-top: var(--space-3); }
+.ki-list[data-selectable] .ki-list__item[data-state="loading"] { grid-template-areas: "pick main"; grid-template-columns: var(--size-hit) minmax(0, 1fr); padding-top: var(--space-1); }

@@ -1,4 +1,4 @@
-/* 数のカード。数、単位、前との差、小さな推移の線。data-state: loading | error。 */
+/* 数の表示(Stat)。数、単位、前との差、小さな推移の線。data-state: loading | error。 */
 .ki-stat {
   display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-4);
   background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);

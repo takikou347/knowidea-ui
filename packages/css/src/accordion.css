@@ -1,0 +1,18 @@
+/* アコーディオン。見出しの行全体が開閉のボタン(44px)。開いた印は向きが変わる矢印。 */
+.ki-accordion { border: 1px solid var(--color-line); border-radius: var(--radius-3); background: var(--color-surface); overflow: hidden; }
+.ki-accordion__item { border-bottom: 1px solid var(--color-line); }
+.ki-accordion__item:last-child { border-bottom: 0; }
+.ki-accordion__header { margin: 0; }
+.ki-accordion__trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); width: 100%; min-height: var(--size-hit);
+  padding: var(--space-2) var(--space-4); border: 0; background: transparent; color: var(--color-text); text-align: left;
+  font: inherit; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); cursor: pointer;
+}
+.ki-accordion__trigger:is(:hover, .is-hover) { background: var(--color-surface-2); }
+.ki-accordion__trigger:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-accordion__trigger:is(:disabled, [data-disabled]) { color: var(--color-text-muted); cursor: not-allowed; }
+.ki-accordion__trigger > .ki-icon { color: var(--color-text-muted); transition: transform var(--motion-duration-state) var(--motion-ease); }
+.ki-accordion__trigger[data-panel-open] > .ki-icon, .ki-accordion__trigger[aria-expanded="true"] > .ki-icon { transform: rotate(180deg); }
+.ki-accordion__panel { padding: 0 var(--space-4) var(--space-4); font-size: var(--font-size-3); line-height: var(--font-line-height-3); }
+.ki-accordion__panel[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .ki-accordion__trigger > .ki-icon { transition: none; } }

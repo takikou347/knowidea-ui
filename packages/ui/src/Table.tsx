@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Icon } from "./Icon.js";
 import { Checkbox } from "./Choice.js";
-import { Banner } from "./Banner.js";
+import { Alert } from "./Alert.js";
 import { Button } from "./Button.js";
 import { EmptyState } from "./EmptyState.js";
 import { Skeleton } from "./Skeleton.js";
@@ -97,7 +97,7 @@ export function Table<T extends Record<string, unknown>>({
         <tbody>
           {error ? (
             <tr><td colSpan={span} className="ki-table__state">
-              <Banner tone="error" action={onRetry ? <Button variant="secondary" onClick={onRetry}>もう一度</Button> : undefined}>{error}</Banner>
+              <Alert tone="error" action={onRetry ? <Button variant="secondary" onClick={onRetry}>もう一度</Button> : undefined}>{error}</Alert>
             </td></tr>
           ) : loading ? (
             [0, 1, 2].map((i) => (

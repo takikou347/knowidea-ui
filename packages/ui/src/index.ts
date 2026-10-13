@@ -13,7 +13,7 @@ export { Dialog, DialogClose, ConfirmDialog, type DialogProps, type ConfirmDialo
 export { Menu, type MenuProps, type MenuEntry } from "./Menu.js";
 export { Tooltip, type TooltipProps } from "./Tooltip.js";
 export { ToastProvider, useToast, type ToastProviderProps, type ToastOptions, type ToastTone } from "./Toast.js";
-export { Banner, type BannerProps, type Tone } from "./Banner.js";
+export { Alert, type AlertProps, type Tone } from "./Alert.js";
 export { Badge, type BadgeProps } from "./Badge.js";
 export { CodeBlock, type CodeBlockProps } from "./CodeBlock.js";
 export { Quote, type QuoteProps } from "./Quote.js";
@@ -21,17 +21,23 @@ export { Skeleton, SkeletonText, type SkeletonProps, type SkeletonTextProps } fr
 export { EmptyState, type EmptyStateProps } from "./EmptyState.js";
 export { Divider, type DividerProps } from "./Divider.js";
 export { Pagination, pageItems, type PaginationProps } from "./Pagination.js";
-export { StatusMark, claudeStatus, proposalStatus, type StatusMarkProps, type ClaudeStatus, type ProposalStatus } from "./StatusMark.js";
-export { StatCard, Sparkline, type StatCardProps, type StatDelta, type SparklineProps } from "./Stat.js";
-export { TrendChart, type TrendChartProps, type TrendPoint, type TrendBreakdown } from "./TrendChart.js";
-export { ClaudeCard, ProposalCard, type ClaudeCardProps, type ProposalCardProps } from "./ClaudeCard.js";
-export { ThreadList, ThreadRow, PrMarks, type ThreadListProps, type ThreadRowProps, type ThreadItem, type PrInfo, type PrState, type CiState, type Verdict } from "./ThreadList.js";
-export {
-  DecisionBar, TalkBox, Thinking, SendTray,
-  type DecisionBarProps, type DecisionState, type DecisionValue, type TalkBoxProps,
-  type SendTrayProps, type TrayItem, type TrayKind, type TrayItemState, type TrayPhase,
-} from "./Decide.js";
-export { ActivityList, type ActivityListProps, type ActivityItem, type ActivityKind } from "./Activity.js";
-export { StopButton, type StopButtonProps } from "./StopButton.js";
-export { AppShell, type AppShellProps, type NavItem } from "./AppShell.js";
+export { Status, statusKinds, type StatusProps, type StatusKind, type StatusTone } from "./Status.js";
+export { Stat, Sparkline, type StatProps, type StatDelta, type SparklineProps } from "./Stat.js";
+export { Chart, type ChartProps, type ChartPoint, type ChartBreakdown } from "./Chart.js";
+export { Stack, Grid, Container, type StackProps, type GridProps, type ContainerProps, type Space } from "./Layout.js";
+export { Card, type CardProps, type CardMeta } from "./Card.js";
+export { Accordion, type AccordionProps, type AccordionItem } from "./Accordion.js";
+export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbItem } from "./Breadcrumbs.js";
+export { Avatar, type AvatarProps } from "./Avatar.js";
+export { Chip, type ChipProps } from "./Chip.js";
+export { Progress, type ProgressProps } from "./Progress.js";
+export { TextField, type TextFieldProps } from "./TextField.js";
+export { List, ListItem, type ListProps, type ListEntry, type ListItemProps } from "./List.js";
+export { Timeline, type TimelineProps, type TimelineEntry } from "./Timeline.js";
+export { SelectionBar, type SelectionBarProps } from "./SelectionBar.js";
+export { AppBar, type AppBarProps } from "./AppBar.js";
+export { Drawer, type DrawerProps, type DrawerGroup } from "./Drawer.js";
+export { BottomNavigation, type BottomNavigationProps } from "./BottomNavigation.js";
+export type { NavItem } from "./NavItems.js";
+export { ThemeProvider, createTheme, type ThemeProviderProps, type ThemeOptions, type ThemeWarning } from "./ThemeProvider.js";
 export { formatNumber } from "./utils.js";

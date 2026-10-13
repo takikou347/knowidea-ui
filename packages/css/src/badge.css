@@ -11,3 +11,9 @@
 .ki-badge[data-tone="error"] { background: var(--color-error-soft); color: var(--color-error); }
 .ki-badge > .ki-icon { width: var(--space-3); height: var(--space-3); }
 .ki-badge[data-numeric] { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* 件数の印。数は等幅。 */
+.ki-count {
+  display: inline-flex; align-items: center; justify-content: center; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-1);
+  border-radius: var(--radius-3); background: var(--color-warn-soft); color: var(--color-warn); font-family: var(--font-mono); font-size: var(--font-size-1); font-weight: var(--font-weight-strong); line-height: 1;
+}
