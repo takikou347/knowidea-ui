@@ -61,3 +61,6 @@
 .ki-choice[data-loading] > .ki-spinner { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
 
 @media (prefers-reduced-motion: reduce) { .ki-switch::after { transition: none; } }
+
+/* ラベルの無い選択肢(表の行の選択)。名前は aria-label で付ける */
+.ki-choice[data-bare] { min-width: var(--size-hit); justify-content: center; }
