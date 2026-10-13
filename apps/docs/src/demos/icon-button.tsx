@@ -12,5 +12,5 @@ export function Row({ kind }: { kind?: "demo" | "loading" | "disabled" | "focus"
   );
 }
 export function Large() {
-  return <IconButton variant="secondary" size="lg" label="閉じる" icon={<Icon name="x" />} />;
+  return <IconButton variant="secondary" size="lg" label="閉じる" icon={<Icon name="close" />} />;
 }

@@ -4,10 +4,12 @@
   border-radius: var(--radius-2); background: var(--color-surface-2); color: var(--color-text);
   font-size: var(--font-size-3); line-height: var(--font-line-height-3);
 }
+.ki-banner[data-tone="info"] { background: var(--color-info-soft); }
 .ki-banner[data-tone="success"] { background: var(--color-success-soft); }
 .ki-banner[data-tone="warn"] { background: var(--color-warn-soft); }
 .ki-banner[data-tone="error"] { background: var(--color-error-soft); }
 .ki-banner__icon { flex: none; display: inline-flex; margin-top: var(--space-1); color: var(--color-text-muted); }
+.ki-banner[data-tone="info"] .ki-banner__icon { color: var(--color-info); }
 .ki-banner[data-tone="success"] .ki-banner__icon { color: var(--color-success); }
 .ki-banner[data-tone="warn"] .ki-banner__icon { color: var(--color-warn); }
 .ki-banner[data-tone="error"] .ki-banner__icon { color: var(--color-error); }

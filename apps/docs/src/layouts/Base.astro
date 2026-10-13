@@ -3,6 +3,7 @@ import { nav } from "../nav.mjs";
 import "tokens/dist/tokens.css";
 import "@knowidea/css/index.css";
 import "../styles/global.css";
+import sprite from "icons/dist/sprite.svg?raw";
 const { title, description = "" } = Astro.props;
 const path = Astro.url.pathname;
 ---
@@ -25,6 +26,7 @@ const path = Astro.url.pathname;
     </script>
   </head>
   <body>
+    <div hidden aria-hidden="true" set:html={sprite}></div>
     <a class="skip" href="#main">本文へ</a>
     <div class="shell">
       <aside class="side">

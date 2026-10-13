@@ -44,13 +44,13 @@ export function Pagination({ page, pageCount, onPageChange, getHref, siblings = 
   return (
     <nav className={cx("ki-pagination", className)} aria-label={label}>
       <ul className="ki-pagination__list">
-        <li>{cell(page - 1, <Icon name="caret-left" />, "前のページ", page <= 1)}</li>
+        <li>{cell(page - 1, <Icon name="chevron-left" />, "前のページ", page <= 1)}</li>
         {pageItems(page, pageCount, siblings).map((it) => (
           <li key={String(it)}>
             {typeof it === "number" ? cell(it, it, `${it} ページ`, false, it === page) : <span className="ki-pagination__gap" aria-hidden="true">…</span>}
           </li>
         ))}
-        <li>{cell(page + 1, <Icon name="caret-right" />, "次のページ", page >= pageCount)}</li>
+        <li>{cell(page + 1, <Icon name="chevron-right" />, "次のページ", page >= pageCount)}</li>
       </ul>
     </nav>
   );

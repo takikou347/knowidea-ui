@@ -83,10 +83,10 @@ importers:
       '@base-ui/react':
         specifier: 1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      icons:
+        specifier: workspace:*
+        version: link:../icons
     devDependencies:
-      '@phosphor-icons/core':
-        specifier: 2.1.1
-        version: 2.1.1
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0

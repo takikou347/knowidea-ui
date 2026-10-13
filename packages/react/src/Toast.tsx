@@ -3,7 +3,7 @@ import { Toast as BaseToast } from "@base-ui/react/toast";
 import { Icon, type IconName } from "./Icon.js";
 
 export type ToastTone = "info" | "success" | "warn" | "error";
-const toneIcon: Record<ToastTone, IconName> = { info: "info", success: "check-circle", warn: "warning", error: "warning-circle" };
+const toneIcon: Record<ToastTone, IconName> = { info: "info", success: "success", warn: "warning", error: "error" };
 
 function ToastList() {
   const { toasts } = BaseToast.useToastManager();
@@ -19,7 +19,7 @@ function ToastList() {
               <BaseToast.Description className="ki-toast__description" />
             </div>
             <BaseToast.Close className="ki-button ki-icon-button ki-toast__close" data-variant="quiet" aria-label="閉じる">
-              <Icon name="x" />
+              <Icon name="close" />
             </BaseToast.Close>
           </BaseToast.Root>
         );

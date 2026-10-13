@@ -27,7 +27,7 @@ export function Field({ label, hint, error, required, disabled, className, child
       {hint ? <BaseField.Description className="ki-field__hint">{hint}</BaseField.Description> : null}
       {error ? (
         <BaseField.Error match className="ki-field__error">
-          <Icon name="warning-circle" />
+          <Icon name="error" />
           <span>{error}</span>
         </BaseField.Error>
       ) : null}

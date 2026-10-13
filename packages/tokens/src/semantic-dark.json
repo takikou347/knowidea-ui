@@ -52,6 +52,14 @@
       "$value": "{ref.success.a.softDark}",
       "$type": "color"
     },
+    "info": {
+      "$value": "{ref.info.fgDark}",
+      "$type": "color"
+    },
+    "info-soft": {
+      "$value": "{ref.info.softDark}",
+      "$type": "color"
+    },
     "warn": {
       "$value": "{ref.warn.fgDark}",
       "$type": "color"

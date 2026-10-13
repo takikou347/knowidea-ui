@@ -61,8 +61,8 @@ export const pairs = [];
 for (const bg of ["bg", "surface", "surface-2"]) pairs.push(["text", bg, text], ["text-muted", bg, text]);
 for (const bg of ["bg", "surface"]) {
   pairs.push(["primary", bg, text], ["line-strong", bg, ui], ["focus", bg, ui]);
-  for (const s of ["success", "warn", "error"]) pairs.push([s, bg, text]);
+  for (const s of ["info", "success", "warn", "error"]) pairs.push([s, bg, text]);
 }
-for (const s of ["success", "warn", "error"]) pairs.push([s, s + "-soft", text]);
+for (const s of ["info", "success", "warn", "error"]) pairs.push([s, s + "-soft", text]);
 pairs.push(["on-primary", "primary", text], ["on-primary", "primary-hover", text]);
 
