@@ -47,7 +47,7 @@ export default function Dashboard() {
       actions={<IconButton label="更新" icon={<Icon name="refresh" />} />}
     >
       <Alert tone="info">この画面の数値はすべてサンプルであり、実際の値ではない。</Alert>
-      <Grid minItemWidth={170}>
+      <Grid minItemWidth={220}>
         <Stat label="件数" icon="list" value={1280} unit="件" delta={{ dir: "up", text: "+12%" }} spark={trend} sparkLabel="直近 7 日の件数(サンプル値)" />
         <Stat label="待ち時間" icon="clock" value="4.2" unit="分" delta={{ dir: "down", text: "-0.8 分" }} />
         <Stat label="完了" icon="check" value="96.5" unit="%" delta={{ dir: "up", text: "+0.4" }} />
