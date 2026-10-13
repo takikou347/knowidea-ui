@@ -1,21 +1,52 @@
 ---
 import Base from "../layouts/Base.astro";
+import { CodeBlock } from "@knowidea/ui";
+import { links } from "../lib/paths.mjs";
+import { components, categories } from "../lib/registry.mjs";
+import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
+const { href } = links(Astro.url.pathname);
+const quick = `import "@knowidea/tokens/tokens.css";
+import "@knowidea/css/index.css";
+import { Button, Alert } from "@knowidea/ui";
+
+export function Example() {
+  return (
+    <>
+      <Alert tone="info">保存した。</Alert>
+      <Button>完了にする</Button>
+    </>
+  );
+}`;
 ---
-<Base title="はじめに" description="KNOW IDEA のトークン、アイコン、部品の見本">
-  <h1>KNOW IDEA のデザイン</h1>
-  <p>管理アプリ、Logru、Ruleru のサイトが同じ土台を使う。アプリは CSS 変数を上書きして、主の色、角丸、密度を変える(サイドの「アプリ」で既定、Logru、Ruleru の上書きを切り替えて見られる)。</p>
+<Base title="概要" description="KNOW IDEA の UI ライブラリ">
+  <h1>KNOW IDEA UI</h1>
+  <p class="lead">どのアプリにも属さない、1 つの UI ライブラリ。詰めた、灰色、小さな角丸、等幅の数字。主の色は 1 つで、テーマで変えられる。</p>
+  <p>React の部品(<code>@knowidea/ui</code>)、素の CSS(<code>@knowidea/css</code>)、CSS 変数のトークン(<code>@knowidea/tokens</code>)、アイコン(<code>@knowidea/icons</code>)の 4 つに分かれている。部品の土台は Base UI で、キーボードとスクリーンリーダーの挙動はそちらに任せている。</p>
+
+  <h2 id="contents">中身</h2>
   <div class="table-wrap">
-    <table>
+    <table class="docs-table link-table">
       <thead><tr><th>ページ</th><th>中身</th></tr></thead>
       <tbody>
-        <tr><td><a href="/tokens/">トークン</a></td><td>色(ライトとダーク、コントラスト比)、字、余白、角丸、動き</td></tr>
-        <tr><td><a href="/icons/">アイコン</a></td><td>133 個を用途別に。絞り込みと、3 組の比較</td></tr>
-        <tr><td><a href="/components/button/">部品</a></td><td>25 の部品。それぞれ、デモ、状態、API、素の HTML、上書きの例</td></tr>
-        <tr><td><a href="/components/stat-card/">管理アプリの部品</a></td><td>数のカード、推移のグラフ、Claude のカード、状態の印、提案とプロジェクト、スレッドと PR の行、承認と否認とコメント、まとめて送るトレイ、最近の動き、止めるボタン、アプリの枠</td></tr>
-        <tr><td><a href="/screens/home/">画面の見本</a></td><td>管理アプリのホームと、スレッドと PR の一覧。幅 390px と 1024px</td></tr>
+        <tr><td><a href={href("getting-started/install")}>はじめに</a></td><td>入れ方。React、素の HTML、Tailwind v4 での使い方</td></tr>
+        <tr><td><a href={href("customization/theme")}>カスタマイズ</a></td><td>テーマ(主の色、角丸、密度、字の大きさ)、トークン、ダークモード、部品の上書き</td></tr>
+        <tr><td><a href={href("components")}>部品</a></td><td>{components.length} 個。{categories.map((c) => c.ja).join("、")}</td></tr>
+        <tr><td><a href={href("icons")}>アイコン</a></td><td>{all.icons.length} 個。名前で探し、太さを選び、import か SVG を写せる</td></tr>
+        <tr><td><a href={href("templates/dashboard")}>見本の画面</a></td><td>ダッシュボードと、一覧と一括の操作。幅 390px と 1024px</td></tr>
       </tbody>
     </table>
   </div>
-  <h2>ページの足し方</h2>
-  <p><code>src/pages/components/&lt;名前&gt;.astro</code> を作り、<code>src/nav.mjs</code> に 1 行足す。1 部品に 1 ページ。</p>
+
+  <h2 id="quick">最小の例</h2>
+  <p>CSS を 2 つ読み、部品を import する。</p>
+  <CodeBlock client:load language="tsx" label="最小の例" code={quick} />
+
+  <h2 id="principles">決めていること</h2>
+  <ul class="plain">
+    <li>部品はアプリの名前を持たない。画面の用途は、部品の組み合わせで作る(<a href={href("templates/dashboard")}>見本の画面</a>)</li>
+    <li>全部の部品に、空、読み込み、失敗、無効、focus の 5 つの状態がある</li>
+    <li>押せる所は 44px 以上。focus の輪は 2px で、隣の色と 3:1 以上</li>
+    <li>色はライトとダークを別に決める。本文は 4.5:1 以上</li>
+    <li>色、角丸、余白、字は役割の名前の CSS 変数で読む。アプリは変数を上書きする</li>
+  </ul>
 </Base>

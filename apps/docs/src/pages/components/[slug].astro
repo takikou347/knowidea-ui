@@ -1,0 +1,84 @@
+---
+import Base from "../../layouts/Base.astro";
+import ApiTable from "../../components/ApiTable.astro";
+import DemoBlock from "../../components/DemoBlock.tsx";
+import StatesBlock from "../../components/StatesBlock.tsx";
+import { CodeBlock } from "@knowidea/ui";
+import { components } from "../../lib/registry.mjs";
+import { snippet } from "../../lib/snippet.mjs";
+import { links } from "../../lib/paths.mjs";
+
+export function getStaticPaths() {
+  return components.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const { href, rel } = links(Astro.url.pathname);
+
+const raws = import.meta.glob("../../demos/*.tsx", { query: "?raw", import: "default", eager: true });
+const src = raws[`../../demos/${c.slug}.tsx`];
+const demos = c.demos.map((d) => ({ ...d, code: snippet(src, d.fn) }));
+const importLine = `import { ${c.imports.join(", ")} } from "@knowidea/ui";`;
+const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="#${n}"/></svg>`;
+const html = c.html ? c.html.replace(/\$\{icon\("([\w-]+)"\)\}/g, (_, n) => icon(n)) : null;
+const slug = (s) => s.toLowerCase();
+const same = components.filter((x) => x.cat === c.cat && x.slug !== c.slug);
+---
+<Base title={c.name} description={`${c.ja}(${c.name})のデモ、5 つの状態、API、CSS、アクセシビリティ`}>
+  <h1>{c.name}</h1>
+  <p class="lead">{c.lead ?? `${c.ja}。`}</p>
+  <div class="gap"><CodeBlock client:load code={importLine} language="tsx" label="import" /></div>
+  <p class="muted cat-line">{c.catJa}の部品。{same.length > 0 && <>ほかに {same.map((x, i) => <><a href={href("components/" + x.slug)}>{x.name}</a>{i < same.length - 1 ? "、" : ""}</>)}</>}</p>
+
+  <h2 id="demo">デモ</h2>
+  {c.sample && <p class="muted">デモの数は見本の数。実際の値ではない。</p>}
+  {demos.map((d) => (
+    <>
+      <h3 id={"demo-" + slug(d.fn)}>{d.title}</h3>
+      {d.text && <p>{d.text}</p>}
+      <DemoBlock client:load slug={c.slug} fn={d.fn} code={d.code} block={d.block} />
+    </>
+  ))}
+  {html && (
+    <>
+      <h3 id="demo-html">素の HTML</h3>
+      <p>React が無いページは、<code>@knowidea/css</code> の CSS を読み、クラスを書く。{c.htmlNote}</p>
+      <div class="demo">
+        <div class="demo-stage" data-block set:html={html.replace(/<use href="#([\w-]+)"/g, `<use href="${rel}sprite.svg#$1"`)}></div>
+        <details class="demo-code">
+          <summary>コードを見る</summary>
+          <CodeBlock client:load code={html} language="html" label="HTML の例" />
+        </details>
+      </div>
+    </>
+  )}
+
+  <h2 id="states">5 つの状態</h2>
+  <p>空、読み込み、失敗、無効、focus。hover と押した時は、見本のため固定で出している。部品に合わない状態は「該当しない」と理由を書く。</p>
+  <StatesBlock client:load slug={c.slug} />
+
+  <h2 id="api">API</h2>
+  {c.props.length > 0 ? <ApiTable rows={c.props} /> : <p class="muted">React の props は、HTML の属性と、デモで使った物だけ。型は <code>@knowidea/ui</code> の型定義を見る。</p>}
+
+  <h2 id="css">CSS のクラスと変数</h2>
+  {c.classes.length > 0 && (
+    <>
+      <h3>クラスと data 属性</h3>
+      <ApiTable rows={c.classes} heads={["名前", "説明"]} codeCols={[0]} />
+    </>
+  )}
+  {c.vars.length > 0 && (
+    <>
+      <h3>読む CSS 変数</h3>
+      <p>役割の名前の変数だけを読む。素の値は読まない。上書きの仕方は<a href={href("customization/overriding")}>部品の上書き</a>。</p>
+      <ApiTable rows={c.vars} heads={["変数", "使う所"]} codeCols={[]} />
+    </>
+  )}
+  {c.classes.length === 0 && c.vars.length === 0 && <p class="muted">専用のクラスは無い。</p>}
+
+  <h2 id="a11y">アクセシビリティ</h2>
+  {c.a11y.length > 0 ? <ul class="plain">{c.a11y.map((t) => <li>{t}</li>)}</ul> : <p class="muted">Base UI の部品の挙動に従う。</p>}
+</Base>
+<style>
+  .gap { margin-bottom: var(--space-3); }
+  .cat-line { font-size: var(--font-size-2); }
+</style>

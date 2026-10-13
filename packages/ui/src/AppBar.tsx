@@ -10,17 +10,20 @@ export interface AppBarProps {
   actions?: ReactNode;
   /** 右に寄せた小さな補足(いつの数か、など)。2 行まで */
   meta?: ReactNode;
+  /** 題の見出しの段。既定 1(画面の最上位)。ほかの見出しと並ぶ所では 2 */
+  headingLevel?: 1 | 2 | 3;
   /** sticky で上に貼り付く */
   position?: "static" | "sticky";
   className?: string;
 }
 
 /** アプリや画面の上のバー。題は h1。 */
-export function AppBar({ title, leading, actions, meta, position = "static", className }: AppBarProps) {
+export function AppBar({ title, leading, actions, meta, position = "static", headingLevel = 1, className }: AppBarProps) {
+  const H = `h${headingLevel}` as "h1" | "h2" | "h3";
   return (
     <header className={cx("ki-appbar", className)} data-position={position === "sticky" ? "sticky" : undefined}>
       {leading ? <div className="ki-appbar__leading">{leading}</div> : null}
-      <h1 className="ki-appbar__title">{title}</h1>
+      <H className="ki-appbar__title">{title}</H>
       {meta ? <p className="ki-appbar__meta">{meta}</p> : null}
       {actions ? <div className="ki-appbar__actions">{actions}</div> : null}
     </header>

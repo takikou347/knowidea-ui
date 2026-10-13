@@ -1,0 +1,1621 @@
+{
+ "badge": {
+  "lead": "状態を短い語で示す。色は状態の色だけで、文字を必ず入れる(色だけで伝えない)。押せない。押せる物はボタンにする。",
+  "props": [
+   [
+    "tone",
+    "\"neutral\" | \"success\" | \"warn\" | \"error\"",
+    "\"neutral\"",
+    "状態の色"
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "-",
+    "先頭の小さなアイコン(任意)"
+   ],
+   [
+    "numeric",
+    "boolean",
+    "false",
+    "数。等幅"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-badge",
+    "札"
+   ],
+   [
+    "data-tone=\"success | warn | error\"",
+    "状態の色"
+   ],
+   [
+    "data-numeric",
+    "数"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface-2、--color-text",
+    "neutral の面と文字"
+   ],
+   [
+    "--color-success(-soft)、--color-warn(-soft)、--color-error(-soft)",
+    "状態の文字と面(4.5:1 以上)"
+   ],
+   [
+    "--radius-1、--font-size-1",
+    "角丸、文字"
+   ]
+  ],
+  "html": "<span class=\"ki-badge\">下書き</span>\n<span class=\"ki-badge\" data-tone=\"success\">動作中</span>\n<span class=\"ki-badge\" data-tone=\"warn\">止まった</span>\n<span class=\"ki-badge\" data-tone=\"error\">失敗</span>",
+  "htmlNote": null
+ },
+ "button": {
+  "lead": "操作を実行する。ナビゲーションには使わない(リンクを使う)。主は 1 画面に 1 つ。危ない操作は danger にして、確かめるダイアログと組む。",
+  "props": [
+   [
+    "variant",
+    "\"primary\" | \"secondary\" | \"quiet\" | \"danger\"",
+    "\"primary\"",
+    "主は 1 画面に 1 つ。静か(quiet)は枠も面も無い"
+   ],
+   [
+    "size",
+    "\"md\" | \"lg\"",
+    "\"md\"",
+    "md は 44px、lg は 52px。どちらも押せる大きさ"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "押せなくなり、aria-busy になる。ラベルはそのまま、先頭に回転が出る"
+   ],
+   [
+    "loadingLabel",
+    "string",
+    "\"処理中\"",
+    "読み込み中に読み上げる文"
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "-",
+    "ラベルの前のアイコン。packages/icons の部品も渡せる"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "押せない。focus も入らない"
+   ],
+   [
+    "type",
+    "\"button\" | \"submit\" | \"reset\"",
+    "\"button\"",
+    "form の中では submit を明示する"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-button",
+    "ボタン本体。<button> か <a> に付ける"
+   ],
+   [
+    "data-variant=\"secondary | quiet | danger\"",
+    "無ければ primary"
+   ],
+   [
+    "data-size=\"lg\"",
+    "大きいボタン"
+   ],
+   [
+    "data-loading",
+    "読み込み中。pointer-events を止める。aria-busy も付ける"
+   ],
+   [
+    ".is-hover、.is-focus、.is-active",
+    "見本のための固定。実物では使わない"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary、--color-primary-hover、--color-on-primary",
+    "primary の面、hover、文字"
+   ],
+   [
+    "--color-surface、--color-surface-2、--color-line、--color-line-strong",
+    "secondary と quiet の面、hover、枠"
+   ],
+   [
+    "--color-error、--color-bg、--color-text",
+    "danger の面、文字、hover の混ぜ色"
+   ],
+   [
+    "--color-focus",
+    "focus の輪(2px)"
+   ],
+   [
+    "--radius-2、--space-2、--space-4、--space-5",
+    "角丸、中の間隔、左右の余白"
+   ],
+   [
+    "--size-hit",
+    "最小の高さ(44px)"
+   ],
+   [
+    "--font-size-3、--font-weight-strong",
+    "文字"
+   ]
+  ],
+  "html": "<button type=\"button\" class=\"ki-button\">承認する</button>\n<button type=\"button\" class=\"ki-button\" data-variant=\"secondary\">否認する</button>\n<button type=\"button\" class=\"ki-button\" data-variant=\"quiet\">あとで</button>\n<button type=\"button\" class=\"ki-button\" data-variant=\"danger\">削除する</button>\n<button type=\"button\" class=\"ki-button\" data-variant=\"secondary\" data-size=\"lg\">大きいボタン</button>\n<button type=\"button\" class=\"ki-button\" data-loading aria-busy=\"true\"><span class=\"ki-spinner\" aria-hidden=\"true\"></span><span>送る</span></button>",
+  "htmlNote": "読み込み中の回転は ki-spinner。"
+ },
+ "checkbox": {
+  "lead": "独立した「入」と「切」。押せる所はラベルまで含めて 44px。複数から選ぶときは並べる。1 つだけ選ぶときはラジオを使う。",
+  "props": [
+   [
+    "label",
+    "ReactNode",
+    "-",
+    "ラベル。無いときは aria-label を付ける"
+   ],
+   [
+    "checked / defaultChecked / onCheckedChange",
+    "boolean",
+    "-",
+    "制御と非制御"
+   ],
+   [
+    "indeterminate",
+    "boolean",
+    "false",
+    "一部だけ選んだ状態(全選択の見出しなど)"
+   ],
+   [
+    "invalid",
+    "boolean",
+    "false",
+    "失敗の枠"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "操作できず、回転を出す"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "押せない"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-choice > .ki-check",
+    "素の HTML は <input type=\"checkbox\">。React は Base UI が同じクラスで描く"
+   ],
+   [
+    "[data-checked]、:checked、:indeterminate",
+    "入"
+   ],
+   [
+    "[data-indeterminate]",
+    "一部"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary、--color-on-primary",
+    "入の面と印"
+   ],
+   [
+    "--color-line-strong、--color-surface",
+    "切の枠と面"
+   ],
+   [
+    "--color-error",
+    "失敗"
+   ],
+   [
+    "--size-hit",
+    "ラベルを含む押せる高さ"
+   ],
+   [
+    "--radius-1",
+    "角丸"
+   ]
+  ],
+  "html": "<label class=\"ki-choice\"><input type=\"checkbox\" class=\"ki-check\" checked /><span>完了したら知らせる</span></label>\n<label class=\"ki-choice\"><input type=\"checkbox\" class=\"ki-check\" /><span>失敗したら知らせる</span></label>",
+  "htmlNote": null
+ },
+ "code-block": {
+  "lead": "等幅でコードを示す。写すボタンがあり、行番号は任意。長い行は枠の中だけが横に動く(キーボードでも動かせる)。文の中の短いコードは .ki-inline-code。",
+  "props": [
+   [
+    "code",
+    "string",
+    "-",
+    "コード。必須"
+   ],
+   [
+    "language",
+    "string",
+    "-",
+    "右上に出す言語名"
+   ],
+   [
+    "lineNumbers",
+    "boolean",
+    "false",
+    "行番号。写すときは含めない"
+   ],
+   [
+    "copy",
+    "boolean",
+    "true",
+    "写すボタン。結果は「写した」「写せない」で伝える"
+   ],
+   [
+    "label",
+    "string",
+    "\"コード\"",
+    "横に動く領域の名前"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-code、[data-lines]",
+    "枠。data-lines で行番号"
+   ],
+   [
+    ".ki-code__head、__lang、__pre、__line",
+    "頭、言語、本文、1 行"
+   ],
+   [
+    "data-ki-copy=\"#id\"",
+    "enhance.js が写す"
+   ],
+   [
+    ".ki-inline-code",
+    "文の中の短いコード"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface-2、--color-line、--color-text",
+    "面、枠、文字"
+   ],
+   [
+    "--font-mono、--font-size-2",
+    "等幅の書体と大きさ"
+   ],
+   [
+    "--color-text-muted",
+    "言語名、行番号"
+   ],
+   [
+    "--radius-2、--space-3",
+    "角丸、余白"
+   ]
+  ],
+  "html": "<figure class=\"ki-code\" data-lines>\n  <div class=\"ki-code__head\">\n    <span class=\"ki-code__lang\">yaml</span>\n    <button type=\"button\" class=\"ki-button ki-icon-button\" data-variant=\"quiet\" aria-label=\"コードを写す\" data-ki-copy=\"#c1\">\n      <span data-ki-copy-label class=\"ki-sr-only\">写す</span>\n      <svg class=\"ki-icon\" aria-hidden=\"true\"><use href=\"#copy\"/></svg>\n    </button>\n  </div>\n  <pre class=\"ki-code__pre\" tabindex=\"0\" aria-label=\"コード\"><code id=\"c1\"><span class=\"ki-code__line\">name: sample</span><span class=\"ki-code__line\">model: opus</span></code></pre>\n</figure>",
+  "htmlNote": "写すボタンは enhance.js。行番号は CSS の counter で、選択や写しに入らない。"
+ },
+ "dialog": {
+  "lead": "今の作業を止めて、1 つのことを頼む。focus は中に閉じ込め、Esc で閉じ、閉じたら開いたボタンへ戻る。取り返しのつかない操作は「確かめる形」(ConfirmDialog)を使い、外を押しても閉じない。",
+  "props": [
+   [
+    "trigger",
+    "ReactElement",
+    "-",
+    "開くボタン。1 つの要素"
+   ],
+   [
+    "title",
+    "ReactNode",
+    "-",
+    "表題。必須。読み上げの名前になる"
+   ],
+   [
+    "description",
+    "ReactNode",
+    "-",
+    "説明。1〜2 文"
+   ],
+   [
+    "actions",
+    "ReactNode",
+    "-",
+    "下の操作。DialogClose を使うと閉じる"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "中身の代わりに回転と文を出す"
+   ],
+   [
+    "open / defaultOpen / onOpenChange",
+    "boolean",
+    "-",
+    "制御と非制御"
+   ],
+   [
+    "ConfirmDialog: confirmLabel",
+    "string",
+    "-",
+    "実行する文。「削除する」のように、何をするかを書く。「OK」は使わない"
+   ],
+   [
+    "ConfirmDialog: tone",
+    "\"danger\" | \"primary\"",
+    "\"danger\"",
+    "取り返しがつかない操作は danger"
+   ],
+   [
+    "ConfirmDialog: onConfirm",
+    "() => void",
+    "-",
+    "実行"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-dialog",
+    "素の HTML は <dialog> に付けて showModal() で開く(閉じ込めと Esc はブラウザが持つ)"
+   ],
+   [
+    ".ki-dialog__title、__description、__actions",
+    "表題、説明、操作"
+   ],
+   [
+    ".ki-dialog__popup、__backdrop",
+    "Base UI の Popup と Backdrop に当てる"
+   ],
+   [
+    "data-ki-dialog-open、data-ki-dialog-close",
+    "enhance.js が開閉する"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line",
+    "面、枠"
+   ],
+   [
+    "--shadow-pop",
+    "影(ポップする物)"
+   ],
+   [
+    "--color-bg",
+    "背面を覆う膜(70%)"
+   ],
+   [
+    "--radius-3、--space-4、--space-5",
+    "角丸、画面との余白(16px)、中の余白"
+   ],
+   [
+    "--motion-duration-state",
+    "出入り。reduced-motion で止まる"
+   ]
+  ],
+  "html": "<button type=\"button\" class=\"ki-button\" data-variant=\"secondary\" data-ki-dialog-open=\"d1\">開く(素の HTML)</button>\n<dialog id=\"d1\" class=\"ki-dialog\" aria-labelledby=\"d1-t\">\n  <h2 id=\"d1-t\" class=\"ki-dialog__title\">名前を変える</h2>\n  <p class=\"ki-dialog__description\">一覧と記録の表示が変わる。</p>\n  <div class=\"ki-dialog__actions\">\n    <button type=\"button\" class=\"ki-button\" data-variant=\"secondary\" data-ki-dialog-close>やめる</button>\n    <button type=\"button\" class=\"ki-button\" data-ki-dialog-close>保存する</button>\n  </div>\n</dialog>",
+  "htmlNote": "enhance.js を読むと data 属性で開閉できる。"
+ },
+ "divider": {
+  "lead": "内容の切れ目に 1 本の線。区切りは線 1 つで足り、影や面を重ねない。ラベル付きは文の切れ目に使う。",
+  "props": [
+   [
+    "orientation",
+    "\"horizontal\" | \"vertical\"",
+    "\"horizontal\"",
+    "横か縦"
+   ],
+   [
+    "strong",
+    "boolean",
+    "false",
+    "濃い線(--color-line-strong)"
+   ],
+   [
+    "label",
+    "string",
+    "-",
+    "切れ目の語(横だけ)"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-divider",
+    "hr に付ける"
+   ],
+   [
+    "data-orientation=\"vertical\"",
+    "縦。span に付ける"
+   ],
+   [
+    "data-strong",
+    "濃い線"
+   ],
+   [
+    ".ki-divider-label",
+    "ラベル付き"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-line、--color-line-strong",
+    "線"
+   ],
+   [
+    "--space-3、--space-4",
+    "前後の余白"
+   ]
+  ],
+  "html": "<p>上の文</p>\n<hr class=\"ki-divider\" />\n<p>下の文</p>\n<div class=\"ki-divider-label\"><span>または</span></div>\n<span>一覧<span class=\"ki-divider\" data-orientation=\"vertical\" role=\"separator\" aria-orientation=\"vertical\"></span>記録</span>",
+  "htmlNote": null
+ },
+ "empty-state": {
+  "lead": "一覧や表が空のとき、理由と次にすることを短い文で書く。行動は 1 つ。大きな絵は使わない(小さなアイコンは任意)。",
+  "props": [
+   [
+    "title",
+    "ReactNode",
+    "-",
+    "何が無いか。短く"
+   ],
+   [
+    "children",
+    "ReactNode",
+    "-",
+    "理由と次にすること。1〜2 文"
+   ],
+   [
+    "action",
+    "ReactNode",
+    "-",
+    "行動 1 つ(ボタンかリンク)"
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "-",
+    "小さなアイコン(任意)"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-empty",
+    "外枠"
+   ],
+   [
+    ".ki-empty__icon、__title、__text、__action",
+    "中の部品"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-text、--color-text-muted",
+    "表題、説明"
+   ],
+   [
+    "--space-2、--space-4、--space-6",
+    "間隔、余白"
+   ]
+  ],
+  "html": "<div class=\"ki-empty\">\n  <p class=\"ki-empty__title\">項目が無い</p>\n  <p class=\"ki-empty__text\">項目を作ると、ここに並ぶ。</p>\n  <div class=\"ki-empty__action\"><button type=\"button\" class=\"ki-button\" data-variant=\"secondary\">項目を作る</button></div>\n</div>",
+  "htmlNote": null
+ },
+ "field": {
+  "lead": "ラベル、補足、誤りを入力部品にまとめる。ラベルと入力の結び付け、aria-describedby、aria-invalid は Base UI の Field が付ける。誤りは「何が悪いか」を 1 文で書く。",
+  "props": [
+   [
+    "label",
+    "ReactNode",
+    "-",
+    "ラベル。必須"
+   ],
+   [
+    "hint",
+    "ReactNode",
+    "-",
+    "補足。入力の前に知っておくこと"
+   ],
+   [
+    "error",
+    "ReactNode",
+    "-",
+    "誤り。あると欄全体が失敗になり、入力の枠も変わる"
+   ],
+   [
+    "required",
+    "boolean",
+    "false",
+    "ラベルに「必須」を足す。記号の * は使わない"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "欄全体を無効にする"
+   ],
+   [
+    "children",
+    "ReactNode",
+    "-",
+    "Input、Textarea、Select、Checkbox など 1 つ"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-field",
+    "欄の外枠(間隔 4px)"
+   ],
+   [
+    ".ki-field__label、__required、__hint、__error",
+    "ラベル、必須の印、補足、誤り"
+   ],
+   [
+    "[data-invalid]",
+    "誤りのある欄"
+   ],
+   [
+    ".ki-fieldset",
+    "ラジオなどをまとめる。legend がラベルになる"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-text、--color-text-muted、--color-error",
+    "ラベル、補足、誤りの色"
+   ],
+   [
+    "--space-1",
+    "ラベルと入力の間隔"
+   ],
+   [
+    "--font-size-2、--font-size-3",
+    "補足と誤り、ラベル"
+   ]
+  ],
+  "html": "<div class=\"ki-field\">\n  <label class=\"ki-field__label\" for=\"f1\">名前<span class=\"ki-field__required\">必須</span></label>\n  <input id=\"f1\" class=\"ki-input\" aria-describedby=\"f1-hint\" />\n  <p id=\"f1-hint\" class=\"ki-field__hint\">英小文字とハイフンで書く</p>\n</div>\n<div class=\"ki-field\" data-invalid>\n  <label class=\"ki-field__label\" for=\"f2\">名前<span class=\"ki-field__required\">必須</span></label>\n  <input id=\"f2\" class=\"ki-input\" aria-invalid=\"true\" aria-describedby=\"f2-err\" value=\"Review Daily\" />\n  <p id=\"f2-err\" class=\"ki-field__error\">英小文字とハイフンだけが使える</p>\n</div>",
+  "htmlNote": null
+ },
+ "icon-button": {
+  "lead": "アイコンだけのボタン。名前(label)が必須で、読み上げに使う。意味が伝わりにくいときはツールチップを添える。",
+  "props": [
+   [
+    "label",
+    "string",
+    "-",
+    "読み上げる名前。必須"
+   ],
+   [
+    "icon",
+    "ReactNode",
+    "-",
+    "アイコン。必須"
+   ],
+   [
+    "variant",
+    "\"primary\" | \"secondary\" | \"quiet\" | \"danger\"",
+    "\"quiet\"",
+    "ボタンと同じ"
+   ],
+   [
+    "size",
+    "\"md\" | \"lg\"",
+    "\"md\"",
+    "44px と 52px の正方形"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "回転に変わり、押せなくなる"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "押せない"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-button.ki-icon-button",
+    "2 つのクラスを重ねる。aria-label を付ける"
+   ],
+   [
+    "data-variant、data-size、data-loading",
+    "ボタンと同じ"
+   ]
+  ],
+  "vars": [
+   [
+    "--size-hit",
+    "幅と高さ(44px)"
+   ],
+   [
+    "--color-*、--radius-2",
+    "ボタンと同じ"
+   ]
+  ],
+  "html": "<button type=\"button\" class=\"ki-button ki-icon-button\" data-variant=\"quiet\" aria-label=\"閉じる\">\n  <svg class=\"ki-icon\" aria-hidden=\"true\"><use href=\"#close\"/></svg>\n</button>",
+  "htmlNote": null
+ },
+ "input": {
+  "lead": "1 行の文字を受ける。名前は必ず欄(Field)のラベルか aria-label で付ける。数字は等幅で出せる。",
+  "props": [
+   [
+    "invalid",
+    "boolean",
+    "false",
+    "失敗。枠が失敗の色になり、aria-invalid が付く。理由は欄の誤りで書く"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "右端に回転を出す"
+   ],
+   [
+    "numeric",
+    "boolean",
+    "false",
+    "等幅の数字"
+   ],
+   [
+    "disabled / readOnly",
+    "boolean",
+    "false",
+    "無効、読み取り専用"
+   ],
+   [
+    "...input",
+    "-",
+    "-",
+    "type、value、onChange など input の属性"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-input",
+    "<input> に付ける"
+   ],
+   [
+    "aria-invalid=\"true\"",
+    "失敗"
+   ],
+   [
+    ".ki-input-group[data-loading] > .ki-input__adornment",
+    "読み込み中の回転を右端に置く"
+   ],
+   [
+    "data-numeric",
+    "等幅の数字"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line、--color-line-strong、--color-text-muted",
+    "面、枠、hover の枠、placeholder"
+   ],
+   [
+    "--color-error",
+    "失敗の枠"
+   ],
+   [
+    "--color-focus",
+    "focus の輪"
+   ],
+   [
+    "--size-hit、--radius-2、--space-3",
+    "高さ、角丸、左右の余白"
+   ]
+  ],
+  "html": "<label for=\"in1\">名前</label>\n<input id=\"in1\" class=\"ki-input\" placeholder=\"例: review\" />\n<input class=\"ki-input\" aria-invalid=\"true\" value=\"a b\" aria-label=\"失敗の例\" />",
+  "htmlNote": null
+ },
+ "link": {
+  "lead": "別の場所へ移る。色でなく下線で見分ける(主の色は主のボタンと今いる所だけ)。操作を実行するときはボタンを使う。",
+  "props": [
+   [
+    "tone",
+    "\"default\" | \"muted\"",
+    "\"default\"",
+    "muted は補助の文"
+   ],
+   [
+    "standalone",
+    "boolean",
+    "false",
+    "文の外に単独で置くとき。44px の高さになる"
+   ],
+   [
+    "external",
+    "boolean",
+    "false",
+    "別のタブで開く。「新しいタブで開く」を読み上げに足す"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "href を外し、focus も入らない"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-link",
+    "<a> に付ける"
+   ],
+   [
+    "data-tone=\"muted\"",
+    "補助の色"
+   ],
+   [
+    "data-standalone",
+    "単独で置く(44px)"
+   ],
+   [
+    "aria-disabled=\"true\"",
+    "無効"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-text、--color-text-muted",
+    "文字"
+   ],
+   [
+    "--color-focus",
+    "focus の輪"
+   ],
+   [
+    "--size-hit",
+    "単独のときの高さ"
+   ],
+   [
+    "--radius-1",
+    "focus の輪の角"
+   ]
+  ],
+  "html": "<p>詳しくは <a class=\"ki-link\" href=\"#\">項目の一覧</a> を見る。</p>\n<a class=\"ki-link\" data-standalone href=\"#\">一覧へ</a>\n<a class=\"ki-link\" data-tone=\"muted\" data-standalone href=\"#\">使用量のトークン</a>",
+  "htmlNote": "文の中のリンクは押せる大きさの決まりから外れる。単独のときは data-standalone。"
+ },
+ "menu": {
+  "lead": "1 つのボタンから、関連する操作の一覧を開く。矢印キーで移り、Esc で閉じ、閉じたらボタンへ戻る。危ない操作は区切りの下に置き、data-tone で色を変える。ナビゲーションには使わない。",
+  "props": [
+   [
+    "trigger",
+    "ReactElement",
+    "-",
+    "開くボタン。1 つの要素"
+   ],
+   [
+    "items",
+    "MenuEntry[]",
+    "-",
+    "{ label, icon?, tone?, disabled?, onSelect?, href? }、{ type: \"separator\" }、{ type: \"label\", label }"
+   ],
+   [
+    "align",
+    "\"start\" | \"center\" | \"end\"",
+    "\"start\"",
+    "ボタンのどこに揃えるか"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-menu__popup、__item、__separator、__label",
+    "Base UI の Popup と Item に当てる。素の HTML は見た目だけ(開閉の動きは持たない)"
+   ],
+   [
+    "[data-tone=\"danger\"]",
+    "危ない操作"
+   ],
+   [
+    "[data-highlighted]",
+    "矢印で選んでいる項目"
+   ],
+   [
+    "[data-disabled]",
+    "無効の項目"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line、--color-surface-2",
+    "面、枠、選んでいる項目"
+   ],
+   [
+    "--color-error",
+    "危ない操作"
+   ],
+   [
+    "--shadow-pop",
+    "影(ポップする物)"
+   ],
+   [
+    "--size-hit",
+    "項目の高さ"
+   ],
+   [
+    "--radius-2、--radius-3",
+    "項目と全体の角丸"
+   ]
+  ],
+  "html": "<div class=\"ki-menu__popup\" role=\"menu\" aria-label=\"操作\" style=\"position: static; display: inline-block;\">\n  <div class=\"ki-menu__item\" role=\"menuitem\" tabindex=\"-1\">名前を変える</div>\n  <div class=\"ki-menu__item\" role=\"menuitem\" tabindex=\"-1\">複製する</div>\n  <hr class=\"ki-menu__separator\" />\n  <div class=\"ki-menu__item\" role=\"menuitem\" tabindex=\"-1\" data-tone=\"danger\">削除する</div>\n</div>",
+  "htmlNote": "素の HTML では見た目だけ。開閉と矢印キーの動きが要るときは React の Menu を使う。"
+ },
+ "pagination": {
+  "lead": "長い一覧を分ける。今のページは aria-current で示し、主の色(今いる所)で塗る。ページごとに URL があるときは getHref でリンクにする。",
+  "props": [
+   [
+    "page / pageCount",
+    "number",
+    "-",
+    "今のページ(1 から)と全部の数。必須"
+   ],
+   [
+    "onPageChange",
+    "(page) => void",
+    "-",
+    "移る"
+   ],
+   [
+    "getHref",
+    "(page) => string",
+    "-",
+    "渡すとボタンでなくリンクにする"
+   ],
+   [
+    "siblings",
+    "number",
+    "1",
+    "今のページの前後に出す数。多いときは … で省く"
+   ],
+   [
+    "label",
+    "string",
+    "\"ページ送り\"",
+    "nav の名前"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-pagination__list、__item、__gap",
+    "並び、ページ、省略"
+   ],
+   [
+    "aria-current=\"page\"",
+    "今のページ"
+   ],
+   [
+    ":disabled、aria-disabled",
+    "最初と最後の前後ボタン"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary、--color-on-primary",
+    "今のページ"
+   ],
+   [
+    "--color-surface-2",
+    "hover"
+   ],
+   [
+    "--size-hit",
+    "1 つの大きさ(44px)"
+   ],
+   [
+    "--space-1",
+    "間隔"
+   ]
+  ],
+  "html": "<nav class=\"ki-pagination\" aria-label=\"ページ送り\">\n  <ul class=\"ki-pagination__list\">\n    ${li(1)}\n    ${li(2, true)}\n    ${li(3)}\n  </ul>\n</nav>",
+  "htmlNote": null
+ },
+ "quote": {
+  "lead": "ほかの文書から引いた文。左に 2px の線を引き、出典を下に書く。斜体にしない。強調したい自分の文には使わない。",
+  "props": [
+   [
+    "cite",
+    "ReactNode",
+    "-",
+    "出典"
+   ],
+   [
+    "children",
+    "ReactNode",
+    "-",
+    "引いた文"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-quote",
+    "figure に付ける"
+   ],
+   [
+    "blockquote、figcaption",
+    "引用の文、出典"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-line-strong",
+    "左の線"
+   ],
+   [
+    "--color-text、--color-text-muted",
+    "文、出典"
+   ],
+   [
+    "--space-4",
+    "線との間"
+   ]
+  ],
+  "html": "<figure class=\"ki-quote\">\n  <blockquote>答えはまだ無い。だから試す。</blockquote>\n  <figcaption>KNOW IDEA のロゴに添える一言</figcaption>\n</figure>",
+  "htmlNote": null
+ },
+ "radio": {
+  "lead": "複数から 1 つだけ選ぶ。見出し(legend)が必須。矢印キーで移れる。選択肢は 2 つから 6 つ。それより多いときは選ぶ(Select)を使う。",
+  "props": [
+   [
+    "legend",
+    "ReactNode",
+    "-",
+    "見出し。必須"
+   ],
+   [
+    "options",
+    "{ value, label, disabled? }[]",
+    "-",
+    "選択肢"
+   ],
+   [
+    "value / defaultValue / onValueChange",
+    "string",
+    "-",
+    "制御と非制御"
+   ],
+   [
+    "invalid",
+    "boolean",
+    "false",
+    "失敗の枠"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "全部を無効にする"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-fieldset",
+    "見出しと選択肢をまとめる(fieldset と legend)"
+   ],
+   [
+    ".ki-choice > .ki-radio",
+    "素の HTML は <input type=\"radio\">"
+   ],
+   [
+    "[data-checked]、:checked",
+    "選んだ状態"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary",
+    "選んだ点と枠"
+   ],
+   [
+    "--color-line-strong、--color-surface",
+    "選ばない枠と面"
+   ],
+   [
+    "--color-error",
+    "失敗"
+   ],
+   [
+    "--size-hit",
+    "ラベルを含む押せる高さ"
+   ]
+  ],
+  "html": "<fieldset class=\"ki-fieldset\">\n  <legend>間隔</legend>\n  <div class=\"ki-choice-group\">\n    <label class=\"ki-choice\"><input type=\"radio\" name=\"r\" class=\"ki-radio\" checked /><span>毎日</span></label>\n    <label class=\"ki-choice\"><input type=\"radio\" name=\"r\" class=\"ki-radio\" /><span>毎週</span></label>\n  </div>\n</fieldset>",
+  "htmlNote": null
+ },
+ "select": {
+  "lead": "1 つを選ぶ。選択肢が 7 つ以内ならラジオも考える。React は Base UI の Select(キーボード、読み上げ込み)、素の HTML はブラウザの select。",
+  "props": [
+   [
+    "options",
+    "{ value, label, disabled? }[]",
+    "-",
+    "選択肢。必須"
+   ],
+   [
+    "value / defaultValue / onValueChange",
+    "string | null",
+    "-",
+    "制御と非制御"
+   ],
+   [
+    "placeholder",
+    "string",
+    "\"選ぶ\"",
+    "未選択のときの文"
+   ],
+   [
+    "invalid",
+    "boolean",
+    "false",
+    "失敗の枠"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "開けなくなり、回転と「読み込み中」を出す"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "押せない"
+   ],
+   [
+    "aria-label",
+    "string",
+    "-",
+    "欄(Field)の外で使うときの名前"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-select-wrap > select.ki-select",
+    "素の HTML。右の矢印は wrap が出す"
+   ],
+   [
+    "aria-invalid=\"true\"",
+    "失敗"
+   ],
+   [
+    ".ki-select__popup、.ki-select__item",
+    "Base UI の一覧に当てるクラス"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line-strong、--color-surface-2",
+    "面、枠、項目の hover"
+   ],
+   [
+    "--shadow-pop",
+    "一覧の影(ポップする物)"
+   ],
+   [
+    "--size-hit、--radius-2、--radius-3",
+    "高さ、角丸"
+   ]
+  ],
+  "html": "<span class=\"ki-select-wrap\">\n  <select class=\"ki-select\" aria-label=\"間隔\">\n    <option>毎日</option><option>毎週</option><option>毎月</option>\n  </select>\n</span>",
+  "htmlNote": "開いた一覧の見た目はブラウザに任せる。"
+ },
+ "skeleton": {
+  "lead": "内容が来るまでの仮の形。動かさない(終わらない脈動は使わない)。包む側に aria-busy を付け、読み上げには「読み込み中」を 1 回だけ伝える。2 秒以上かかるときに出す。",
+  "props": [
+   [
+    "Skeleton: size",
+    "\"short\" | \"medium\" | \"long\"",
+    "\"long\"",
+    "幅 30%、60%、100%"
+   ],
+   [
+    "Skeleton: shape",
+    "\"text\" | \"block\"",
+    "\"text\"",
+    "1 行か、面"
+   ],
+   [
+    "SkeletonText: lines / label",
+    "number / string",
+    "3 / \"読み込み中\"",
+    "文の仮の行。最後の行は短い"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-skeleton[data-size][data-shape]",
+    "仮の形"
+   ],
+   [
+    ".ki-skeleton-stack",
+    "縦に並べる"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-line",
+    "面"
+   ],
+   [
+    "--radius-1、--radius-2",
+    "角丸"
+   ],
+   [
+    "--space-3",
+    "行の間"
+   ]
+  ],
+  "html": "<div class=\"ki-skeleton-stack\" aria-busy=\"true\">\n  <span class=\"ki-sr-only\" role=\"status\">読み込み中</span>\n  <span class=\"ki-skeleton\" data-size=\"long\"></span>\n  <span class=\"ki-skeleton\" data-size=\"long\"></span>\n  <span class=\"ki-skeleton\" data-size=\"medium\"></span>\n</div>",
+  "htmlNote": null
+ },
+ "spinner": {
+  "lead": "小さな回転。ボタンや入力の中で、短い待ちを示す。大きさは周りの文字の大きさ(1em)。reduced-motion では回さず、点線の輪にする。",
+  "props": [
+   [
+    "label",
+    "string",
+    "-",
+    "読み上げる文。無ければ装飾"
+   ],
+   [
+    "className",
+    "string",
+    "-",
+    "追加のクラス"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-spinner",
+    "回転。大きさは font-size で変える"
+   ]
+  ],
+  "vars": [
+   [
+    "currentColor",
+    "色は周りの文字の色"
+   ]
+  ],
+  "html": "<span class=\"ki-spinner\" aria-hidden=\"true\"></span>\n<span class=\"ki-sr-only\" role=\"status\">読み込み中</span>",
+  "htmlNote": "読み上げには ki-sr-only の文を足す。"
+ },
+ "switch": {
+  "lead": "押してすぐに効く入と切。フォームで「保存」を押してから効くものはチェックを使う。ラベルは状態でなく対象を書く(「動かす」であって「オン」ではない)。",
+  "props": [
+   [
+    "label",
+    "ReactNode",
+    "-",
+    "ラベル。対象を書く"
+   ],
+   [
+    "checked / defaultChecked / onCheckedChange",
+    "boolean",
+    "-",
+    "制御と非制御"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "効くまで待つ間。操作できず、回転を出す"
+   ],
+   [
+    "disabled",
+    "boolean",
+    "false",
+    "押せない"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-choice > .ki-switch",
+    "素の HTML は <input type=\"checkbox\" role=\"switch\">"
+   ],
+   [
+    "[data-checked]、:checked",
+    "入"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary",
+    "入の面"
+   ],
+   [
+    "--color-line-strong、--color-surface",
+    "切の面と丸"
+   ],
+   [
+    "--space-5、--space-6、--space-2",
+    "大きさ(24px、40px)"
+   ],
+   [
+    "--motion-duration-state",
+    "丸の動き。reduced-motion で止まる"
+   ]
+  ],
+  "html": "<label class=\"ki-choice\"><input type=\"checkbox\" role=\"switch\" class=\"ki-switch\" checked /><span>自動で動かす</span></label>",
+  "htmlNote": null
+ },
+ "table": {
+  "lead": "行と列で比べる。数字の列は等幅で右寄せにする。狭い幅では表の中だけが横に動く(ページは動かさない)。並べ替えは見出しのボタンで、aria-sort が付く。",
+  "props": [
+   [
+    "label",
+    "string",
+    "-",
+    "表の名前。必須。横に動く領域の名前にもなる"
+   ],
+   [
+    "columns",
+    "Column[]",
+    "-",
+    "key、header、numeric、sortable、wrap、render"
+   ],
+   [
+    "rows / rowKey",
+    "T[] / (row) => string",
+    "-",
+    "行と、行ごとの一意のキー"
+   ],
+   [
+    "sort / onSortChange",
+    "{ key, direction } | null",
+    "-",
+    "並べ替え。見出しを押すと 昇順、降順、なし の順に回る。並べ替える処理は呼ぶ側"
+   ],
+   [
+    "selectable / selected / onSelectedChange",
+    "boolean / string[] / fn",
+    "false",
+    "行の選択。見出しのチェックで全選択"
+   ],
+   [
+    "loading",
+    "boolean",
+    "false",
+    "仮の行を 3 つ出す。aria-busy"
+   ],
+   [
+    "error / onRetry",
+    "ReactNode / () => void",
+    "-",
+    "失敗の帯と「もう一度」"
+   ],
+   [
+    "emptyTitle / emptyText / emptyAction",
+    "-",
+    "-",
+    "行が 0 のときの空の状態"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-table-wrap > table.ki-table",
+    "外の枠が横に動く。tabindex=\"0\" と role=\"region\" と aria-label を付ける"
+   ],
+   [
+    "th[aria-sort]、.ki-table__sort",
+    "並べ替えの見出し"
+   ],
+   [
+    "td[data-numeric]、th[data-numeric]",
+    "数字。右寄せ、等幅"
+   ],
+   [
+    "tr[aria-selected=\"true\"]",
+    "選んだ行。左に 2px の主の色"
+   ],
+   [
+    "[data-select]",
+    "選択のチェックの列"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-surface-2、--color-line",
+    "面、見出し、行の線"
+   ],
+   [
+    "--color-primary",
+    "選んだ行の印"
+   ],
+   [
+    "--font-mono、--font-size-2",
+    "数字、表の文字"
+   ],
+   [
+    "--space-2、--space-3、--size-hit",
+    "余白、見出しのボタンの高さ"
+   ]
+  ],
+  "html": "<div class=\"ki-table-wrap\" role=\"region\" aria-label=\"項目の一覧\" tabindex=\"0\">\n  <table class=\"ki-table\">\n    <thead><tr>\n      <th scope=\"col\" aria-sort=\"ascending\"><button type=\"button\" class=\"ki-table__sort\">項目</button></th>\n      <th scope=\"col\" data-numeric>実行</th>\n      <th scope=\"col\" data-numeric>使用量のトークン</th>\n    </tr></thead>\n    <tbody>\n      <tr><td>review</td><td data-numeric>24</td><td data-numeric>182,400</td></tr>\n      <tr aria-selected=\"true\"><td>production</td><td data-numeric>7</td><td data-numeric>96,250</td></tr>\n    </tbody>\n  </table>\n</div>",
+  "htmlNote": "並べ替えと選択の動きは自分で書く(React の Table が持つ)。"
+ },
+ "tabs": {
+  "lead": "同じ場所で内容を切り替える。矢印キーで移り、Tab で中身へ入る。選んだタブの下に 2px の主の色(今いる所)。ページの移動にはタブでなくリンクを使う。",
+  "props": [
+   [
+    "label",
+    "string",
+    "-",
+    "タブ一覧の名前。必須"
+   ],
+   [
+    "items",
+    "{ value, label, content, disabled? }[]",
+    "-",
+    "タブ"
+   ],
+   [
+    "value / defaultValue / onValueChange",
+    "string",
+    "先頭",
+    "制御と非制御"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-tabs__list、__tab、__panel",
+    "一覧、タブ、中身。role は tablist、tab、tabpanel"
+   ],
+   [
+    "aria-selected=\"true\"、[data-active]",
+    "選んだタブ"
+   ],
+   [
+    "[data-disabled]",
+    "無効"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-primary",
+    "選んだタブの下線"
+   ],
+   [
+    "--color-line、--color-surface-2",
+    "一覧の線、hover"
+   ],
+   [
+    "--color-text、--color-text-muted",
+    "文字"
+   ],
+   [
+    "--size-hit",
+    "タブの高さ"
+   ]
+  ],
+  "html": "<div class=\"ki-tabs\">\n  <div class=\"ki-tabs__list\" role=\"tablist\" aria-label=\"項目の表示\">\n    <button class=\"ki-tabs__tab\" role=\"tab\" id=\"t1\" aria-selected=\"true\" aria-controls=\"p1\">概要</button>\n    <button class=\"ki-tabs__tab\" role=\"tab\" id=\"t2\" aria-selected=\"false\" aria-controls=\"p2\" tabindex=\"-1\">実行</button>\n  </div>\n  <div class=\"ki-tabs__panel\" role=\"tabpanel\" id=\"p1\" aria-labelledby=\"t1\" tabindex=\"0\"><p>項目の数と、直近の更新。</p></div>\n  <div class=\"ki-tabs__panel\" role=\"tabpanel\" id=\"p2\" aria-labelledby=\"t2\" hidden><p>実行の記録。</p></div>\n</div>",
+  "htmlNote": "切り替えの動き(aria-selected、hidden、矢印キー)は自分で書く。React の Tabs は持っている。"
+ },
+ "textarea": {
+  "lead": "複数行の文字を受ける。縦にだけ大きさを変えられる。",
+  "props": [
+   [
+    "invalid",
+    "boolean",
+    "false",
+    "失敗の枠と aria-invalid"
+   ],
+   [
+    "rows",
+    "number",
+    "3",
+    "初めの行数"
+   ],
+   [
+    "...textarea",
+    "-",
+    "-",
+    "value、onChange、disabled など"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-textarea",
+    "<textarea> に付ける"
+   ],
+   [
+    "aria-invalid=\"true\"",
+    "失敗"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line-strong、--color-error、--color-focus",
+    "面、枠、失敗、focus"
+   ],
+   [
+    "--size-hit、--space-2、--space-3、--radius-2",
+    "最小の高さ(2 倍)、余白、角丸"
+   ]
+  ],
+  "html": "<textarea class=\"ki-textarea\" rows=\"3\" aria-label=\"メモ\" placeholder=\"メモを書く\"></textarea>",
+  "htmlNote": null
+ },
+ "toast": {
+  "lead": "操作の結果を、作業を止めずに知らせる。数秒で消え、閉じるボタンがある。読み上げにも伝わる。消えて困る内容(失敗の理由、次にすること)は帯に書く。",
+  "props": [
+   [
+    "ToastProvider",
+    "{ timeout?, limit? }",
+    "5000, 3",
+    "アプリの根に 1 つ。消えるまでの ms と同時に出す数"
+   ],
+   [
+    "useToast().show",
+    "{ title, description?, tone?, timeout? }",
+    "-",
+    "知らせを出す。tone は info、success、warn、error"
+   ],
+   [
+    "useToast().close",
+    "(id?) => void",
+    "-",
+    "閉じる"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-toast-viewport",
+    "知らせの置き場。画面の下、左右 16px"
+   ],
+   [
+    ".ki-toast[data-type]",
+    "知らせ。data-type は info、success、warn、error"
+   ],
+   [
+    ".ki-toast__icon、__content、__title、__description、__close",
+    "中の部品"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line、--color-text-muted",
+    "面、枠、説明"
+   ],
+   [
+    "--color-success、--color-warn、--color-error",
+    "アイコンの色"
+   ],
+   [
+    "--shadow-pop",
+    "影(ポップする物)"
+   ],
+   [
+    "--space-4",
+    "画面との余白(16px)"
+   ]
+  ],
+  "html": "<div class=\"ki-toast\" data-type=\"success\" role=\"status\">\n  <span class=\"ki-toast__icon\"><svg class=\"ki-icon\" aria-hidden=\"true\"><use href=\"#success\"/></svg></span>\n  <div class=\"ki-toast__content\"><p class=\"ki-toast__title\">成功</p><p class=\"ki-toast__description\">設定を保存した。</p></div>\n</div>",
+  "htmlNote": "消す動きは自分で書く。"
+ },
+ "tooltip": {
+  "lead": "触れた要素の補足を短く出す。hover と focus で開き、Esc で閉じる。押せるものや大事な文は入れない(タッチでは出ないため)。アイコンだけのボタンの名前は aria-label で付け、ツールチップは補足にする。",
+  "props": [
+   [
+    "content",
+    "ReactNode",
+    "-",
+    "補足の文。短く"
+   ],
+   [
+    "children",
+    "ReactElement",
+    "-",
+    "触れる要素 1 つ"
+   ],
+   [
+    "side",
+    "\"top\" | \"bottom\" | \"left\" | \"right\"",
+    "\"top\"",
+    "出る側"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-tooltip",
+    "吹き出し。Base UI の Popup に当てる"
+   ],
+   [
+    ".ki-tooltip-wrap",
+    "素の HTML。hover と focus-within で出す。Esc では閉じない(React を使うと閉じる)"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-surface、--color-line、--color-text",
+    "面、枠、文字"
+   ],
+   [
+    "--shadow-pop",
+    "影(ポップする物)"
+   ],
+   [
+    "--radius-2、--space-1、--space-3",
+    "角丸、余白"
+   ]
+  ],
+  "html": "<span class=\"ki-tooltip-wrap\">\n  <button type=\"button\" class=\"ki-button\" data-variant=\"secondary\" aria-describedby=\"tt1\">使用量</button>\n  <span id=\"tt1\" role=\"tooltip\" class=\"ki-tooltip\">日本時間の 0 時で区切る</span>\n</span>",
+  "htmlNote": "素の HTML は触れると出るだけ。"
+ },
+ "alert": {
+  "lead": "画面の中に残る知らせ。情報、成功、警告、失敗。色だけに頼らず、アイコンと文で伝える。読み上げに知らせたいとき(後から出る、変わる)だけ live にする。",
+  "props": [
+   [
+    "tone",
+    "\"info\" | \"success\" | \"warn\" | \"error\"",
+    "\"info\"",
+    "種類。info は青(--color-info)"
+   ],
+   [
+    "title",
+    "ReactNode",
+    "-",
+    "表題(任意)。短く"
+   ],
+   [
+    "children",
+    "ReactNode",
+    "-",
+    "本文。平叙で短く"
+   ],
+   [
+    "action",
+    "ReactNode",
+    "-",
+    "右に置く操作。1 つ"
+   ],
+   [
+    "live",
+    "boolean",
+    "false",
+    "true で role を付ける(error は alert、ほかは status)"
+   ]
+  ],
+  "classes": [
+   [
+    ".ki-alert[data-tone]",
+    "帯。info、success、warn、error"
+   ],
+   [
+    ".ki-alert__icon、__body、__title、__text、__action",
+    "中の部品"
+   ]
+  ],
+  "vars": [
+   [
+    "--color-info-soft、--color-success-soft、--color-warn-soft、--color-error-soft",
+    "各種類の面"
+   ],
+   [
+    "--color-info、--color-success、--color-warn、--color-error",
+    "アイコン"
+   ],
+   [
+    "--color-text",
+    "文字(全部の種類で 4.5:1 以上)"
+   ],
+   [
+    "--radius-2、--space-3、--space-4",
+    "角丸、余白"
+   ]
+  ],
+  "html": "<div class=\"ki-alert\" data-tone=\"info\">${icon(\"info\")}\n  <div class=\"ki-alert__body\"><p class=\"ki-alert__title\">設定を更新した</p><p class=\"ki-alert__text\">変更は次の読み込みから使われる。</p></div>\n</div>\n<div class=\"ki-alert\" data-tone=\"error\" role=\"alert\">${icon(\"error\")}\n  <div class=\"ki-alert__body\"><p class=\"ki-alert__text\">保存できなかった。</p></div>\n</div>",
+  "htmlNote": null
+ }
+}

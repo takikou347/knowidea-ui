@@ -1,5 +1,5 @@
-import { themes, color, ratio, hex, pairs } from "tokens/scripts/contrast.mjs";
-import core from "tokens/src/core.json" with { type: "json" };
+import { themes, color, ratio, hex, pairs } from "@knowidea/tokens/scripts/contrast.mjs";
+import core from "@knowidea/tokens/src/core.json" with { type: "json" };
 
 export { ratio, hex, pairs, color, core };
 

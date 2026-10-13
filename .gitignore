@@ -2,3 +2,4 @@ node_modules
 dist
 .astro
 samples/all/gen
+apps/docs/public/
