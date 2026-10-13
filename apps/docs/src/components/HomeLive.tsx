@@ -6,7 +6,7 @@ import { demos } from "../demos/index";
  * トップの動く見本。主の色、角丸、密度、ダークを切り替えると、下の画面と部品の格子が同じ場で変わる。
  * 数値はすべてサンプル。部品は @knowidea/ui の本物で、デモのページと同じものを使う。
  */
-interface Cell { slug: string; fn: string; name: string; href: string; react: string; html: string }
+interface Cell { slug: string; fn: string; name: string; desc: string; href: string; react: string; html: string }
 interface Props { cells: Cell[] }
 
 const PRESETS = [
@@ -142,16 +142,21 @@ export default function HomeLive({ cells }: Props) {
         <div className="hl-stage">
           <Dashboard />
         </div>
-        <ul className="hl-grid" aria-label="Live components">
+        <ul className="cp-grid" aria-label="Live components">
           {cells.map((c) => {
             const Demo = (demos as Record<string, Record<string, unknown>>)[c.slug]?.[c.fn] as (() => React.JSX.Element) | undefined;
             return (
-              <li className="hl-cell" key={c.slug}>
-                <div className="hl-cell-head">
-                  <a className="hl-cell-name" href={c.href}>{c.name}</a>
-                  <button type="button" className="ki-button hl-cell-code" data-variant="quiet" data-cp-code={c.name} data-cp-react={c.react} data-cp-html={c.html} aria-label={`Code for ${c.name}`}>Code</button>
+              <li className="cp" key={c.slug}>
+                <div className="cp-view">
+                  <div className="cp-stage"><div className="cp-fit">{Demo ? <Demo /> : null}</div></div>
+                  <div className="cp-bar">
+                    <button type="button" className="ki-button cp-codebtn" data-variant="quiet" data-cp-code={c.name} data-cp-react={c.react} data-cp-html={c.html} aria-label={`Code for ${c.name}`}>Code</button>
+                  </div>
                 </div>
-                <div className="hl-cell-body">{Demo ? <Demo /> : null}</div>
+                <div className="cp-text">
+                  <h3 className="cp-name"><a className="cp-link" href={c.href}>{c.name}</a></h3>
+                  <p className="cp-desc">{c.desc}</p>
+                </div>
               </li>
             );
           })}
