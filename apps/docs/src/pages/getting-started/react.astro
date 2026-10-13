@@ -38,7 +38,7 @@ const { href } = links(Astro.url.pathname);
   <p>値を試しながら決めたい場合は、<a href={href("customization/theme")}>Theme</a> の Try it セクションを使う。</p>
 
   <h2 id="toast">Toast</h2>
-  <p>Toast だけは、アプリの根に <code>ToastProvider</code> が要る。<code>useToast</code> はその内側で呼ぶ。</p>
+  <p>Toast だけは、アプリの根に <code>ToastProvider</code> が要る。<code>useToast</code> はその内側で呼ぶ。<code>ThemeProvider</code> の内でも外でもよい。テーマは <code>useToast</code> を呼んだ所のものが当たる。</p>
   <Code code={react.toast} label="Toast example" />
 
   <h2 id="icons">Icons</h2>
