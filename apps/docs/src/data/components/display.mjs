@@ -138,7 +138,7 @@ export const display = [
       [".ki-list__pick、__main、__title、__meta、__side、__head、__state", "内部の要素"],
     ],
     vars: [["--color-surface、--color-surface-2、--color-line", "背景、ホバー時の背景、区切り線"], ["--color-primary", "選択中の行の左線と背景"], ["--size-hit", "タイトルのリンクとチェックボックスの高さ"], ["--font-mono", "時刻と番号"]],
-    a11y: ["<ul> の各行として描画する。タイトルのリンクの ::after によって行全体がクリック領域になるが、チェックボックスと末尾の操作は前面に出し、個別に操作できる", "チェックボックスの名前は「{タイトル} を選ぶ」。上部のチェックボックスは indeterminate を持つ"],
+    a11y: ["<ul> の各行として描画する。タイトルのリンクの ::after によって行全体がクリック領域になるが、チェックボックスと末尾の操作は前面に出し、個別に操作できる", "チェックボックスの名前は「{タイトル} を選択」。上部のチェックボックスは indeterminate を持つ"],
   },
   {
     slug: "timeline", name: "Timeline", imports: ["Timeline"],

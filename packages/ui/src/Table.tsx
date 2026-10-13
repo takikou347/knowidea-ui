@@ -35,7 +35,7 @@ export interface TableProps<T> {
   selectable?: boolean;
   selected?: string[];
   onSelectedChange?: (keys: string[]) => void;
-  /** 行を選ぶチェックの名前 */
+  /** 行を選択するチェックボックスの名前 */
   rowLabel?: (row: T) => string;
   loading?: boolean;
   /** 失敗の文。あると表の代わりに帯を出す */
@@ -71,7 +71,7 @@ export function Table<T extends Record<string, unknown>>({
             {selectable ? (
               <th scope="col" data-select="">
                 <Checkbox
-                  aria-label="すべての行を選ぶ"
+                  aria-label="すべての行を選択"
                   checked={allSelected}
                   indeterminate={!allSelected && someSelected}
                   disabled={loading || rows.length === 0}
@@ -120,7 +120,7 @@ export function Table<T extends Record<string, unknown>>({
                   {selectable ? (
                     <td data-select="">
                       <Checkbox
-                        aria-label={rowLabel ? rowLabel(row) + " を選ぶ" : "この行を選ぶ"}
+                        aria-label={rowLabel ? rowLabel(row) + " を選択" : "この行を選択"}
                         checked={isSel}
                         onCheckedChange={(c) => onSelectedChange?.(c ? [...selected, k] : selected.filter((x) => x !== k))}
                       />

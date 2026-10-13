@@ -25,7 +25,7 @@ export interface ListItemProps {
   selected?: boolean;
   /** 無ければ選べない行 */
   onSelectedChange?: (selected: boolean) => void;
-  /** 選ぶ枠の名前。既定「{題} を選ぶ」 */
+  /** 選ぶ枠の名前。既定「{題} を選択」 */
   selectLabel?: string;
 }
 
@@ -36,7 +36,7 @@ export function ListItem({ item, selected, onSelectedChange, selectLabel }: List
     <li className="ki-list__item" data-selected={selected ? "" : undefined} data-disabled={item.disabled ? "" : undefined}>
       {onSelectedChange ? (
         <div className="ki-list__pick">
-          <Checkbox aria-label={selectLabel ?? `${text ?? "この行"} を選ぶ`} checked={!!selected} disabled={item.disabled} onCheckedChange={onSelectedChange} />
+          <Checkbox aria-label={selectLabel ?? `${text ?? "この行"} を選択`} checked={!!selected} disabled={item.disabled} onCheckedChange={onSelectedChange} />
         </div>
       ) : null}
       <div className="ki-list__main">
