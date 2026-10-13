@@ -1,8 +1,13 @@
 @import "tailwindcss";
 /* 基本のデザイン。@theme に色、字、余白、角丸を渡す(ライトの値)。ダークは tokens.css が同じ変数を上書きする */
-@import "tokens/theme.css";
-@import "tokens/tokens.css";
-/* アプリの上書き。Logru は <html data-app="logru"> */
-@import "tokens/themes/logru.css";
+@import "@knowidea/tokens/theme.css";
+@import "@knowidea/tokens/tokens.css";
 /* 部品の見た目(ki- クラス) */
 @import "@knowidea/css/index.css";
+/* 自分のテーマ。createTheme(...).css(".brand") で作った CSS を、ここに貼る */
+.brand {
+  --color-primary: oklch(0.4811 0.0819 194.7749);
+  --color-primary-hover: oklch(0.4111 0.0707 194.7749);
+  --radius-2: 6px;
+  --radius-3: 9px;
+}

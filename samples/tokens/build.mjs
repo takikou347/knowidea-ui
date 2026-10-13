@@ -1,5 +1,5 @@
 // samples/tokens/index.html を作る。外を読まない 1 枚(フォントだけ Google Fonts)。
-// 実行: node samples/tokens/build.mjs(先に pnpm --filter tokens build と pnpm --filter icons build)
+// 実行: node samples/tokens/build.mjs(先に pnpm --filter @knowidea/tokens build と pnpm --filter @knowidea/icons build)
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -205,7 +205,7 @@ td.ic { color: var(--color-text); } td.ic svg { display: block; }
   <p class="lead">ライトとダークは別に決めた(反転ではない)。部品は役割の名前(<code>--color-*</code>)だけを参照し、素の値は参照しない。アプリはこの変数を上書きして主の色や角丸を変える。</p>
   <div class="grid2">${colorTable("light")}${colorTable("dark")}</div>
   <h3 style="margin-top: var(--space-5)">コントラスト比</h3>
-  <p class="lead">本文は 4.5:1 以上、線と focus の輪は 3:1 以上。<code>pnpm --filter tokens check</code> が同じ計算で判定し、落ちると失敗にする。</p>
+  <p class="lead">本文は 4.5:1 以上、線と focus の輪は 3:1 以上。<code>pnpm --filter @knowidea/tokens check</code> が同じ計算で判定し、落ちると失敗にする。</p>
   <div class="scroll"><table>
     <thead><tr><th>前景</th><th>背景</th><th class="num">必要</th><th class="num">ライト</th><th class="num">ダーク</th></tr></thead>
     <tbody>${pairRows}</tbody></table></div>

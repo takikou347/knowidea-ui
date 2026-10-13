@@ -87,7 +87,7 @@ matchMedia("(min-width: 1024px)").addEventListener("change", (m) => { if (m.matc
 // 右の見出しの一覧。h2 と h3 から作り、今読んでいる所に印を付ける
 const tocList = document.getElementById("docs-toc-list");
 if (tocList) {
-  const heads = [...document.querySelectorAll("#main h2, #main h3")];
+  const heads = [...document.querySelectorAll("#main h2, #main h3")].filter((h) => !h.closest(".demo, .states-table, .tpl"));
   const used = new Set();
   for (const h of heads) {
     if (!h.id) {

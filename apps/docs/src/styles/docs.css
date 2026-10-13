@@ -113,7 +113,8 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 .docs-table tr:last-child td { border-bottom: 0; }
 .docs-table td.num, .docs-table th.num { font-variant-numeric: tabular-nums; }
 .docs-table td code { white-space: normal; }
-.docs-table td a { display: inline-flex; align-items: center; min-height: var(--size-hit); }
+.docs-table td a { display: inline-flex; align-items: center; min-height: var(--size-hit); min-width: var(--size-hit); }
+.docs-main ul.links a { display: inline-flex; align-items: center; min-height: var(--size-hit); min-width: var(--size-hit); }
 .ok { color: var(--color-success); }
 .ng { color: var(--color-error); }
 .sw { display: inline-block; width: 24px; height: 16px; border-radius: var(--radius-1); border: 1px solid var(--color-line-strong); vertical-align: middle; margin-right: var(--space-2); }

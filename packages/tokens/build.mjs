@@ -67,7 +67,7 @@ const block = (map, indent) =>
   Object.entries(map).map(([k, v]) => `${indent}${varName(k)}: ${v};`).join("\n");
 
 const darkOnly = dark; // ダークは別に決める。同じ値でも全部出す(上書きしやすくする)
-const header = "/* 自動生成。src/*.json を直し、pnpm --filter tokens build で作り直す */\n";
+const header = "/* 自動生成。src/*.json を直し、pnpm --filter @knowidea/tokens build で作り直す */\n";
 
 const css = `${header}:root {
 ${block(light, "  ")}

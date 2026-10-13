@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "@knowidea/css": "workspace:*",
-    "@knowidea/react": "workspace:*",
+    "@knowidea/ui": "workspace:*",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "tokens": "workspace:*"
+    "@knowidea/tokens": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

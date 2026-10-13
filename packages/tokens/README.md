@@ -5,7 +5,7 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 | コマンド | 中身 |
 | --- | --- |
 | `pnpm --filter tokens build` | `dist/tokens.css`(CSS 変数。ライトは `:root`、ダークは `prefers-color-scheme` と `data-theme="dark"`)と `dist/theme.css`(Tailwind v4 の `@theme`)を作る |
-| `pnpm --filter tokens check` | 色の組をライトとダークで検査する。本文 4.5:1、線と focus 3:1。落ちたら exit 1 |
+| `pnpm --filter @knowidea/tokens check` | 色の組をライトとダークで検査する。本文 4.5:1、線と focus 3:1。落ちたら exit 1 |
 
 ## 分け方
 
@@ -56,31 +56,37 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 
 ## Tailwind v4
 
-Logru(React 19、Tailwind v4、Vite)の形。`examples/tailwind/` が同じ形で Vite の build を通す(Tailwind 4.3.3、`@tailwindcss/vite`)。
+React 19、Tailwind v4、Vite の形。`examples/tailwind/` が同じ形で Vite の build を通す(Tailwind 4.3.3、`@tailwindcss/vite`)。
 
 ```css
 @import "tailwindcss";
-@import "tokens/theme.css";          /* = dist/theme.css。@theme にライトの値と名前を渡す */
-@import "tokens/tokens.css";         /* ダークと、テーマで変わらない値 */
-@import "tokens/themes/logru.css";   /* アプリの上書き(<html data-app="logru">) */
+@import "@knowidea/tokens/theme.css";    /* = dist/theme.css。@theme にライトの値と名前を渡す */
+@import "@knowidea/tokens/tokens.css";   /* ダークと、テーマで変わらない値 */
 @import "@knowidea/css/index.css";   /* 部品の見た目(ki- クラス) */
 ```
 
-`theme.css` は名前(`--color-*`、`--text-1`、`--spacing-1`、`--radius-1`)を Tailwind に渡すので、`bg-surface`、`text-text-muted`、`rounded-2`、`text-5` のような道具クラスがトークンを読む。ダークは `tokens.css` が同じ変数を上書きする。パッケージ名は `tokens`(`@knowidea/tokens` ではない)。
+`theme.css` は名前(`--color-*`、`--text-1`、`--spacing-1`、`--radius-1`)を Tailwind に渡すので、`bg-surface`、`text-text-muted`、`rounded-2`、`text-5` のような道具クラスがトークンを読む。ダークは `tokens.css` が同じ変数を上書きする。
 
 ## 情報の色
 
 `ref.info`(色相 250、青)。主の青緑(195)、成功の緑(145)と分かれる。ライト `oklch(0.5 0.14 250)`(#0465af)は面(`bg` #f5f6f8)に 5.55:1、`info-soft` に 5.20:1。ダーク `oklch(0.72 0.13 250)`(#60aaf3)は `bg` に 7.47:1、`info-soft` に 5.71:1。`check` に入っている。
 
-## アプリのテーマ(`themes/`)
+## テーマを作る(`createTheme`)
 
-| ファイル | 変える物 |
-| --- | --- |
-| `admin.css` | 既定のまま(上書き無し) |
-| `logru.css` | 角丸を 4/8/12px、本文 15px、余白を少し広く。主の色は未決で、案をコメントに書いた |
-| `ruleru.css` | 本文 16px、行 1.8、余白を広く、角丸を 0/2/4px。主の色は未決で、案をコメントに書いた |
+アプリごとのファイルは置かない。主の色、角丸、密度、字の大きさを渡して、CSS 変数の上書きを作る。
 
-`<html data-app="logru">` のように指定すると効く(`:root[data-app]` で絞っている)。色を変えるテーマは、`light-dark(ライト, ダーク)` で 1 つに書くと、ダークの上書きと食い合わない。見本のサイトのサイドに「アプリ」と「テーマ」の切り替えがある。素の HTML の例は `examples/static/index.html`。
+```js
+import { createTheme } from "@knowidea/tokens/create-theme";
+const t = createTheme({ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 });
+t.css(".brand");   // クラスの下に効く CSS(ライトとダークの両方)。":root" や "[data-theme=x]" も渡せる
+t.warnings;        // コントラストが 4.5:1 に届かない組
+```
+
+- hover の色は OKLCH の明るさを 0.07 ずらして作る。主の面の文字は、明るい文字と暗い文字から比が高い方を選ぶ
+- ダークは反転せず、同じ色相で明るさ 0.74 以上にして別に作る(`primaryDark` で指定もできる)
+- 色域を出る色は彩度を下げて収める
+- 基準の面の値は `src/create-theme.mjs` の `BASE` にあり、`pnpm --filter @knowidea/tokens check` が `dist/tokens.css` と同じ値かを確かめる
+- React では `@knowidea/ui` の `ThemeProvider` が同じ物を `<style>` で出す。CSS だけなら、変数を直に書き換えてもよい。試す所は見本のサイトの「テーマ」
 
 ## 成功の色
 

@@ -411,7 +411,7 @@
    "phosphor": "play-circle",
    "group": "status",
    "groupLabel": "状態と通知",
-   "ja": "動いている(Claude の状態)"
+   "ja": "動いている"
   },
   {
    "name": "thinking",
@@ -439,7 +439,7 @@
    "phosphor": "user",
    "group": "object",
    "groupLabel": "もの",
-   "ja": "人(Claude と人)"
+   "ja": "人"
   },
   {
    "name": "users",
@@ -664,7 +664,7 @@
    "phosphor": null,
    "group": "dev",
    "groupLabel": "開発",
-   "ja": "Claude のセッション",
+   "ja": "作業の 1 回分(セッション)",
    "custom": true
   },
   {

@@ -10,7 +10,7 @@
   display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); min-height: var(--size-hit); margin: calc((var(--size-hit) - var(--space-6)) / -2 - 1px) 0;
   padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer;
 }
-.ki-chip__main { padding: 0 var(--space-3); border-radius: var(--radius-2); }
+.ki-chip__main { min-width: var(--size-hit); padding: 0 var(--space-3); border-radius: var(--radius-2); }
 .ki-chip__main > .ki-icon { width: var(--space-4); height: var(--space-4); color: var(--color-text-muted); }
 .ki-chip__remove { min-width: var(--size-hit); border-radius: var(--radius-2); color: var(--color-text-muted); }
 .ki-chip__remove > .ki-icon { width: var(--space-4); height: var(--space-4); }

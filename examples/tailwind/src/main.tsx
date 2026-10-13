@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { Badge, Button, Icon, StatCard } from "@knowidea/react";
+import { Badge, Button, Icon, Stat, ThemeProvider } from "@knowidea/ui";
 import "./app.css";
 
 function App() {
@@ -13,7 +13,14 @@ function App() {
         <Button variant="secondary">副のボタン</Button>
         <Badge tone="info">情報</Badge>
       </div>
-      <StatCard label="今日の使用量" icon="usage" value={412300} unit="トークン" delta={{ dir: "up", text: "+12%" }} />
+      <Stat label="件数" icon="list" value={1280} unit="件" delta={{ dir: "up", text: "+12%" }} />
+      {/* ThemeProvider: この中だけ主の色と角丸を変える */}
+      <ThemeProvider theme={{ primary: "#3c5ba8", radius: 8 }}>
+        <div className="flex flex-wrap gap-3">
+          <Button>別の主の色</Button>
+          <Button variant="secondary">角丸 8px</Button>
+        </div>
+      </ThemeProvider>
     </main>
   );
 }

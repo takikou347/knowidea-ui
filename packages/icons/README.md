@@ -1,6 +1,6 @@
-# icons
+# @knowidea/icons
 
-管理アプリで使う UI のアイコン。土台は Phosphor の regular。比較は `apps/docs` のアイコンのページと `samples/tokens/index.html`。
+UI ライブラリのアイコン。土台は Phosphor の regular。比較は `apps/docs` のアイコンのページと `samples/tokens/index.html`。
 
 ## 3 組(2026-10-13 に npm で確認)
 
@@ -37,7 +37,7 @@ Phosphor の regular を使う。
 | 役 | 名前 | Phosphor(regular) | Tabler(outline) | Lucide |
 | --- | --- | --- | --- | --- |
 | home | ホーム | `house` | `home` | `house` |
-| actor | Claude と人 | `user` | `user` | `user` |
+| actor | 人 | `user` | `user` | `user` |
 | proposal | 提案 | `lightbulb` | `bulb` | `lightbulb` |
 | thread | スレッド | `chats` | `messages` | `messages-square` |
 | pr | PR | `git-pull-request` | `git-pull-request` | `git-pull-request` |
@@ -53,35 +53,35 @@ Phosphor の regular を使う。
 | external | 外へのリンク | `arrow-square-out` | `external-link` | `external-link` |
 | refresh | 更新 | `arrow-clockwise` | `refresh` | `refresh-cw` |
 
-「Claude と人」は 1 つの `user`。Claude を人と見分ける印は、アイコンでなく名前の文字で出す。`error`(失敗)は状態の印で、`reject`(否認)は操作。
+人と、人でない相手を見分ける印は、アイコンでなく名前の文字で出す。`error`(失敗)は状態の印で、`reject`(否認)は操作。
 
 ## 全アイコン(1c)
 
-`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに、方向と移動、操作、状態と通知、もの、管理アプリ、Logru、Ruleru のサイト、会社の自作。各行は名前、Phosphor の名前、日本語、使うアプリ。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
+`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに分ける(方向と移動、操作、状態と通知、もの、会話、開発、データ、日付、文字、メディア、会社の自作)。各行は名前、Phosphor の名前、日本語。アプリごとの区分は持たない。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
 
 | 決まり | 中身 |
 | --- | --- |
 | 名前 | 用途の名前(`chevron-right`、`routine`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
-| 足し方 | `icons.json` に 1 行足して `pnpm --filter icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
-| 使う者の上書き | 各アプリは、自分で使う名前の部品を選ぶ。形を変えたいときは `icons.json` に自作を足し、同じ名前で上書きする |
+| 足し方 | `icons.json` に 1 行足して `pnpm --filter @knowidea/icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
+| 使う者の上書き | 使う側は、自分で使う名前の部品を選ぶ。形を変えたいときは `icons.json` に自作を足し、同じ名前で上書きする |
 
 ### 自作(2 個)
 
 | 名前 | 役 | 自作の理由 |
 | --- | --- | --- |
 | `token` | 使用量のトークン | 六角形に 2 本の文字の線。Phosphor の `coins` は金銭に読めてしまい、費用(`cost`)と区別できない |
-| `session` | Claude のセッション | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、Claude に頼んだ 1 回の作業とは違う |
+| `session` | 作業の 1 回分 | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、頼んだ 1 回の作業とは違う |
 
-`routine` は `clock-clockwise`、`model` は `cpu`、`proposal` は `lightbulb`、オーナー待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `token` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。Claude や Anthropic、他社のロゴは写していない。
+`routine` は `clock-clockwise`、`model` は `cpu`、`proposal` は `lightbulb`、オーナー待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `token` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。他社のロゴは写していない。
 
 ## 出す形
 
-`pnpm --filter icons build` が `dist/` に出す。
+`pnpm --filter @knowidea/icons build` が `dist/` に出す。
 
 | ファイル | 使う所 |
 | --- | --- |
 | `dist/svg/<名前>.svg`、`<名前>-bold.svg` | 1 枚ずつ。`currentColor` |
-| `dist/sprite.svg` | 素の HTML(Ruleru のサイト)。`<svg width="20" height="20"><use href="/sprite.svg#play"/></svg>`。bold は `#play-bold` |
+| `dist/sprite.svg` | 素の HTML。`<svg width="20" height="20"><use href="/sprite.svg#play"/></svg>`。bold は `#play-bold` |
 | `dist/react/` | React 19。`<Icon name="chevron-right" size={20} weight="regular" />`、名前ごとの部品(`ChevronRightIcon`)、型つき(`IconName`) |
 | `dist/icons-data.json` | docs と見本が読む |
 | `dist/LICENSE-phosphor.txt`、`dist/NOTICE.txt` | ライセンス |
@@ -92,7 +92,7 @@ import { Icon, SearchIcon } from "icons/react";
 <SearchIcon size={16} weight="bold" title="検索" />   // 16px は bold。title があれば読み上げる
 ```
 
-`pnpm --filter icons check` が数、`currentColor`、React の描画、型を確かめる。
+`pnpm --filter @knowidea/icons check` が数、`currentColor`、React の描画、型を確かめる。
 
 ## ライセンス
 
@@ -100,4 +100,4 @@ import { Icon, SearchIcon } from "icons/react";
 
 ## 比較用の作り方(1b)
 
-`pnpm --filter icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。比較の表だけに使う。全アイコンは上の `build-set.mjs` が作る。
+`pnpm --filter @knowidea/icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。比較の表だけに使う。全アイコンは上の `build-set.mjs` が作る。
