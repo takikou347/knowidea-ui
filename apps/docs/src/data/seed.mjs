@@ -280,7 +280,7 @@ export default {
       ["--size-hit、--radius-2、--space-3", "高さ、角丸、左右のパディング"],
     ],
     html: `<label for="in1">名前</label>
-<input id="in1" class="ki-input" placeholder="例: review" />
+<input id="in1" class="ki-input" placeholder="例: sample-name" />
 <input class="ki-input" aria-invalid="true" value="a b" aria-label="エラーの例" />`,
     htmlNote: null,
   },
@@ -385,7 +385,7 @@ export default {
     ],
     html: `<figure class="ki-quote">
   <blockquote>答えはまだない。だから試す。</blockquote>
-  <figcaption>KNOW IDEA のロゴに添える一言</figcaption>
+  <figcaption>出典の名前</figcaption>
 </figure>`,
     htmlNote: null,
   },
@@ -536,12 +536,12 @@ export default {
   <table class="ki-table">
     <thead><tr>
       <th scope="col" aria-sort="ascending"><button type="button" class="ki-table__sort">名前</button></th>
-      <th scope="col" data-numeric>実行回数</th>
-      <th scope="col" data-numeric>使用トークン数</th>
+      <th scope="col" data-numeric>回数</th>
+      <th scope="col" data-numeric>サイズ</th>
     </tr></thead>
     <tbody>
-      <tr><td>review</td><td data-numeric>24</td><td data-numeric>182,400</td></tr>
-      <tr aria-selected="true"><td>production</td><td data-numeric>7</td><td data-numeric>96,250</td></tr>
+      <tr><td>項目 A</td><td data-numeric>24</td><td data-numeric>182,400</td></tr>
+      <tr aria-selected="true"><td>項目 B</td><td data-numeric>7</td><td data-numeric>96,250</td></tr>
     </tbody>
   </table>
 </div>`,

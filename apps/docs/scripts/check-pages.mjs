@@ -549,6 +549,35 @@ await kb("表の行の並べ替え(390px、指。掴む所だけで動き、ほ�
   assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 A", "項目 C", "項目 D"]), "本体をなぞって行が動いた");
 }, { width: 390, height: 844 }, { hasTouch: true, isMobile: true });
 
+await kb("文書の規則が見本に漏れない(入れ子の表に data-label を付けない、見本の題の余白と線)", "components/table.html", async (page) => {
+  assert((await page.locator(".states-table .ki-table td[data-label], .states-table .ki-table tr[data-stack]").count()) === 0, "見本の中の表に data-label が付いた");
+  const disp = await page.locator(".states-table .ki-table tbody td").first().evaluate((el) => getComputedStyle(el).display);
+  assert(disp === "table-cell", "見本の中の表のセルが塊に組み替えられた: " + disp);
+  const heads = await page.locator(".states-table .ki-table thead th").first().evaluate((el) => getComputedStyle(el).verticalAlign);
+  assert(heads !== "top", "文書の表の vertical-align: top が見本の表に効いている");
+}, { width: 390, height: 844 });
+for (const [path, sel, what] of [["components/app-bar.html", ".demo .ki-appbar__title", "AppBar"], ["components/card.html", ".demo .ki-card__title", "Card"], ["templates/dashboard.html", ".tpl .ki-appbar__title, .tpl .ki-card__title", "ダッシュボード"]]) {
+  await kb(`見本の題に文書の見出しの規則が効かない(${what})`, path, async (page) => {
+    const n = await page.locator(sel).count();
+    assert(n > 0, "題が見つからない: " + sel);
+    const bad = await page.locator(sel).evaluateAll((els) => els.map((el) => { const s = getComputedStyle(el); return { mt: s.marginTop, bt: s.borderTopWidth, pt: s.paddingTop }; }).filter((x) => x.mt !== "0px" || x.bt !== "0px" || x.pt !== "0px"));
+    assert(bad.length === 0, "題の上の余白か線が 0 でない: " + JSON.stringify(bad[0]));
+  });
+}
+for (const w of [360, 390]) {
+  await kb(`ダッシュボードの AppBar が ${w}px で 1 段(Stat は崩れない)`, "templates/dashboard.html", async (page) => {
+    const h = (await page.locator(".tpl .ki-appbar").boundingBox()).height;
+    assert(h < 70, "AppBar が折れている: " + h + "px");
+    const w2 = await page.locator(".tpl .ki-stat").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().width)));
+    assert(w2.length === 4, "Stat が 4 つでない");
+  }, { width: w, height: 800 });
+}
+await kb("ダッシュボードの Stat が iPad 縦で 3+1 にならない", "templates/dashboard.html", async (page) => {
+  const tops = await page.locator(".tpl .ki-stat").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+  const rows = new Set(tops).size;
+  assert(rows === 2 || rows === 1, "Stat が 3+1 などに分かれた: " + tops);
+}, { width: 820, height: 1180 });
+
 await kb("角丸の段(小 4px、ボタンと入力 8px、面 12px、Chip は丸)", "components/chip.html", async (page) => {
   const v = await page.evaluate(() => { const s = getComputedStyle(document.documentElement); return [1, 2, 3].map((n) => s.getPropertyValue("--radius-" + n).trim()).concat(s.getPropertyValue("--radius-pill").trim()); });
   assert(v.slice(0, 3).join() === "4px,8px,12px" && v[3] === "999px", "角丸のトークンが違う: " + v);

@@ -56,10 +56,10 @@ if (cd) {
 
 // 狭い幅の表は CSS が塊に組み替える。その見出しを、各セルの data-label に写す(data-keep の表は触らない)
 document.querySelectorAll("table.docs-table:not([data-keep])").forEach((t) => {
-  const heads = [...t.querySelectorAll("thead th")].map((h) => h.textContent.trim());
+  const heads = [...t.querySelectorAll(":scope > thead > tr > th")].map((h) => h.textContent.trim());
   if (!heads.length) return;
   t.dataset.stack = "";
-  t.querySelectorAll("tbody tr").forEach((tr) => [...tr.children].forEach((td, i) => { if (td.tagName === "TD" && heads[i]) td.dataset.label = heads[i]; }));
+  t.querySelectorAll(":scope > tbody > tr").forEach((tr) => [...tr.children].forEach((td, i) => { if (td.tagName === "TD" && heads[i]) td.dataset.label = heads[i]; }));
 });
 
 // 検索。索引(search-index.json)はビルドのときに作る静的なファイル。開いたときに 1 回だけ読む。
