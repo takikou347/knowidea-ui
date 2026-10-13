@@ -1,0 +1,63 @@
+/* チェック、ラジオ、スイッチ。素の HTML は <label class="ki-choice"><input class="ki-check" type="checkbox">。
+   React は Base UI。同じクラスを当てる。押せる所は label 全体(44px)。 */
+.ki-choice {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  min-height: var(--size-hit); cursor: pointer; font-size: var(--font-size-3);
+}
+.ki-choice:has(:disabled, [data-disabled], [aria-disabled="true"]) { color: var(--color-text-muted); cursor: not-allowed; }
+
+.ki-check, .ki-radio, .ki-switch {
+  appearance: none; -webkit-appearance: none; margin: 0; padding: 0; flex: none; position: relative;
+  border: 1px solid var(--color-line-strong); background: var(--color-surface); color: var(--color-on-primary);
+  cursor: inherit; display: inline-block;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-check, .ki-radio { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-check { border-radius: var(--radius-1); }
+.ki-radio { border-radius: 50%; }
+.ki-check:is(:hover, .is-hover), .ki-radio:is(:hover, .is-hover), .ki-switch:is(:hover, .is-hover) { border-color: var(--color-text); }
+.ki-check:is(:focus-visible, .is-focus), .ki-radio:is(:focus-visible, .is-focus), .ki-switch:is(:focus-visible, .is-focus) {
+  outline: 2px solid var(--color-focus); outline-offset: 2px;
+}
+.ki-check:is([aria-invalid="true"], [data-invalid]), .ki-radio:is([aria-invalid="true"], [data-invalid]) { border-color: var(--color-error); }
+
+.ki-check:is(:checked, [data-checked], [data-indeterminate], :indeterminate) { background: var(--color-primary); border-color: var(--color-primary); }
+.ki-check:is(:checked, [data-checked])::after, .ki-check:is([data-indeterminate], :indeterminate)::after {
+  content: ""; position: absolute; inset: 0; background: var(--color-on-primary);
+  -webkit-mask: var(--ki-check) center / 80% no-repeat; mask: var(--ki-check) center / 80% no-repeat;
+}
+.ki-check:is([data-indeterminate], :indeterminate)::after { -webkit-mask-image: var(--ki-minus); mask-image: var(--ki-minus); }
+:root {
+  --ki-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E");
+  --ki-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z'/%3E%3C/svg%3E");
+}
+
+.ki-radio:is(:checked, [data-checked]) { border-color: var(--color-primary); border-width: 2px; }
+.ki-radio:is(:checked, [data-checked])::after {
+  content: ""; position: absolute; inset: 2px; border-radius: 50%; background: var(--color-primary);
+}
+
+.ki-switch { width: calc(var(--space-6) + var(--space-2)); height: var(--space-5); border-radius: var(--space-5); background: var(--color-line-strong); border-color: var(--color-line-strong); }
+.ki-switch::after {
+  content: ""; position: absolute; top: 50%; left: var(--space-1); width: var(--space-4); height: var(--space-4);
+  border-radius: 50%; background: var(--color-surface); transform: translateY(-50%);
+  transition: left var(--motion-duration-state) var(--motion-ease);
+}
+.ki-switch:is(:checked, [data-checked]) { background: var(--color-primary); border-color: var(--color-primary); }
+.ki-switch:is(:checked, [data-checked])::after { left: calc(100% - var(--space-4) - var(--space-1)); background: var(--color-on-primary); }
+
+.ki-check:is(:disabled, [data-disabled], [aria-disabled="true"]),
+.ki-radio:is(:disabled, [data-disabled], [aria-disabled="true"]),
+.ki-switch:is(:disabled, [data-disabled], [aria-disabled="true"]) {
+  background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted);
+}
+.ki-check:is(:disabled, [data-disabled]):is(:checked, [data-checked])::after { background: var(--color-text-muted); }
+.ki-radio:is(:disabled, [data-disabled]):is(:checked, [data-checked])::after { background: var(--color-text-muted); }
+.ki-switch:is(:disabled, [data-disabled])::after { background: var(--color-text-muted); }
+.ki-switch:is(:disabled, [data-disabled]):is(:checked, [data-checked])::after { background: var(--color-text-muted); }
+
+/* 読み込み中の選択肢 */
+.ki-choice[data-loading] { cursor: progress; color: var(--color-text-muted); }
+.ki-choice[data-loading] > .ki-spinner { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+
+@media (prefers-reduced-motion: reduce) { .ki-switch::after { transition: none; } }

@@ -1,0 +1,17 @@
+/* コードブロック。等幅。写すボタン、行番号は任意(data-lines)。 */
+.ki-code { margin: 0; border: 1px solid var(--color-line); border-radius: var(--radius-2); background: var(--color-surface-2); color: var(--color-text); min-width: 0; }
+.ki-code__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: 0 var(--space-1) 0 var(--space-3); border-bottom: 1px solid var(--color-line); }
+.ki-code__lang { font-family: var(--font-mono); font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-code__pre { margin: 0; padding: var(--space-3); overflow-x: auto; font-family: var(--font-mono); font-size: var(--font-size-2); line-height: var(--font-line-height-3); tab-size: 2; }
+.ki-code__pre:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-code__pre > code { font: inherit; display: block; width: max-content; min-width: 100%; }
+.ki-code__line { display: block; }
+.ki-code[data-lines] .ki-code__pre > code { counter-reset: ki-line; }
+.ki-code[data-lines] .ki-code__line { counter-increment: ki-line; }
+.ki-code[data-lines] .ki-code__line::before {
+  content: counter(ki-line); display: inline-block; width: 2.5ch; margin-right: var(--space-3); text-align: right;
+  color: var(--color-text-muted); font-variant-numeric: tabular-nums; user-select: none;
+}
+.ki-code__status { font-size: var(--font-size-1); color: var(--color-text-muted); }
+/* 本文の中の短いコード */
+.ki-inline-code { font-family: var(--font-mono); font-size: var(--font-size-2); padding: 0 var(--space-1); background: var(--color-surface-2); border-radius: var(--radius-1); }

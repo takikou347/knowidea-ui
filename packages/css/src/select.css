@@ -1,0 +1,46 @@
+/* 選ぶ。素の HTML は <span class="ki-select-wrap"><select class="ki-select">。React は Base UI の Select。 */
+.ki-select-wrap { position: relative; display: block; }
+.ki-select {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+  width: 100%; min-height: var(--size-hit); padding: 0 var(--space-3);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-2);
+  background: var(--color-surface); color: var(--color-text);
+  font: inherit; font-size: var(--font-size-3); text-align: left; cursor: pointer;
+  transition: border-color var(--motion-duration-fast) var(--motion-ease);
+}
+select.ki-select { appearance: none; -webkit-appearance: none; padding-right: calc(var(--space-3) + var(--space-5)); }
+.ki-select-wrap::after {
+  content: ""; position: absolute; right: var(--space-3); top: 50%;
+  width: var(--space-4); height: var(--space-4); transform: translateY(-50%);
+  background: var(--color-text-muted);
+  -webkit-mask: var(--ki-caret-down) center / contain no-repeat; mask: var(--ki-caret-down) center / contain no-repeat;
+  pointer-events: none;
+}
+:root { --ki-caret-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E"); }
+.ki-select:is(:hover, .is-hover) { border-color: var(--color-text-muted); }
+.ki-select:is(:focus-visible, :focus, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-text); }
+.ki-select:is([aria-invalid="true"], [data-invalid]) { border-color: var(--color-error); }
+.ki-select:is(:disabled, [aria-disabled="true"], [data-disabled]) {
+  background: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-line); cursor: not-allowed;
+}
+.ki-select[data-placeholder] { color: var(--color-text-muted); }
+.ki-select__icon { display: inline-flex; color: var(--color-text-muted); }
+.ki-select__icon > .ki-icon { width: var(--space-4); height: var(--space-4); }
+
+/* Base UI の popup */
+.ki-select__positioner { z-index: 20; }
+.ki-select__popup {
+  min-width: var(--anchor-width); max-height: var(--available-height); overflow: auto;
+  padding: var(--space-1); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-select__popup[data-starting-style], .ki-select__popup[data-ending-style] { opacity: 0; }
+.ki-select__item {
+  display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); padding: 0 var(--space-3);
+  border-radius: var(--radius-2); font-size: var(--font-size-3); cursor: pointer; outline: none;
+}
+.ki-select__item[data-highlighted] { background: var(--color-surface-2); outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-select__item[data-disabled] { color: var(--color-text-muted); cursor: not-allowed; }
+.ki-select__item-mark { width: var(--space-4); height: var(--space-4); flex: none; }
+.ki-select__item:not([data-selected]) .ki-select__item-mark { visibility: hidden; }

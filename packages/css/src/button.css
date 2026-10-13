@@ -1,0 +1,47 @@
+/* ボタン。data-variant: primary(既定) | secondary | quiet | danger。data-size: lg。data-loading。 */
+.ki-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: var(--size-hit); padding: 0 var(--space-4);
+  border: 1px solid var(--color-primary); border-radius: var(--radius-2);
+  background: var(--color-primary); color: var(--color-on-primary);
+  font: inherit; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: 1;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-button:is(:hover, .is-hover) { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.ki-button:is(:active, .is-active) { background: var(--color-primary-hover); border-color: var(--color-text); }
+
+.ki-button[data-variant="secondary"] { background: var(--color-surface); color: var(--color-text); border-color: var(--color-line-strong); }
+.ki-button[data-variant="secondary"]:is(:hover, .is-hover) { background: var(--color-surface-2); border-color: var(--color-line-strong); }
+.ki-button[data-variant="secondary"]:is(:active, .is-active) { background: var(--color-line); border-color: var(--color-text-muted); }
+
+.ki-button[data-variant="quiet"] { background: transparent; color: var(--color-text); border-color: transparent; }
+.ki-button[data-variant="quiet"]:is(:hover, .is-hover) { background: var(--color-surface-2); border-color: transparent; }
+.ki-button[data-variant="quiet"]:is(:active, .is-active) { background: var(--color-line); border-color: transparent; }
+
+.ki-button[data-variant="danger"] { background: var(--color-error); color: var(--color-bg); border-color: var(--color-error); }
+.ki-button[data-variant="danger"]:is(:hover, .is-hover) {
+  background: color-mix(in oklch, var(--color-error), var(--color-text) 18%);
+  border-color: color-mix(in oklch, var(--color-error), var(--color-text) 18%);
+}
+.ki-button[data-variant="danger"]:is(:active, .is-active) {
+  background: color-mix(in oklch, var(--color-error), var(--color-text) 28%);
+  border-color: var(--color-text);
+}
+
+.ki-button[data-size="lg"] { min-height: calc(var(--size-hit) + var(--space-2)); padding: 0 var(--space-5); }
+
+.ki-button:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.ki-button:is(:disabled, [aria-disabled="true"]) {
+  background: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-line); cursor: not-allowed;
+}
+.ki-button[data-variant="quiet"]:is(:disabled, [aria-disabled="true"]) { background: transparent; border-color: transparent; }
+
+.ki-button[data-loading] { cursor: progress; pointer-events: none; }
+.ki-button > .ki-icon { width: 1.25em; height: 1.25em; }
+
+/* アイコンだけのボタン。ki-button と一緒に付ける。aria-label が要る。 */
+.ki-icon-button { width: var(--size-hit); padding: 0; }
+.ki-icon-button[data-size="lg"] { width: calc(var(--size-hit) + var(--space-2)); padding: 0; }
+.ki-icon-button > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
