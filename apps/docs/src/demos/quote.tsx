@@ -2,7 +2,7 @@ import { Quote } from "@knowidea/ui";
 import type { StateRow } from "./types";
 
 export function Basic() {
-  return <Quote cite="KNOW IDEA のロゴに添える一言">答えはまだない。だから試す。</Quote>;
+  return <Quote cite="出典の名前">答えはまだない。だから試す。</Quote>;
 }
 
 export function states(): StateRow[] {
