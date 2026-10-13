@@ -1,0 +1,26 @@
+/* チップ。ラベル、選べる(aria-pressed)、消せる(右の×)。見た目の高さは 32px、押せる範囲は 44px(上下に 6px はみ出す)。 */
+.ki-chip {
+  display: inline-flex; align-items: stretch; min-height: calc(var(--space-6)); max-width: 100%; margin: var(--space-1) 0;
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text);
+  font-size: var(--font-size-2); line-height: 1; white-space: nowrap;
+}
+.ki-chip__label { display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-3); min-width: 0; }
+.ki-chip__label > .ki-icon { width: var(--space-4); height: var(--space-4); color: var(--color-text-muted); }
+.ki-chip__main, .ki-chip__remove {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); min-height: var(--size-hit); margin: calc((var(--size-hit) - var(--space-6)) / -2 - 1px) 0;
+  padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer;
+}
+.ki-chip__main { min-width: var(--size-hit); padding: 0 var(--space-3); border-radius: var(--radius-2); }
+.ki-chip__main > .ki-icon { width: var(--space-4); height: var(--space-4); color: var(--color-text-muted); }
+.ki-chip__remove { min-width: var(--size-hit); border-radius: var(--radius-2); color: var(--color-text-muted); }
+.ki-chip__remove > .ki-icon { width: var(--space-4); height: var(--space-4); }
+.ki-chip__main:is(:hover, .is-hover), .ki-chip__remove:is(:hover, .is-hover) { background: var(--color-surface-2); color: var(--color-text); }
+.ki-chip__main:is(:focus-visible, .is-focus), .ki-chip__remove:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 0; }
+/* 選んだ状態は主の色の面にせず、太い枠と先頭のチェックの印で示す(主の色は主のボタンと今いる所だけ) */
+.ki-chip[data-selected] { border-color: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-text); }
+.ki-chip[data-selected] .ki-chip__main > .ki-icon { color: var(--color-text); }
+.ki-chip[data-disabled] { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); }
+.ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove) { cursor: not-allowed; }
+.ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove):is(:hover, .is-hover) { background: transparent; }
+.ki-chip[data-loading] .ki-chip__label { color: var(--color-text-muted); }
+.ki-chips { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: center; }

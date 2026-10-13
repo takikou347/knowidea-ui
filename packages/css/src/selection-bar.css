@@ -1,0 +1,15 @@
+/* 選んだ物への一括の操作の帯(SelectionBar)。件数、操作、選びの解除。data-sticky で画面の下に貼り付く。data-state: loading | error。 */
+.ki-selbar {
+  display: grid; gap: var(--space-3); min-width: 0; padding: var(--space-3) var(--space-4);
+  background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line-strong); border-radius: var(--radius-3);
+}
+.ki-selbar[data-sticky] { position: sticky; bottom: var(--space-4); z-index: 4; box-shadow: var(--shadow-pop); }
+.ki-selbar__head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+.ki-selbar__summary { display: grid; gap: var(--space-1); min-width: 0; }
+.ki-selbar__count { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
+.ki-selbar__count b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.ki-selbar__note { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-selbar__note > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-selbar[data-state="error"] .ki-selbar__note { color: var(--color-error); }
+.ki-selbar__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ki-selbar[data-state="error"] { border-color: var(--color-error); }

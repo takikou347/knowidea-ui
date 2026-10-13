@@ -1,0 +1,937 @@
+{
+ "icons": [
+  {
+   "name": "chevron-right",
+   "phosphor": "caret-right",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "右(進む、開く)"
+  },
+  {
+   "name": "chevron-left",
+   "phosphor": "caret-left",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "左(戻る)"
+  },
+  {
+   "name": "chevron-up",
+   "phosphor": "caret-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上(閉じる)"
+  },
+  {
+   "name": "chevron-down",
+   "phosphor": "caret-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下(開く)"
+  },
+  {
+   "name": "arrow-up",
+   "phosphor": "arrow-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上へ(増えた)"
+  },
+  {
+   "name": "arrow-down",
+   "phosphor": "arrow-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下へ(減った)"
+  },
+  {
+   "name": "trend-up",
+   "phosphor": "trend-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上向きの推移"
+  },
+  {
+   "name": "trend-down",
+   "phosphor": "trend-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下向きの推移"
+  },
+  {
+   "name": "menu",
+   "phosphor": "list",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "メニュー"
+  },
+  {
+   "name": "close",
+   "phosphor": "x",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "閉じる"
+  },
+  {
+   "name": "home",
+   "phosphor": "house",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "ホーム"
+  },
+  {
+   "name": "sidebar",
+   "phosphor": "sidebar-simple",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "サイドバー"
+  },
+  {
+   "name": "external",
+   "phosphor": "arrow-square-out",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "外へのリンク"
+  },
+  {
+   "name": "link",
+   "phosphor": "link-simple",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "リンク"
+  },
+  {
+   "name": "search",
+   "phosphor": "magnifying-glass",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "検索"
+  },
+  {
+   "name": "filter",
+   "phosphor": "funnel",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "絞り込み"
+  },
+  {
+   "name": "sort",
+   "phosphor": "arrows-down-up",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "並べ替え"
+  },
+  {
+   "name": "add",
+   "phosphor": "plus",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "追加"
+  },
+  {
+   "name": "remove",
+   "phosphor": "minus",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "減らす"
+  },
+  {
+   "name": "check",
+   "phosphor": "check",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "チェック"
+  },
+  {
+   "name": "delete",
+   "phosphor": "trash",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "消す"
+  },
+  {
+   "name": "edit",
+   "phosphor": "pencil-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "編集"
+  },
+  {
+   "name": "copy",
+   "phosphor": "copy",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "写す"
+  },
+  {
+   "name": "download",
+   "phosphor": "download-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ダウンロード"
+  },
+  {
+   "name": "upload",
+   "phosphor": "upload-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "アップロード"
+  },
+  {
+   "name": "share",
+   "phosphor": "share-network",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "共有"
+  },
+  {
+   "name": "refresh",
+   "phosphor": "arrow-clockwise",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "更新"
+  },
+  {
+   "name": "undo",
+   "phosphor": "arrow-counter-clockwise",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "元に戻す"
+  },
+  {
+   "name": "more",
+   "phosphor": "dots-three",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "その他"
+  },
+  {
+   "name": "more-vertical",
+   "phosphor": "dots-three-vertical",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "その他(縦)"
+  },
+  {
+   "name": "settings",
+   "phosphor": "gear",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "設定"
+  },
+  {
+   "name": "eye",
+   "phosphor": "eye",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "見る"
+  },
+  {
+   "name": "eye-off",
+   "phosphor": "eye-slash",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "隠す"
+  },
+  {
+   "name": "lock",
+   "phosphor": "lock",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "鍵"
+  },
+  {
+   "name": "sign-in",
+   "phosphor": "sign-in",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ログイン"
+  },
+  {
+   "name": "sign-out",
+   "phosphor": "sign-out",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ログアウト"
+  },
+  {
+   "name": "archive",
+   "phosphor": "archive",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "しまう"
+  },
+  {
+   "name": "attach",
+   "phosphor": "paperclip",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "添える"
+  },
+  {
+   "name": "drag",
+   "phosphor": "dots-six-vertical",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "つかんで動かす"
+  },
+  {
+   "name": "approve",
+   "phosphor": "check",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "承認"
+  },
+  {
+   "name": "reject",
+   "phosphor": "x",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "否認"
+  },
+  {
+   "name": "send",
+   "phosphor": "paper-plane-tilt",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "送る"
+  },
+  {
+   "name": "stop",
+   "phosphor": "stop",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "止める"
+  },
+  {
+   "name": "resume",
+   "phosphor": "play",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "再開"
+  },
+  {
+   "name": "batch-send",
+   "phosphor": "tray-arrow-up",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "まとめて送る"
+  },
+  {
+   "name": "info",
+   "phosphor": "info",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "情報"
+  },
+  {
+   "name": "success",
+   "phosphor": "check-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "成功"
+  },
+  {
+   "name": "warning",
+   "phosphor": "warning",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "警告"
+  },
+  {
+   "name": "error",
+   "phosphor": "x-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "失敗"
+  },
+  {
+   "name": "help",
+   "phosphor": "question",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "ヘルプ"
+  },
+  {
+   "name": "loading",
+   "phosphor": "spinner",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "読み込み中"
+  },
+  {
+   "name": "paused",
+   "phosphor": "pause-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "一時停止"
+  },
+  {
+   "name": "stopped",
+   "phosphor": "stop-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "止めた"
+  },
+  {
+   "name": "clock",
+   "phosphor": "clock",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "時刻"
+  },
+  {
+   "name": "stale",
+   "phosphor": "clock-countdown",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "数が古い"
+  },
+  {
+   "name": "notification",
+   "phosphor": "bell",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "通知"
+  },
+  {
+   "name": "notification-off",
+   "phosphor": "bell-slash",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "通知を切る"
+  },
+  {
+   "name": "flag",
+   "phosphor": "flag",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "旗"
+  },
+  {
+   "name": "working",
+   "phosphor": "play-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "動いている"
+  },
+  {
+   "name": "thinking",
+   "phosphor": "chat-circle-dots",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "考えている(返事を待つ)"
+  },
+  {
+   "name": "review",
+   "phosphor": "seal-check",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "レビュー"
+  },
+  {
+   "name": "hand-palm",
+   "phosphor": "hand-palm",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "待ち(手を止める)"
+  },
+  {
+   "name": "user",
+   "phosphor": "user",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "人"
+  },
+  {
+   "name": "users",
+   "phosphor": "users",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "複数の人"
+  },
+  {
+   "name": "mail",
+   "phosphor": "envelope-simple",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "メール"
+  },
+  {
+   "name": "image",
+   "phosphor": "image",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "画像"
+  },
+  {
+   "name": "camera",
+   "phosphor": "camera",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "カメラ"
+  },
+  {
+   "name": "file",
+   "phosphor": "file-text",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "文書"
+  },
+  {
+   "name": "folder",
+   "phosphor": "folder",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "フォルダ"
+  },
+  {
+   "name": "tag",
+   "phosphor": "tag",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "タグ"
+  },
+  {
+   "name": "bookmark",
+   "phosphor": "bookmark-simple",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "しおり"
+  },
+  {
+   "name": "star",
+   "phosphor": "star",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "星"
+  },
+  {
+   "name": "heart",
+   "phosphor": "heart",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ハート"
+  },
+  {
+   "name": "globe",
+   "phosphor": "globe",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ウェブ"
+  },
+  {
+   "name": "sun",
+   "phosphor": "sun",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ライト"
+  },
+  {
+   "name": "moon",
+   "phosphor": "moon",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ダーク"
+  },
+  {
+   "name": "inbox",
+   "phosphor": "tray",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "空の受け皿"
+  },
+  {
+   "name": "place",
+   "phosphor": "map-pin",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "場所"
+  },
+  {
+   "name": "gift",
+   "phosphor": "gift",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "贈り物"
+  },
+  {
+   "name": "confetti",
+   "phosphor": "confetti",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "お祝い"
+  },
+  {
+   "name": "wallet",
+   "phosphor": "wallet",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "財布"
+  },
+  {
+   "name": "yen",
+   "phosphor": "currency-jpy",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "円"
+  },
+  {
+   "name": "sparkle",
+   "phosphor": "sparkle",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "新しい"
+  },
+  {
+   "name": "lightbulb",
+   "phosphor": "lightbulb",
+   "group": "chat",
+   "groupLabel": "会話",
+   "ja": "ひらめき"
+  },
+  {
+   "name": "chats",
+   "phosphor": "chats",
+   "group": "chat",
+   "groupLabel": "会話",
+   "ja": "会話のまとまり"
+  },
+  {
+   "name": "comment",
+   "phosphor": "chat-text",
+   "group": "chat",
+   "groupLabel": "会話",
+   "ja": "コメント"
+  },
+  {
+   "name": "git-pull-request",
+   "phosphor": "git-pull-request",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "変更の取り込み依頼"
+  },
+  {
+   "name": "clock-clockwise",
+   "phosphor": "clock-clockwise",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "決まった周期でくり返す"
+  },
+  {
+   "name": "cpu",
+   "phosphor": "cpu",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "チップ"
+  },
+  {
+   "name": "terminal",
+   "phosphor": "terminal-window",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "端末"
+  },
+  {
+   "name": "merge",
+   "phosphor": "git-merge",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "マージ"
+  },
+  {
+   "name": "branch",
+   "phosphor": "git-branch",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "ブランチ"
+  },
+  {
+   "name": "buildings",
+   "phosphor": "buildings",
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "建物(組織)"
+  },
+  {
+   "name": "hex-lines",
+   "phosphor": null,
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "六角形に 2 本の線",
+   "custom": true
+  },
+  {
+   "name": "chat-prompt",
+   "phosphor": null,
+   "group": "dev",
+   "groupLabel": "開発",
+   "ja": "吹き出しにプロンプト",
+   "custom": true
+  },
+  {
+   "name": "usage",
+   "phosphor": "gauge",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "使用量"
+  },
+  {
+   "name": "cost",
+   "phosphor": "currency-jpy",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "費用"
+  },
+  {
+   "name": "quota",
+   "phosphor": "hourglass-medium",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "使用量の枠"
+  },
+  {
+   "name": "chart-bar",
+   "phosphor": "chart-bar",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "棒グラフ"
+  },
+  {
+   "name": "chart-line",
+   "phosphor": "chart-line",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "折れ線グラフ"
+  },
+  {
+   "name": "pulse",
+   "phosphor": "pulse",
+   "group": "data",
+   "groupLabel": "グラフと数",
+   "ja": "最近の動き"
+  },
+  {
+   "name": "calendar",
+   "phosphor": "calendar-dots",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "カレンダー"
+  },
+  {
+   "name": "calendar-blank",
+   "phosphor": "calendar-blank",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "日付"
+  },
+  {
+   "name": "calendar-add",
+   "phosphor": "calendar-plus",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "予定を足す"
+  },
+  {
+   "name": "calendar-check",
+   "phosphor": "calendar-check",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "予定の済み"
+  },
+  {
+   "name": "timer",
+   "phosphor": "timer",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "タイマー"
+  },
+  {
+   "name": "repeat",
+   "phosphor": "repeat",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "繰り返し"
+  },
+  {
+   "name": "today",
+   "phosphor": "calendar-star",
+   "group": "calendar",
+   "groupLabel": "日付と時間",
+   "ja": "今日"
+  },
+  {
+   "name": "todo",
+   "phosphor": "list-checks",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "やること"
+  },
+  {
+   "name": "note",
+   "phosphor": "note-pencil",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "メモ"
+  },
+  {
+   "name": "list",
+   "phosphor": "list-bullets",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "一覧"
+  },
+  {
+   "name": "article",
+   "phosphor": "article",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "記事"
+  },
+  {
+   "name": "transcript",
+   "phosphor": "text-align-left",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "書き起こし"
+  },
+  {
+   "name": "text-size",
+   "phosphor": "text-aa",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "文字の大きさ"
+  },
+  {
+   "name": "quote",
+   "phosphor": "quotes",
+   "group": "text",
+   "groupLabel": "文章",
+   "ja": "引用"
+  },
+  {
+   "name": "play",
+   "phosphor": "play",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "再生"
+  },
+  {
+   "name": "pause",
+   "phosphor": "pause",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "一時停止"
+  },
+  {
+   "name": "stop-media",
+   "phosphor": "stop",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "停止"
+  },
+  {
+   "name": "skip-forward",
+   "phosphor": "skip-forward",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "次へ"
+  },
+  {
+   "name": "skip-back",
+   "phosphor": "skip-back",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "前へ"
+  },
+  {
+   "name": "fast-forward",
+   "phosphor": "fast-forward",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "早送り"
+  },
+  {
+   "name": "rewind",
+   "phosphor": "rewind",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "巻き戻し"
+  },
+  {
+   "name": "volume",
+   "phosphor": "speaker-high",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "音量"
+  },
+  {
+   "name": "volume-mute",
+   "phosphor": "speaker-x",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "消音"
+  },
+  {
+   "name": "radio",
+   "phosphor": "radio",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "ラジオ"
+  },
+  {
+   "name": "broadcast",
+   "phosphor": "broadcast",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "配信"
+  },
+  {
+   "name": "rss",
+   "phosphor": "rss",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "RSS"
+  },
+  {
+   "name": "headphones",
+   "phosphor": "headphones",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "ヘッドホン"
+  },
+  {
+   "name": "microphone",
+   "phosphor": "microphone",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "マイク"
+  },
+  {
+   "name": "waveform",
+   "phosphor": "waveform",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "音の波"
+  },
+  {
+   "name": "speed",
+   "phosphor": "speedometer",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "再生の速さ"
+  },
+  {
+   "name": "playlist",
+   "phosphor": "playlist",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "再生の順"
+  },
+  {
+   "name": "shuffle",
+   "phosphor": "shuffle",
+   "group": "media",
+   "groupLabel": "メディア",
+   "ja": "順不同"
+  }
+ ]
+}

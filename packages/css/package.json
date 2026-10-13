@@ -1,0 +1,19 @@
+{
+  "name": "@knowidea/css",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md"
+  ]
+}

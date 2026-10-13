@@ -1,0 +1,112 @@
+{
+  "color": {
+    "bg": {
+      "$value": "{ref.gray.950}",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "{ref.gray.850}",
+      "$type": "color"
+    },
+    "surface-2": {
+      "$value": "{ref.gray.800}",
+      "$type": "color"
+    },
+    "text": {
+      "$value": "{ref.gray.100}",
+      "$type": "color"
+    },
+    "text-muted": {
+      "$value": "{ref.gray.300}",
+      "$type": "color"
+    },
+    "line": {
+      "$value": "{ref.gray.700}",
+      "$type": "color"
+    },
+    "line-strong": {
+      "$value": "{ref.gray.400}",
+      "$type": "color"
+    },
+    "primary": {
+      "$value": "{ref.primary.400}",
+      "$type": "color"
+    },
+    "primary-hover": {
+      "$value": "{ref.primary.300}",
+      "$type": "color"
+    },
+    "on-primary": {
+      "$value": "{ref.primary.950}",
+      "$type": "color"
+    },
+    "focus": {
+      "$value": "{ref.primary.400}",
+      "$type": "color"
+    },
+    "success": {
+      "$value": "{ref.success.a.fgDark}",
+      "$type": "color"
+    },
+    "success-soft": {
+      "$value": "{ref.success.a.softDark}",
+      "$type": "color"
+    },
+    "info": {
+      "$value": "{ref.info.fgDark}",
+      "$type": "color"
+    },
+    "info-soft": {
+      "$value": "{ref.info.softDark}",
+      "$type": "color"
+    },
+    "warn": {
+      "$value": "{ref.warn.fgDark}",
+      "$type": "color"
+    },
+    "warn-soft": {
+      "$value": "{ref.warn.softDark}",
+      "$type": "color"
+    },
+    "error": {
+      "$value": "{ref.error.fgDark}",
+      "$type": "color"
+    },
+    "error-soft": {
+      "$value": "{ref.error.softDark}",
+      "$type": "color"
+    }
+  },
+  "shadow": {
+    "pop": {
+      "$value": {
+        "color": {
+          "colorSpace": "oklch",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "alpha": 0.5
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 4,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 12,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "$type": "shadow"
+    }
+  }
+}

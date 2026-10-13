@@ -1,0 +1,31 @@
+/* 数の表示(Stat)。数、単位、前との差、小さな推移の線。data-state: loading | error。 */
+.ki-stat {
+  display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-4);
+  background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+}
+.ki-stat__head { display: flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--color-text-muted); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.ki-stat__head > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-stat__value { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-1) var(--space-2); margin: 0; }
+.ki-stat__num {
+  font-family: var(--font-mono); font-size: var(--font-size-5); line-height: var(--font-line-height-5);
+  font-weight: var(--font-weight-strong); font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+}
+.ki-stat__unit { font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-stat__foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3); min-width: 0; }
+.ki-stat__delta { display: inline-flex; white-space: nowrap; align-items: center; gap: var(--space-1); margin: 0; font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.ki-stat__delta > .ki-icon { width: var(--space-4); height: var(--space-4); }
+.ki-stat__delta[data-dir="none"] { color: var(--color-text-muted); }
+.ki-stat__sub { margin: 0; font-size: var(--font-size-2); color: var(--color-text-muted); }
+.ki-stat__spark { flex: none; color: var(--color-text-muted); }
+.ki-stat__asof { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-1) var(--space-2); margin: 0; font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-stat__asof time { font-family: var(--font-mono); }
+.ki-stat[data-state="error"] .ki-stat__num { color: var(--color-text-muted); }
+.ki-stat[data-state="error"] { border-color: var(--color-error); }
+.ki-stat__error { display: flex; gap: var(--space-1); align-items: flex-start; margin: 0; font-size: var(--font-size-2); color: var(--color-error); }
+.ki-stat__error > .ki-icon { margin-top: 1px; }
+.ki-stats { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--space-7) * 3)), 1fr)); }
+
+/* 小さな推移の線(Sparkline)。値は線と最後の点だけ。 */
+.ki-spark { display: block; overflow: visible; }
+.ki-spark__line { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.ki-spark__dot { fill: var(--color-primary); }
