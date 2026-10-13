@@ -1,13 +1,13 @@
 /* アプリの上のバー(AppBar)。題は h1。data-position: sticky で上に貼り付く。 */
 .ki-appbar {
-  display: flex; align-items: center; gap: var(--space-3); min-height: calc(var(--size-hit) + var(--space-3)); padding: var(--space-1) var(--space-4);
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); min-height: calc(var(--size-hit) + var(--space-3)); padding: var(--space-1) var(--space-4);
   background: var(--color-bg); color: var(--color-text); border-bottom: 1px solid var(--color-line);
 }
 .ki-appbar[data-position="sticky"] { position: sticky; top: 0; z-index: 5; }
 .ki-appbar__leading { display: flex; align-items: center; gap: var(--space-2); }
 .ki-appbar__brand { display: inline-flex; align-items: center; gap: var(--space-2); color: inherit; text-decoration: none; font-weight: var(--font-weight-strong); min-height: var(--size-hit); }
-.ki-appbar__title { flex: 1; min-width: 0; margin: 0; font-size: var(--font-size-4); line-height: var(--font-line-height-4); font-weight: var(--font-weight-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ki-appbar__meta { display: grid; justify-items: end; margin: 0; font-size: var(--font-size-1); line-height: var(--font-line-height-1); color: var(--color-text-muted); }
+.ki-appbar__title { flex: 1 1 8rem; min-width: 0; margin: 0; font-size: var(--font-size-4); line-height: var(--font-line-height-4); font-weight: var(--font-weight-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ki-appbar__meta { display: grid; justify-items: end; margin: 0 0 0 auto; font-size: var(--font-size-1); line-height: var(--font-line-height-1); color: var(--color-text-muted); }
 .ki-appbar__meta time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .ki-appbar__actions { display: flex; align-items: center; gap: var(--space-1); }
 .ki-appbar__spacer { flex: 1; }

@@ -4,7 +4,10 @@
   background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);
   transition: border-color var(--motion-duration-fast) var(--motion-ease);
 }
-.ki-card[data-interactive]:is(:hover, .is-hover) { border-color: var(--color-line-strong); }
+.ki-card[data-interactive].is-hover { border-color: var(--color-line-strong); }
+@media (hover: hover) {
+  .ki-card[data-interactive]:hover { border-color: var(--color-line-strong); }
+}
 .ki-card:is(.is-focus, :has(:focus-visible)) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .ki-card__header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2) var(--space-3); }
 .ki-card__heading { display: grid; gap: var(--space-1); min-width: 0; }

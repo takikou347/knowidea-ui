@@ -7,7 +7,10 @@
   border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: transparent;
   color: var(--color-text-muted); font: inherit; font-size: var(--font-size-3); cursor: pointer;
 }
-.ki-tabs__tab:is(:hover, .is-hover), .ki-tabs [role="tab"]:is(:hover, .is-hover) { color: var(--color-text); background: var(--color-surface-2); }
+.ki-tabs__tab.is-hover, .ki-tabs [role="tab"].is-hover { color: var(--color-text); background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-tabs__tab:hover, .ki-tabs [role="tab"]:hover { color: var(--color-text); background: var(--color-surface-2); }
+}
 .ki-tabs__tab:is([data-active], [aria-selected="true"]), .ki-tabs [role="tab"][aria-selected="true"] {
   color: var(--color-text); font-weight: var(--font-weight-strong); border-bottom-color: var(--color-primary);
 }
