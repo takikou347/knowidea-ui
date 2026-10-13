@@ -2,7 +2,7 @@
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
 //  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  すべて dist を /a/b/ の下で配って確かめる(どの場所に置いても壊れないこと。404 はコンソールの誤りに出る)
-//  2. 操作: ダイアログ(閉じ込め、Esc)、確かめる操作、タブ、メニュー、アコーディオン、グラフ、目次の引き出し(390px)、検索、テーマを試す所、アイコンの一覧
+//  2. 操作: ダイアログ(閉じ込め、Esc)、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
 // 使い方: pnpm --filter @knowidea/docs build の後に pnpm --filter @knowidea/docs check:pages
 // ONLY=メニュー のように名前の一部を渡すと、その操作だけ回す
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -156,13 +156,13 @@ await kb("ダイアログ(閉じ込め、Esc、戻る)", "components/dialog.html
 });
 
 await kb("確かめる操作(取り消し側が先 → 依頼中 → 止めた)", "components/dialog.html", async (page) => {
-  await page.getByRole("button", { name: "止める" }).first().click();
+  await page.getByRole("button", { name: "停止する" }).first().click();
   const dlg = page.getByRole("alertdialog").first();
   await dlg.waitFor({ state: "visible" });
-  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("やめる")), "確かめる画面の初めの focus が取り消し側でない");
-  await page.getByRole("button", { name: "止める依頼を出す" }).click();
-  await page.getByText("依頼中").first().waitFor({ state: "visible" });
-  await page.getByText("止めた", { exact: true }).first().waitFor({ state: "visible", timeout: 4000 });
+  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("キャンセル")), "確認ダイアログの最初の focus がキャンセル側でない");
+  await page.getByRole("button", { name: "停止をリクエスト" }).click();
+  await page.getByText("リクエスト中").first().waitFor({ state: "visible" });
+  await page.getByText("停止した", { exact: true }).first().waitFor({ state: "visible", timeout: 4000 });
 });
 
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
@@ -221,23 +221,23 @@ await kb("グラフ(矢印で選ぶ、押すと値)", "components/chart.html", a
   assert((await readout.textContent()).includes("記録なし"), "数の無い日(9/30)が「記録なし」にならない");
 });
 
-await kb("目次の引き出し(390px で開く、Esc、押して移る)", "components/button.html", async (page) => {
+await kb("ナビゲーションのドロワー(390px で開く、Esc、押して移る)", "components/button.html", async (page) => {
   const nav = page.locator("#docs-drawer");
-  assert(!(await nav.isVisible()), "初めから目次が開いている");
-  await page.getByRole("button", { name: "目次を開く" }).click();
+  assert(!(await nav.isVisible()), "初めからナビゲーションが開いている");
+  await page.getByRole("button", { name: "Open navigation" }).click();
   await nav.waitFor({ state: "visible" });
-  assert(await inside(page, "#docs-drawer"), "開いても focus が目次に入らない");
+  assert(await inside(page, "#docs-drawer"), "開いても focus がナビゲーションに入らない");
   await page.keyboard.press("Escape");
   await nav.waitFor({ state: "hidden" });
-  await page.getByRole("button", { name: "目次を開く" }).click();
+  await page.getByRole("button", { name: "Open navigation" }).click();
   await nav.waitFor({ state: "visible" });
-  await nav.locator("summary", { hasText: /^面$/ }).click(); // 目次の分類は閉じている
-  await nav.getByRole("link", { name: "カード", exact: true }).first().click();
+  await nav.locator("summary", { hasText: /^Surfaces$/ }).click(); // サイドメニューの分類は閉じている
+  await nav.getByRole("link", { name: "Card", exact: true }).first().click();
   await page.waitForURL(/components\/card\.html/);
 }, { width: 390, height: 844 });
 
 await kb("検索(入力、矢印、Enter で移る)", "index.html", async (page) => {
-  const q = page.getByRole("combobox", { name: "部品を名前で探す" });
+  const q = page.getByRole("combobox", { name: "Search components" });
   await q.fill("chip");
   const opts = page.getByRole("option");
   await opts.first().waitFor({ state: "visible" });
@@ -257,16 +257,16 @@ await kb("テーマを試す所(色を変えると比が変わる、警告、書
   const table = page.locator('[data-testid="contrast"]');
   const first = await table.textContent();
   assert(first.includes("5.77:1") || /\d\.\d\d:1/.test(first), "初めの比が出ない");
-  assert(!(await table.textContent()).includes("届かない"), "ブランドの色で警告が出ている");
-  await page.getByRole("button", { name: "黄(足りない例)" }).click();
-  assert((await table.textContent()).includes("届かない"), "薄い黄で警告が出ない");
-  assert((await page.getByText("4.5:1 に届かない", { exact: false }).count()) > 0, "警告の文が出ない");
+  assert(!(await table.textContent()).includes("未満"), "ブランドの色で警告が出ている");
+  await page.getByRole("button", { name: "Yellow" }).click();
+  assert((await table.textContent()).includes("未満"), "薄い黄で警告が出ない");
+  assert((await page.getByText("4.5:1 未満", { exact: false }).count()) > 0, "警告の文が出ない");
   const code = await page.locator("#tc-code ~ .ki-code").first().textContent().catch(() => "");
   const all = await page.locator(".tc").textContent();
   assert(all.includes("--color-primary: oklch("), "書き出しの CSS に主の色が入らない");
-  await page.getByLabel("色の値").fill("#2358B0");
-  assert(!(await table.textContent()).includes("届かない"), "青で警告が残る");
-  await page.getByRole("button", { name: "ブランド" }).click();
+  await page.getByLabel("Color value").fill("#2358B0");
+  assert(!(await table.textContent()).includes("未満"), "青で警告が残る");
+  await page.getByRole("button", { name: "Brand", exact: true }).click();
   await page.locator("#tc-radius").fill("8");
   assert((await page.locator(".tc").textContent()).includes("--radius-2: 8px"), "角丸が書き出しに出ない");
 });
@@ -275,17 +275,17 @@ await kb("アイコン(探す、太さ、写す)", "icons.html", async (page) =>
   const count = async () => page.locator(".ib-tile").count();
   const all = await count();
   assert(all > 100, "アイコンが出ない");
-  await page.getByLabel("名前で探す", { exact: true }).fill("calendar");
+  await page.getByLabel("Search by name", { exact: true }).fill("calendar");
   const n = await count();
   assert(n >= 1 && n < all, "探しても絞られない");
   await page.getByRole("button", { name: "bold" }).click();
   await page.locator(".ib-tile").first().click();
   const clip = await page.evaluate(() => navigator.clipboard.readText());
   assert(clip.startsWith("import {") && clip.includes("@knowidea/icons/react"), "import の行が写っていない: " + clip);
-  await page.getByRole("button", { name: "SVG を写す" }).click();
+  await page.getByRole("button", { name: "Copy SVG" }).click();
   const svg = await page.evaluate(() => navigator.clipboard.readText());
   assert(svg.startsWith("<svg"), "SVG が写っていない");
-  await page.getByLabel("名前で探す", { exact: true }).fill("zzzz");
+  await page.getByLabel("Search by name", { exact: true }).fill("zzzz");
   assert((await count()) === 0, "合わない語で 0 件にならない");
 });
 
@@ -301,13 +301,13 @@ await kb("「コードを見る」と写す(部品のページ)", "components/bu
   assert(norm(clip) === norm(shown) && clip.includes("Button"), "写した文字が表示と違う");
 });
 
-await kb("見本の画面(一覧: 選んで保管、元に戻す)", "templates/list.html", async (page) => {
-  const bar = page.getByRole("button", { name: "保管する" });
-  assert(await bar.isDisabled(), "選ぶ前に保管できる");
+await kb("見本の画面(一覧: 選んでアーカイブ、元に戻す)", "templates/list.html", async (page) => {
+  const bar = page.getByRole("button", { name: "アーカイブする" });
+  assert(await bar.isDisabled(), "選ぶ前にアーカイブできる");
   await page.getByRole("checkbox", { name: "デザインの見直し を選ぶ" }).click();
-  assert(!(await bar.isDisabled()), "選んでも保管できない");
+  assert(!(await bar.isDisabled()), "選んでもアーカイブできない");
   await bar.click();
-  await page.getByText("1 件を保管した。").waitFor({ state: "visible" });
+  await page.getByText("1 件をアーカイブした。").waitFor({ state: "visible" });
   await page.getByRole("button", { name: "元に戻す" }).click();
 });
 
