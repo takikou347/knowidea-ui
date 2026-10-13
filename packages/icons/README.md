@@ -1,6 +1,6 @@
 # @knowidea/icons
 
-UI ライブラリのアイコン。土台は Phosphor の regular。比較は `apps/docs` のアイコンのページと `samples/tokens/index.html`。
+UI ライブラリのアイコン。ベースは Phosphor の regular。比較は `apps/docs` の Icons ページと `samples/tokens/index.html` で確認できる。
 
 ## 3 組(2026-10-13 に npm で確認)
 
@@ -14,10 +14,10 @@ UI ライブラリのアイコン。土台は Phosphor の regular。比較は `
 
 Phosphor の regular を使う。
 
-| 理由 | 中身 |
+| 理由 | 内容 |
 | --- | --- |
 | 線の太さ | 20px で 1.25px、16px で 1px。方向 B の本文(IBM Plex Sans JP 400、14px の縦線が約 1.1px)と同じ重さ。Tabler と Lucide は 20px で 1.67px、16px で 1.33px で、文字より 1 段重い |
-| 太さを選べる | 同じ形のまま light(軽く)と bold(強く)に変えられる。Tabler と Lucide は線の太さを後から変えるしかない |
+| ウェイトを選べる | 同じ形のまま light と bold に変えられる。Tabler と Lucide は線の太さを後から変えるしかない |
 | 形 | 角が小さく、方向 B の小さな角丸に合う。外へのリンクと更新は Phosphor が一番すっきりしている |
 | 注意 | 16px の regular は細い。小さな所は 16px を避け、20px を既定にする。16px が要る所(表の中の印)は bold を試す |
 
@@ -27,9 +27,9 @@ Phosphor の regular を使う。
 
 | 決まり | 中身 |
 | --- | --- |
-| 大きさ | 20px が既定、表の中は 16px。24px 以上は使わない |
+| サイズ | 20px がデフォルト、表の中は 16px。24px 以上は使わない |
 | 色 | `currentColor`。文字と同じ色にする |
-| 囲み | 枠や丸で囲まない。押せる所は、ボタン側の大きさを 44px にする |
+| 囲み | 枠や円で囲まない。タップ領域が必要な場合は、ボタン側のサイズを 44px にする |
 | 組 | 1 つの組だけ。混ぜない |
 
 ## 16 個の対応表
@@ -42,7 +42,7 @@ Phosphor の regular を使う。
 | chats | 会話のまとまり | `chats` | `messages` | `messages-square` |
 | pull-request | 変更の取り込み依頼 | `git-pull-request` | `git-pull-request` | `git-pull-request` |
 | approve | 承認 | `check` | `check` | `check` |
-| reject | 否認 | `x` | `x` | `x` |
+| reject | 却下 | `x` | `x` | `x` |
 | comment | コメント | `chat-text` | `message` | `message-square` |
 | send | 送る | `paper-plane-tilt` | `send` | `send` |
 | stop | 止める | `stop` | `player-stop` | `square` |
@@ -53,17 +53,17 @@ Phosphor の regular を使う。
 | external | 外へのリンク | `arrow-square-out` | `external-link` | `external-link` |
 | refresh | 更新 | `arrow-clockwise` | `refresh` | `refresh-cw` |
 
-人と、人でない相手を見分ける印は、アイコンでなく名前の文字で出す。`error`(失敗)は状態の印で、`reject`(否認)は操作。
+人と、人でない相手を見分ける印は、アイコンでなく名前の文字で出す。`error`(失敗)は状態を示すマークで、`reject`(却下)は操作。
 
 ## 全アイコン(1c)
 
-`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに分ける(方向と移動、操作、状態と通知、もの、会話、開発、データ、日付、文字、メディア)。各行は名前、Phosphor の名前、日本語。アプリごとの区分は持たない。一覧は `apps/docs` のアイコンのページ(名前で絞り込める)。
+`icons.json` に 133 個(Phosphor 131、自作 2)。用途ごとに分ける(方向と移動、操作、状態と通知、もの、会話、開発、データ、日付、文字、メディア)。各行は名前、Phosphor の名前、日本語の説明。アプリごとの区分は持たない。一覧は `apps/docs` の Icons ページにある(名前で絞り込める)。
 
 | 決まり | 中身 |
 | --- | --- |
 | 名前 | 用途の名前(`chevron-right`、`clock-clockwise`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
 | 足し方 | `icons.json` に 1 行足して `pnpm --filter @knowidea/icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
-| 使う者の上書き | 使う側は、自分で使う名前の部品を選ぶ。形を変えたいときは `icons.json` に自作を足し、同じ名前で上書きする |
+| 使う側での差し替え | 使う側は、必要な名前のコンポーネントを選んで使う。形を変えたいときは、`icons.json` に自作を足し、同じ名前でオーバーライドする |
 
 ### 自作(2 個)
 
@@ -82,13 +82,13 @@ Phosphor の regular を使う。
 | --- | --- |
 | `dist/svg/<名前>.svg`、`<名前>-bold.svg` | 1 枚ずつ。`currentColor` |
 | `dist/sprite.svg` | 素の HTML。`<svg width="20" height="20"><use href="/sprite.svg#play"/></svg>`。bold は `#play-bold` |
-| `dist/react/` | React 19。`<Icon name="chevron-right" size={20} weight="regular" />`、名前ごとの部品(`ChevronRightIcon`)、型つき(`IconName`) |
-| `dist/icons-data.json` | docs と見本が読む |
+| `dist/react/` | React 19 用。`<Icon name="chevron-right" size={20} weight="regular" />` と、名前ごとのコンポーネント(`ChevronRightIcon`)。型定義つき(`IconName`) |
+| `dist/icons-data.json` | docs とサンプルが読み込む |
 | `dist/LICENSE-phosphor.txt`、`dist/NOTICE.txt` | ライセンス |
 
 ```tsx
 import { Icon, SearchIcon } from "icons/react";
-<Icon name="search" />            // 20px、regular、飾り(読み上げない)
+<Icon name="search" />            // 20px、regular、装飾(読み上げない)
 <SearchIcon size={16} weight="bold" title="検索" />   // 16px は bold。title があれば読み上げる
 ```
 
@@ -96,7 +96,7 @@ import { Icon, SearchIcon } from "icons/react";
 
 ## ライセンス
 
-大半のアイコンは Phosphor Icons(MIT、Copyright (c) 2023 Phosphor Icons、`@phosphor-icons/core` 2.1.1)から取り出した。全文は `dist/LICENSE-phosphor.txt`(出どころは `node_modules/@phosphor-icons/core/LICENSE`)。自作の `hex-lines`、`chat-prompt` は KNOW IDEA のもの。
+大半のアイコンは、Phosphor Icons(MIT、Copyright (c) 2023 Phosphor Icons、`@phosphor-icons/core` 2.1.1)から取り出している。全文は `dist/LICENSE-phosphor.txt`(出どころは `node_modules/@phosphor-icons/core/LICENSE`)。自作の `hex-lines`、`chat-prompt` は KNOW IDEA のもの。
 
 ## 比較用の作り方(1b)
 
