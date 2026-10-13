@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KNOW IDEA ロゴの見本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@700&family=IBM+Plex+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #fdfdff; --surface-2: #ebedef;
+  --text: #1a1b1c; --text-muted: #515355; --line: #d9dbdd; --line-strong: #7e8083;
+  --primary: #016c6c; --primary-hover: #015757; --on-primary: #fbfcfd;
+  --font-sans: "IBM Plex Sans JP", "BIZ UDPGothic", "Noto Sans CJK JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-brand: "IBM Plex Sans", "IBM Plex Sans JP", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --hit: 44px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131416; --surface: #1d1e20; --surface-2: #26282a;
+    --text: #ecedef; --text-muted: #afb1b4; --line: #343538; --line-strong: #7e8083;
+    --primary: #4cbfbf; --primary-hover: #70d0d0; --on-primary: #0c1515;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131416; --surface: #1d1e20; --surface-2: #26282a;
+  --text: #ecedef; --text-muted: #afb1b4; --line: #343538; --line-strong: #7e8083;
+  --primary: #4cbfbf; --primary-hover: #70d0d0; --on-primary: #0c1515;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 14px/1.6 var(--font-sans); overflow-wrap: anywhere; }
+h1, h2, h3 { margin: 0; font-weight: 600; }
+h1 { font-size: 24px; line-height: 1.3; }
+h2 { font-size: 18px; line-height: 1.35; }
+h3 { font-size: 14px; }
+p { margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-top: 0; padding-bottom: 0; padding-left: 16px; padding-right: 16px; }
+.mono { font-family: var(--font-mono); font-size: 12px; }
+.dim { color: var(--text-muted); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.head { background: var(--surface); border-bottom: 1px solid var(--line); }
+.head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: var(--hit); min-width: var(--hit); padding: 0 16px; border-radius: 4px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); font: 500 13px/1 var(--font-sans); cursor: pointer; }
+.btn:hover { background: var(--surface-2); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+.btn.is-focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+.sec { padding-top: 32px; padding-bottom: 0; }
+.sec > .wrap > * + * { margin-top: 16px; }
+.lead { color: var(--text-muted); max-width: 64ch; }
+.hero { padding-top: 32px; padding-bottom: 8px; }
+.hero .wrap { display: grid; gap: 16px; }
+.hero svg.logo { width: 100%; max-width: 460px; height: auto; display: block; }
+.tagline { font: 500 16px/1.5 var(--font-sans); letter-spacing: 0.08em; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding-top: 16px; padding-bottom: 16px; padding-left: 16px; padding-right: 16px; min-width: 0; }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.cell { display: grid; gap: 8px; justify-items: start; align-content: start; }
+.tile { display: grid; place-items: center; width: 100%; aspect-ratio: 1; border: 1px solid var(--line); border-radius: 4px; }
+.tile svg { width: 56%; height: 56%; }
+.t-white { background: #ffffff; color: #016c6c; }
+.t-dark { background: #1f2328; color: #ffffff; }
+.t-mono-dark { background: #ffffff; color: #4b6b6b; }
+.t-mono-light { background: #ffffff; color: #c7ced3; }
+.sizes { display: flex; flex-wrap: wrap; gap: 24px 32px; align-items: flex-end; }
+.sizes .cell { justify-items: start; }
+.mk { display: block; fill: currentColor; }
+.icons { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; }
+.icons svg { display: block; }
+.on-light { background: #ffffff; color: #1f2328; padding-top: 24px; padding-bottom: 24px; padding-left: 24px; padding-right: 24px; border: 1px solid var(--line); border-radius: 4px; }
+.on-dark { background: #1f2328; color: #ffffff; padding-top: 24px; padding-bottom: 24px; padding-left: 24px; padding-right: 24px; border-radius: 4px; }
+.lock { display: flex; align-items: center; gap: 12px; }
+.lock .word { font: 700 24px/1 var(--font-brand); letter-spacing: 0.07em; }
+.lock svg { fill: #016c6c; width: 48px; height: 48px; flex: none; }
+.on-dark .lock svg { fill: #4cbfbf; }
+.two { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .two { grid-template-columns: 1fr 1fr; } }
+.sample { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.s-bar { background: var(--surface); border-bottom: 1px solid var(--line); padding-left: 12px; padding-right: 12px; display: flex; flex-wrap: wrap; align-items: stretch; gap: 0 16px; }
+.s-brand { display: flex; align-items: center; min-height: var(--hit); font: 600 14px/1 var(--font-mono); letter-spacing: 0.04em; }
+.s-brand svg { width: 24px; height: 24px; margin-right: 8px; fill: var(--primary); flex: none; }
+.s-nav { display: flex; flex-wrap: wrap; }
+.s-nav a { display: inline-flex; align-items: center; min-height: var(--hit); padding-left: 12px; padding-right: 12px; color: var(--text-muted); font-size: 13px; text-decoration: none; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.s-nav a[aria-current="page"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+.s-body { padding-top: 16px; padding-bottom: 16px; padding-left: 12px; padding-right: 12px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.clear svg { width: 100%; max-width: 360px; height: auto; display: block; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { background: var(--surface-2); color: var(--text-muted); font-weight: 500; font-size: 12px; white-space: nowrap; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.sw { display: inline-block; width: 12px; height: 12px; border: 1px solid var(--line-strong); vertical-align: -1px; margin-right: 6px; }
+.foot { padding-top: 32px; padding-bottom: 48px; color: var(--text-muted); font-size: 12px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="m" d="M22.55 69.8C22.55 68.69 22.58 67.57 22.65 66.47C22.72 65.36 22.83 64.28 22.98 63.23C23.13 62.18 23.32 61.17 23.55 60.22C23.78 59.27 24.05 58.37 24.36 57.55C24.67 56.74 25.01 55.99 25.38 55.34C25.76 54.68 26.15 54.11 26.57 53.62C26.99 53.12 27.43 52.71 27.91 52.34C28.39 51.98 28.91 51.66 29.52 51.39C30.13 51.12 30.84 50.89 31.69 50.72C32.54 50.55 33.53 50.45 34.7 50.45C36.08 50.45 37.1 50.61 37.9 50.83C38.7 51.05 39.29 51.33 39.84 51.68C40.4 52.04 40.93 52.48 41.5 53.09C42.06 53.69 42.65 54.45 43.28 55.36C43.91 56.28 44.56 57.34 45.28 58.51C46 59.68 46.79 60.96 47.7 62.29C48.62 63.62 49.66 65.02 50.94 66.38C52.22 67.74 53.73 69.07 55.53 70.22C57.32 71.36 59.38 72.3 61.63 72.92C63.89 73.54 66.32 73.85 68.9 73.85C70.29 73.85 71.63 73.76 72.91 73.59C74.2 73.42 75.43 73.15 76.59 72.8C77.76 72.45 78.87 72.01 79.89 71.51C80.92 71 81.87 70.42 82.73 69.8C83.59 69.18 84.36 68.52 85.05 67.86C85.73 67.19 86.34 66.53 86.87 65.88C87.41 65.24 87.88 64.62 88.3 64.04C88.71 63.46 89.08 62.92 89.41 62.44C89.74 61.96 90.03 61.54 90.28 61.19C90.54 60.84 90.76 60.56 90.94 60.35A7.65 7.65 0 0 0 79.26 50.45C78.74 51.07 78.29 51.67 77.89 52.23C77.48 52.78 77.13 53.31 76.8 53.78C76.47 54.26 76.17 54.69 75.89 55.08C75.61 55.47 75.35 55.8 75.11 56.1C74.87 56.39 74.64 56.64 74.42 56.85C74.2 57.06 74 57.23 73.79 57.38C73.57 57.54 73.36 57.67 73.1 57.79C72.85 57.92 72.56 58.04 72.2 58.15C71.83 58.26 71.39 58.36 70.85 58.43C70.31 58.5 69.67 58.55 68.9 58.55C67.52 58.55 66.5 58.39 65.7 58.17C64.9 57.95 64.31 57.67 63.76 57.32C63.2 56.96 62.67 56.52 62.1 55.91C61.54 55.31 60.95 54.55 60.32 53.64C59.69 52.72 59.04 51.66 58.32 50.49C57.6 49.32 56.81 48.04 55.9 46.71C54.98 45.38 53.94 43.98 52.66 42.62C51.38 41.26 49.87 39.93 48.07 38.78C46.28 37.64 44.22 36.7 41.97 36.08C39.71 35.46 37.28 35.15 34.7 35.15C32.63 35.15 30.63 35.33 28.73 35.71C26.82 36.09 25.01 36.66 23.32 37.41C21.63 38.16 20.06 39.09 18.65 40.16C17.24 41.23 15.99 42.44 14.89 43.73C13.8 45.02 12.86 46.4 12.07 47.81C11.27 49.23 10.6 50.68 10.05 52.15C9.49 53.62 9.04 55.11 8.68 56.6C8.32 58.1 8.04 59.59 7.83 61.08C7.62 62.56 7.47 64.04 7.38 65.5C7.29 66.96 7.25 68.39 7.25 69.8A7.65 7.65 0 0 0 22.55 69.8ZM75.65 31.1a8.55 8.55 0 1 0 17.1 0a8.55 8.55 0 1 0 -17.1 0Z"/>
+    <path id="m16" d="M24.35 69.8C24.35 68.82 24.38 67.84 24.45 66.86C24.51 65.88 24.61 64.92 24.75 63.98C24.89 63.05 25.07 62.15 25.28 61.31C25.49 60.47 25.74 59.69 26.01 58.98C26.29 58.27 26.59 57.64 26.91 57.09C27.22 56.54 27.56 56.08 27.89 55.68C28.23 55.29 28.58 54.96 28.96 54.68C29.33 54.4 29.74 54.16 30.23 53.94C30.72 53.72 31.3 53.53 32.03 53.39C32.76 53.24 33.64 53.15 34.7 53.15C36.09 53.15 37.07 53.3 37.77 53.48C38.46 53.66 38.9 53.87 39.29 54.1C39.67 54.34 40.03 54.62 40.45 55.07C40.88 55.51 41.35 56.12 41.89 56.92C42.43 57.71 43.02 58.69 43.7 59.81C44.37 60.94 45.13 62.21 46.05 63.58C46.98 64.94 48.07 66.4 49.45 67.85C50.82 69.29 52.48 70.72 54.45 71.92C56.42 73.13 58.67 74.09 61.11 74.72C63.55 75.35 66.15 75.65 68.9 75.65C70.37 75.65 71.79 75.56 73.16 75.37C74.53 75.19 75.85 74.9 77.11 74.53C78.37 74.15 79.57 73.67 80.69 73.12C81.81 72.56 82.84 71.93 83.78 71.26C84.72 70.58 85.55 69.87 86.3 69.15C87.04 68.44 87.69 67.72 88.26 67.03C88.83 66.35 89.32 65.69 89.75 65.09C90.19 64.49 90.56 63.94 90.89 63.46C91.22 62.98 91.51 62.57 91.74 62.25C91.98 61.92 92.17 61.67 92.31 61.51A9.45 9.45 0 0 0 77.89 49.29C77.33 49.96 76.85 50.59 76.43 51.17C76.01 51.75 75.64 52.29 75.31 52.76C74.99 53.24 74.7 53.66 74.43 54.03C74.17 54.39 73.94 54.7 73.73 54.95C73.52 55.2 73.33 55.4 73.17 55.55C73.01 55.71 72.87 55.83 72.73 55.92C72.6 56.02 72.47 56.1 72.31 56.18C72.14 56.26 71.95 56.34 71.68 56.42C71.41 56.5 71.07 56.58 70.61 56.65C70.16 56.71 69.59 56.75 68.9 56.75C67.51 56.75 66.53 56.6 65.83 56.42C65.14 56.24 64.7 56.03 64.31 55.8C63.93 55.56 63.57 55.28 63.15 54.83C62.72 54.39 62.25 53.78 61.71 52.98C61.17 52.19 60.58 51.21 59.9 50.09C59.23 48.96 58.47 47.69 57.55 46.32C56.62 44.96 55.53 43.5 54.15 42.05C52.78 40.61 51.12 39.18 49.15 37.98C47.18 36.77 44.93 35.81 42.49 35.18C40.05 34.55 37.45 34.25 34.7 34.25C32.52 34.25 30.41 34.44 28.38 34.84C26.36 35.24 24.42 35.84 22.61 36.64C20.8 37.44 19.12 38.43 17.6 39.57C16.09 40.71 14.74 41.99 13.57 43.35C12.4 44.72 11.4 46.16 10.54 47.63C9.69 49.11 8.98 50.62 8.39 52.14C7.81 53.65 7.33 55.18 6.95 56.69C6.57 58.21 6.28 59.71 6.06 61.2C5.84 62.69 5.68 64.16 5.59 65.59C5.49 67.03 5.45 68.44 5.45 69.8A9.45 9.45 0 0 0 24.35 69.8ZM74.3 30.65a9.9 9.9 0 1 0 19.8 0a9.9 9.9 0 1 0 -19.8 0Z"/>
+  </defs>
+</svg>
+
+<header class="head">
+  <div class="wrap">
+    <strong>KNOW IDEA ロゴの見本</strong>
+    <button class="btn" id="themeBtn" type="button" aria-label="ライトとダークを切り替える">ライト / ダーク</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 460 100" role="img" aria-label="KNOW IDEA">
+      <g style="fill:var(--primary)"><use href="#m"/></g>
+      <text x="118" y="67" font-family="'IBM Plex Sans','IBM Plex Sans JP',sans-serif" font-weight="700" font-size="46" letter-spacing="3.2" style="fill:var(--text)">KNOW IDEA</text>
+    </svg>
+    <p class="tagline">答えはまだ無い。だから試す。</p>
+    <p class="lead">流れる線は思考と行動の流れ、その先の点はまだ見ない答えと次の一手。線は K、点は I の抽象。</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>大きさの展開</h2>
+    <div class="panel"><div class="sizes">
+      <div class="cell"><svg class="mk" width="128" height="128" viewBox="0 0 100 100" style="color:var(--primary)" aria-label="128px"><use href="#m"/></svg><span class="mono dim">128px アプリ・大</span></div>
+      <div class="cell"><svg class="mk" width="64" height="64" viewBox="0 0 100 100" style="color:var(--primary)" aria-label="64px"><use href="#m"/></svg><span class="mono dim">64px メニュー・中</span></div>
+      <div class="cell"><svg class="mk" width="32" height="32" viewBox="0 0 100 100" style="color:var(--primary)" aria-label="32px"><use href="#m"/></svg><span class="mono dim">32px リスト・小</span></div>
+      <div class="cell"><svg class="mk" width="16" height="16" viewBox="0 0 100 100" style="color:var(--primary)" aria-label="16px"><use href="#m16"/></svg><span class="mono dim">16px 最小(太め)</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>色の展開</h2>
+    <div class="grid">
+      <div class="cell"><div class="tile t-white"><svg class="mk" viewBox="0 0 100 100" aria-label="ライト"><use href="#m"/></svg></div><span>ライト</span><span class="mono dim">背景 白、線 #016C6C</span></div>
+      <div class="cell"><div class="tile t-dark"><svg class="mk" viewBox="0 0 100 100" aria-label="ダーク"><use href="#m"/></svg></div><span>ダーク</span><span class="mono dim">背景 #1F2328、線 白</span></div>
+      <div class="cell"><div class="tile t-mono-dark"><svg class="mk" viewBox="0 0 100 100" aria-label="単色の濃"><use href="#m"/></svg></div><span>単色の濃</span><span class="mono dim">#4B6B6B</span></div>
+      <div class="cell"><div class="tile t-mono-light"><svg class="mk" viewBox="0 0 100 100" aria-label="単色の薄"><use href="#m"/></svg></div><span>単色の薄</span><span class="mono dim">#C7CED3</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>アプリのアイコン</h2>
+    <div class="panel"><div class="icons">
+      <div class="cell"><svg width="96" height="96" viewBox="0 0 100 100" aria-label="ライト"><rect width="100" height="100" rx="22" fill="#016c6c"/><use href="#m" fill="#ffffff" transform="translate(19 19) scale(.62)"/></svg><span class="mono dim">ライト 面 #016C6C</span></div>
+      <div class="cell"><svg width="96" height="96" viewBox="0 0 100 100" aria-label="ダーク"><rect width="100" height="100" rx="22" fill="#1f2328"/><use href="#m" fill="#ffffff" transform="translate(19 19) scale(.62)"/></svg><span class="mono dim">ダーク 面 #1F2328</span></div>
+      <div class="cell"><svg width="48" height="48" viewBox="0 0 100 100" aria-label="48px"><rect width="100" height="100" rx="22" fill="#016c6c"/><use href="#m" fill="#ffffff" transform="translate(19 19) scale(.62)"/></svg><span class="mono dim">48px</span></div>
+      <div class="cell"><svg width="32" height="32" viewBox="0 0 100 100" aria-label="32px"><rect width="100" height="100" rx="22" fill="#016c6c"/><use href="#m16" fill="#ffffff" transform="translate(16 16) scale(.68)"/></svg><span class="mono dim">32px</span></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>横のロゴ</h2>
+    <div class="two">
+      <div class="on-light"><div class="lock"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#m"/></svg><span class="word">KNOW IDEA</span></div></div>
+      <div class="on-dark"><div class="lock"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#m"/></svg><span class="word">KNOW IDEA</span></div></div>
+    </div>
+    <p class="dim">字は IBM Plex Sans の 700、字間は少し広げる。添える一言は「答えはまだ無い。だから試す。」。</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>まわりの余白</h2>
+    <div class="panel clear">
+      <svg viewBox="-10 5.4 120 89.2" role="img" aria-label="点の直径 1 つ分の余白">
+        <rect x="-9.85" y="5.45" width="119.8" height="89.1" fill="none" stroke="var(--line-strong)" stroke-dasharray="2 2" stroke-width=".5"/>
+        <rect x="7.25" y="22.55" width="85.5" height="54.9" fill="none" stroke="var(--line-strong)" stroke-dasharray="1 1" stroke-width=".4"/>
+        <g style="fill:var(--primary)"><use href="#m"/></g>
+        <circle cx="-1.3" cy="14" r="8.55" fill="none" stroke="var(--text-muted)" stroke-width=".5"/>
+        <circle cx="101.3" cy="86" r="8.55" fill="none" stroke="var(--text-muted)" stroke-width=".5"/>
+      </svg>
+      <p class="dim" style="margin-top:8px">マークの外形から、点の直径 1 つ分を空ける。</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>方向 B の部品に当てた例</h2>
+    <div class="sample">
+      <div class="s-bar">
+        <div class="s-brand"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#m16"/></svg>KNOW IDEA</div>
+        <nav class="s-nav" aria-label="例のナビ">
+          <a href="#" aria-current="page">今いる所</a>
+          <a href="#">ほかの所</a>
+        </nav>
+      </div>
+      <div class="s-body">
+        <button class="btn btn-primary" type="button">主のボタン</button>
+        <button class="btn btn-primary" type="button" style="background:var(--primary-hover);border-color:var(--primary-hover)">hover</button>
+        <button class="btn btn-primary is-focus" type="button">focus</button>
+        <button class="btn" type="button">ふつうのボタン</button>
+      </div>
+    </div>
+    <p class="dim">上のバーのマークは 24px で 16px 用の太い形を使う。主の色は主のボタンと今いる所の線に使い、ロゴは例外とする。</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2>ファイル</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>ファイル</th><th>使う所</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">mark.svg</td><td>通常のマーク。32px 以上</td></tr>
+        <tr><td class="mono">mark-16.svg</td><td>16 から 24px。線と点を太くした形</td></tr>
+        <tr><td class="mono">mark-white.svg、mark-mono-*.svg</td><td>暗い面、単色の印刷</td></tr>
+        <tr><td class="mono">app-icon-*.svg</td><td>アプリのアイコン</td></tr>
+        <tr><td class="mono">logo-horizontal.svg</td><td>マークと字の横組み</td></tr>
+        <tr><td class="mono">favicon.svg</td><td>ブラウザのタブ。ダークでは #4CBFBF</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">2026-10-13 にオーナーが決めた。ChatGPT の見本を元に Claude が描き直した。</div></footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  try { var s = localStorage.getItem('kn-theme'); if (s === 'light' || s === 'dark') root.setAttribute('data-theme', s); } catch (e) {}
+  function effective() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var n = effective() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n);
+    try { localStorage.setItem('kn-theme', n); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
