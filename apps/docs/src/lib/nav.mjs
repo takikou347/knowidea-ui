@@ -28,4 +28,11 @@ export const nav = [
     { href: "templates/dashboard", label: "Dashboard" },
     { href: "templates/list", label: "List" },
   ] },
+  { label: "Changelog", items: [{ href: "changelog", label: "Changelog" }] },
 ];
+
+// 前後に移れる順のページ一覧(Previous / Next)。サイドメニューの上から下の順
+export const flat = nav.flatMap((g) => [
+  ...(g.href !== undefined ? [{ href: g.href, label: g.label }] : []),
+  ...g.items.flatMap((it) => (it.children ? it.children : [it])),
+]);
