@@ -56,7 +56,7 @@ export function ClaudeCard({ role, model, status, doing, lastActive, usage, need
       )}
       <dl className="ki-claude__meta">
         <div><dt>最後に動いた</dt><dd>{lastActive ?? "記録なし"}</dd></div>
-        <div><dt>今日の使用量</dt><dd>{usage == null ? "不明" : `${formatNumber(usage)} トークン`}</dd></div>
+        <div><dt>今日の使用量</dt><dd>{usage == null ? "不明" : <>{formatNumber(usage)} <span className="ki-claude__unit">トークン</span></>}</dd></div>
       </dl>
       {needsAction ? <p className="ki-claude__need"><Icon name="owner-wait" /><span><b>オーナーに要ること</b> {needsAction}</span></p> : null}
     </article>

@@ -7,7 +7,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "prebuild": "pnpm --filter tokens build && pnpm --filter icons build",
     "predev": "pnpm --filter tokens build && pnpm --filter icons build",
     "check:pages": "node scripts/check-pages.mjs"
   },

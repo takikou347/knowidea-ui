@@ -149,6 +149,52 @@ await kb("メニュー(矢印、Esc)", "/components/menu/", async (page) => {
   assert(await page.evaluate(() => document.activeElement?.textContent?.includes("操作")), "閉じた後に focus が開いたボタンへ戻らない");
 });
 
+await kb("推移のグラフ(矢印で選ぶ、押すと値)", "/components/trend-chart/", async (page) => {
+  const readout = page.locator(".ki-chart__readout-main").first();
+  const before = await readout.textContent();
+  const cols = page.locator(".ki-chart").first().locator('.ki-chart__col[role="button"]');
+  await cols.last().focus();
+  await press(page, "ArrowLeft");
+  assert((await readout.textContent()) !== before, "ArrowLeft で選んだ日が変わらない");
+  assert((await cols.nth(28).getAttribute("aria-pressed")) === "true", "ArrowLeft で 1 つ前の列が選ばれない");
+  await press(page, "Home");
+  assert((await readout.textContent()).includes("9 月 14 日"), "Home で先頭の日に移らない");
+  await cols.nth(15).click();
+  assert((await readout.textContent()).includes("9 月 29 日") || (await readout.textContent()).includes("9 月 29"), "押した列が選ばれない");
+  await cols.nth(16).click();
+  assert((await readout.textContent()).includes("記録なし"), "数の無い日(9/30)が「記録なし」にならない");
+});
+
+await kb("止めるボタン(確かめる画面 → 依頼中 → 止めた)", "/components/stop-button/", async (page) => {
+  const trigger = page.getByRole("button", { name: "制作を止める" }).first();
+  await trigger.click();
+  const dlg = page.getByRole("alertdialog").first();
+  await dlg.waitFor({ state: "visible" });
+  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("やめる")), "確かめる画面の初めの focus が取り消し側でない");
+  await page.getByRole("button", { name: "止める依頼を出す" }).click();
+  await page.getByText("依頼中").first().waitFor({ state: "visible" });
+  await page.getByText("止めた").first().waitFor({ state: "visible", timeout: 4000 });
+});
+
+await kb("まとめて送るトレイ(取り消し、送る、進み方)", "/components/send-tray/", async (page) => {
+  const tray = page.locator(".ki-tray").first();
+  const count = async () => Number(await tray.locator(".ki-tray__count b").textContent());
+  assert((await count()) === 4, "初めの件数が 4 でない");
+  await tray.getByRole("button", { name: /^取り消す/ }).first().click();
+  assert((await count()) === 3, "取り消しで件数が減らない");
+  await tray.getByRole("button", { name: "まとめて送る" }).click();
+  await tray.getByText("送っている").first().waitFor({ state: "visible" });
+  await tray.getByText("受けた").first().waitFor({ state: "visible", timeout: 3000 });
+});
+
+await kb("スレッドと PR(選んで送る前の一覧へ)", "/screens/threads/", async (page) => {
+  const shell = page.locator(".ki-shell").first();
+  await shell.getByRole("button", { name: "承認" }).waitFor();
+  await shell.getByRole("checkbox", { name: /を選ぶ/ }).first().click();
+  await shell.getByRole("button", { name: "承認" }).click();
+  assert((await shell.locator(".ki-tray__item").count()) >= 1, "承認がトレイに入らない");
+});
+
 await browser.close();
 server.close();
 console.log(fail ? `\n${fail} 件が通らない` : "\n全部通った");

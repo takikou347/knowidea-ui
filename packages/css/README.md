@@ -10,6 +10,8 @@ KNOW IDEA の UI 部品の見た目。素の CSS で、クラスは `ki-` 頭。
 
 状態は `:hover`、`:focus-visible`、`:disabled`、`aria-invalid`、`data-loading` などで出す。見本のために固定する `.is-hover`、`.is-focus`、`.is-active` も効く(実物では使わない)。
 
+管理アプリの部品(`status.css`、`stat.css`、`chart.css`、`claude.css`、`rows.css`、`decide.css`、`shell.css`)もここにある。アプリの枠(`.ki-shell`)は画面でなく枠の幅の container query で、720px 未満は下のタブバー、720px 以上はサイドの目次になる。
+
 アプリは tokens の変数を上書きして変える。部品の CSS は書き換えない。部品ごとの書き方は `apps/docs` の各ページ。
 
 決めたこと:
