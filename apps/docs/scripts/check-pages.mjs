@@ -34,7 +34,7 @@ function pagesIn(dir, rel = "") {
   const out = [];
   for (const name of readdirSync(join(dir, rel))) {
     const r = join(rel, name);
-    if (statSync(join(dir, r)).isDirectory()) { if (name !== "_astro") out.push(...pagesIn(dir, r)); }
+    if (statSync(join(dir, r)).isDirectory()) { if (name !== "assets") out.push(...pagesIn(dir, r)); }
     else if (name.endsWith(".html")) out.push(PREFIX + r.split("\\").join("/"));
   }
   return out.sort();
