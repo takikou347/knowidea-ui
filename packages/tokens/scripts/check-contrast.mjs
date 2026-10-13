@@ -42,7 +42,9 @@ for (const [mode, name] of [["light", "ライト"], ["dark", "ダーク"]]) {
   const sw = createTheme({ primary: "oklch(0.5 0.4 30)" });
   if (!/^oklch\(0\.5 0\.[0-3]/.test(sw.light["--color-primary"])) { fail++; console.log("NG  色域の外のライトの主の色を fit しない"); }
   if (!createTheme({ primary: "#016C6C", radius: 40 }).warnings.some((w) => w.id === "radius-large")) { fail++; console.log("NG  大きな角丸で警告が出ない"); }
-  if (createTheme({ primary: "#016C6C", radius: 8 }).warnings.length) { fail++; console.log("NG  8px の角丸で警告が出た"); }
+  if (createTheme({ primary: "#016C6C", radius: 12 }).warnings.length) { fail++; console.log("NG  12px の角丸で警告が出た"); }
+  if (!createTheme({ primary: "#016C6C", radius: 13 }).warnings.some((w) => w.id === "radius-large")) { fail++; console.log("NG  13px の角丸で警告が出ない"); }
+  if (createTheme({ radius: 0 }).common["--radius-pill"] !== "0px") { fail++; console.log("NG  角丸 0 のテーマで --radius-pill が 0 にならない"); }
   if (!createTheme({ primary: "#88cccc" }).warnings.some((w) => w.id === "primary-bg")) { fail++; console.log("NG  薄い主の色で警告が出ない"); }
 }
 

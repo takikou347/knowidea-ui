@@ -100,6 +100,7 @@ for (const [k, v] of Object.entries(light)) {
   else if ((m = k.match(/^font\.line-?[hH]eight\.(\d)$/))) tw[`--text-${m[1]}--line-height`] = v;
   else if ((m = k.match(/^space\.(\d)$/))) tw[`--spacing-${m[1]}`] = v;
   else if ((m = k.match(/^radius\.(\d)$/))) tw[`--radius-${m[1]}`] = v;
+  else if (k === "radius.pill") tw["--radius-pill"] = v;
   else if (k === "shadow.pop") tw["--shadow-pop"] = v;
   else if (k === "motion.ease") tw["--ease-standard"] = v;
   else if (k.startsWith("motion.duration.")) tw["--duration-" + k.slice(16)] = v;

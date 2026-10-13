@@ -104,7 +104,7 @@ function checkPrimary(mode, label, p, hover, on, warnings) {
   if (ro < 4.5) warnings.push({ id: "primary-on", mode, ratio: ro, message: `${label}: 主のボタンの文字が ${ro.toFixed(2)}:1。4.5:1 に届かない` });
 }
 
-const RADIUS = { none: 0, sm: 2, md: 4, lg: 8 };
+const RADIUS = { none: 0, sm: 4, md: 8, lg: 12 };
 function radiusPx(r) {
   if (r == null) return null;
   if (typeof r === "number") return r;
@@ -156,10 +156,12 @@ export function createTheme(options = {}) {
   const r = radiusPx(options.radius);
   if (options.radius != null && r == null) warnings.push({ id: "radius", message: `角丸を読めない: ${options.radius}(数、"none"、"sm"、"md"、"lg"、"6px")` });
   if (r != null) {
-    if (r > 8) warnings.push({ id: "radius-large", message: `角丸 ${r}px は大きい。8px(lg)を超えると、部品が柔らかすぎて業務の画面に合わない` });
+    if (r > 12) warnings.push({ id: "radius-large", message: `角丸 ${r}px は大きい。12px(lg)を超えると、面の角丸が 1.5 倍で 18px を超え、部品が柔らかすぎて業務の画面に合わない` });
     common["--radius-1"] = `${Math.max(0, Math.round(r / 2))}px`;
     common["--radius-2"] = `${r}px`;
     common["--radius-3"] = `${Math.round(r * 1.5)}px`;
+    // 角丸を 0 にしたテーマでは、Chip も角にする
+    if (r === 0) common["--radius-pill"] = "0px";
   }
 
   if (options.density === "comfortable") {

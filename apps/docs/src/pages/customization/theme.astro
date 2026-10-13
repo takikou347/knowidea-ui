@@ -14,7 +14,7 @@ const { provider, cli, cliTgz, script, makeUse, plain } = theme;
 const rows = [
   ["primary", "string", "プライマリカラー。#rrggbb か oklch(L C h) で指定する", "ブランドカラー #016C6C"],
   ["primaryDark", "string", "ダークモードのプライマリカラー。省略すると、同じ色相で明るくして自動的に生成する", "自動"],
-  ["radius", "number | \"none\" | \"sm\" | \"md\" | \"lg\" | \"6px\"", "中サイズの角丸。小は半分、大は 1.5 倍になる", "4"],
+  ["radius", "number | \"none\" | \"sm\" | \"md\" | \"lg\" | \"6px\"", "中サイズの角丸。小は半分、大は 1.5 倍になる", "8"],
   ["density", "\"compact\" | \"comfortable\"", "余白(--space-2〜6)と、本文の行の高さ", "\"compact\""],
   ["fontSize", "number (12〜20)", "本文のフォントサイズ(px)。小さい文字や見出しのサイズも、これに合わせて変わる", "14"],
 ];
@@ -57,7 +57,7 @@ const rows = [
     <li>プライマリ面の文字色は、明るい色と暗い色の候補のうち、コントラスト比が高い方を採用する</li>
     <li>ダークモードのプライマリカラーは、ライトを反転せず、同じ色相で明るさを 0.74 以上に引き上げ、彩度を 1.25 倍にして別に生成する</li>
     <li>色域を超える色は、ライトのプライマリカラーもダークも、彩度を下げて収める</li>
-    <li>次の組み合わせのコントラスト比が 4.5:1 に届かないと、<code>warnings</code> に追加される(ライトとダークそれぞれ)。プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合である。ほかの組み合わせ(状態を表す色や線など)は検査しない。角丸が 8px を超えた場合も追加される。<code>ThemeProvider</code> は <code>warnings</code> を <code>console.warn</code> に出力する</li>
+    <li>次の組み合わせのコントラスト比が 4.5:1 に届かないと、<code>warnings</code> に追加される(ライトとダークそれぞれ)。プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合である。ほかの組み合わせ(状態を表す色や線など)は検査しない。角丸が 12px を超えた場合も追加される。<code>ThemeProvider</code> は <code>warnings</code> を <code>console.warn</code> に出力する</li>
   </ul>
   <p>ほかの変数は <a href={href("customization/tokens/color")}>Tokens</a>、ダークモードの扱いは <a href={href("customization/dark-mode")}>Dark mode</a> を参照。</p>
 </Base>

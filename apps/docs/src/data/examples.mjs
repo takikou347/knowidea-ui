@@ -61,7 +61,7 @@ export default function App() {
 
 export default function App() {
   return (
-    <ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+    <ThemeProvider theme={{ primary: "#016C6C", radius: 8, density: "compact", fontSize: 14 }}>
       <Button>完了にする</Button>
     </ThemeProvider>
   );
@@ -205,7 +205,7 @@ export const theme = {
 
 export default function App() {
   return (
-    <ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+    <ThemeProvider theme={{ primary: "#016C6C", radius: 8, density: "compact", fontSize: 14 }}>
       {/* ここから下だけが変わる */}
     </ThemeProvider>
   );
