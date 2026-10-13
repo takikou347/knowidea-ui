@@ -68,7 +68,7 @@
 | --- | --- |
 | マークの path | stroke ではなく塗りの path。3 本のベジェ曲線の芯線から、一定の太さの外形を計算して作った。端の丸は円弧 |
 | 太さ | 通常は viewBox の 100 に対して線 15 ほど、点の直径 17 ほど |
-| 字 | `logo-horizontal.svg` は `<text>`(IBM Plex Sans 700、字間やや広め)。字の輪郭化は後でする。輪郭化するまで、書体の無い環境では代わりの書体で出る |
+| 字 | `logo-horizontal.svg` の「KNOW IDEA」は path に輪郭化した。IBM Plex Sans 700(OFL-1.1、`@fontsource/ibm-plex-sans`)から opentype.js で作る(`node outline-logo.mjs`)。字間は元の `letter-spacing` 3.2 に合わせ、カーニングも入れた。書体の無い環境でも同じ形で出る。前後の比較は `samples/shots/logo-light.png`、`logo-dark.png`(上が前、下が後。字の右端のずれは約 1 単位) |
 | 色の切り替え | `logo-horizontal.svg` と `favicon.svg` は `prefers-color-scheme` で色が変わる |
 
 ## 出どころ
