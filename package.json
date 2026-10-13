@@ -4,7 +4,9 @@
   "packageManager": "pnpm@10.28.0",
   "scripts": {
     "build": "pnpm -r build",
-    "check": "pnpm --filter @knowidea/tokens check && pnpm --filter @knowidea/icons check"
+    "check": "pnpm --filter @knowidea/tokens check && pnpm --filter @knowidea/icons check",
+    "release:pack": "node scripts/release-pack.mjs",
+    "test:consumer": "node scripts/consumer-test.mjs"
   },
   "devDependencies": {
     "@fontsource/ibm-plex-sans": "5.2.5",

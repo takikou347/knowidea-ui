@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json"
   },
   "exports": {
     ".": {
@@ -14,19 +14,28 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@base-ui/react": "1.9.0",
-    "@knowidea/icons": "workspace:*",
-    "@knowidea/tokens": "workspace:*"
+    "@base-ui/react": "1.9.0"
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@knowidea/css": "workspace:^",
+    "@knowidea/icons": "workspace:^",
+    "@knowidea/tokens": "workspace:^"
   },
   "devDependencies": {
+    "@knowidea/css": "workspace:*",
+    "@knowidea/icons": "workspace:*",
+    "@knowidea/tokens": "workspace:*",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "typescript": "5.9.3"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false
 }

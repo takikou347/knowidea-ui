@@ -104,7 +104,7 @@ export function createIcon(name, def) {
 }
 `);
 fs.writeFileSync(path.join(R, "create.d.ts"), `import type { FC } from "react";
-import type { IconProps } from "./types";
+import type { IconProps } from "./types.js";
 export function createIcon(name: string, def: Record<string, unknown>): FC<IconProps>;
 `);
 fs.writeFileSync(path.join(R, "types.d.ts"), `import type { SVGProps } from "react";
@@ -127,7 +127,7 @@ export const ${P} = createIcon(${JSON.stringify(icon.name)}, ${JSON.stringify(de
 export default ${P};
 `);
   fs.writeFileSync(path.join(R, "icons", P + ".d.ts"), `import type { FC } from "react";
-import type { IconProps } from "../types";
+import type { IconProps } from "../types.js";
 export declare const ${P}: FC<IconProps>;
 export default ${P};
 `);
@@ -150,8 +150,8 @@ export function Icon({ name, ...props }) {
 }
 `);
 fs.writeFileSync(path.join(R, "Icon.d.ts"), `import type { FC } from "react";
-import type { IconProps } from "./types";
-import type { IconName } from "./names";
+import type { IconProps } from "./types.js";
+import type { IconName } from "./names.js";
 export declare const Icon: FC<IconProps & { name: IconName }>;
 `);
 fs.writeFileSync(path.join(R, "names.d.ts"), `export type IconName =\n${names.map((n) => `  | "${n}"`).join("\n")};\nexport declare const iconNames: readonly IconName[];\n`);
@@ -159,10 +159,10 @@ fs.writeFileSync(path.join(R, "index.js"), `export { Icon } from "./Icon.js";
 export { iconNames } from "./data.js";
 ${icons.map((i) => `export { ${pascal(i.name)} } from "./icons/${pascal(i.name)}.js";`).join("\n")}
 `);
-fs.writeFileSync(path.join(R, "index.d.ts"), `export { Icon } from "./Icon";
-export type { IconProps, IconWeight } from "./types";
-export type { IconName } from "./names";
-export { iconNames } from "./names";
-${icons.map((i) => `export { ${pascal(i.name)} } from "./icons/${pascal(i.name)}";`).join("\n")}
+fs.writeFileSync(path.join(R, "index.d.ts"), `export { Icon } from "./Icon.js";
+export type { IconProps, IconWeight } from "./types.js";
+export type { IconName } from "./names.js";
+export { iconNames } from "./names.js";
+${icons.map((i) => `export { ${pascal(i.name)} } from "./icons/${pascal(i.name)}.js";`).join("\n")}
 `);
 console.log(`dist/svg: ${icons.length * 2} 枚、sprite.svg、react: ${icons.length} 部品 + Icon`);

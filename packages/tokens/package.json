@@ -11,14 +11,25 @@
     "style-dictionary": "5.6.1"
   },
   "exports": {
-    "./dist/*": "./dist/*",
-    "./theme.css": "./dist/theme.css",
     "./tokens.css": "./dist/tokens.css",
+    "./theme.css": "./dist/theme.css",
     "./create-theme": {
       "types": "./src/create-theme.d.ts",
       "default": "./src/create-theme.mjs"
     },
+    "./dist/*": "./dist/*",
     "./scripts/*": "./scripts/*",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "scripts",
+    "bin",
+    "README.md"
+  ],
+  "bin": {
+    "knowidea-theme": "./bin/knowidea-theme.mjs"
   }
 }

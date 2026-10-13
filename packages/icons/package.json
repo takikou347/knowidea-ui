@@ -17,13 +17,20 @@
     "typescript": "5.9.3"
   },
   "exports": {
-    "./dist/*": "./dist/*",
     "./react": {
       "types": "./dist/react/index.d.ts",
       "default": "./dist/react/index.js"
-    }
+    },
+    "./sprite.svg": "./dist/sprite.svg",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
   },
   "peerDependencies": {
     "react": "^19.0.0"
-  }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false
 }

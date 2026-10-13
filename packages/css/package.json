@@ -4,10 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": "./src/*",
-    "./dist/*": "./dist/*"
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json",
+    "./*": "./src/*"
   },
   "scripts": {
     "build": "node build.mjs"
-  }
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md"
+  ]
 }
