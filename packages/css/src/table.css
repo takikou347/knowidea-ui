@@ -1,6 +1,6 @@
 /* 表。外側 .ki-table-wrap が狭い幅で中だけ横に動く。数字の列は td[data-numeric]。 */
 .ki-table-wrap {
-  max-width: 100%; overflow-x: auto; border: 1px solid var(--color-line); border-radius: var(--radius-2);
+  max-width: 100%; overflow-x: auto; border: 1px solid var(--color-line); border-radius: var(--radius-3);
   background: var(--color-surface);
 }
 .ki-table-wrap:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
@@ -11,7 +11,9 @@
 .ki-table thead th { background: var(--color-surface-2); color: var(--color-text-muted); font-weight: var(--font-weight-regular); }
 .ki-table tbody th { font-weight: var(--font-weight-regular); }
 .ki-table :is(th, td)[data-numeric] { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.ki-table tbody tr:hover { background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-table tbody tr:hover { background: var(--color-surface-2); }
+}
 .ki-table tbody tr[aria-selected="true"] { background: var(--color-surface-2); box-shadow: inset 2px 0 0 var(--color-primary); }
 .ki-table :is(th, td)[data-select] { width: var(--size-hit); padding: 0 var(--space-1) 0 var(--space-3); }
 .ki-table :is(th, td)[data-wrap] { white-space: normal; min-width: calc(var(--space-7) * 3); }
@@ -20,7 +22,10 @@
   display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--size-hit); margin: 0 calc(var(--space-3) * -1); padding: 0 var(--space-3);
   border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; text-align: inherit;
 }
-.ki-table__sort:is(:hover, .is-hover) { color: var(--color-text); }
+.ki-table__sort.is-hover { color: var(--color-text); }
+@media (hover: hover) {
+  .ki-table__sort:hover { color: var(--color-text); }
+}
 .ki-table__sort:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
 .ki-table th[aria-sort="ascending"], .ki-table th[aria-sort="descending"] { color: var(--color-text); }
 .ki-table__sort > .ki-icon { width: var(--space-4); height: var(--space-4); }

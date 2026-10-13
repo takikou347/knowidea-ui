@@ -6,6 +6,9 @@
   display: inline-flex; align-items: center; min-height: var(--size-hit); min-width: var(--size-hit); padding: 0 var(--space-2); border-radius: var(--radius-1);
   color: var(--color-text-muted); text-decoration: underline; text-underline-offset: 3px;
 }
-.ki-breadcrumbs a:is(:hover, .is-hover) { color: var(--color-text); }
+.ki-breadcrumbs a.is-hover { color: var(--color-text); }
+@media (hover: hover) {
+  .ki-breadcrumbs a:hover { color: var(--color-text); }
+}
 .ki-breadcrumbs a:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 0; }
 .ki-breadcrumbs [aria-current="page"] { padding: 0 var(--space-2); color: var(--color-text); font-weight: var(--font-weight-strong); overflow-wrap: anywhere; }

@@ -13,7 +13,10 @@
 }
 .ki-drawer__item > .ki-icon { flex: none; width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); color: var(--color-text-muted); }
 .ki-drawer__item > .ki-count { margin-left: auto; }
-.ki-drawer__item:is(:hover, .is-hover) { background: var(--color-surface-2); }
+.ki-drawer__item.is-hover { background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-drawer__item:hover { background: var(--color-surface-2); }
+}
 .ki-drawer__item:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .ki-drawer__item[aria-current="page"] { color: var(--color-primary); font-weight: var(--font-weight-strong); box-shadow: inset 2px 0 0 var(--color-primary); }
 .ki-drawer__item[aria-current="page"] > .ki-icon { color: var(--color-primary); }

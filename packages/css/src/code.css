@@ -15,3 +15,7 @@
 .ki-code__status { font-size: var(--font-size-1); color: var(--color-text-muted); }
 /* 本文の中の短いコード */
 .ki-inline-code { font-family: var(--font-mono); font-size: var(--font-size-2); padding: 0 var(--space-1); background: var(--color-surface-2); border-radius: var(--radius-1); }
+/* 狭い幅では折り返す。横に流す枠は、画面の端で切れて流せると気づきにくい */
+@media (max-width: 640px) {
+  .ki-code__pre > code { width: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+}

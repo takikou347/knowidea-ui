@@ -10,22 +10,29 @@
   appearance: none; -webkit-appearance: none; margin: 0; padding: 0; flex: none; position: relative;
   border: 1px solid var(--color-line-strong); background: var(--color-surface); color: var(--color-on-primary);
   cursor: inherit; display: inline-block;
-  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), outline-offset var(--motion-duration-fast) var(--motion-ease), outline-color var(--motion-duration-fast) var(--motion-ease);
 }
 .ki-check, .ki-radio { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
 .ki-check { border-radius: var(--radius-1); }
 .ki-radio { border-radius: 50%; }
-.ki-check:is(:hover, .is-hover), .ki-radio:is(:hover, .is-hover), .ki-switch:is(:hover, .is-hover) { border-color: var(--color-text); }
+.ki-check.is-hover, .ki-radio.is-hover, .ki-switch.is-hover { border-color: var(--color-text); }
+@media (hover: hover) {
+  .ki-check:hover, .ki-radio:hover, .ki-switch:hover { border-color: var(--color-text); }
+}
+.ki-check, .ki-radio, .ki-switch { outline: 2px solid transparent; outline-offset: -2px; }
 .ki-check:is(:focus-visible, .is-focus), .ki-radio:is(:focus-visible, .is-focus), .ki-switch:is(:focus-visible, .is-focus) {
-  outline: 2px solid var(--color-focus); outline-offset: 2px;
+  outline-color: var(--color-focus); outline-offset: 2px;
 }
 .ki-check:is([aria-invalid="true"], [data-invalid]), .ki-radio:is([aria-invalid="true"], [data-invalid]) { border-color: var(--color-error); }
 
 .ki-check:is(:checked, [data-checked], [data-indeterminate], :indeterminate) { background: var(--color-primary); border-color: var(--color-primary); }
-.ki-check:is(:checked, [data-checked])::after, .ki-check:is([data-indeterminate], :indeterminate)::after {
+/* チェックは、左から描かれる(clip-path)。外すと右から消える。動きは --motion-duration-state で、動きを減らす設定では 0 になる */
+.ki-check::after {
   content: ""; position: absolute; inset: 0; background: var(--color-on-primary);
   -webkit-mask: var(--ki-check) center / 80% no-repeat; mask: var(--ki-check) center / 80% no-repeat;
+  clip-path: inset(0 100% 0 0); transition: clip-path var(--motion-duration-state) var(--motion-ease);
 }
+.ki-check:is(:checked, [data-checked], [data-indeterminate], :indeterminate)::after { clip-path: inset(0); }
 .ki-check:is([data-indeterminate], :indeterminate)::after { -webkit-mask-image: var(--ki-minus); mask-image: var(--ki-minus); }
 :root {
   --ki-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z'/%3E%3C/svg%3E");
@@ -33,15 +40,17 @@
 }
 
 .ki-radio:is(:checked, [data-checked]) { border-color: var(--color-primary); border-width: 2px; }
-.ki-radio:is(:checked, [data-checked])::after {
+.ki-radio::after {
   content: ""; position: absolute; inset: 2px; border-radius: 50%; background: var(--color-primary);
+  transform: scale(0); transition: transform var(--motion-duration-state) var(--motion-ease);
 }
+.ki-radio:is(:checked, [data-checked])::after { transform: scale(1); }
 
 .ki-switch { width: calc(var(--space-6) + var(--space-2)); height: var(--space-5); border-radius: var(--space-5); background: var(--color-line-strong); border-color: var(--color-line-strong); }
 .ki-switch::after {
   content: ""; position: absolute; top: 50%; left: var(--space-1); width: var(--space-4); height: var(--space-4);
   border-radius: 50%; background: var(--color-surface); transform: translateY(-50%);
-  transition: left var(--motion-duration-state) var(--motion-ease);
+  transition: left var(--motion-duration-state) var(--motion-ease), width var(--motion-duration-fast) var(--motion-ease);
 }
 .ki-switch:is(:checked, [data-checked]) { background: var(--color-primary); border-color: var(--color-primary); }
 .ki-switch:is(:checked, [data-checked])::after { left: calc(100% - var(--space-4) - var(--space-1)); background: var(--color-on-primary); }
@@ -56,6 +65,9 @@
 .ki-switch:is(:disabled, [data-disabled])::after { background: var(--color-text-muted); }
 .ki-switch:is(:disabled, [data-disabled]):is(:checked, [data-checked])::after { background: var(--color-text-muted); }
 
+/* 押した間は、つまみが少し伸びる */
+.ki-switch:active::after { width: calc(var(--space-4) + var(--space-1)); }
+.ki-switch:active:is(:checked, [data-checked])::after { left: calc(100% - var(--space-4) - var(--space-1) - var(--space-1) / 2 - 1px); }
 /* 読み込み中の選択肢 */
 .ki-choice[data-loading] { cursor: progress; color: var(--color-text-muted); }
 .ki-choice[data-loading] > .ki-spinner { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }

@@ -4,7 +4,10 @@
   text-decoration-thickness: 1px; text-underline-offset: 0.2em;
   border-radius: var(--radius-1);
 }
-.ki-link:is(:hover, .is-hover) { text-decoration-thickness: 2px; }
+.ki-link.is-hover { text-decoration-thickness: 2px; }
+@media (hover: hover) {
+  .ki-link:hover { text-decoration-thickness: 2px; }
+}
 .ki-link:is(:active, .is-active) { color: var(--color-text-muted); }
 .ki-link:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .ki-link[data-tone="muted"] { color: var(--color-text-muted); }

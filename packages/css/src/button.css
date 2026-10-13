@@ -6,23 +6,39 @@
   background: var(--color-primary); color: var(--color-on-primary);
   font: inherit; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: 1;
   text-decoration: none; white-space: nowrap; cursor: pointer;
-  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease), transform var(--motion-duration-fast) var(--motion-ease), outline-offset var(--motion-duration-fast) var(--motion-ease);
+  outline: 2px solid transparent; outline-offset: -2px;
 }
-.ki-button:is(:hover, .is-hover) { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.ki-button.is-hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+@media (hover: hover) {
+  .ki-button:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+}
 .ki-button:is(:active, .is-active) { background: var(--color-primary-hover); border-color: var(--color-text); }
 
 .ki-button[data-variant="secondary"] { background: var(--color-surface); color: var(--color-text); border-color: var(--color-line-strong); }
-.ki-button[data-variant="secondary"]:is(:hover, .is-hover) { background: var(--color-surface-2); border-color: var(--color-line-strong); }
+.ki-button[data-variant="secondary"].is-hover { background: var(--color-surface-2); border-color: var(--color-line-strong); }
+@media (hover: hover) {
+  .ki-button[data-variant="secondary"]:hover { background: var(--color-surface-2); border-color: var(--color-line-strong); }
+}
 .ki-button[data-variant="secondary"]:is(:active, .is-active) { background: var(--color-line); border-color: var(--color-text-muted); }
 
 .ki-button[data-variant="quiet"] { background: transparent; color: var(--color-text); border-color: transparent; }
-.ki-button[data-variant="quiet"]:is(:hover, .is-hover) { background: var(--color-surface-2); border-color: transparent; }
+.ki-button[data-variant="quiet"].is-hover { background: var(--color-surface-2); border-color: transparent; }
+@media (hover: hover) {
+  .ki-button[data-variant="quiet"]:hover { background: var(--color-surface-2); border-color: transparent; }
+}
 .ki-button[data-variant="quiet"]:is(:active, .is-active) { background: var(--color-line); border-color: transparent; }
 
 .ki-button[data-variant="danger"] { background: var(--color-error); color: var(--color-bg); border-color: var(--color-error); }
-.ki-button[data-variant="danger"]:is(:hover, .is-hover) {
+.ki-button[data-variant="danger"].is-hover {
   background: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
   border-color: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
+}
+@media (hover: hover) {
+  .ki-button[data-variant="danger"]:hover {
+    background: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
+    border-color: color-mix(in oklab, var(--color-error), var(--color-text) 18%);
+  }
 }
 .ki-button[data-variant="danger"]:is(:active, .is-active) {
   background: color-mix(in oklab, var(--color-error), var(--color-text) 28%);
@@ -31,7 +47,9 @@
 
 .ki-button[data-size="lg"] { min-height: calc(var(--size-hit) + var(--space-2)); padding: 0 var(--space-5); }
 
-.ki-button:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ki-button:is(:focus-visible, .is-focus) { outline-color: var(--color-focus); outline-offset: 2px; }
+/* 押した間は 1px 沈む */
+.ki-button:is(:active, .is-active):not(:disabled, [aria-disabled="true"], [data-loading]) { transform: translateY(1px); }
 
 .ki-button:is(:disabled, [aria-disabled="true"]) {
   background: var(--color-surface-2); color: var(--color-text-muted); border-color: var(--color-line); cursor: not-allowed;

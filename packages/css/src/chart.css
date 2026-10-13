@@ -15,8 +15,13 @@
 .ki-chart__tick { fill: var(--color-text-muted); font-family: var(--font-mono); font-size: var(--font-size-1); font-variant-numeric: tabular-nums; }
 .ki-chart__bar { fill: var(--color-line-strong); transition: fill var(--motion-duration-fast) var(--motion-ease); }
 .ki-chart__col[data-selected] .ki-chart__bar { fill: var(--color-primary); }
-.ki-chart__col:hover .ki-chart__bar, .ki-chart__col.is-hover .ki-chart__bar { fill: var(--color-text-muted); }
-.ki-chart__col[data-selected]:hover .ki-chart__bar { fill: var(--color-primary-hover); }
+.ki-chart__col.is-hover .ki-chart__bar { fill: var(--color-text-muted); }
+@media (hover: hover) {
+  .ki-chart__col:hover .ki-chart__bar { fill: var(--color-text-muted); }
+}
+@media (hover: hover) {
+  .ki-chart__col[data-selected]:hover .ki-chart__bar { fill: var(--color-primary-hover); }
+}
 .ki-chart__hit { fill: transparent; cursor: pointer; }
 .ki-chart__col { outline: none; }
 .ki-chart__col:is(:focus-visible, .is-focus) .ki-chart__hit { stroke: var(--color-focus); stroke-width: 2; }
