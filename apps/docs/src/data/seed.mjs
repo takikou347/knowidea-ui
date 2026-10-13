@@ -471,7 +471,7 @@ export default {
     htmlNote: null,
   },
   spinner: {
-    lead: "短い待ち時間を示す、小さな回転の印。ボタンや入力欄の中で、短い待ち時間を示す。大きさは周囲の文字サイズ(1em)に合わせる。prefers-reduced-motion では回転させず、点線の輪にする。",
+    lead: "短い待ち時間を示す、小さな回転の印。ボタンや入力欄の中で使う。大きさは周囲の文字サイズ(1em)に合わせる。prefers-reduced-motion では回転させず、点線の輪にする。",
     props: [
       ["label", "string", "-", "スクリーンリーダーが読み上げる文言。なければ装飾として扱う"],
       ["className", "string", "-", "追加のクラス"],
