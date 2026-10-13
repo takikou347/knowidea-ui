@@ -15,3 +15,9 @@
 ## ページの足し方
 
 1 部品に 1 ページ。サイドの目次は `src/nav.mjs`。部品は `src/components/`、ページは `src/pages/components/`。部品は semantic の CSS 変数だけを参照する。
+
+## 部品のページ
+
+`src/components/ComponentPage.astro` が型。デモ、状態(空、読み込み、失敗、無効、focus、hover、押した時)、API、素の HTML、上書きの例を並べる。React の要素を props に渡す物は `src/demos/*.tsx` に書く(.astro から JSX の要素は渡せない)。
+
+`pnpm --filter docs check:pages` は、ビルドの後に全ページを 390px ライトと 1280px ダークで開き、横にはみ出さないこと、コンソールの誤りが 0 なこと、ダイアログ、タブ、メニューのキーボードを確かめる。

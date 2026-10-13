@@ -95,6 +95,7 @@ const hasOverrideSlot = Astro.slots.has("override");
 </Base>
 <style>
   .demo { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; }
+  .demo :global(.ki-banner) { flex: 1 1 100%; }
   .gap { margin-top: var(--space-3); }
   h3 { margin: var(--space-4) 0 var(--space-2); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
   .states :global(td:first-child) { width: 7em; white-space: nowrap; }

@@ -1,0 +1,41 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Code } from "../../demos/misc.tsx";
+const html = `<figure class="ki-code" data-lines>
+  <div class="ki-code__head">
+    <span class="ki-code__lang">yaml</span>
+    <button type="button" class="ki-button ki-icon-button" data-variant="quiet" aria-label="コードを写す" data-ki-copy="#c1">
+      <span data-ki-copy-label class="ki-sr-only">写す</span>
+      <svg class="ki-icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"/></svg>
+    </button>
+  </div>
+  <pre class="ki-code__pre" tabindex="0" aria-label="コード"><code id="c1"><span class="ki-code__line">routine: review</span><span class="ki-code__line">model: opus</span></code></pre>
+</figure>`;
+---
+<ComponentPage
+  title="コードブロック"
+  lead="等幅でコードを示す。写すボタンがあり、行番号は任意。長い行は枠の中だけが横に動く(キーボードでも動かせる)。文の中の短いコードは .ki-inline-code。"
+  props={[
+    ["code", "string", "-", "コード。必須"],
+    ["language", "string", "-", "右上に出す言語名"],
+    ["lineNumbers", "boolean", "false", "行番号。写すときは含めない"],
+    ["copy", "boolean", "true", "写すボタン。結果は「写した」「写せない」で伝える"],
+    ["label", "string", '"コード"', "横に動く領域の名前"],
+  ]}
+  attrs={[[".ki-code、[data-lines]", "枠。data-lines で行番号"], [".ki-code__head、__lang、__pre、__line", "頭、言語、本文、1 行"], ["data-ki-copy=\"#id\"", "enhance.js が写す"], [".ki-inline-code", "文の中の短いコード"]]}
+  vars={[["--color-surface-2、--color-line、--color-text", "面、枠、文字"], ["--font-mono、--font-size-2", "等幅の書体と大きさ"], ["--color-text-muted", "言語名、行番号"], ["--radius-2、--space-3", "角丸、余白"]]}
+  html={html}
+  htmlNote="写すボタンは enhance.js。行番号は CSS の counter で、選択や写しに入らない。"
+>
+  <Fragment slot="demo"><Code lines client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="コードの無いブロックは出さない" />
+    <StateRow label="読み込み" na="該当しない。読み込み中はスケルトンを出し、揃ってから出す" />
+    <StateRow label="失敗" note="写せなかったときは「写せない」と出る(権限が無い環境)。" ><Code client:load /></StateRow>
+    <StateRow label="無効" na="写すボタンは常に使える" />
+    <StateRow label="focus" note="コードの領域(横に動く)と写すボタンに Tab で入る。"><Code wide client:load /></StateRow>
+    <StateRow label="hover" na="写すボタンは quiet のボタンと同じ" />
+    <StateRow label="押した時" na="押すと写し、数秒「写した」と出る" />
+  </Fragment>
+</ComponentPage>

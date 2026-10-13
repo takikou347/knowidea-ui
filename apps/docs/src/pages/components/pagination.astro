@@ -1,0 +1,38 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Pages, PagesLink } from "../../demos/misc.tsx";
+const li = (n, cur) => `<li><a class="ki-pagination__item" href="#p${n}" aria-label="${n} ページ"${cur ? ' aria-current="page"' : ""}>${n}</a></li>`;
+const html = `<nav class="ki-pagination" aria-label="ページ送り">
+  <ul class="ki-pagination__list">
+    ${li(1)}
+    ${li(2, true)}
+    ${li(3)}
+  </ul>
+</nav>`;
+---
+<ComponentPage
+  title="ページ送り"
+  lead="長い一覧を分ける。今のページは aria-current で示し、主の色(今いる所)で塗る。ページごとに URL があるときは getHref でリンクにする。"
+  props={[
+    ["page / pageCount", "number", "-", "今のページ(1 から)と全部の数。必須"],
+    ["onPageChange", "(page) => void", "-", "移る"],
+    ["getHref", "(page) => string", "-", "渡すとボタンでなくリンクにする"],
+    ["siblings", "number", "1", "今のページの前後に出す数。多いときは … で省く"],
+    ["label", "string", '"ページ送り"', "nav の名前"],
+  ]}
+  attrs={[[".ki-pagination__list、__item、__gap", "並び、ページ、省略"], ['aria-current="page"', "今のページ"], [":disabled、aria-disabled", "最初と最後の前後ボタン"]]}
+  vars={[["--color-primary、--color-on-primary", "今のページ"], ["--color-surface-2", "hover"], ["--size-hit", "1 つの大きさ(44px)"], ["--space-1", "間隔"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Pages client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="ページが 1 つ以下なら、ページ送りを出さない" />
+    <StateRow label="読み込み" na="読み込み中は今のページを保ち、一覧をスケルトンにする" />
+    <StateRow label="失敗" na="移れなかったら、一覧の上に帯を出す" />
+    <StateRow label="無効" note="最初のページで「前」、最後で「次」が無効。"><Pages page={1} count={3} client:load /></StateRow>
+    <StateRow label="focus" note="Tab で回る。"><Pages page={5} count={9} client:load /></StateRow>
+    <StateRow label="hover" na="面が変わる。実機で触れて確かめる" />
+    <StateRow label="押した時" na="押すと移る。リンクの場合は次のページへ"><PagesLink client:load /></StateRow>
+  </Fragment>
+</ComponentPage>

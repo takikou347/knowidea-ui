@@ -1,0 +1,32 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Badges } from "../../demos/misc.tsx";
+const html = `<span class="ki-badge">下書き</span>
+<span class="ki-badge" data-tone="success">動作中</span>
+<span class="ki-badge" data-tone="warn">止まった</span>
+<span class="ki-badge" data-tone="error">失敗</span>`;
+---
+<ComponentPage
+  title="札(Badge)"
+  lead="状態を短い語で示す。色は状態の色だけで、文字を必ず入れる(色だけで伝えない)。押せない。押せる物はボタンにする。"
+  props={[
+    ["tone", '"neutral" | "success" | "warn" | "error"', '"neutral"', "状態の色"],
+    ["icon", "ReactNode", "-", "先頭の小さなアイコン(任意)"],
+    ["numeric", "boolean", "false", "数。等幅"],
+  ]}
+  attrs={[[".ki-badge", "札"], ["data-tone=\"success | warn | error\"", "状態の色"], ["data-numeric", "数"]]}
+  vars={[["--color-surface-2、--color-text", "neutral の面と文字"], ["--color-success(-soft)、--color-warn(-soft)、--color-error(-soft)", "状態の文字と面(4.5:1 以上)"], ["--radius-1、--font-size-1", "角丸、文字"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Badges client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="文の無い札は出さない" />
+    <StateRow label="読み込み" na="該当しない。状態が決まるまでは札を出さず、スケルトンを使う" />
+    <StateRow label="失敗" note={"失敗は tone=\"error\" の札。"}><span class="ki-badge" data-tone="error">失敗</span></StateRow>
+    <StateRow label="無効" na="札は押せない" />
+    <StateRow label="focus" na="札は focus を受けない" />
+    <StateRow label="hover" na="札は変わらない" />
+    <StateRow label="押した時" na="札は押せない" />
+  </Fragment>
+</ComponentPage>
