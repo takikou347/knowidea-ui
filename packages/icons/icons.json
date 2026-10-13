@@ -1,0 +1,1277 @@
+{
+ "icons": [
+  {
+   "name": "chevron-right",
+   "phosphor": "caret-right",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "右(進む、開く)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "chevron-left",
+   "phosphor": "caret-left",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "左(戻る)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "chevron-up",
+   "phosphor": "caret-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上(閉じる)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "chevron-down",
+   "phosphor": "caret-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下(開く)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "arrow-up",
+   "phosphor": "arrow-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上へ(増えた)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "arrow-down",
+   "phosphor": "arrow-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下へ(減った)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "trend-up",
+   "phosphor": "trend-up",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "上向きの推移",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "trend-down",
+   "phosphor": "trend-down",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "下向きの推移",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "menu",
+   "phosphor": "list",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "メニュー",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "close",
+   "phosphor": "x",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "閉じる",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "home",
+   "phosphor": "house",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "ホーム",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "sidebar",
+   "phosphor": "sidebar-simple",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "サイドバー",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "external",
+   "phosphor": "arrow-square-out",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "外へのリンク",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "link",
+   "phosphor": "link-simple",
+   "group": "nav",
+   "groupLabel": "方向と移動",
+   "ja": "リンク",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "search",
+   "phosphor": "magnifying-glass",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "検索",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "filter",
+   "phosphor": "funnel",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "絞り込み",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "sort",
+   "phosphor": "arrows-down-up",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "並べ替え",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "add",
+   "phosphor": "plus",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "追加",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "remove",
+   "phosphor": "minus",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "減らす",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "check",
+   "phosphor": "check",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "チェック",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "delete",
+   "phosphor": "trash",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "消す",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "edit",
+   "phosphor": "pencil-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "編集",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "copy",
+   "phosphor": "copy",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "写す",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "download",
+   "phosphor": "download-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ダウンロード",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "upload",
+   "phosphor": "upload-simple",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "アップロード",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "share",
+   "phosphor": "share-network",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "共有",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "refresh",
+   "phosphor": "arrow-clockwise",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "更新",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "undo",
+   "phosphor": "arrow-counter-clockwise",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "元に戻す",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "more",
+   "phosphor": "dots-three",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "その他",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "more-vertical",
+   "phosphor": "dots-three-vertical",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "その他(縦)",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "settings",
+   "phosphor": "gear",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "設定",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "eye",
+   "phosphor": "eye",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "見る",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "eye-off",
+   "phosphor": "eye-slash",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "隠す",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "lock",
+   "phosphor": "lock",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "鍵",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "sign-in",
+   "phosphor": "sign-in",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ログイン",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "sign-out",
+   "phosphor": "sign-out",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "ログアウト",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "info",
+   "phosphor": "info",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "情報",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "success",
+   "phosphor": "check-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "成功",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "warning",
+   "phosphor": "warning",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "警告",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "error",
+   "phosphor": "x-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "失敗",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "help",
+   "phosphor": "question",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "ヘルプ",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "loading",
+   "phosphor": "spinner",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "読み込み中",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "paused",
+   "phosphor": "pause-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "一時停止",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "stopped",
+   "phosphor": "stop-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "止めた",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "clock",
+   "phosphor": "clock",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "時刻",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "stale",
+   "phosphor": "clock-countdown",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "数が古い",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "notification",
+   "phosphor": "bell",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "通知",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "notification-off",
+   "phosphor": "bell-slash",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "通知を切る",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "flag",
+   "phosphor": "flag",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "旗",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "user",
+   "phosphor": "user",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "人(Claude と人)",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "users",
+   "phosphor": "users",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "複数の人",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "mail",
+   "phosphor": "envelope-simple",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "メール",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "image",
+   "phosphor": "image",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "画像",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "camera",
+   "phosphor": "camera",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "カメラ",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "file",
+   "phosphor": "file-text",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "文書",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "folder",
+   "phosphor": "folder",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "フォルダ",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "tag",
+   "phosphor": "tag",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "タグ",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "bookmark",
+   "phosphor": "bookmark-simple",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "しおり",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "star",
+   "phosphor": "star",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "星",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "heart",
+   "phosphor": "heart",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ハート",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "globe",
+   "phosphor": "globe",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ウェブ",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "sun",
+   "phosphor": "sun",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ライト",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "moon",
+   "phosphor": "moon",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "ダーク",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "proposal",
+   "phosphor": "lightbulb",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "提案",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "thread",
+   "phosphor": "chats",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "スレッド",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "comment",
+   "phosphor": "chat-text",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "コメント",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "pr",
+   "phosphor": "git-pull-request",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "PR",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "approve",
+   "phosphor": "check",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "承認",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "reject",
+   "phosphor": "x",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "否認",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "send",
+   "phosphor": "paper-plane-tilt",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "送る",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "stop",
+   "phosphor": "stop",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "止める",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "resume",
+   "phosphor": "play",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "再開",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "routine",
+   "phosphor": "clock-clockwise",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "routine",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "model",
+   "phosphor": "cpu",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "モデル",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "usage",
+   "phosphor": "gauge",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "使用量",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "cost",
+   "phosphor": "currency-jpy",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "費用",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "quota",
+   "phosphor": "hourglass-medium",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "使用量の枠",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "review",
+   "phosphor": "seal-check",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "レビュー",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "owner-wait",
+   "phosphor": "hand-palm",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "オーナー待ち",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "batch-send",
+   "phosphor": "tray-arrow-up",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "まとめて送る",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "terminal",
+   "phosphor": "terminal-window",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "端末",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "calendar",
+   "phosphor": "calendar-dots",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "カレンダー",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "calendar-blank",
+   "phosphor": "calendar-blank",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "日付",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "calendar-add",
+   "phosphor": "calendar-plus",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "予定を足す",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "calendar-check",
+   "phosphor": "calendar-check",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "予定の済み",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "timer",
+   "phosphor": "timer",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "タイマー",
+   "apps": [
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "repeat",
+   "phosphor": "repeat",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "繰り返し",
+   "apps": [
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "todo",
+   "phosphor": "list-checks",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "やること",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "note",
+   "phosphor": "note-pencil",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "メモ",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "place",
+   "phosphor": "map-pin",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "場所",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "gift",
+   "phosphor": "gift",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "贈り物",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "confetti",
+   "phosphor": "confetti",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "お祝い",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "wallet",
+   "phosphor": "wallet",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "財布",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "yen",
+   "phosphor": "currency-jpy",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "円",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "list",
+   "phosphor": "list-bullets",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "一覧",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "sparkle",
+   "phosphor": "sparkle",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "新しい",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "play",
+   "phosphor": "play",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "再生",
+   "apps": [
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "pause",
+   "phosphor": "pause",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "一時停止",
+   "apps": [
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "stop-media",
+   "phosphor": "stop",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "停止",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "skip-forward",
+   "phosphor": "skip-forward",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "次へ",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "skip-back",
+   "phosphor": "skip-back",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "前へ",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "fast-forward",
+   "phosphor": "fast-forward",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "早送り",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "rewind",
+   "phosphor": "rewind",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "巻き戻し",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "volume",
+   "phosphor": "speaker-high",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "音量",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "volume-mute",
+   "phosphor": "speaker-x",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "消音",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "radio",
+   "phosphor": "radio",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "ラジオ",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "broadcast",
+   "phosphor": "broadcast",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "配信",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "rss",
+   "phosphor": "rss",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "RSS",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "headphones",
+   "phosphor": "headphones",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "ヘッドホン",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "microphone",
+   "phosphor": "microphone",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "マイク",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "waveform",
+   "phosphor": "waveform",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "音の波",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "article",
+   "phosphor": "article",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "記事",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "transcript",
+   "phosphor": "text-align-left",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "書き起こし",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "speed",
+   "phosphor": "speedometer",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "再生の速さ",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "token",
+   "phosphor": null,
+   "group": "company",
+   "groupLabel": "会社の自作",
+   "ja": "使用量のトークン",
+   "apps": [
+    "admin"
+   ],
+   "custom": true
+  },
+  {
+   "name": "session",
+   "phosphor": null,
+   "group": "company",
+   "groupLabel": "会社の自作",
+   "ja": "Claude のセッション",
+   "apps": [
+    "admin"
+   ],
+   "custom": true
+  }
+ ]
+}
