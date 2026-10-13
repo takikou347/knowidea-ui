@@ -1,0 +1,8 @@
+@import "tailwindcss";
+/* 基本のデザイン。@theme に色、字、余白、角丸を渡す(ライトの値)。ダークは tokens.css が同じ変数を上書きする */
+@import "tokens/theme.css";
+@import "tokens/tokens.css";
+/* アプリの上書き。Logru は <html data-app="logru"> */
+@import "tokens/themes/logru.css";
+/* 部品の見た目(ki- クラス) */
+@import "@knowidea/css/index.css";

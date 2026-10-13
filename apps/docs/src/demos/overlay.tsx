@@ -51,18 +51,18 @@ const entries: MenuEntry[] = [
   { label: "複製する", icon: <Icon name="copy" /> },
   { label: "止める", disabled: true },
   { type: "separator" },
-  { label: "削除する", tone: "danger", icon: <Icon name="trash" /> },
+  { label: "削除する", tone: "danger", icon: <Icon name="delete" /> },
 ];
 export function MenuDemo({ disabled, className }: { disabled?: boolean; className?: string }) {
   return (
     <Menu
       items={entries}
-      trigger={<Button variant="secondary" disabled={disabled} className={className} icon={<Icon name="dots-three" />}>操作</Button>}
+      trigger={<Button variant="secondary" disabled={disabled} className={className} icon={<Icon name="more" />}>操作</Button>}
     />
   );
 }
 export function IconMenuDemo() {
-  return <Menu items={entries} align="end" trigger={<IconButton variant="secondary" label="その他の操作" icon={<Icon name="dots-three" />} />} />;
+  return <Menu items={entries} align="end" trigger={<IconButton variant="secondary" label="その他の操作" icon={<Icon name="more" />} />} />;
 }
 
 export function TooltipDemo() {

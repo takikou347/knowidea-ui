@@ -10,6 +10,7 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 1a 方向の見本 | 軸を分けた 3 つの方向。`samples/direction-a`、`b`、`c` | B に決定(オーナー 2026-10-13 08:36 日本時間)。A と C は比べた記録として残す |
 | 1b 土台 | 会社の主の色と会社のアイコン、トークン、UI のアイコン、見本のサイトの骨組み | 主の色 #016C6C(ダーク #4CBFBF)とロゴ「ループ」に決定(オーナー 2026-10-13 09:28 日本時間)。決まりは `brand/README.md`。書体は今の IBM Plex Sans / Sans JP / Mono のまま(オーナー 2026-10-13 09:45 日本時間、候補は `samples/fonts/`)。トークン(`packages/tokens`、DTCG、OKLCH)、UI のアイコンの比較(`packages/icons`)、見本のサイトの骨組み(`apps/docs`、Astro)を置いた。見本は `samples/tokens/`。オーナーの選択待ち: 成功の色(おすすめは候補 a、色相 145)、アイコンの組(おすすめは Phosphor regular)、見本のサイトに Astro を採るか |
 | 1c 部品 | 25 の部品を `packages/css`(素の CSS)と `packages/react`(Base UI 1.9.0 の上)に置き、`apps/docs` の 1 部品 1 ページで確かめる。見本は `apps/docs`、検査は `pnpm --filter docs check:pages` | 作った。オーナーの目で確かめる |
+| 1d 管理アプリと各アプリの上書き | 情報の色(青、色相 250)をトークンに足した。アイコンを 133 個にし、部品の中のアイコンを `packages/icons` に差し替えた。管理アプリの部品 11 種(数のカード、推移のグラフ、Claude のカード、状態の印、提案とプロジェクトのカード、スレッドと PR の行、承認と否認とコメント、まとめて送るトレイ、最近の動き、止めるボタン、アプリの枠)と画面の見本 2 枚(ホーム、スレッドと PR。幅 390px と 1024px)。アプリごとの上書き `packages/tokens/themes/`(admin、logru、ruleru。Logru と Ruleru の主の色は未決で、案をコメントに書いた)、Tailwind v4 の検査 `examples/tailwind/`、素の HTML の例 `examples/static/`。全部の見本の 1 枚は `samples/all/index.html`(`pnpm --filter sample-all build` で作る) | 作った。オーナーの目で確かめる。Logru と Ruleru の主の色を決める |
 
 | 方向 | 密度、色の温度 | 形、書体 |
 | --- | --- | --- |

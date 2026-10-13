@@ -13,6 +13,7 @@
 .ki-toast[data-starting-style], .ki-toast[data-ending-style] { opacity: 0; transform: translateY(var(--space-3)); }
 .ki-toast__icon { flex: none; display: inline-flex; margin-top: var(--space-3); }
 .ki-toast__icon > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-toast[data-type="info"] .ki-toast__icon { color: var(--color-info); }
 .ki-toast[data-type="success"] .ki-toast__icon { color: var(--color-success); }
 .ki-toast[data-type="warn"] .ki-toast__icon { color: var(--color-warn); }
 .ki-toast[data-type="error"] .ki-toast__icon { color: var(--color-error); }

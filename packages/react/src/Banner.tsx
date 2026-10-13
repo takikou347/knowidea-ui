@@ -3,7 +3,7 @@ import { Icon, type IconName } from "./Icon.js";
 import { cx } from "./utils.js";
 
 export type Tone = "info" | "success" | "warn" | "error";
-const toneIcon: Record<Tone, IconName> = { info: "info", success: "check-circle", warn: "warning", error: "warning-circle" };
+const toneIcon: Record<Tone, IconName> = { info: "info", success: "success", warn: "warning", error: "error" };
 
 export interface BannerProps {
   tone?: Tone;

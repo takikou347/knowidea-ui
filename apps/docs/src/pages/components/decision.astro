@@ -1,0 +1,44 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Decisions, DecisionStates, Talks } from "../../demos/admin.tsx";
+import { ic } from "../../lib/html.mjs";
+const html = `<div class="ki-decide">
+  <div class="ki-decide__bar" role="group" aria-label="提案への返事">
+    <button type="button" class="ki-button ki-decide__btn" data-variant="secondary" data-choice="approve" aria-pressed="true">${ic("approve")}<span>承認</span></button>
+    <button type="button" class="ki-button ki-decide__btn" data-variant="secondary" data-choice="reject" aria-pressed="false">${ic("reject")}<span>否認</span></button>
+    <button type="button" class="ki-button ki-decide__btn" data-variant="secondary" data-choice="comment" aria-pressed="false">${ic("comment")}<span>コメント</span></button>
+  </div>
+  <p class="ki-decide__note" role="status">${ic("batch-send")}「承認」を送る前の一覧に入れた。もう一度押すと外す。</p>
+</div>`;
+---
+<ComponentPage
+  title="承認、否認、コメント(DecisionBar と TalkBox)"
+  lead="提案、PR、オーナー待ちに付ける 3 つの操作。押してもすぐには送らず、送る前の一覧(まとめて送るトレイ)に入る。もう一度押すと外せる。オーナーが決める 5 つに当たる物は「はい」「いいえ」にする。話しかける欄(TalkBox)も同じく、書いた文は一覧に入り、送った後は答えが来るまで「考えている」と出す。"
+  props={[
+    ["DecisionBar.target", "string", "-", "対象の名前(読み上げと一覧に出る)"],
+    ["DecisionBar.mode", '"standard" | "owner"', '"standard"', "owner は はい、いいえ"],
+    ["DecisionBar.value / comment / onChange", "DecisionValue | null / string / (next) => void", "-", "選んだ返事。渡さなければ内部で持つ"],
+    ["DecisionBar.disabled", "boolean", "false", "済みの物"],
+    ["TalkBox.status", '"idle" | "queued" | "thinking" | "answered"', '"idle"', "一覧に入れた、考えている、答えが来た"],
+    ["TalkBox.onSubmit / answer / answerMeta", "(text) => void / ReactNode / string", "-", "一覧に入れる、答え、答えの出どころ"],
+    ["Thinking", "{ label? }", '"考えている"', "待っている印。動かさない"],
+  ]}
+  attrs={[[".ki-decide__bar、__btn[aria-pressed][data-choice]", "3 つのボタン。押すと aria-pressed。否認は失敗の色、承認は主の色"], [".ki-decide__note、__comment", "入れた知らせ、コメントの欄"], [".ki-talk、__label、__row、__answer", "話しかける欄"], [".ki-thinking", "考えている"]]}
+  vars={[["--color-primary / --color-error / --color-surface-2", "選んだ返事の面"], ["--color-text-muted", "知らせ、考えている"], ["--color-line-strong", "答えの左の線"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Decisions client:load /><Talks client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" note="何も選ばない。3 つとも押せる。"><DecisionStates kind="idle" client:load /></StateRow>
+    <StateRow label="読み込み" na="操作は即座に一覧へ入るので、読み込みは無い。送るのはトレイの役" />
+    <StateRow label="失敗" na="失敗はトレイで出る(送りの失敗)" />
+    <StateRow label="承認を入れた" note="承認が主の色の面。字で「承認を送る前の一覧に入れた」。"><DecisionStates kind="approve" client:load /></StateRow>
+    <StateRow label="否認を入れた" note="否認は失敗の色の面。"><DecisionStates kind="reject" client:load /></StateRow>
+    <StateRow label="コメントを入れた" note="書いた文を知らせに出す。"><DecisionStates kind="comment" client:load /></StateRow>
+    <StateRow label="無効" note="済み、見送りの物は押せない。"><DecisionStates kind="disabled" client:load /></StateRow>
+    <StateRow label="考えている" note="送った後、答えが来るまで。動かさない。"><Talks status="thinking" client:load /></StateRow>
+    <StateRow label="答えが来た" note="同じ画面に答えが出る。"><Talks status="answered" client:load /></StateRow>
+    <StateRow label="focus / hover / 押した時" note="ボタンの状態はボタンのページと同じ。" />
+  </Fragment>
+</ComponentPage>

@@ -11,7 +11,7 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 
 | ファイル | 中身 |
 | --- | --- |
-| `src/primitive.json` | 素の値(`ref.*`)。灰色、主の色、成功と警告と失敗の色。CSS には出さない |
+| `src/primitive.json` | 素の値(`ref.*`)。灰色、主の色、情報と成功と警告と失敗の色。CSS には出さない |
 | `src/semantic-light.json`、`semantic-dark.json` | 役割の名前(`color.bg`、`color.primary` など)。ライトとダークを別に決める。素の値を参照する |
 | `src/core.json` | 字(書体、大きさと行の高さ 5 段)、余白 7 段、角丸 3 段、動き、押せる所 44px。テーマで変わらない |
 
@@ -56,13 +56,31 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 
 ## Tailwind v4
 
+Logru(React 19、Tailwind v4、Vite)の形。`examples/tailwind/` が同じ形で Vite の build を通す(Tailwind 4.3.3、`@tailwindcss/vite`)。
+
 ```css
 @import "tailwindcss";
-@import "tokens/dist/theme.css";
-@import "tokens/dist/tokens.css";
+@import "tokens/theme.css";          /* = dist/theme.css。@theme にライトの値と名前を渡す */
+@import "tokens/tokens.css";         /* ダークと、テーマで変わらない値 */
+@import "tokens/themes/logru.css";   /* アプリの上書き(<html data-app="logru">) */
+@import "@knowidea/css/index.css";   /* 部品の見た目(ki- クラス) */
 ```
 
-`theme.css` はライトの値と名前(`--color-*`、`--text-1`、`--spacing-1`、`--radius-1`)を Tailwind に渡す。ダークは `tokens.css` が同じ変数を上書きする。
+`theme.css` は名前(`--color-*`、`--text-1`、`--spacing-1`、`--radius-1`)を Tailwind に渡すので、`bg-surface`、`text-text-muted`、`rounded-2`、`text-5` のような道具クラスがトークンを読む。ダークは `tokens.css` が同じ変数を上書きする。パッケージ名は `tokens`(`@knowidea/tokens` ではない)。
+
+## 情報の色
+
+`ref.info`(色相 250、青)。主の青緑(195)、成功の緑(145)と分かれる。ライト `oklch(0.5 0.14 250)`(#0465af)は面(`bg` #f5f6f8)に 5.55:1、`info-soft` に 5.20:1。ダーク `oklch(0.72 0.13 250)`(#60aaf3)は `bg` に 7.47:1、`info-soft` に 5.71:1。`check` に入っている。
+
+## アプリのテーマ(`themes/`)
+
+| ファイル | 変える物 |
+| --- | --- |
+| `admin.css` | 既定のまま(上書き無し) |
+| `logru.css` | 角丸を 4/8/12px、本文 15px、余白を少し広く。主の色は未決で、案をコメントに書いた |
+| `ruleru.css` | 本文 16px、行 1.8、余白を広く、角丸を 0/2/4px。主の色は未決で、案をコメントに書いた |
+
+`<html data-app="logru">` のように指定すると効く(`:root[data-app]` で絞っている)。色を変えるテーマは、`light-dark(ライト, ダーク)` で 1 つに書くと、ダークの上書きと食い合わない。見本のサイトのサイドに「アプリ」と「テーマ」の切り替えがある。素の HTML の例は `examples/static/index.html`。
 
 ## 成功の色
 

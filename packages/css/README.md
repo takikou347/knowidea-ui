@@ -10,12 +10,27 @@ KNOW IDEA の UI 部品の見た目。素の CSS で、クラスは `ki-` 頭。
 
 状態は `:hover`、`:focus-visible`、`:disabled`、`aria-invalid`、`data-loading` などで出す。見本のために固定する `.is-hover`、`.is-focus`、`.is-active` も効く(実物では使わない)。
 
+管理アプリの部品(`status.css`、`stat.css`、`chart.css`、`claude.css`、`rows.css`、`decide.css`、`shell.css`)もここにある。アプリの枠(`.ki-shell`)は画面でなく枠の幅の container query で、720px 未満は下のタブバー、720px 以上はサイドの目次になる。
+
 アプリは tokens の変数を上書きして変える。部品の CSS は書き換えない。部品ごとの書き方は `apps/docs` の各ページ。
 
 決めたこと:
 
 - 角丸は `--radius-1`〜`3` の 3 段。ラジオ、スイッチの丸、回転は形なので `50%` を使う
 - 影はポップする物(メニュー、ダイアログ、ツールチップ、知らせ、選ぶの一覧)だけ
-- 情報の色(info)はトークンに無い。帯は `--color-surface-2` の中立で示す
+- 情報の色は `--color-info`(青、色相 250)。帯、札、知らせの info がこれを使う。成功の緑、主の青緑と色相が離れている
 - 危ないボタンの文字は `--color-bg`(ライトで明るく、ダークで暗くなり、どちらも 4.5:1 以上)
 - 読み込みの仮の形は動かさない(終わらない脈動を使わない)
+
+## アイコン
+
+部品の中のアイコンは `packages/icons`(workspace の `icons`)の物。React は `@knowidea/react` の `Icon` が包む。素の HTML は sprite の `<use>` で出す。
+
+```html
+<!-- ページに 1 回: sprite を置く(icons/dist/sprite.svg の中身を body の頭に入れる。外部ファイルの <use href="/sprite.svg#name"> でも同じ) -->
+<svg class="ki-icon" aria-hidden="true"><use href="#check"/></svg>          <!-- 文字と同じ色、1.25em -->
+<svg class="ki-icon" aria-hidden="true"><use href="/sprite.svg#check"/></svg> <!-- 外部ファイル -->
+<svg class="ki-icon" role="img" aria-label="検索"><use href="#search"/></svg>  <!-- 意味を持つとき -->
+```
+
+`ki-icon` は `fill: currentColor`、幅と高さは 1.25em。bold は `#check-bold`。名前の一覧は `apps/docs` のアイコンのページ。

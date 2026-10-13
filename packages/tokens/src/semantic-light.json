@@ -52,6 +52,14 @@
       "$value": "{ref.success.a.soft}",
       "$type": "color"
     },
+    "info": {
+      "$value": "{ref.info.fg}",
+      "$type": "color"
+    },
+    "info-soft": {
+      "$value": "{ref.info.soft}",
+      "$type": "color"
+    },
     "warn": {
       "$value": "{ref.warn.fg}",
       "$type": "color"

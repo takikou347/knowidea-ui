@@ -86,7 +86,7 @@ export function Table<T extends Record<string, unknown>>({
                   {col.sortable ? (
                     <button type="button" className="ki-table__sort" onClick={() => nextSort(col)}>
                       {col.header}
-                      <Icon name={dir === "ascending" ? "caret-up" : dir === "descending" ? "caret-down" : "arrows-down-up"} />
+                      <Icon name={dir === "ascending" ? "chevron-up" : dir === "descending" ? "chevron-down" : "sort"} />
                     </button>
                   ) : col.header}
                 </th>

@@ -1,10 +1,11 @@
-/* 札。状態を色と文字で示す。data-tone: neutral(既定) | success | warn | error。色だけに頼らず文字を入れる。 */
+/* 札。状態を色と文字で示す。data-tone: neutral(既定) | info | success | warn | error。色だけに頼らず文字を入れる。 */
 .ki-badge {
   display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-2);
   min-height: var(--space-5); border-radius: var(--radius-1);
   background: var(--color-surface-2); color: var(--color-text);
   font-size: var(--font-size-1); font-weight: var(--font-weight-strong); line-height: 1; white-space: nowrap;
 }
+.ki-badge[data-tone="info"] { background: var(--color-info-soft); color: var(--color-info); }
 .ki-badge[data-tone="success"] { background: var(--color-success-soft); color: var(--color-success); }
 .ki-badge[data-tone="warn"] { background: var(--color-warn-soft); color: var(--color-warn); }
 .ki-badge[data-tone="error"] { background: var(--color-error-soft); color: var(--color-error); }

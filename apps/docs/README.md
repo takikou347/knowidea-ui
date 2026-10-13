@@ -2,7 +2,7 @@
 
 トークン、アイコン、部品の見本のサイト。Astro 7.3.8(2026-10-13 の npm の最新)。外に公開しない。デプロイの設定は置かない。
 
-`pnpm --filter docs build` で `dist/` を作る(前に tokens と icons を作る)。`pnpm --filter docs dev` で見る。
+`pnpm --filter docs build` で `dist/` を作る。tokens と icons の build は `pnpm -r build` が先に回す(単独で回すなら先に `pnpm --filter tokens build` と `pnpm --filter icons build`)。`dev` は前に自分で作る。`pnpm --filter docs dev` で見る。
 
 ## Astro を採るかの判断材料
 
@@ -21,3 +21,5 @@
 `src/components/ComponentPage.astro` が型。デモ、状態(空、読み込み、失敗、無効、focus、hover、押した時)、API、素の HTML、上書きの例を並べる。React の要素を props に渡す物は `src/demos/*.tsx` に書く(.astro から JSX の要素は渡せない)。
 
 `pnpm --filter docs check:pages` は、ビルドの後に全ページを 390px ライトと 1280px ダークで開き、横にはみ出さないこと、コンソールの誤りが 0 なこと、ダイアログ、タブ、メニューのキーボードを確かめる。
+
+管理アプリの部品のページ(11)と画面の見本(`/screens/home/`、`/screens/threads/`)も同じ型。サイドの「アプリ」で既定、Logru、Ruleru の上書きを切り替えて見られる。`check:pages` は、グラフ、止めるボタン、トレイ、スレッドの画面の動きも確かめる。

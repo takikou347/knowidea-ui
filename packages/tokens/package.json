@@ -12,6 +12,9 @@
   },
   "exports": {
     "./dist/*": "./dist/*",
+    "./theme.css": "./dist/theme.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./themes/*": "./themes/*",
     "./scripts/*": "./scripts/*",
     "./src/*": "./src/*"
   }

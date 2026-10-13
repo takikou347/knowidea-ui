@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cx } from "./utils.js";
 
 export interface BadgeProps {
-  tone?: "neutral" | "success" | "warn" | "error";
+  tone?: "neutral" | "info" | "success" | "warn" | "error";
   /** 先頭に置く小さなアイコン */
   icon?: ReactNode;
   numeric?: boolean;

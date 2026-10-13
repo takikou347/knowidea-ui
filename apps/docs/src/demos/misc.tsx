@@ -23,7 +23,7 @@ export function Badges() {
       <Badge>下書き</Badge>
       <Badge tone="success" icon={<Icon name="check" />}>動作中</Badge>
       <Badge tone="warn" icon={<Icon name="warning" />}>止まった</Badge>
-      <Badge tone="error" icon={<Icon name="warning-circle" />}>失敗</Badge>
+      <Badge tone="error" icon={<Icon name="error" />}>失敗</Badge>
       <Badge numeric>24</Badge>
     </>
   );
@@ -56,7 +56,7 @@ export function Spinners() {
 export function Empty({ action = true }: { action?: boolean }) {
   return (
     <div style={{ width: "100%" }}>
-      <EmptyState title="routine が無い" icon={<Icon name="tray" />} action={action ? <Button variant="secondary">routine を作る</Button> : undefined}>
+      <EmptyState title="routine が無い" icon={<Icon name="file" />} action={action ? <Button variant="secondary">routine を作る</Button> : undefined}>
         routine を作ると、実行の記録がここに並ぶ。
       </EmptyState>
     </div>

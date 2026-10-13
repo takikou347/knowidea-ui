@@ -47,7 +47,7 @@ export function Select({
         ) : (
           <BaseSelect.Value placeholder={placeholder} />
         )}
-        <BaseSelect.Icon className="ki-select__icon"><Icon name="caret-down" /></BaseSelect.Icon>
+        <BaseSelect.Icon className="ki-select__icon"><Icon name="chevron-down" /></BaseSelect.Icon>
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
         <BaseSelect.Positioner className="ki-select__positioner" sideOffset={4} alignItemWithTrigger={false}>
