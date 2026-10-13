@@ -1,0 +1,22 @@
+/* メニュー。Base UI の Menu に当てる。項目は 44px。data-tone="danger" で危ない操作。 */
+.ki-menu__positioner { z-index: 20; }
+.ki-menu__popup {
+  min-width: calc(var(--space-7) * 4); padding: var(--space-1);
+  border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-menu__popup[data-starting-style], .ki-menu__popup[data-ending-style] { opacity: 0; }
+.ki-menu__item {
+  display: flex; align-items: center; gap: var(--space-3); min-height: var(--size-hit); padding: 0 var(--space-3);
+  border-radius: var(--radius-2); font-size: var(--font-size-3); text-decoration: none; color: inherit; cursor: pointer; outline: none;
+}
+.ki-menu__item:is([data-highlighted], .is-hover) { background: var(--color-surface-2); }
+.ki-menu__item:is([data-highlighted], .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-menu__item[data-tone="danger"] { color: var(--color-error); }
+.ki-menu__item:is([data-disabled], [aria-disabled="true"]) { color: var(--color-text-muted); cursor: not-allowed; }
+.ki-menu__label { padding: var(--space-2) var(--space-3) var(--space-1); font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-menu__separator { height: 1px; margin: var(--space-1) 0; background: var(--color-line); border: 0; }
+.ki-menu__mark { width: var(--space-4); height: var(--space-4); flex: none; }
+.ki-menu__item:not([data-checked]) > .ki-menu__mark { visibility: hidden; }
+.ki-menu__item > .ki-icon { width: var(--space-4); height: var(--space-4); }

@@ -1,0 +1,494 @@
+{
+  "ref": {
+    "$description": "素の値。部品は直接参照しない。semantic だけが参照する",
+    "gray": {
+      "25": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9946,
+            0.0026,
+            286.4
+          ]
+        },
+        "$type": "color"
+      },
+      "50": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9729,
+            0.0029,
+            264.5
+          ]
+        },
+        "$type": "color"
+      },
+      "100": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9451,
+            0.0034,
+            247.9
+          ]
+        },
+        "$type": "color"
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8905,
+            0.0035,
+            247.9
+          ]
+        },
+        "$type": "color"
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7597,
+            0.0048,
+            258.3
+          ]
+        },
+        "$type": "color"
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5991,
+            0.0051,
+            258.3
+          ]
+        },
+        "$type": "color"
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.4411,
+            0.0042,
+            247.9
+          ]
+        },
+        "$type": "color"
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.3291,
+            0.0054,
+            271.3
+          ]
+        },
+        "$type": "color"
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.2756,
+            0.0047,
+            248
+          ]
+        },
+        "$type": "color"
+      },
+      "850": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.2348,
+            0.0041,
+            264.5
+          ]
+        },
+        "$type": "color"
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.2215,
+            0.0025,
+            247.9
+          ]
+        },
+        "$type": "color"
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.191,
+            0.0043,
+            264.5
+          ]
+        },
+        "$type": "color"
+      },
+      "$description": "灰色の段。方向 B の値を OKLCH に起こした"
+    },
+    "primary": {
+      "300": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7992,
+            0.091,
+            195.5
+          ]
+        },
+        "$type": "color"
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.7402,
+            0.1025,
+            195.2
+          ]
+        },
+        "$type": "color"
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.4811,
+            0.0819,
+            194.8
+          ]
+        },
+        "$type": "color"
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.4137,
+            0.0703,
+            194.8
+          ]
+        },
+        "$type": "color"
+      },
+      "950": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.1868,
+            0.0134,
+            196.1
+          ]
+        },
+        "$type": "color"
+      },
+      "$description": "主の色の段。#016C6C(700)とダーク #4CBFBF(400)が正本"
+    },
+    "success": {
+      "$description": "成功の色の候補 a, b, c。semantic は a を参照する。差し替えは semantic 側の参照を変えるだけ",
+      "a": {
+        "fg": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.508,
+              0.15,
+              145
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの文字と印"
+        },
+        "soft": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.95,
+              0.035,
+              145
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの薄い面"
+        },
+        "fgDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.684,
+              0.15,
+              145
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの文字と印"
+        },
+        "softDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.29,
+              0.05,
+              145
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの薄い面"
+        }
+      },
+      "b": {
+        "fg": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.514,
+              0.138,
+              130
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの文字と印"
+        },
+        "soft": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.95,
+              0.035,
+              130
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの薄い面"
+        },
+        "fgDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.688,
+              0.15,
+              130
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの文字と印"
+        },
+        "softDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.29,
+              0.05,
+              130
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの薄い面"
+        }
+      },
+      "c": {
+        "fg": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.518,
+              0.12,
+              118
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの文字と印"
+        },
+        "soft": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.95,
+              0.035,
+              118
+            ]
+          },
+          "$type": "color",
+          "$description": "ライトの薄い面"
+        },
+        "fgDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.692,
+              0.14,
+              118
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの文字と印"
+        },
+        "softDark": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [
+              0.29,
+              0.05,
+              118
+            ]
+          },
+          "$type": "color",
+          "$description": "ダークの薄い面"
+        }
+      }
+    },
+    "info": {
+      "$description": "情報の色。色相 250(青)。主の青緑(195)とも成功の緑(145)とも離す。ライトは L 0.5 で白と 6.0:1、ダークは L 0.72",
+      "fg": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.5,
+            0.14,
+            250
+          ]
+        },
+        "$type": "color",
+        "$description": "ライトの文字と印"
+      },
+      "soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.95,
+            0.025,
+            250
+          ]
+        },
+        "$type": "color",
+        "$description": "ライトの薄い面"
+      },
+      "fgDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.72,
+            0.13,
+            250
+          ]
+        },
+        "$type": "color",
+        "$description": "ダークの文字と印"
+      },
+      "softDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.29,
+            0.06,
+            250
+          ]
+        },
+        "$type": "color",
+        "$description": "ダークの薄い面"
+      }
+    },
+    "warn": {
+      "fg": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.4691,
+            0.0998,
+            65.2
+          ]
+        },
+        "$type": "color"
+      },
+      "soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9558,
+            0.0448,
+            85.9
+          ]
+        },
+        "$type": "color"
+      },
+      "fgDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.8195,
+            0.1399,
+            80.1
+          ]
+        },
+        "$type": "color"
+      },
+      "softDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.2997,
+            0.0548,
+            73.8
+          ]
+        },
+        "$type": "color"
+      }
+    },
+    "error": {
+      "fg": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.491,
+            0.1853,
+            27.1
+          ]
+        },
+        "$type": "color"
+      },
+      "soft": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.9557,
+            0.0219,
+            21
+          ]
+        },
+        "$type": "color"
+      },
+      "fgDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.76,
+            0.143,
+            24.6
+          ]
+        },
+        "$type": "color"
+      },
+      "softDark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [
+            0.2899,
+            0.0638,
+            26
+          ]
+        },
+        "$type": "color"
+      }
+    }
+  }
+}

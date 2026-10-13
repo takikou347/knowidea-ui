@@ -1,0 +1,7 @@
+/* 空の状態。文と、行動は 1 つ。大きな絵は使わない。 */
+.ki-empty { display: grid; justify-items: start; gap: var(--space-2); padding: var(--space-6) var(--space-4); color: var(--color-text); }
+.ki-empty__icon { display: inline-flex; color: var(--color-text-muted); }
+.ki-empty__icon > .ki-icon { width: calc(var(--space-5)); height: calc(var(--space-5)); }
+.ki-empty__title { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: var(--font-line-height-3); }
+.ki-empty__text { margin: 0; max-width: 48ch; color: var(--color-text-muted); font-size: var(--font-size-3); line-height: var(--font-line-height-3); }
+.ki-empty__action { margin-top: var(--space-2); }

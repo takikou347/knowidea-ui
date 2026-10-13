@@ -1,0 +1,19 @@
+/* 札。状態を色と文字で示す。data-tone: neutral(既定) | info | success | warn | error。色だけに頼らず文字を入れる。 */
+.ki-badge {
+  display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-2);
+  min-height: var(--space-5); border-radius: var(--radius-1);
+  background: var(--color-surface-2); color: var(--color-text);
+  font-size: var(--font-size-1); font-weight: var(--font-weight-strong); line-height: 1; white-space: nowrap;
+}
+.ki-badge[data-tone="info"] { background: var(--color-info-soft); color: var(--color-info); }
+.ki-badge[data-tone="success"] { background: var(--color-success-soft); color: var(--color-success); }
+.ki-badge[data-tone="warn"] { background: var(--color-warn-soft); color: var(--color-warn); }
+.ki-badge[data-tone="error"] { background: var(--color-error-soft); color: var(--color-error); }
+.ki-badge > .ki-icon { width: var(--space-3); height: var(--space-3); }
+.ki-badge[data-numeric] { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* 件数の印。数は等幅。 */
+.ki-count {
+  display: inline-flex; align-items: center; justify-content: center; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-1);
+  border-radius: var(--radius-3); background: var(--color-warn-soft); color: var(--color-warn); font-family: var(--font-mono); font-size: var(--font-size-1); font-weight: var(--font-weight-strong); line-height: 1;
+}
