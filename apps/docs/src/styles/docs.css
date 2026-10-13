@@ -141,8 +141,9 @@ body {
   .dn a:hover, .dn summary:hover { background: var(--color-surface-2); }
 }
 .dn details ul { margin-left: var(--space-3); border-left: 1px solid var(--color-line); }
-.dn a[aria-current="page"] { color: var(--color-primary); font-weight: var(--font-weight-strong); box-shadow: inset 2px 0 0 var(--color-primary); }
-.dn-title a[aria-current="page"] { box-shadow: none; }
+/* 今いるページは、縦の線ではなく、主の色を薄く敷いた面と主の色の文字で示す */
+.dn a[aria-current="page"] { color: var(--color-primary); font-weight: var(--font-weight-strong); background: color-mix(in oklch, var(--color-primary) 12%, transparent); }
+.dn-title a[aria-current="page"] { background: none; }
 /* 見出しがリンクのときも、ほかの見出しと同じ位置と大きさにする */
 .dn-title:has(a) { padding-inline: 0; }
 .dn .dn-title a { font-size: inherit; color: inherit; }

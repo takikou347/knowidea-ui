@@ -220,7 +220,7 @@ td.ic { color: var(--color-text); } td.ic svg { display: block; }
 
 <section>
   <h2>アイコン 3 組の比較</h2>
-  <p class="lead">管理アプリで要る 16 個を 20px と 16px で。Phosphor は線が細く、文字と同じ重さ。Tabler と Lucide は線 2px の枠で、20px では 1.67px。枠や丸で囲まない。</p>
+  <p class="lead">よく使う 16 個を 20px と 16px で。Phosphor は線が細く、文字と同じ重さ。Tabler と Lucide は線 2px の枠で、20px では 1.67px。枠や丸で囲まない。</p>
   <div class="scroll"><table style="min-width: 640px">
     <thead><tr><th rowspan="2">役</th>${sets.map(([, l]) => `<th colspan="2">${l}</th>`).join("")}</tr>
     <tr>${sets.map(() => "<th>20px</th><th>16px</th>").join("")}</tr></thead>

@@ -18,10 +18,16 @@
 @media (hover: hover) {
   .ki-chip__main:hover, .ki-chip__remove:hover { background: var(--color-surface-2); color: var(--color-text); }
 }
-.ki-chip__main:is(:focus-visible, .is-focus), .ki-chip__remove:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 0; }
-/* 選んだ状態は主の色の面にせず、太い枠と先頭のチェックの印で示す(主の色は主のボタンと今いる所だけ) */
-.ki-chip[data-selected] { border-color: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-text); }
-.ki-chip[data-selected] .ki-chip__main > .ki-icon { color: var(--color-text); }
+/* focus の輪は、押せる範囲(44px)ではなく見えているチップの形に沿わせる */
+.ki-chip__main:is(:focus-visible, .is-focus), .ki-chip__remove:is(:focus-visible, .is-focus) { outline: none; }
+.ki-chip:has(:is(.ki-chip__main, .ki-chip__remove):is(:focus-visible, .is-focus)) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+/* 選んだ状態は、文字の色で塗り、地の色の文字と先頭のチェックで示す(主の色は主のボタンと今いる所だけ) */
+.ki-chip[data-selected] { border-color: var(--color-text); background: var(--color-text); color: var(--color-bg); }
+.ki-chip[data-selected] :is(.ki-chip__main, .ki-chip__remove) > .ki-icon { color: inherit; }
+.ki-chip[data-selected] :is(.ki-chip__main, .ki-chip__remove).is-hover { background: transparent; color: inherit; }
+@media (hover: hover) {
+  .ki-chip[data-selected] :is(.ki-chip__main, .ki-chip__remove):hover { background: color-mix(in oklch, var(--color-bg) 16%, transparent); color: inherit; }
+}
 .ki-chip[data-disabled] { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); }
 .ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove) { cursor: not-allowed; }
 .ki-chip[data-disabled] :is(.ki-chip__main, .ki-chip__remove).is-hover { background: transparent; }
