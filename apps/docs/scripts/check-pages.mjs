@@ -181,9 +181,9 @@ if (!process.env.ONLY) {
 }
 
 // 2. 操作
-async function kb(name, path, fn, viewport = { width: 1280, height: 800 }) {
+async function kb(name, path, fn, viewport = { width: 1280, height: 800 }, extra = {}) {
   if (process.env.ONLY && !name.includes(process.env.ONLY)) return;
-  const ctx = await browser.newContext({ viewport });
+  const ctx = await browser.newContext({ viewport, ...extra });
   await ctx.grantPermissions(["clipboard-read", "clipboard-write"], { origin }).catch(() => {});
   const errors = [];
   const page = await open(ctx, PREFIX + path, errors);
@@ -471,6 +471,83 @@ await kb("部品の一覧(カテゴリごとの触れる見本、Code でコー�
   await page.locator(".cp-link", { hasText: /^Card$/ }).click();
   await page.waitForURL(/components\/card\.html/);
 });
+
+// 表の行の並べ替え(マウス、指、キーボード)。デモ Reorderable の 4 行(項目 A から D)を使う
+const reorderDemo = (page) => page.locator(".demo").filter({ has: page.getByRole("region", { name: "並べ替えできる項目の一覧" }) });
+const rowNames = (page) => reorderDemo(page).locator("tbody tr td:nth-child(2)").allTextContents();
+const handleOf = (page, name) => reorderDemo(page).getByRole("button", { name: new RegExp(name + " を並べ替える") });
+const center = async (loc) => { const b = await loc.boundingBox(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; };
+
+await kb("表の行の並べ替え(マウス、キーボード、Esc、aria-live)", "components/table.html", async (page) => {
+  const demo = reorderDemo(page);
+  await demo.scrollIntoViewIfNeeded();
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 A", "項目 B", "項目 C", "項目 D"]), "最初の順が違う: " + (await rowNames(page)));
+  const h = await handleOf(page, "項目 A").boundingBox();
+  assert(h.width >= 44 && h.height >= 44, "掴む所が 44px 未満: " + h.width + "x" + h.height);
+  assert((await handleOf(page, "項目 A").evaluate((el) => getComputedStyle(el).touchAction)) === "none", "掴む所の touch-action が none でない");
+  assert((await demo.locator("tbody tr:nth-child(1) td:nth-child(2)").evaluate((el) => getComputedStyle(el).touchAction)) !== "none", "表のほかの所まで touch-action: none");
+  // マウス: 項目 A を、項目 C の下へ
+  const from = await center(handleOf(page, "項目 A"));
+  const c = await demo.locator("tbody tr:nth-child(3)").boundingBox();
+  await page.mouse.move(from.x, from.y);
+  await page.mouse.down();
+  await page.mouse.move(from.x, from.y + 20, { steps: 3 });
+  await page.mouse.move(from.x, c.y + c.height - 4, { steps: 6 });
+  assert((await demo.locator("tr[data-dragging]").count()) === 1, "掴んでいる行に印が付かない");
+  assert((await demo.locator("tr[data-drop]").count()) === 1, "落とす位置の線が出ない");
+  assert((await demo.locator("tr[data-dragging]").evaluate((el) => getComputedStyle(el).filter)) !== "none", "持ち上げた行に影が無い");
+  await page.mouse.up();
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 C", "項目 A", "項目 D"]), "マウスで動かした後の順が違う: " + (await rowNames(page)));
+  assert((await demo.locator("tr[data-dragging], tr[data-drop]").count()) === 0, "終わっても印が残る");
+  assert((await demo.getByRole("status").filter({ hasText: "移した" }).textContent()).includes("1 行目から 3 行目へ移した"), "aria-live の文が違う");
+  // Esc でやめる(マウス)
+  const f2 = await center(handleOf(page, "項目 D"));
+  await page.mouse.move(f2.x, f2.y); await page.mouse.down(); await page.mouse.move(f2.x, f2.y - 100, { steps: 5 });
+  await page.keyboard.press("Escape");
+  await page.mouse.up();
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 C", "項目 A", "項目 D"]), "Esc でやめても順が変わった");
+  // キーボード: 項目 D を Space で持ち上げ、上へ 3 つ、Space で置く
+  await handleOf(page, "項目 D").focus();
+  await page.keyboard.press("Space");
+  assert((await handleOf(page, "項目 D").getAttribute("aria-pressed")) === "true", "持ち上げても aria-pressed にならない");
+  for (let i = 0; i < 3; i++) await page.keyboard.press("ArrowUp");
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 D", "項目 B", "項目 C", "項目 A"]), "矢印で動かしている間の見た目の順が違う: " + (await rowNames(page)));
+  assert(await handleOf(page, "項目 D").evaluate((el) => document.activeElement === el), "動かしても focus が掴む所から外れる");
+  await page.keyboard.press("Space");
+  await page.waitForTimeout(50);
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 D", "項目 B", "項目 C", "項目 A"]), "置いた後の順が違う");
+  assert(await handleOf(page, "項目 D").evaluate((el) => document.activeElement === el), "置いた後に focus が掴む所へ戻らない");
+  assert((await demo.getByRole("status").filter({ hasText: "移した" }).textContent()).includes("4 行目から 1 行目へ移した"), "キーボードの aria-live の文が違う: " + (await demo.getByRole("status").allTextContents()));
+  // Enter で置く、Esc で戻す
+  await page.keyboard.press("Space"); await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 D", "項目 C", "項目 A"]), "Enter で置けない: " + (await rowNames(page)));
+  await page.keyboard.press("Space"); await page.keyboard.press("ArrowDown"); await page.keyboard.press("ArrowDown"); await page.keyboard.press("Escape");
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 D", "項目 C", "項目 A"]), "Esc で戻らない: " + (await rowNames(page)));
+  assert((await demo.getByRole("status").filter({ hasText: "戻した" }).count()) === 1, "戻したことが伝わらない");
+});
+
+await kb("表の行の並べ替え(390px、指。掴む所だけで動き、ほかはスクロールできる)", "components/table.html", async (page) => {
+  const demo = reorderDemo(page);
+  await demo.scrollIntoViewIfNeeded();
+  const cdp = await page.context().newCDPSession(page);
+  const touch = (type, p) => cdp.send("Input.dispatchTouchEvent", { type, touchPoints: p ? [{ x: p.x, y: p.y, id: 1 }] : [] });
+  const from = await center(handleOf(page, "項目 A"));
+  const b = await demo.locator("tbody tr:nth-child(2)").boundingBox();
+  const sy = await page.evaluate(() => scrollY);
+  await touch("touchStart", from);
+  for (let i = 1; i <= 8; i++) await touch("touchMove", { x: from.x, y: from.y + ((b.y + b.height - 4 - from.y) * i) / 8 });
+  assert((await page.evaluate(() => scrollY)) === sy, "掴む所を動かしている間に、画面がスクロールした");
+  await touch("touchEnd");
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 A", "項目 C", "項目 D"]), "指で動かした後の順が違う: " + (await rowNames(page)));
+  // 表の本体をなぞると、画面がスクロールする(掴む所と取り合わない)
+  const cell = await center(demo.locator("tbody tr:nth-child(3) td:nth-child(2)"));
+  await touch("touchStart", cell);
+  for (let i = 1; i <= 8; i++) await touch("touchMove", { x: cell.x, y: cell.y - i * 25 });
+  await touch("touchEnd");
+  await page.waitForTimeout(100);
+  assert((await page.evaluate(() => scrollY)) > sy, "表の本体をなぞっても画面がスクロールしない");
+  assert(JSON.stringify(await rowNames(page)) === JSON.stringify(["項目 B", "項目 A", "項目 C", "項目 D"]), "本体をなぞって行が動いた");
+}, { width: 390, height: 844 }, { hasTouch: true, isMobile: true });
 
 await kb("角丸の段(小 4px、ボタンと入力 8px、面 12px、Chip は丸)", "components/chip.html", async (page) => {
   const v = await page.evaluate(() => { const s = getComputedStyle(document.documentElement); return [1, 2, 3].map((n) => s.getPropertyValue("--radius-" + n).trim()).concat(s.getPropertyValue("--radius-pill").trim()); });

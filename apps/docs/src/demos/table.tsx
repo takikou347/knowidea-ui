@@ -34,6 +34,25 @@ export function Sortable() {
   );
 }
 
+export function Reorderable() {
+  const [rows, setRows] = useState<Row[]>(data);
+  const [log, setLog] = useState("まだ動かしていない");
+  const onReorder = (from: number, to: number) => {
+    const next = rows.slice();
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved as Row);
+    setRows(next);
+    setLog(`${moved?.name} を ${from + 1} 行目から ${to + 1} 行目へ移した`);
+  };
+  return (
+    <div style={{ width: "100%", minWidth: 0 }}>
+      <Table label="並べ替えできる項目の一覧" columns={columns.map((c) => ({ ...c, sortable: false }))} rows={rows} rowKey={(r) => r.id}
+        rowLabel={(r) => r.name} reorderable onReorder={onReorder} />
+      <p className="muted" style={{ marginTop: "var(--space-2)" }}>{log}</p>
+    </div>
+  );
+}
+
 const Box = ({ children, cls }: { children: React.ReactNode; cls?: string }) => <div style={{ width: "100%", minWidth: 0 }} className={cls}>{children}</div>;
 export function states(): StateRow[] {
   const t = (p: Record<string, unknown>, rows = data.slice(0, 2)) => (
@@ -44,8 +63,10 @@ export function states(): StateRow[] {
     { label: "Loading", node: <Box>{t({ loading: true }, [])}</Box> },
     { label: "Error", node: <Box>{t({ error: "一覧を読み込めなかった。", onRetry: () => {} }, [])}</Box> },
     { label: "Disabled", node: <Box>{t({ selectable: true, selected: ["a"] })}</Box>, note: "選択できる表で、選択済みの行。行ごとの無効は列の内容で示す" },
+    { label: "Disabled (reorder)", node: <Box>{t({ reorderable: true, onReorder: () => {} }, data.slice(0, 1))}</Box>, note: "行が 1 つ以下、読み込み中、失敗のときは、掴む所が押せない" },
     { label: "Focus", node: <Box cls="force-focus">{t({ selectable: true })}</Box>, note: "表の領域には Tab で移り、矢印キーで横にスクロールできる" },
+    { label: "Focus (reorder handle)", node: <Box cls="force-focus-handle">{t({ reorderable: true, onReorder: () => {} })}</Box>, note: "掴む所に Tab で移る。Space で持ち上げる" },
     { label: "Hover", node: <Box cls="force-row-hover">{t({})}</Box> },
-    { label: "Active", na: "行は操作できない。並べ替えとチェックボックスは、押すと切り替わる" },
+    { label: "Active", na: "行は操作できない。並べ替えとチェックボックスは、押すと切り替わる。掴んでいる間の見た目(行の影と落とす位置の線)は、Reorderable のデモで確かめる" },
   ];
 }

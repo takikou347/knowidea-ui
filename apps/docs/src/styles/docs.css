@@ -243,6 +243,7 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 /* 見本のための固定の状態(部品のコードには入れない) */
 .force-row-hover .ki-table tbody tr:first-child { background: var(--color-surface-2); }
 .force-focus .ki-table-wrap { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.force-focus-handle .ki-table tbody tr:first-child .ki-table__handle { outline: 2px solid var(--color-focus); outline-offset: -2px; }
 
 /* テーマを試す所 */
 .tc { display: grid; gap: var(--space-3); min-width: 0; }
