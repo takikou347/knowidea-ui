@@ -13,4 +13,7 @@
   position: absolute; bottom: calc(100% + var(--space-1)); left: 50%; transform: translateX(-50%);
   width: max-content; visibility: hidden; opacity: 0; pointer-events: none; z-index: 40;
 }
-.ki-tooltip-wrap:is(:hover, :focus-within) > .ki-tooltip, .ki-tooltip-wrap.is-open > .ki-tooltip { visibility: visible; opacity: 1; }
+.ki-tooltip-wrap:is(:focus-within, .is-open) > .ki-tooltip { visibility: visible; opacity: 1; }
+@media (hover: hover) {
+  .ki-tooltip-wrap:hover > .ki-tooltip { visibility: visible; opacity: 1; }
+}

@@ -9,7 +9,10 @@
 }
 .ki-textarea { min-height: calc(var(--size-hit) * 2); padding: var(--space-2) var(--space-3); resize: vertical; }
 .ki-input::placeholder, .ki-textarea::placeholder { color: var(--color-text-muted); opacity: 1; }
-.ki-input:is(:hover, .is-hover), .ki-textarea:is(:hover, .is-hover) { border-color: var(--color-text-muted); }
+.ki-input.is-hover, .ki-textarea.is-hover { border-color: var(--color-text-muted); }
+@media (hover: hover) {
+  .ki-input:hover, .ki-textarea:hover { border-color: var(--color-text-muted); }
+}
 .ki-input:is(:focus-visible, :focus, .is-focus), .ki-textarea:is(:focus-visible, :focus, .is-focus) {
   outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-text);
 }
