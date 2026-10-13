@@ -6,11 +6,33 @@ UI ライブラリ(`@knowidea/tokens`、`@knowidea/icons`、`@knowidea/css`、`@
 
 | コマンド | 内容 |
 | --- | --- |
-| `pnpm --filter @knowidea/docs build` | `dist/` を生成する。ロゴと sprite を `public/` にコピーし、`astro build` を実行したあと、パスを相対パスに書き換える |
+| `pnpm --filter @knowidea/docs build` | `dist/` を生成する。ロゴ、sprite、画像を `public/` にコピーし、`astro build` を実行し、パスを相対パスに書き換え、検索の索引 `dist/search-index.json` を作る |
 | `pnpm --filter @knowidea/docs dev` | tokens と icons をビルドしてから、開発サーバーを起動する |
 | `pnpm --filter @knowidea/docs check:pages` | `dist/` を `/a/b/` の下で配信し、全ページと操作を Chromium で検査する |
 
 tokens、icons、css、ui のビルドは、`pnpm -r build` が先に実行する。
+
+## 公開先の設定
+
+公開先に関わる値は `src/site.config.mjs` の 1 か所にある。環境変数で上書きできる。公開先のリポジトリ名は未決なので、既定は `takikou347/design-system`。
+
+| 値 | 環境変数 | 既定 | 使う所 |
+| --- | --- | --- | --- |
+| サイトの URL | `SITE_URL` | `https://takikou347.github.io/design-system/` | `og:image`、`og:url`、canonical(絶対 URL が要る所だけ)。パス部分は 404 ページの `<base>` |
+| リポジトリの URL | `SITE_REPO` | `https://github.com/takikou347/design-system` | "Edit this page" と GitHub のリンク |
+| ブランチ | `SITE_BRANCH` | `main` | "Edit this page" のリンク先 |
+
+例: `SITE_URL=https://example.com/ui/ SITE_REPO=https://github.com/org/ui pnpm --filter @knowidea/docs build`
+
+`og.png`(1200x630)、`favicon-32.png`、`apple-touch-icon.png` は `assets-src/` にある。ロゴや版を変えたら `node apps/docs/scripts/make-images.mjs` で作り直して git に入れる。ビルドは `public/` に写すだけ。
+
+## 検索、前後の移動、404
+
+- 検索は外のサービスを使わない。`scripts/build-search.mjs` が `dist/` の HTML から `search-index.json`(節ごとの題、見出し、本文の抜粋)を作る。`/` か `Ctrl+K`(Mac は `Cmd+K`)で開き、初めて開いたときに 1 回だけ読む。索引の中の道は `dist/` の根からの相対で、読む側が索引の場所を基準に解くので、どの場所の下でも動く。コードとデモ、見本の画面の中の文字は索引に入れない(除く対象は `build-search.mjs` の `SKIP_TAGS`、`SKIP_CLASS`)
+- Previous / Next は `src/lib/nav.mjs` の `flat`(サイドメニューの順)から作る。ページを足したら `nav.mjs` に足す
+- "Edit this page" のリンクは `src/lib/source.mjs` が決める。部品のページは、そのカテゴリのデータ(`src/data/components/<カテゴリ>.mjs`)を指す
+- 変更の履歴は `src/data/changelog.mjs`。新しい版を上に足す
+- 404 は `dist/404.html`。GitHub Pages はどの深さの URL にもこれを返すので、`<base href>` にサブパスを書いている(`relativize.mjs` はこの 1 つだけ根からの道のまま残す)
 
 ## どこに置いても動く
 
@@ -27,7 +49,7 @@ JS はモジュールなので、`file://` では動かない。静的サーバ�
 
 | 場所 | 内容 |
 | --- | --- |
-| `src/layouts/Base.astro` | 上部のバー(ロゴ、名前とバージョン、コンポーネントの検索、テーマの切り替え)、左のサイドメニュー、右のページ内目次。幅 390px ではサイドメニューが開閉式のドロワーになる |
+| `src/layouts/Base.astro` | 上部のバー(ロゴ、名前とバージョン、検索、テーマの切り替え)。ページの終わりの Previous / Next と Edit this page。OGP とファビコンの meta、左のサイドメニュー、右のページ内目次。幅 390px ではサイドメニューが開閉式のドロワーになる |
 | `src/lib/nav.mjs` | サイドメニュー。Getting started、Customization、Components、Icons、Templates |
 | `src/lib/registry.mjs`、`src/data/` | コンポーネントのページの元データ。`data/components/*.mjs`(カテゴリごと)と `data/seed.mjs`(Props、クラス、変数、素の HTML の例) |
 | `src/demos/<コンポーネント>.tsx` | デモの実体。関数を 1 つ書けば、表示されるデモと "Show code" のコードが同じ元から生成される(`lib/snippet.mjs` が関数の本体を切り出す)。`states()` が States の表になる |
@@ -47,7 +69,7 @@ JS はモジュールなので、`file://` では動かない。静的サーバ�
 `check:pages` は、全ページを 390px のライトと 1280px のダークで開き、横にはみ出さないこと、コンソールエラーと読み込めない画像が 0 件であること、390px でタップ領域が 44px 以上あることを検査する。そのうえで、次の操作をキーボードとクリックで確認する。
 
 - ダイアログ、結果を確かめる操作、タブ、メニュー、アコーディオン、グラフ
-- ナビゲーションのドロワー、コンポーネントの検索、ライトとダークの切り替え
+- ナビゲーションのドロワー、検索(`/`、`Ctrl+K`)、Previous / Next、Edit this page と OGP の meta、404、ライトとダークの切り替え
 - テーマを試すページ、アイコンの一覧、"Show code" とコピー、サンプル画面の一覧操作
 
 Chromium は `/opt/pw-browsers` を直接指定する(`CHROMIUM_PATH` で上書きできる)。型の検査は `pnpm --filter @knowidea/docs exec tsc --noEmit -p .` で行う。
