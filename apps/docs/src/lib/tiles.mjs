@@ -1,5 +1,5 @@
 // 部品のタイルに置くデモ。トップの格子と、Components の一覧が同じ表を読む。
-// fn: demos/<slug>.tsx の関数。wide: 一覧で 2 列分の幅を取る(大きな部品)。
+// fn: demos/<slug>.tsx の関数。wide: 大きな部品の印(今は 1 列なので幅は変わらない)。
 import { snippet } from "./snippet.mjs";
 
 export const pick = {

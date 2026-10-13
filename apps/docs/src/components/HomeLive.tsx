@@ -148,7 +148,7 @@ export default function HomeLive({ cells }: Props) {
             return (
               <li className="cp" key={c.slug}>
                 <div className="cp-view">
-                  <div className="cp-stage"><div className="cp-fit">{Demo ? <Demo /> : null}</div></div>
+                  <div className="cp-stage"><div className="cp-fit" data-slug={c.slug}>{Demo ? <Demo /> : null}</div></div>
                   <div className="cp-bar">
                     <button type="button" className="ki-button cp-codebtn" data-variant="quiet" data-cp-code={c.name} data-cp-react={c.react} data-cp-html={c.html} aria-label={`Code for ${c.name}`}>Code</button>
                   </div>
