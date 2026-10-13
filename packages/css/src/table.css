@@ -38,10 +38,11 @@
 /* 行の並べ替え。掴む所の見た目だけ。ドラッグとキーボードの動きは @knowidea/ui の Table(React)が持つ */
 .ki-table :is(th, td)[data-handle] { width: var(--size-hit); padding: 0 0 0 var(--space-1); position: sticky; left: 0; z-index: 1; background: var(--color-surface); }
 .ki-table thead th[data-handle] { background: var(--color-surface-2); }
-.ki-table tbody tr[aria-selected="true"] > td[data-handle], .ki-table tbody tr[data-dragging] > td[data-handle] { background: var(--color-surface-2); }
+.ki-table tbody tr[aria-selected="true"] > td[data-handle] { background: var(--color-surface-2); }
 @media (hover: hover) {
   .ki-table tbody tr:hover > td[data-handle] { background: var(--color-surface-2); }
 }
+.ki-table tbody tr[data-dragging] > td[data-handle] { background: var(--color-surface); }
 .ki-table__handle {
   display: inline-flex; align-items: center; justify-content: center; width: var(--size-hit); height: var(--size-hit); padding: 0;
   border: 0; border-radius: var(--radius-2); background: transparent; color: var(--color-text-muted); cursor: grab;

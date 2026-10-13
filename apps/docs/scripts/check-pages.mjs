@@ -404,7 +404,7 @@ await kb("トップ(サイドメニューが無い、上のバーの 6 つのリ
   assert((await page.locator(".docs-top .docs-gh").count()) === 1, "上のバーに GitHub が無い");
   assert((await page.getByRole("link", { name: "Get started" }).count()) === 1 && (await page.getByRole("link", { name: "Browse components" }).count()) >= 1, "Get started と Browse components が無い");
   assert((await page.locator("h1").textContent()).length > 10, "h1 が無い");
-  assert((await page.locator(".hl-cell").count()) >= 12, "動く部品の格子が少ない");
+  assert((await page.locator(".cp").count()) >= 12, "動く部品の格子が少ない");
   assert((await page.locator(".features-grid li").count()) === 4, "特長が 4 つでない");
   await bar.getByRole("link", { name: "Docs", exact: true }).click();
   await page.waitForURL(/getting-started\/install\.html/);
@@ -442,8 +442,8 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
   assert(JSON.stringify(await names()) !== JSON.stringify(n0), "並べ替えても行の順が変わらない");
   await page.getByRole("switch", { name: "Dark" }).click();
   assert((await page.evaluate(() => document.documentElement.dataset.theme)) === "dark", "Dark で表示がダークにならない");
-  await page.locator(".hl-cell").filter({ hasText: "Checkbox" }).getByRole("checkbox").first().click();
-  await page.locator(".hl-cell").filter({ hasText: "Tabs" }).getByRole("tab").nth(1).click();
+  await page.locator(".cp").filter({ hasText: "Checkbox" }).getByRole("checkbox").first().click();
+  await page.locator(".cp").filter({ hasText: "Tabs" }).getByRole("tab").nth(1).click();
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {

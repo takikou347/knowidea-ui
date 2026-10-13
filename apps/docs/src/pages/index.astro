@@ -17,10 +17,11 @@ const picks = [
   ["pagination", "Basic"], ["menu", "Basic"], ["dialog", "Basic"], ["tooltip", "Basic"], ["breadcrumbs", "Basic"], ["avatar", "Sizes"],
 ];
 const raws = import.meta.glob("../demos/*.tsx", { query: "?raw", import: "default", eager: true });
+const first = (t) => ((t ?? "").split("。")[0] ?? "") + "。";
 const cells = picks.map(([slug, fn]) => {
   const c = components.find((x) => x.slug === slug);
   const t = tileCode(c, raws[`../demos/${slug}.tsx`], fn);
-  return { slug, fn, name: c.name, href: href("components/" + slug), react: t.react, html: t.html };
+  return { slug, fn, name: c.name, desc: first(c.lead), href: href("components/" + slug), react: t.react, html: t.html };
 });
 const features = [
   { icon: "settings", title: "Theming", text: "プライマリカラー、角丸、密度、字の大きさを createTheme で変える。変わるのは CSS 変数だけで、コンポーネントのコードには触らない。", to: "customization/theme", link: "Theme" },

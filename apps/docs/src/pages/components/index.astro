@@ -25,13 +25,15 @@ const code = Object.fromEntries(components.map((c) => {
       <ul class="cp-grid">
         {components.filter((c) => c.cat === cat.id).map((c) => (
           <li class="cp" data-wide={pick[c.slug].wide ? "" : undefined}>
-            <div class="cp-view"><ComponentThumb client:visible slug={c.slug} /></div>
-            <div class="cp-body">
-              <div class="cp-text">
-                <h3 class="cp-name"><a class="cp-link" href={href("components/" + c.slug)}>{c.name}</a></h3>
-                <p class="cp-desc">{first(c.lead)}</p>
+            <div class="cp-view">
+              <div class="cp-stage"><ComponentThumb client:visible slug={c.slug} /></div>
+              <div class="cp-bar">
+                <button type="button" class="ki-button cp-codebtn" data-variant="quiet" data-cp-code={c.name} data-cp-react={code[c.slug].react} data-cp-html={code[c.slug].html} aria-label={`Code for ${c.name}`}>Code</button>
               </div>
-              <button type="button" class="ki-button cp-codebtn" data-variant="secondary" data-cp-code={c.name} data-cp-react={code[c.slug].react} data-cp-html={code[c.slug].html} aria-label={`Code for ${c.name}`}>Code</button>
+            </div>
+            <div class="cp-text">
+              <h3 class="cp-name"><a class="cp-link" href={href("components/" + c.slug)}>{c.name}</a></h3>
+              <p class="cp-desc">{first(c.lead)}</p>
             </div>
           </li>
         ))}
