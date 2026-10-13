@@ -1,5 +1,6 @@
 // コントラスト検査。落ちた組があれば exit 1。
 import { primitive, themes, pairs, color, ratio, hex, inGamut } from "./contrast.mjs";
+import { BASE, createTheme } from "../src/create-theme.mjs";
 
 let fail = 0;
 const rows = [];
@@ -24,6 +25,21 @@ for (const k of ["a", "b", "c"]) {
   const D = ["bg", "surface", "surface-2"].map((s) => ratio(c("fgDark"), color(themes.ダーク, "color." + s)));
   cand.push({ k, hue: c("fg")[2], lightHex: hex(c("fg")), darkHex: hex(c("fgDark")), L, D });
   for (const r of [...L, ...D]) if (r < 4.5) fail++;
+}
+
+// createTheme の基準の面が tokens.css の値と同じこと。会社の主の色から作った値が、決めた値と近いこと
+const oklchOf = (c) => c;
+const near = (a, b) => a.every((x, i) => Math.abs(x - b[i]) < 0.0006);
+for (const [mode, name] of [["light", "ライト"], ["dark", "ダーク"]]) {
+  const T = themes[name];
+  for (const k of ["bg", "surface"]) if (!near(BASE[mode][k], color(T, "color." + k))) { fail++; console.log(`NG  createTheme の ${mode}.${k} が tokens と違う`); }
+}
+{
+  const t = createTheme({ primary: "#016C6C" });
+  const wantL = oklchOf(color(themes.ライト, "color.primary")), wantD = oklchOf(color(themes.ダーク, "color.primary"));
+  const close = (str, w) => { const m = str.match(/oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)/); return m && Math.abs(m[1] - w[0]) < 0.01 && Math.abs(m[2] - w[1]) < 0.01; };
+  if (t.warnings.length || !close(t.light["--color-primary"], wantL) || !close(t.dark["--color-primary"], wantD)) { fail++; console.log("NG  会社の主の色 #016C6C から作った値が、決めた主の色と合わない、または警告が出た"); }
+  if (!createTheme({ primary: "#88cccc" }).warnings.some((w) => w.id === "primary-bg")) { fail++; console.log("NG  薄い主の色で警告が出ない"); }
 }
 
 const pad = (s, n) => String(s).padEnd(n);

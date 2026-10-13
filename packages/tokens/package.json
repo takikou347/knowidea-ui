@@ -1,5 +1,5 @@
 {
-  "name": "tokens",
+  "name": "@knowidea/tokens",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,10 @@
     "./dist/*": "./dist/*",
     "./theme.css": "./dist/theme.css",
     "./tokens.css": "./dist/tokens.css",
-    "./themes/*": "./themes/*",
+    "./create-theme": {
+      "types": "./src/create-theme.d.ts",
+      "default": "./src/create-theme.mjs"
+    },
     "./scripts/*": "./scripts/*",
     "./src/*": "./src/*"
   }
