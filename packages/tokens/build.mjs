@@ -83,6 +83,10 @@ ${block(darkOnly, "    ")}
 ${block(darkOnly, "  ")}
   color-scheme: dark;
 }
+/* 動きを減らす設定のとき、状態の変わり目の動きを止める(スピナーの回転は進行を伝えるので残す) */
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-duration-fast: 0ms; --motion-duration-state: 0ms; }
+}
 `;
 
 // Tailwind v4 の @theme。ライトの値を入れる。ダークは tokens.css が同じ変数を上書きする

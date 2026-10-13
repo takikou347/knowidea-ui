@@ -1,3 +1,4 @@
+import { useThemeScope } from "./ThemeScope.js";
 import type { ReactElement, ReactNode } from "react";
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 
@@ -14,11 +15,12 @@ export interface MenuProps {
 }
 
 export function Menu({ trigger, items, align = "start" }: MenuProps) {
+  const scope = useThemeScope();
   return (
     <BaseMenu.Root>
       <BaseMenu.Trigger render={trigger} />
       <BaseMenu.Portal>
-        <BaseMenu.Positioner className="ki-menu__positioner" sideOffset={4} align={align}>
+        <BaseMenu.Positioner className="ki-menu__positioner" sideOffset={4} align={align} {...scope}>
           <BaseMenu.Popup className="ki-menu__popup">
             {items.map((it, i) => {
               if (it.type === "separator") return <BaseMenu.Separator key={i} className="ki-menu__separator" />;

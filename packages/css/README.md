@@ -4,9 +4,11 @@ KNOW IDEA の UI コンポーネントの見た目。素の CSS で、クラス�
 
 | 使い方 | 中身 |
 | --- | --- |
-| バンドラーを使う場合 | `@import "@knowidea/tokens/tokens.css"; @import "@knowidea/css/index.css";` |
-| 素の HTML | `pnpm --filter @knowidea/css build` で `dist/ki.css` と `dist/ki.js` を作り、tokens.css と一緒に置く。`ki.js` はコピーボタンと `<dialog>` の開閉だけ |
-| コンポーネントごと | `src/<コンポーネント>.css` を個別に読み込む |
+| バンドラーを使う場合 | `import "@knowidea/tokens/tokens.css"; import "@knowidea/css/index.css";`(tarball の入れ方は `apps/docs` の Installation) |
+| 素の HTML | tarball から `dist/ki.css` と `dist/ki.js` を取り出し、tokens.css と一緒に置く(手順は Plain HTML のページ)。`ki.js` はコピーボタンと `<dialog>` の開閉だけ |
+| コンポーネントごと | `src/<コンポーネント>.css` を個別に読み込む(`@knowidea/css/button.css`) |
+
+`base.css` は `body` の背景、文字色、書体、余白 0 の既定も与える。詳細度 0(`:where`)なので、アプリ側の指定が勝つ。これが無いと、ダークに切り替えても背景が変わらない。
 
 状態は `:hover`、`:focus-visible`、`:disabled`、`aria-invalid`、`data-loading` などで表現する。ドキュメントで状態を固定して見せるための `.is-hover`、`.is-focus`、`.is-active` も効く(実際のアプリでは使わない)。
 

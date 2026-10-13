@@ -2,6 +2,7 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import { Icon } from "./Icon.js";
 import { Spinner } from "./Spinner.js";
 import { cx } from "./utils.js";
+import { useThemeScope } from "./ThemeScope.js";
 
 export interface SelectOption {
   value: string;
@@ -27,6 +28,7 @@ export interface SelectProps {
 export function Select({
   options, value, defaultValue, onValueChange, placeholder = "選択", disabled, invalid, loading, name, className, ...rest
 }: SelectProps) {
+  const scope = useThemeScope();
   return (
     <BaseSelect.Root
       items={options}
@@ -50,7 +52,7 @@ export function Select({
         <BaseSelect.Icon className="ki-select__icon"><Icon name="chevron-down" /></BaseSelect.Icon>
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
-        <BaseSelect.Positioner className="ki-select__positioner" sideOffset={4} alignItemWithTrigger={false}>
+        <BaseSelect.Positioner className="ki-select__positioner" sideOffset={4} alignItemWithTrigger={false} {...scope}>
           <BaseSelect.Popup className="ki-select__popup">
             <BaseSelect.List>
               {options.map((o) => (

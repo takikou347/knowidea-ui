@@ -21,7 +21,7 @@ export function snippet(src, fn) {
   const take = (text) => {
     for (const h of helpers) {
       const name = h.match(/^(?:const|function|type|interface) (\w+)/)?.[1];
-      if (name && !used.includes(h) && new RegExp(`\\b${name}\\b`).test(text)) { used.push(h); take(h); }
+      if (name && !used.includes(h) && new RegExp(`(?<![\\w.$])${name}\\b(?!\\s*=(?!=))`).test(text)) { used.push(h); take(h); }
     }
   };
   take(demo);

@@ -8,7 +8,7 @@ const gapVar = (g: Space) => `var(--space-${g})`;
 export interface StackProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
   /** column は縦(既定)、row は横 */
   direction?: "column" | "row";
-  /** 間隔の段(1〜7)。既定 3(12px) */
+  /** 間隔の段(1〜7)。省略すると 3(12px)。CSS の --ki-gap で上書きできる(gap を渡すと、そちらが勝つ) */
   gap?: Space;
   align?: "start" | "center" | "end" | "stretch" | "baseline";
   justify?: "start" | "center" | "end" | "between";
@@ -22,8 +22,8 @@ const alignMap = { start: "flex-start", center: "center", end: "flex-end", stret
 const justifyMap = { start: "flex-start", center: "center", end: "flex-end", between: "space-between" } as const;
 
 /** 子を 1 方向に並べ、間隔をそろえる。 */
-export function Stack({ direction = "column", gap = 3, align, justify, wrap, as: Tag = "div", className, style, children, ...rest }: StackProps) {
-  const s = { "--ki-gap": gapVar(gap), ...(align ? { "--ki-align": alignMap[align] } : null), ...(justify ? { "--ki-justify": justifyMap[justify] } : null), ...style } as CSSProperties;
+export function Stack({ direction = "column", gap, align, justify, wrap, as: Tag = "div", className, style, children, ...rest }: StackProps) {
+  const s = { ...(gap ? { "--ki-gap": gapVar(gap) } : null), ...(align ? { "--ki-align": alignMap[align] } : null), ...(justify ? { "--ki-justify": justifyMap[justify] } : null), ...style } as CSSProperties;
   return <Tag className={cx("ki-stack", className)} data-direction={direction === "row" ? "row" : undefined} data-wrap={wrap ? "" : undefined} style={s} {...rest}>{children}</Tag>;
 }
 
@@ -40,9 +40,9 @@ export interface GridProps extends Omit<HTMLAttributes<HTMLElement>, "children">
 }
 
 /** 格子。列の数を決めるか、1 つの最小の幅で自動に詰める。 */
-export function Grid({ columns, minItemWidth, keepColumns, gap = 3, as: Tag = "div", className, style, children, ...rest }: GridProps) {
+export function Grid({ columns, minItemWidth, keepColumns, gap, as: Tag = "div", className, style, children, ...rest }: GridProps) {
   const s = {
-    "--ki-gap": gapVar(gap),
+    ...(gap ? { "--ki-gap": gapVar(gap) } : null),
     ...(columns ? { "--ki-cols": columns } : null),
     ...(!columns && minItemWidth ? { "--ki-min": `${minItemWidth}px` } : null),
     ...style,

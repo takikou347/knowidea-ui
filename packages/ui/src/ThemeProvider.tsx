@@ -1,6 +1,7 @@
 import { useId, useMemo, type ElementType, type ReactNode } from "react";
 import { createTheme, type ThemeOptions, type ThemeWarning } from "@knowidea/tokens/create-theme";
 import { cx } from "./utils.js";
+import { ThemeScopeContext } from "./ThemeScope.js";
 
 export interface ThemeProviderProps {
   /** 主の色、角丸、密度、字の大きさ。無い項目は基本のまま */
@@ -28,7 +29,7 @@ export function ThemeProvider({ theme, as: Tag = "div", onWarn, className, child
   return (
     <Tag className={cx(className)} data-ki-theme={id} style={{ display: "contents" }}>
       <style>{built.css(`[data-ki-theme="${id}"]`)}</style>
-      {children}
+      <ThemeScopeContext.Provider value={id}>{children}</ThemeScopeContext.Provider>
     </Tag>
   );
 }

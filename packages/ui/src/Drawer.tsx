@@ -1,3 +1,4 @@
+import { useThemeScope } from "./ThemeScope.js";
 import type { ReactNode } from "react";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { Icon } from "./Icon.js";
@@ -54,6 +55,7 @@ function Nav({ groups, current, label }: { groups: DrawerGroup[]; current?: stri
 
 /** サイドの目次。permanent はその場に、temporary は Esc や外を押して閉じる引き出しになる。 */
 export function Drawer({ items, groups, current, brand, label = "ナビゲーション", variant = "permanent", open, defaultOpen, onOpenChange, closeLabel = "ナビゲーションを閉じる", footer, className }: DrawerProps) {
+  const scope = useThemeScope();
   const g = groups ?? [{ items: items ?? [] }];
   const head = brand ? <p className="ki-drawer__brand"><b>{brand.name}</b>{brand.sub ? <span>{brand.sub}</span> : null}</p> : null;
   if (variant === "permanent") {
@@ -68,8 +70,8 @@ export function Drawer({ items, groups, current, brand, label = "ナビゲーシ
   return (
     <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (o) => onOpenChange(o) : undefined}>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="ki-dialog__backdrop" />
-        <BaseDialog.Popup className={cx("ki-drawer", className)} data-variant="temporary" aria-label={label}>
+        <BaseDialog.Backdrop className="ki-dialog__backdrop" {...scope} />
+        <BaseDialog.Popup className={cx("ki-drawer", className)} data-variant="temporary" aria-label={label} {...scope}>
           <div className="ki-drawer__head">
             {head ?? <span />}
             <BaseDialog.Close render={<IconButton variant="quiet" label={closeLabel} icon={<Icon name="close" />} />} />

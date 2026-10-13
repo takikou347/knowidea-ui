@@ -1,3 +1,4 @@
+import { useThemeScope } from "./ThemeScope.js";
 import type { ReactNode } from "react";
 import { Toast as BaseToast } from "@base-ui/react/toast";
 import { Icon, type IconName } from "./Icon.js";
@@ -38,11 +39,12 @@ export interface ToastProviderProps {
 
 /** アプリの根に 1 つ置く。中から useToast() で出す */
 export function ToastProvider({ children, timeout = 5000, limit = 3 }: ToastProviderProps) {
+  const scope = useThemeScope();
   return (
     <BaseToast.Provider timeout={timeout} limit={limit}>
       {children}
       <BaseToast.Portal>
-        <BaseToast.Viewport className="ki-toast-viewport">
+        <BaseToast.Viewport className="ki-toast-viewport" {...scope}>
           <ToastList />
         </BaseToast.Viewport>
       </BaseToast.Portal>

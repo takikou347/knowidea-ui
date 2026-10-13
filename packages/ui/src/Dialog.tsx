@@ -1,3 +1,4 @@
+import { useThemeScope } from "./ThemeScope.js";
 import type { ReactElement, ReactNode } from "react";
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog";
@@ -25,12 +26,13 @@ export function DialogClose(props: ButtonProps) {
 }
 
 export function Dialog({ trigger, title, description, children, actions, open, defaultOpen, onOpenChange, loading }: DialogProps) {
+  const scope = useThemeScope();
   return (
     <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (o) => onOpenChange(o) : undefined}>
       {trigger ? <BaseDialog.Trigger render={trigger} /> : null}
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="ki-dialog__backdrop" />
-        <BaseDialog.Popup className="ki-dialog ki-dialog__popup">
+        <BaseDialog.Backdrop className="ki-dialog__backdrop" {...scope} />
+        <BaseDialog.Popup className="ki-dialog ki-dialog__popup" {...scope}>
           <BaseDialog.Title className="ki-dialog__title">{title}</BaseDialog.Title>
           {description ? <BaseDialog.Description className="ki-dialog__description">{description}</BaseDialog.Description> : null}
           {loading ? (
@@ -62,12 +64,13 @@ export interface ConfirmDialogProps {
 export function ConfirmDialog({
   trigger, title, description, confirmLabel, cancelLabel = "やめる", tone = "danger", onConfirm, open, defaultOpen, onOpenChange,
 }: ConfirmDialogProps) {
+  const scope = useThemeScope();
   return (
     <BaseAlertDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (o) => onOpenChange(o) : undefined}>
       {trigger ? <BaseAlertDialog.Trigger render={trigger} /> : null}
       <BaseAlertDialog.Portal>
-        <BaseAlertDialog.Backdrop className="ki-dialog__backdrop" />
-        <BaseAlertDialog.Popup className="ki-dialog ki-dialog__popup">
+        <BaseAlertDialog.Backdrop className="ki-dialog__backdrop" {...scope} />
+        <BaseAlertDialog.Popup className="ki-dialog ki-dialog__popup" {...scope}>
           <BaseAlertDialog.Title className="ki-dialog__title">{title}</BaseAlertDialog.Title>
           {description ? <BaseAlertDialog.Description className="ki-dialog__description">{description}</BaseAlertDialog.Description> : null}
           <div className="ki-dialog__actions">

@@ -8,3 +8,11 @@
   clip-path: inset(50%); white-space: nowrap; border: 0;
 }
 .ki-icon { width: 1.25em; height: 1.25em; flex: none; fill: currentColor; }
+
+/* ページの既定。詳細度 0(:where)なので、アプリ側の body の指定があればそちらが勝つ。
+   これが無いと、ダークに切り替えても背景と文字の色が変わらず、書体も当たらない。 */
+:where(html) { background: var(--color-bg); }
+:where(body) {
+  margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans);
+  font-size: var(--font-size-3); line-height: var(--font-line-height-3); font-weight: var(--font-weight-regular);
+}
