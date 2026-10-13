@@ -106,6 +106,9 @@ body {
 .dn details ul { margin-left: var(--space-3); border-left: 1px solid var(--color-line); }
 .dn a[aria-current="page"] { color: var(--color-primary); font-weight: var(--font-weight-strong); box-shadow: inset 2px 0 0 var(--color-primary); }
 .dn-title a[aria-current="page"] { box-shadow: none; }
+/* 見出しがリンクのときも、ほかの見出しと同じ位置と大きさにする */
+.dn-title:has(a) { padding-inline: 0; }
+.dn .dn-title a { font-size: inherit; color: inherit; }
 
 /* 本文 */
 .docs-main h1 { margin: 0 0 var(--space-3); font-size: var(--font-size-5); line-height: var(--font-line-height-5); font-weight: var(--font-weight-strong); }
