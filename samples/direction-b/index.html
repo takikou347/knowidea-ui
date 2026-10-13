@@ -16,8 +16,8 @@
   --text-muted: #515355;
   --line: #d9dbdd;
   --line-strong: #7e8083;
-  --primary: #0262ab;
-  --primary-hover: #00518f;
+  --primary: #016c6c;
+  --primary-hover: #015757;
   --on-primary: #fbfcfd;
   --success: #026337;
   --success-soft: #ddf6e4;
@@ -50,9 +50,9 @@
     --text-muted: #afb1b4;
     --line: #343538;
     --line-strong: #7e8083;
-    --primary: #68b2ef;
-    --primary-hover: #82c5fd;
-    --on-primary: #0e1216;
+    --primary: #4cbfbf;
+    --primary-hover: #70d0d0;
+    --on-primary: #0c1515;
     --success: #5dd68f;
     --success-soft: #143320;
     --warn: #f3b94c;
@@ -71,9 +71,9 @@
   --text-muted: #afb1b4;
   --line: #343538;
   --line-strong: #7e8083;
-  --primary: #68b2ef;
-  --primary-hover: #82c5fd;
-  --on-primary: #0e1216;
+  --primary: #4cbfbf;
+  --primary-hover: #70d0d0;
+  --on-primary: #0c1515;
   --success: #5dd68f;
   --success-soft: #143320;
   --warn: #f3b94c;
@@ -183,6 +183,7 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 .topbar .in { display: flex; align-items: stretch; gap: var(--sp-5); min-height: 48px; flex-wrap: wrap; }
 .topbar .nav { order: 3; flex: 1 0 100%; }
 .topbar .tool { order: 2; }
+.brand-mark { width: 24px; height: 24px; margin-right: 8px; flex: none; fill: var(--primary); }
 .brand { display: flex; align-items: center; font: 600 var(--fs-3)/1 var(--font-mono); letter-spacing: 0.04em; min-height: var(--hit); }
 .nav { display: flex; gap: 0; overflow-x: auto; flex: 1 1 auto; min-width: 0; }
 .nav a {
@@ -324,7 +325,7 @@ td.num, th.num { text-align: right; white-space: nowrap; }
   <div class="app">
     <div class="topbar">
       <div class="wrap in">
-        <div class="brand">KNOW IDEA</div>
+        <div class="brand"><svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M24.35 69.8C24.35 68.82 24.38 67.84 24.45 66.86C24.51 65.88 24.61 64.92 24.75 63.98C24.89 63.05 25.07 62.15 25.28 61.31C25.49 60.47 25.74 59.69 26.01 58.98C26.29 58.27 26.59 57.64 26.91 57.09C27.22 56.54 27.56 56.08 27.89 55.68C28.23 55.29 28.58 54.96 28.96 54.68C29.33 54.4 29.74 54.16 30.23 53.94C30.72 53.72 31.3 53.53 32.03 53.39C32.76 53.24 33.64 53.15 34.7 53.15C36.09 53.15 37.07 53.3 37.77 53.48C38.46 53.66 38.9 53.87 39.29 54.1C39.67 54.34 40.03 54.62 40.45 55.07C40.88 55.51 41.35 56.12 41.89 56.92C42.43 57.71 43.02 58.69 43.7 59.81C44.37 60.94 45.13 62.21 46.05 63.58C46.98 64.94 48.07 66.4 49.45 67.85C50.82 69.29 52.48 70.72 54.45 71.92C56.42 73.13 58.67 74.09 61.11 74.72C63.55 75.35 66.15 75.65 68.9 75.65C70.37 75.65 71.79 75.56 73.16 75.37C74.53 75.19 75.85 74.9 77.11 74.53C78.37 74.15 79.57 73.67 80.69 73.12C81.81 72.56 82.84 71.93 83.78 71.26C84.72 70.58 85.55 69.87 86.3 69.15C87.04 68.44 87.69 67.72 88.26 67.03C88.83 66.35 89.32 65.69 89.75 65.09C90.19 64.49 90.56 63.94 90.89 63.46C91.22 62.98 91.51 62.57 91.74 62.25C91.98 61.92 92.17 61.67 92.31 61.51A9.45 9.45 0 0 0 77.89 49.29C77.33 49.96 76.85 50.59 76.43 51.17C76.01 51.75 75.64 52.29 75.31 52.76C74.99 53.24 74.7 53.66 74.43 54.03C74.17 54.39 73.94 54.7 73.73 54.95C73.52 55.2 73.33 55.4 73.17 55.55C73.01 55.71 72.87 55.83 72.73 55.92C72.6 56.02 72.47 56.1 72.31 56.18C72.14 56.26 71.95 56.34 71.68 56.42C71.41 56.5 71.07 56.58 70.61 56.65C70.16 56.71 69.59 56.75 68.9 56.75C67.51 56.75 66.53 56.6 65.83 56.42C65.14 56.24 64.7 56.03 64.31 55.8C63.93 55.56 63.57 55.28 63.15 54.83C62.72 54.39 62.25 53.78 61.71 52.98C61.17 52.19 60.58 51.21 59.9 50.09C59.23 48.96 58.47 47.69 57.55 46.32C56.62 44.96 55.53 43.5 54.15 42.05C52.78 40.61 51.12 39.18 49.15 37.98C47.18 36.77 44.93 35.81 42.49 35.18C40.05 34.55 37.45 34.25 34.7 34.25C32.52 34.25 30.41 34.44 28.38 34.84C26.36 35.24 24.42 35.84 22.61 36.64C20.8 37.44 19.12 38.43 17.6 39.57C16.09 40.71 14.74 41.99 13.57 43.35C12.4 44.72 11.4 46.16 10.54 47.63C9.69 49.11 8.98 50.62 8.39 52.14C7.81 53.65 7.33 55.18 6.95 56.69C6.57 58.21 6.28 59.71 6.06 61.2C5.84 62.69 5.68 64.16 5.59 65.59C5.49 67.03 5.45 68.44 5.45 69.8A9.45 9.45 0 0 0 24.35 69.8ZM74.3 30.65a9.9 9.9 0 1 0 19.8 0a9.9 9.9 0 1 0 -19.8 0Z"/></svg>KNOW IDEA</div>
         <nav class="nav" aria-label="主なページ">
           <a href="#screen" aria-current="page">会社の状態</a>
           <a href="#wait">オーナー待ち</a>
@@ -412,7 +413,7 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 <section class="sec" id="color">
   <div class="wrap">
     <h2>色</h2>
-    <p class="lead">灰は彩度 0.005 以下で、青にも黄にも寄せない。主の色は青 1 色だけで、使うのは主のボタンと今いる所(ナビの現在地、focus の輪)に限る。ダークは明るさと彩度を別に決め直していて、ライトの反転ではない。</p>
+    <p class="lead">灰は彩度 0.005 以下で、青にも黄にも寄せない。主の色は青緑(#016c6c)1 色だけで、使うのは主のボタンと今いる所(ナビの現在地、focus の輪)に限る。ダークは明るさと彩度を別に決め直していて、ライトの反転ではない。</p>
     <div class="stack-v">
       <div class="scroll"><table style="min-width:640px">
         <thead><tr><th>トークン</th><th>役</th><th>ライト OKLCH / sRGB</th><th>ダーク OKLCH / sRGB</th></tr></thead>
@@ -424,9 +425,9 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 <tr><td class="mono">--text-muted</td><td>弱い文字</td><td><span class="sw" style="background:#515355"></span><span class="mono">oklch(0.440 0.005 262)</span><br><span class="mono dim">#515355</span></td><td><span class="sw" style="background:#afb1b4"></span><span class="mono">oklch(0.760 0.005 262)</span><br><span class="mono dim">#afb1b4</span></td></tr>
 <tr><td class="mono">--line</td><td>線</td><td><span class="sw" style="background:#d9dbdd"></span><span class="mono">oklch(0.890 0.004 262)</span><br><span class="mono dim">#d9dbdd</span></td><td><span class="sw" style="background:#343538"></span><span class="mono">oklch(0.330 0.005 262)</span><br><span class="mono dim">#343538</span></td></tr>
 <tr><td class="mono">--line-strong</td><td>強い線(入力欄の枠)</td><td><span class="sw" style="background:#7e8083"></span><span class="mono">oklch(0.600 0.005 262)</span><br><span class="mono dim">#7e8083</span></td><td><span class="sw" style="background:#7e8083"></span><span class="mono">oklch(0.600 0.005 262)</span><br><span class="mono dim">#7e8083</span></td></tr>
-<tr><td class="mono">--primary</td><td>主</td><td><span class="sw" style="background:#0262ab"></span><span class="mono">oklch(0.490 0.138 250)</span><br><span class="mono dim">#0262ab</span></td><td><span class="sw" style="background:#68b2ef"></span><span class="mono">oklch(0.740 0.115 245)</span><br><span class="mono dim">#68b2ef</span></td></tr>
-<tr><td class="mono">--primary-hover</td><td>主の hover</td><td><span class="sw" style="background:#00518f"></span><span class="mono">oklch(0.430 0.122 250)</span><br><span class="mono dim">#00518f</span></td><td><span class="sw" style="background:#82c5fd"></span><span class="mono">oklch(0.800 0.105 245)</span><br><span class="mono dim">#82c5fd</span></td></tr>
-<tr><td class="mono">--on-primary</td><td>主の上の文字</td><td><span class="sw" style="background:#fbfcfd"></span><span class="mono">oklch(0.990 0.002 262)</span><br><span class="mono dim">#fbfcfd</span></td><td><span class="sw" style="background:#0e1216"></span><span class="mono">oklch(0.180 0.010 250)</span><br><span class="mono dim">#0e1216</span></td></tr>
+<tr><td class="mono">--primary</td><td>主</td><td><span class="sw" style="background:#016c6c"></span><span class="mono">oklch(0.481 0.082 195)</span><br><span class="mono dim">#016c6c</span></td><td><span class="sw" style="background:#4cbfbf"></span><span class="mono">oklch(0.740 0.103 195)</span><br><span class="mono dim">#4cbfbf</span></td></tr>
+<tr><td class="mono">--primary-hover</td><td>主の hover</td><td><span class="sw" style="background:#015757"></span><span class="mono">oklch(0.414 0.070 195)</span><br><span class="mono dim">#015757</span></td><td><span class="sw" style="background:#70d0d0"></span><span class="mono">oklch(0.799 0.091 195)</span><br><span class="mono dim">#70d0d0</span></td></tr>
+<tr><td class="mono">--on-primary</td><td>主の上の文字</td><td><span class="sw" style="background:#fbfcfd"></span><span class="mono">oklch(0.990 0.002 262)</span><br><span class="mono dim">#fbfcfd</span></td><td><span class="sw" style="background:#0c1515"></span><span class="mono">oklch(0.187 0.013 196)</span><br><span class="mono dim">#0c1515</span></td></tr>
 <tr><td class="mono">--success</td><td>成功</td><td><span class="sw" style="background:#026337"></span><span class="mono">oklch(0.440 0.108 155)</span><br><span class="mono dim">#026337</span></td><td><span class="sw" style="background:#5dd68f"></span><span class="mono">oklch(0.790 0.150 155)</span><br><span class="mono dim">#5dd68f</span></td></tr>
 <tr><td class="mono">--success-soft</td><td>成功の面</td><td><span class="sw" style="background:#ddf6e4"></span><span class="mono">oklch(0.950 0.035 155)</span><br><span class="mono dim">#ddf6e4</span></td><td><span class="sw" style="background:#143320"></span><span class="mono">oklch(0.290 0.050 155)</span><br><span class="mono dim">#143320</span></td></tr>
 <tr><td class="mono">--warn</td><td>注意</td><td><span class="sw" style="background:#804d0c"></span><span class="mono">oklch(0.470 0.100 65)</span><br><span class="mono dim">#804d0c</span></td><td><span class="sw" style="background:#f3b94c"></span><span class="mono">oklch(0.820 0.140 80)</span><br><span class="mono dim">#f3b94c</span></td></tr>
@@ -446,16 +447,16 @@ td.num, th.num { text-align: right; white-space: nowrap; }
 <tr><td class="mono">text-muted / surface</td><td>弱い文字(面の上)</td><td class="num">4.5</td><td class="num">7.60</td><td class="num">7.76</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">text-muted / surface-2</td><td>表の見出し</td><td class="num">4.5</td><td class="num">6.58</td><td class="num">6.88</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">text / surface-2</td><td>コードブロック</td><td class="num">4.5</td><td class="num">14.70</td><td class="num">12.63</td><td><span class="tag t-ok">合格</span></td></tr>
-<tr><td class="mono">primary / surface</td><td>今いる所の文字</td><td class="num">4.5</td><td class="num">6.19</td><td class="num">7.31</td><td><span class="tag t-ok">合格</span></td></tr>
-<tr><td class="mono">on-primary / primary</td><td>主のボタン</td><td class="num">4.5</td><td class="num">6.13</td><td class="num">8.24</td><td><span class="tag t-ok">合格</span></td></tr>
-<tr><td class="mono">on-primary / primary-hover</td><td>主のボタン hover</td><td class="num">4.5</td><td class="num">7.94</td><td class="num">10.17</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">primary / surface</td><td>今いる所の文字</td><td class="num">4.5</td><td class="num">6.15</td><td class="num">7.56</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">on-primary / primary</td><td>主のボタン</td><td class="num">4.5</td><td class="num">6.08</td><td class="num">8.39</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">on-primary / primary-hover</td><td>主のボタン hover</td><td class="num">4.5</td><td class="num">8.17</td><td class="num">10.25</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">success / success-soft</td><td>成功のタグ</td><td class="num">4.5</td><td class="num">6.47</td><td class="num">7.53</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">warn / warn-soft</td><td>注意のタグ</td><td class="num">4.5</td><td class="num">6.19</td><td class="num">7.77</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">error / error-soft</td><td>誤りのタグ</td><td class="num">4.5</td><td class="num">5.99</td><td class="num">6.35</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">error / surface</td><td>誤りの文</td><td class="num">4.5</td><td class="num">6.76</td><td class="num">7.32</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">success / surface</td><td>成功の文</td><td class="num">4.5</td><td class="num">7.27</td><td class="num">9.12</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">warn / surface</td><td>注意の文</td><td class="num">4.5</td><td class="num">6.93</td><td class="num">9.42</td><td><span class="tag t-ok">合格</span></td></tr>
-<tr><td class="mono">primary / bg</td><td>focus の輪(UI)</td><td class="num">3.0</td><td class="num">5.82</td><td class="num">8.08</td><td><span class="tag t-ok">合格</span></td></tr>
+<tr><td class="mono">primary / bg</td><td>focus の輪(UI)</td><td class="num">3.0</td><td class="num">5.77</td><td class="num">8.35</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">line-strong / surface</td><td>入力欄の枠(UI)</td><td class="num">3.0</td><td class="num">3.90</td><td class="num">4.21</td><td><span class="tag t-ok">合格</span></td></tr>
 <tr><td class="mono">error / surface(枠)</td><td>誤りの入力欄の枠(UI)</td><td class="num">3.0</td><td class="num">6.76</td><td class="num">7.32</td><td><span class="tag t-ok">合格</span></td></tr>
 
@@ -643,7 +644,7 @@ td.num, th.num { text-align: right; white-space: nowrap; }
     <h2>選んだ理由</h2>
     <div class="stack-v">
       <p>この会社の画面は、routine、PR、待ちの件数を毎朝一度に見る道具なので、余白より表の読みやすさを取り、時刻と PR 番号を等幅にして縦に通した。</p>
-      <p>色の温度を灰で止めたのは、状態の緑、黄、赤を迷わず読ませるため。主の青は主のボタンと今いる所だけで、成功の緑と並んでも混ざらない。</p>
+      <p>色の温度を灰で止めたのは、状態の緑、黄、赤を迷わず読ませるため。主の青緑は主のボタンと今いる所だけに使い、成功の緑とは色の明るさと彩度をずらして、並んでも混ざらないようにした。</p>
       <p>名前を持たない既定の見た目にならないよう、Plex の日本語と等幅を同じ家族でそろえ、影は浮くメニューだけ、区切りは枠 1 本にした。</p>
     </div>
   </div>
