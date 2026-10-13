@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const dist = resolve(fileURLToPath(new URL("../dist/", import.meta.url)));
 const failedRequests = [];
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".svg": "image/svg+xml", ".json": "application/json" };
+const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".svg": "image/svg+xml", ".json": "application/json", ".png": "image/png" };
 
 function findChromium() {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
@@ -40,13 +40,21 @@ function pagesIn(dir, rel = "") {
   return out.sort();
 }
 
+// 見つからない URL には、GitHub Pages と同じく 404.html を 404 で返す。
+// 404.html の <base href> は公開先のサブパス(site.config.mjs)なので、ここでは配っている場所(PREFIX)に差し替える
+const notFound = (res) => {
+  const html = readFileSync(join(dist, "404.html"), "utf8").replace(/<base href="[^"]*">/, `<base href="${PREFIX}">`);
+  res.writeHead(404, { "content-type": types[".html"] });
+  res.end(html);
+};
 const server = createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, "http://x").pathname);
   if (!p.startsWith(PREFIX)) { res.writeHead(404); res.end("not found"); return; }
   p = p.slice(PREFIX.length - 1);
   if (p.endsWith("/")) p += "index.html";
   const f = join(dist, p);
-  if (!f.startsWith(dist) || !existsSync(f) || statSync(f).isDirectory()) { res.writeHead(404); res.end("not found"); return; }
+  if (!f.startsWith(dist) || !existsSync(f) || statSync(f).isDirectory()) { if (p.endsWith(".html") || !extname(p)) notFound(res); else { res.writeHead(404); res.end("not found"); } return; }
+  if (f === join(dist, "404.html")) { res.writeHead(200, { "content-type": types[".html"] }); res.end(readFileSync(f, "utf8").replace(/<base href="[^"]*">/, `<base href="${PREFIX}">`)); return; }
   res.writeHead(200, { "content-type": types[extname(f)] ?? "application/octet-stream" });
   res.end(readFileSync(f));
 });
@@ -60,7 +68,8 @@ const report = (ok, msg) => { if (!ok) fail++; console.log((ok ? "ok  " : "NG  "
 
 async function open(ctx, path, errors) {
   const page = await ctx.newPage();
-  page.on("console", (m) => { if (m.type() === "error") errors.push(`console: ${m.text()}`); });
+  // 読み込んだ文書そのものが 404 のときの行(わざと開く 404 のページ)は誤りに数えない
+  page.on("console", (m) => { if (m.type() === "error" && !(m.location().url === origin + path && /status of 404/.test(m.text()))) errors.push(`console: ${m.text()}`); });
   page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
   // 外のホスト(Google Fonts)は空で返す。ここでは見た目の確かめだけ
   await page.route((u) => !u.href.startsWith(origin), (route) => route.fulfill({ status: 200, contentType: "text/css", body: "" }));
@@ -236,14 +245,106 @@ await kb("ナビゲーションのドロワー(390px で開く、Esc、押して
   await page.waitForURL(/components\/card\.html/);
 }, { width: 390, height: 844 });
 
-await kb("検索(入力、矢印、Enter で移る)", "index.html", async (page) => {
-  const q = page.getByRole("combobox", { name: "Search components" });
-  await q.fill("chip");
+await kb("検索(/ で開く、日本語と英語、矢印、Enter で移る、Esc で閉じて戻る)", "index.html", async (page) => {
+  const dlg = page.locator("#docs-sd");
+  assert(!(await dlg.isVisible()), "初めから検索が開いている");
+  await page.keyboard.press("/");
+  await dlg.waitFor({ state: "visible" });
+  assert(await page.evaluate(() => document.activeElement?.id === "docs-q"), "開いても入力欄に focus が入らない");
+  const q = page.getByRole("combobox", { name: "Search" });
+  await q.fill("tarball");
   const opts = page.getByRole("option");
+  await opts.first().waitFor({ state: "visible" });
+  assert((await opts.count()) >= 2, "tarball で 2 件以上出ない");
+  await q.fill("チップ");
+  await q.fill("chip");
+  await opts.first().waitFor({ state: "visible" });
+  assert((await opts.first().textContent()).includes("Chip"), "chip の 1 件目が Chip でない");
+  await q.fill("zzzzqqqq");
+  await page.getByText("No results", { exact: true }).first().waitFor({ state: "visible" });
+  await page.keyboard.press("Escape");
+  await dlg.waitFor({ state: "hidden" });
+  assert(await page.evaluate(() => !document.activeElement?.closest("#docs-sd")), "閉じた後も focus が検索の中にある");
+  await page.getByRole("button", { name: "Search" }).focus();
+  await press(page, "Enter");
+  await dlg.waitFor({ state: "visible" });
+  await press(page, "Escape");
+  await dlg.waitFor({ state: "hidden" });
+  assert(await page.evaluate(() => document.activeElement?.hasAttribute("data-docs-search-open")), "ボタンから開いて閉じた後に focus がボタンへ戻らない");
+  await page.keyboard.press("Control+k");
+  await dlg.waitFor({ state: "visible" });
+  await q.fill("chip");
   await opts.first().waitFor({ state: "visible" });
   await press(page, "ArrowDown");
   await press(page, "Enter");
   await page.waitForURL(/components\/chip\.html/);
+});
+
+await kb("検索(日本語の語、節への移動、深い場所でも索引を読む)", "components/button.html", async (page) => {
+  await page.getByRole("button", { name: "Search" }).click();
+  await page.locator("#docs-sd").waitFor({ state: "visible" });
+  await page.getByRole("combobox", { name: "Search" }).fill("履歴");
+  await page.getByRole("option").first().waitFor({ state: "visible" });
+  await page.getByRole("combobox", { name: "Search" }).fill("changelog");
+  const first = page.getByRole("option").first();
+  await first.waitFor({ state: "visible" });
+  await first.locator("a").click();
+  await page.waitForURL(/changelog\.html/);
+  const idx = await page.evaluate(async () => (await fetch(new URL("search-index.json", document.baseURI))).status);
+  assert(idx === 200, "索引が読めない");
+});
+
+await kb("前後の移動(Previous / Next)", "components/button.html", async (page) => {
+  const nav = page.getByRole("navigation", { name: "Previous and next pages" });
+  const prev = nav.getByRole("link", { name: /Previous/ });
+  const next = nav.getByRole("link", { name: /Next/ });
+  assert((await prev.count()) === 1 && (await next.count()) === 1, "前後のリンクが無い");
+  await next.focus();
+  await press(page, "Enter");
+  await page.waitForURL((u) => /components\/[a-z-]+\.html/.test(u.pathname) && !u.pathname.endsWith("/button.html"));
+  await page.getByRole("navigation", { name: "Previous and next pages" }).getByRole("link", { name: /Previous/ }).click();
+  await page.waitForURL((u) => u.pathname.endsWith("/components/button.html"));
+});
+
+await kb("前後の移動(先頭は Next だけ、末尾は Previous だけ)", "index.html", async (page) => {
+  const nav = page.getByRole("navigation", { name: "Previous and next pages" });
+  assert((await nav.getByRole("link", { name: /Previous/ }).count()) === 0, "先頭に Previous がある");
+  assert((await nav.getByRole("link", { name: /Next/ }).count()) === 1, "先頭に Next が無い");
+  await page.goto(page.url().replace("index.html", "changelog.html"));
+  const n2 = page.getByRole("navigation", { name: "Previous and next pages" });
+  assert((await n2.getByRole("link", { name: /Next/ }).count()) === 0, "末尾に Next がある");
+});
+
+await kb("Edit this page と版、メタ(OGP、ファビコン)", "components/button.html", async (page) => {
+  const edit = await page.getByRole("link", { name: "Edit this page" }).getAttribute("href");
+  assert(/^https:\/\/github\.com\/[^/]+\/[^/]+\/edit\/[^/]+\/apps\/docs\/src\/data\/components\/input\.mjs$/.test(edit), "編集のリンクの形が違う: " + edit);
+  assert((await page.locator("footer.docs-foot").textContent()).match(/v\d+\.\d+\.\d+/), "版の番号が無い");
+  const meta = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll('meta[property^="og:"]')].map((m) => [m.getAttribute("property"), m.content])));
+  assert(meta["og:title"] && meta["og:description"] && /^https?:\/\/.+\/og\.png$/.test(meta["og:image"]), "OGP が足りない: " + JSON.stringify(meta));
+  assert(meta["og:image:width"] === "1200" && meta["og:image:height"] === "630", "OGP の画像の大きさの指定が違う");
+  const icons = await page.evaluate(() => [...document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]')].map((l) => l.href));
+  assert(icons.length === 3, "ファビコンの link が 3 つ無い");
+  for (const u of icons) { const st = await page.evaluate(async (x) => (await fetch(x)).status, u); assert(st === 200, "ファビコンが読めない: " + u); }
+  const og = await page.evaluate(() => document.querySelector('meta[property="og:image"]').content);
+  const png = readFileSync(join(dist, "og.png"));
+  assert(png.readUInt32BE(16) === 1200 && png.readUInt32BE(20) === 630, "og.png が 1200x630 でない");
+  assert(og.endsWith("/og.png"), "og:image の道");
+});
+
+await kb("404(深い場所の見つからない URL。道が壊れない、リンクで戻れる)", "components/nope/deeper/missing.html", async (page) => {
+  assert((await page.locator("h1").textContent()) === "Page not found", "404 の見出しが出ない");
+  const css = await page.evaluate(() => getComputedStyle(document.body).fontSize);
+  assert(css === "16px" || parseFloat(css) > 0, "CSS が読めていない");
+  assert((await page.locator(".docs-nav a").count()) > 20, "サイドメニューが出ない");
+  await page.getByRole("link", { name: "Components", exact: true }).last().click();
+  await page.waitForURL(/\/a\/b\/components\.html/);
+});
+
+await kb("404(検索が深い場所でも開く)", "components/nope/deeper/missing.html", async (page) => {
+  await page.keyboard.press("Control+k");
+  await page.locator("#docs-sd").waitFor({ state: "visible" });
+  await page.getByRole("combobox", { name: "Search" }).fill("Dialog");
+  await page.getByRole("option").first().waitFor({ state: "visible" });
 });
 
 await kb("ダークとライトの切り替え", "index.html", async (page) => {
