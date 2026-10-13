@@ -1,0 +1,104 @@
+{
+  "color": {
+    "bg": {
+      "$value": "{ref.gray.50}",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "{ref.gray.25}",
+      "$type": "color"
+    },
+    "surface-2": {
+      "$value": "{ref.gray.100}",
+      "$type": "color"
+    },
+    "text": {
+      "$value": "{ref.gray.900}",
+      "$type": "color"
+    },
+    "text-muted": {
+      "$value": "{ref.gray.600}",
+      "$type": "color"
+    },
+    "line": {
+      "$value": "{ref.gray.200}",
+      "$type": "color"
+    },
+    "line-strong": {
+      "$value": "{ref.gray.400}",
+      "$type": "color"
+    },
+    "primary": {
+      "$value": "{ref.primary.700}",
+      "$type": "color"
+    },
+    "primary-hover": {
+      "$value": "{ref.primary.800}",
+      "$type": "color"
+    },
+    "on-primary": {
+      "$value": "{ref.gray.25}",
+      "$type": "color"
+    },
+    "focus": {
+      "$value": "{ref.primary.700}",
+      "$type": "color"
+    },
+    "success": {
+      "$value": "{ref.success.a.fg}",
+      "$type": "color"
+    },
+    "success-soft": {
+      "$value": "{ref.success.a.soft}",
+      "$type": "color"
+    },
+    "warn": {
+      "$value": "{ref.warn.fg}",
+      "$type": "color"
+    },
+    "warn-soft": {
+      "$value": "{ref.warn.soft}",
+      "$type": "color"
+    },
+    "error": {
+      "$value": "{ref.error.fg}",
+      "$type": "color"
+    },
+    "error-soft": {
+      "$value": "{ref.error.soft}",
+      "$type": "color"
+    }
+  },
+  "shadow": {
+    "pop": {
+      "$value": {
+        "color": {
+          "colorSpace": "oklch",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "alpha": 0.14
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 4,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 12,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "$type": "shadow"
+    }
+  }
+}

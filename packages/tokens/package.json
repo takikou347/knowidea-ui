@@ -1,0 +1,13 @@
+{
+  "name": "tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node scripts/check-contrast.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "5.6.1"
+  }
+}
