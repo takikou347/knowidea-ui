@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { themeStyle, pairRatio } from "../../lib/theme.mjs";
+const auto = `/* tokens.css の中身(抜粋)。OS の設定に従い、data-theme で上書きできる */
+:root { --color-bg: oklch(0.9729 0.0029 264.5); /* ... */ }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --color-bg: oklch(0.191 0.0043 264.5); /* ... */ }
+}
+:root[data-theme="dark"] { --color-bg: oklch(0.191 0.0043 264.5); /* ... */ }`;
+const toggle = `// 3 つの状態: 自動(属性なし)、ライト、ダーク
+const root = document.documentElement;
+function setTheme(mode) {            // "light" | "dark" | "auto"
+  if (mode === "auto") root.removeAttribute("data-theme");
+  else root.dataset.theme = mode;
+  try { localStorage.setItem("theme", mode); } catch {}
+}
+// ちらつかないよう、<head> の先頭の小さな script で、保存した値を先に当てる`;
+const scoped = `<section data-theme="dark">
+  <!-- この中だけダーク -->
+</section>`;
+const pairs = [["text", "bg", "本文と背景"], ["text-muted", "bg", "補足の文字と背景"], ["primary", "bg", "主の色と背景"], ["error", "bg", "失敗の色と背景"]];
+---
+<Base title="ダークモード" description="ライトとダークは別に決めた値">
+  <h1>ダークモード</h1>
+  <p class="lead">ダークは、ライトを反転したものではない。ライトとダークで、色を別々に決めてある。</p>
+  <h2 id="how">切り替え</h2>
+  <p>既定は OS の設定に従う。<code>&lt;html data-theme="light"&gt;</code> か <code>"dark"</code> を付けると固定できる。属性が無ければ自動になる。</p>
+  <Code code={auto} lang="css" label="ダークの切り替えの CSS" />
+  <Code code={toggle} lang="js" label="切り替えのコード" />
+  <h2 id="scoped">一部だけ</h2>
+  <p>ダークの値は <code>:root</code> にだけ書いてあるので、要素に <code>data-theme</code> を付けても一部だけは変わらない。一部だけ変えるときは、その要素に変数をまとめて当てる(このサイトの見本の面がそうしている)。</p>
+  <Code code={scoped} lang="html" label="一部だけの例" />
+  <h2 id="contrast">コントラスト</h2>
+  <p>本文は 4.5:1 以上、境界と focus の輪は 3:1 以上を守る。<code>pnpm --filter @knowidea/tokens check</code> が全部の組を確かめる。</p>
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>組</th><th class="num">ライト</th><th class="num">ダーク</th></tr></thead>
+      <tbody>{pairs.map(([f, b, l]) => <tr><td>{l}</td><td class="num">{pairRatio("light", f, b).toFixed(2)}:1</td><td class="num">{pairRatio("dark", f, b).toFixed(2)}:1</td></tr>)}</tbody>
+    </table>
+  </div>
+  <h2 id="rules">守ること</h2>
+  <ul class="plain">
+    <li>色は直接書かず、役割の変数(<code>var(--color-text)</code> など)で読む</li>
+    <li>影はダークで効きにくいので、面の明るさと線で奥行きを示す</li>
+    <li>画像と図は、ダークの面に置いたときも確かめる</li>
+  </ul>
+</Base>

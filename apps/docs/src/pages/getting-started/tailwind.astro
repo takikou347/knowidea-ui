@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const css = `@import "tailwindcss";
+@import "@knowidea/tokens/theme.css";    /* @theme に色、字、余白、角丸を渡す */
+@import "@knowidea/tokens/tokens.css";   /* ダークの値と、実際の変数 */
+@import "@knowidea/css/index.css";       /* 部品の見た目 */`;
+const use = `<div class="rounded-2 bg-surface border border-line p-4 text-text">
+  <button class="ki-button" data-variant="primary">完了にする</button>
+</div>`;
+---
+<Base title="Tailwind v4 で使う" description="トークンを Tailwind のユーティリティにする">
+  <h1>Tailwind v4 で使う</h1>
+  <p class="lead">トークンを <code>@theme</code> に渡すので、<code>bg-surface</code> や <code>text-text-muted</code> のようなユーティリティが、同じ変数を読む。</p>
+  <h2 id="css">CSS</h2>
+  <Code code={css} lang="css" label="Tailwind の CSS" />
+  <h2 id="use">使う</h2>
+  <Code code={use} lang="html" label="Tailwind での使い方" />
+  <p>ダークは <code>tokens.css</code> が同じ変数を上書きするので、<code>dark:</code> を書き足さなくていい。</p>
+  <h2 id="theme">テーマ</h2>
+  <p>クラスを 1 つ作り、変数を上書きする。生成は <a href={href("customization/theme")}>テーマ</a>の試す所が出す。</p>
+  <p>動く例は、リポジトリの <code>examples/tailwind</code>。</p>
+</Base>

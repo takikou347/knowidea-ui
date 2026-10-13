@@ -1,0 +1,70 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import ThemeCreator from "../../components/ThemeCreator.tsx";
+import { themeStyle, colorNames, value, oklchStr } from "../../lib/theme.mjs";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const toObj = (theme) => Object.fromEntries(colorNames.map((k) => [`--color-${k}`, oklchStr(value(theme, k))]));
+const baseLight = toObj("light");
+const baseDark = toObj("dark");
+
+const provider = `import { ThemeProvider } from "@knowidea/ui";
+
+<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+  <App />
+</ThemeProvider>`;
+const create = `import { createTheme } from "@knowidea/tokens/create-theme";
+
+const t = createTheme({ primary: "#016C6C", radius: 4 });
+t.css(".brand");   // CSS 変数の上書きの文字列(ライトとダーク)
+t.warnings;       // コントラストが足りない組(空なら全部合格)`;
+const plain = `.brand {
+  --color-primary: oklch(0.4811 0.0819 194.7749);
+  --color-primary-hover: oklch(0.4111 0.0707 194.7749);
+  --color-on-primary: oklch(0.9946 0.0026 286.4);
+  --radius-2: 6px;
+}`;
+const rows = [
+  ["primary", "色", "主の色。#rrggbb か oklch(L C h)", "ブランドの色 #016C6C"],
+  ["primaryDark", "色", "ダークの主の色。無ければ同じ色相で明るくして作る", "自動"],
+  ["radius", "数 | \"none\" | \"sm\" | \"md\" | \"lg\" | \"6px\"", "中の角丸。小は半分、大は 1.5 倍", "4"],
+  ["density", "\"compact\" | \"comfortable\"", "余白(--space-2 から 6)と、本文の行の高さ", "\"compact\""],
+  ["fontSize", "12 から 20", "本文の字の大きさ(px)。小さい字と見出しの段も、これに合わせて動く", "14"],
+];
+---
+<Base title="テーマ" description="主の色、角丸、密度、字の大きさを変える">
+  <h1>テーマ</h1>
+  <p class="lead">変えられるのは 4 つ。主の色、角丸、密度、本文の字の大きさ。ほかの色は変えず、ライトとダークの別の値のまま使う。</p>
+  <p>方法は 2 つある。CSS 変数を上書きするか、<code>ThemeProvider</code> に値を渡す。どちらも同じ変数を書き換える。</p>
+
+  <h2 id="creator">試す</h2>
+  <p>値を動かすと、下の部品がその場で変わる。下の CSS と <code>ThemeProvider</code> のコードをそのまま写せる。主の色から、hover の色と主の面に載せる文字の色を OKLCH で作り、4.5:1 に届かないと知らせる。</p>
+  <ThemeCreator client:load baseLight={baseLight} baseDark={baseDark} />
+
+  <h2 id="provider">ThemeProvider</h2>
+  <p>React では、囲んだ中だけに効く。外には漏れない。値が変わるとその場で描き直す。</p>
+  <Code code={provider} label="ThemeProvider の例" />
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>項目</th><th>型</th><th>意味</th><th>既定</th></tr></thead>
+      <tbody>{rows.map((r) => <tr><td><code>{r[0]}</code></td><td><code>{r[1]}</code></td><td>{r[2]}</td><td>{r[3]}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <h2 id="plain">CSS だけで変える</h2>
+  <p>React を使わないなら、変数を書き換えるだけでいい。クラスでも <code>[data-theme]</code> でも、好きな選び方でよい。</p>
+  <Code code={plain} lang="css" label="CSS 変数の上書き" />
+  <p>ダークの値も要るので、書き出しは <code>createTheme(...).css(".brand")</code> に任せるのが早い。</p>
+  <Code code={create} label="createTheme の例" />
+
+  <h2 id="derive">色の作り方</h2>
+  <ul class="plain">
+    <li>hover は明るさ(OKLCH の L)を 0.07 だけ暗くする。暗すぎる色は明るくする</li>
+    <li>主の面の文字は、明るい文字と暗い文字の候補から、比が高い方を選ぶ</li>
+    <li>ダークは反転せず、同じ色相で明るさ 0.74 以上に持ち上げ、彩度を 1.25 倍にして別に作る</li>
+    <li>色域を出る色は、彩度を下げて収める</li>
+    <li>主の色と背景、主の面と文字のどちらかが 4.5:1 に届かないと、<code>warnings</code> に入る。<code>ThemeProvider</code> は <code>console.warn</code> に出す</li>
+  </ul>
+  <p>ほかの変数は<a href={href("customization/tokens/color")}>トークン</a>、ダークの扱いは<a href={href("customization/dark-mode")}>ダークモード</a>を見る。</p>
+</Base>

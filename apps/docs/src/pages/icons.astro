@@ -1,0 +1,30 @@
+---
+import Base from "../layouts/Base.astro";
+import Code from "../components/Code.astro";
+import IconBrowser from "../components/IconBrowser.tsx";
+import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
+const react = `import { CalendarIcon, Icon } from "@knowidea/icons/react";
+
+<CalendarIcon />                       {/* 名前ごとの部品 */}
+<Icon name="calendar" weight="bold" /> {/* 名前で選ぶ。16px の所は bold */}
+<CalendarIcon title="予定" />          {/* title を渡すと読み上げる。無ければ飾り */}`;
+const html = `<svg class="ki-icon" aria-hidden="true"><use href="/vendor/sprite.svg#calendar"/></svg>`;
+---
+<Base title="アイコン" description="用途で分けたアイコン。名前で探して写す">
+  <h1>アイコン</h1>
+  <p class="lead">{all.icons.length} 個。Phosphor を元に、用途の名前で付け直した。regular と bold の 2 つの太さがある。</p>
+  <h2 id="browse">探す</h2>
+  <IconBrowser client:load />
+  <h2 id="use">使う</h2>
+  <h3 id="use-react">React</h3>
+  <Code code={react} label="React のアイコンの例" />
+  <h3 id="use-html">素の HTML</h3>
+  <Code code={html} lang="html" label="素の HTML のアイコンの例" />
+  <h2 id="rules">決まり</h2>
+  <ul class="plain">
+    <li>大きさは 16、20 の 2 つ。24 以上は使わない。16px では bold を使う</li>
+    <li>意味を持つアイコンには、文字を添えるか <code>aria-label</code> を付ける。飾りには何も付けない</li>
+    <li>名前は用途で付けてある(<code>approve</code>、<code>archive</code> など)。形の名前ではない</li>
+    <li>ライセンスは <code>packages/icons/dist/LICENSE-phosphor.txt</code></li>
+  </ul>
+</Base>

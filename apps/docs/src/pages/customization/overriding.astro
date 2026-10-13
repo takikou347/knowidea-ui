@@ -1,0 +1,41 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const vars = `/* 1. 変数を書き換える。いちばん安全 */
+.my-app { --color-primary: oklch(0.48 0.15 260); --radius-2: 6px; }`;
+const cls = `/* 2. 部品の変数で 1 つだけ変える(レイアウトの部品が持つ) */
+.my-list { --ki-gap: var(--space-5); }`;
+const own = `/* 3. クラスを足して上書きする。詳しさを揃え、@layer か後ろの順で勝たせる */
+.save-button.ki-button { min-width: 8rem; }`;
+const react = `import { Button } from "@knowidea/ui";
+
+<Button className="save-button" variant="primary">保存</Button>
+<Button style={{ minWidth: "8rem" }}>保存</Button>`;
+const tw = `<Button className="min-w-32">保存</Button>`;
+---
+<Base title="部品の上書き" description="変数、className、データ属性で変える">
+  <h1>部品の上書き</h1>
+  <p class="lead">変えたい量が小さい順に、3 つの手がある。上から順に試す。</p>
+  <h2 id="vars">1. 変数を書き換える</h2>
+  <p>色、角丸、余白、字は、どの部品も役割の名前の変数から読む。変数を書き換えれば、部品の全部が一緒に変わる。主の色だけなら<a href={href("customization/theme")}>テーマ</a>が早い。</p>
+  <Code code={vars} lang="css" label="変数の上書き" />
+  <h2 id="local">2. 部品の変数</h2>
+  <p>Stack、Grid のように、間隔などを変数で受ける部品がある(<code>--ki-gap</code>、<code>--ki-cols</code> など)。名前は各部品のページの「CSS のクラスと変数」に書いてある。</p>
+  <Code code={cls} lang="css" label="部品の変数の上書き" />
+  <h2 id="class">3. className と style</h2>
+  <p>React の部品は <code>className</code> と <code>style</code> を受ける。素の HTML ならクラスを足せばいい。</p>
+  <Code code={react} label="className の例" />
+  <Code code={own} lang="css" label="クラスを足す CSS" />
+  <p>Tailwind のユーティリティも使える。詳しさが同じなら後に読んだ方が勝つので、CSS の読む順に気をつける。</p>
+  <Code code={tw} label="Tailwind の例" />
+  <h2 id="variant">データ属性</h2>
+  <p>見た目の種類は <code>data-variant</code>、<code>data-tone</code>、<code>data-size</code> などの属性で選ぶ。状態は <code>data-disabled</code>、<code>data-loading</code> のような属性と、<code>aria-*</code> が表す。上書きするときも、この属性を選び方に使う。</p>
+  <h2 id="dont">しないこと</h2>
+  <ul class="plain">
+    <li>部品の内側の <code>__</code> のクラスを、深い選び方で書き換えない。更新で壊れる</li>
+    <li><code>outline</code> を消さない。focus の輪は 2px で、色を変えるときも隣の色と 3:1 以上にする</li>
+    <li>押せる所を 44px 未満にしない</li>
+  </ul>
+</Base>

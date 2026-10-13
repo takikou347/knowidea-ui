@@ -1,0 +1,39 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const add = `pnpm add @knowidea/ui @knowidea/css @knowidea/tokens @knowidea/icons
+# React の部品を使わず、CSS だけ使うなら、ui は要らない
+pnpm add @knowidea/css @knowidea/tokens @knowidea/icons`;
+const css = `/* エントリの CSS か、アプリの先頭で */
+import "@knowidea/tokens/tokens.css";   /* 色、字、余白、角丸の CSS 変数(ライトとダーク) */
+import "@knowidea/css/index.css";       /* 部品の見た目(ki- のクラス) */`;
+---
+<Base title="入れ方" description="4 つのパッケージと、読む CSS">
+  <h1>入れ方</h1>
+  <p class="lead">4 つのパッケージに分かれている。使う分だけ入れる。</p>
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>パッケージ</th><th>中身</th><th>要るとき</th></tr></thead>
+      <tbody>
+        <tr><td><code>@knowidea/tokens</code></td><td>CSS 変数(色、字、余白、角丸、影、動き)と、<code>createTheme</code></td><td>いつも</td></tr>
+        <tr><td><code>@knowidea/css</code></td><td>部品の見た目。<code>ki-</code> のクラスと <code>data-*</code> の属性。素の HTML で動く</td><td>いつも</td></tr>
+        <tr><td><code>@knowidea/ui</code></td><td>React の部品。土台は Base UI</td><td>React のとき</td></tr>
+        <tr><td><code>@knowidea/icons</code></td><td>SVG のアイコン、スプライト、React の部品</td><td>アイコンを使うとき</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="add">追加する</h2>
+  <Code code={add} lang="bash" label="追加するコマンド" />
+  <p>まだ公開していないので、今は pnpm のワークスペース(<code>workspace:*</code>)で使う。</p>
+  <h2 id="css">CSS を読む</h2>
+  <Code code={css} lang="ts" label="CSS を読むコード" />
+  <p>この 2 行で足りる。主の色を変えたいときは <a href={href("customization/theme")}>テーマ</a>へ。</p>
+  <h2 id="next">次に</h2>
+  <ul class="plain">
+    <li><a href={href("getting-started/react")}>使い方 React</a></li>
+    <li><a href={href("getting-started/html")}>素の HTML で使う</a></li>
+    <li><a href={href("getting-started/tailwind")}>Tailwind v4 で使う</a></li>
+  </ul>
+</Base>

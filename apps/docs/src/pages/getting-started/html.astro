@@ -1,0 +1,44 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const head = `<link rel="stylesheet" href="/vendor/tokens.css" />
+<link rel="stylesheet" href="/vendor/ki.css" />
+<script type="module" src="/vendor/ki.js"></script>`;
+const body = `<div class="ki-alert" data-tone="info">
+  <span class="ki-alert__icon"><svg class="ki-icon" aria-hidden="true"><use href="/vendor/sprite.svg#info"/></svg></span>
+  <div class="ki-alert__body"><p class="ki-alert__text">保存した。</p></div>
+</div>
+<button type="button" class="ki-button" data-variant="primary">完了にする</button>`;
+const dialog = `<button type="button" class="ki-button" data-ki-dialog-open="confirm">削除する</button>
+<dialog id="confirm" class="ki-dialog" aria-labelledby="confirm-title">
+  ...
+</dialog>`;
+---
+<Base title="素の HTML で使う" description="CSS だけで使う">
+  <h1>素の HTML で使う</h1>
+  <p class="lead">React も Tailwind も無しで使える。CSS を 2 つ読み、<code>ki-</code> のクラスを付ける。</p>
+  <h2 id="files">置くファイル</h2>
+  <div class="table-wrap">
+    <table class="docs-table">
+      <thead><tr><th>ファイル</th><th>場所(パッケージの中)</th></tr></thead>
+      <tbody>
+        <tr><td><code>tokens.css</code></td><td><code>@knowidea/tokens/dist/tokens.css</code></td></tr>
+        <tr><td><code>ki.css</code></td><td><code>@knowidea/css/dist/ki.css</code></td></tr>
+        <tr><td><code>ki.js</code></td><td><code>@knowidea/css/dist/ki.js</code>(任意。dialog の開閉と、写すボタン)</td></tr>
+        <tr><td><code>sprite.svg</code></td><td><code>@knowidea/icons/dist/sprite.svg</code>(アイコンを使うとき)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="head">head に書く</h2>
+  <Code code={head} lang="html" label="head の例" />
+  <h2 id="body">クラスと属性で書く</h2>
+  <p>見た目のちがいは <code>data-variant</code>、<code>data-tone</code> などの属性で選ぶ。クラスと属性は、各部品のページの「CSS のクラスと変数」に書いてある。</p>
+  <Code code={body} lang="html" label="素の HTML の例" />
+  <h2 id="enhance">ki.js</h2>
+  <p>JavaScript が要る動き(dialog の開閉、背景を押して閉じる、写すボタン)は、<code>data-ki-dialog-open</code> のような属性で呼ぶ。メニューやタブのような複雑な動きは React の部品を使う。</p>
+  <Code code={dialog} lang="html" label="dialog の例" />
+  <p class="demo-note">アイコンの <code>&lt;use href&gt;</code> は、ファイル(<code>file://</code>)では外部参照が効かない。静的サーバーで開く。</p>
+  <p>テーマは CSS 変数の上書きだけでできる。<a href={href("customization/overriding")}>部品の上書き</a>を見る。</p>
+</Base>

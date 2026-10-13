@@ -1,0 +1,41 @@
+---
+import Base from "../../layouts/Base.astro";
+import Code from "../../components/Code.astro";
+import { links } from "../../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+const basic = `import "@knowidea/tokens/tokens.css";
+import "@knowidea/css/index.css";
+import { Button, Alert, Stack } from "@knowidea/ui";
+
+export function Example() {
+  return (
+    <Stack gap={3}>
+      <Alert tone="info">保存した。</Alert>
+      <Button>完了にする</Button>
+    </Stack>
+  );
+}`;
+const theme = `import { ThemeProvider } from "@knowidea/ui";
+
+<ThemeProvider theme={{ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 }}>
+  <App />
+</ThemeProvider>`;
+const icons = `import { Icon } from "@knowidea/icons/react";
+
+<Icon name="calendar" />`;
+---
+<Base title="使い方 React" description="React の部品を使う">
+  <h1>使い方 React</h1>
+  <p class="lead">React 19 で使う。部品の動きは Base UI に任せ、見た目は <code>@knowidea/css</code> が持つ。</p>
+  <h2 id="basic">部品を置く</h2>
+  <Code code={basic} label="React の最小の例" />
+  <h2 id="theme">テーマをかける</h2>
+  <p><code>ThemeProvider</code> の下だけ、主の色、角丸、密度、字の大きさが変わる。ライトとダークの両方が作られる。</p>
+  <Code code={theme} label="ThemeProvider の例" />
+  <p>試しながら決めるなら <a href={href("customization/theme")}>テーマ</a>の試す所へ。</p>
+  <h2 id="icons">アイコン</h2>
+  <Code code={icons} label="アイコンの例" />
+  <p>一覧は <a href={href("icons")}>アイコン</a>。</p>
+  <h2 id="ssr">サーバー側の描画</h2>
+  <p>部品は <code>"use client"</code> を付けていない。Next.js の App Router では、使う側のファイルに <code>"use client"</code> を書く。Astro では <code>client:load</code> か <code>client:visible</code> を付ける。</p>
+</Base>
