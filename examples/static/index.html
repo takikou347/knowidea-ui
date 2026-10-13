@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- 素の HTML の例(Ruleru の公開サイトの形)。サーバーで開く(リポジトリの根から python3 -m http.server)。
+     file:// だと sprite の外部参照が効かない。実物は dist のファイルを同じ場所に置いて、相対の道を直す。 -->
+<html lang="ja" data-app="ruleru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>素の HTML の例</title>
+  <link rel="stylesheet" href="../../packages/tokens/dist/tokens.css" />
+  <link rel="stylesheet" href="../../packages/tokens/themes/ruleru.css" />
+  <link rel="stylesheet" href="../../packages/css/dist/ki.css" />
+  <style>
+    body { margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); font-size: var(--font-size-3); line-height: var(--font-line-height-3); }
+    main { max-width: 40rem; margin: 0 auto; padding: var(--space-5) var(--space-4); display: grid; gap: var(--space-5); }
+    h1 { margin: 0; font-size: var(--font-size-5); line-height: var(--font-line-height-5); }
+    .player { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-3); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>素の HTML の例</h1>
+    <div class="ki-banner" data-tone="info">
+      <span class="ki-banner__icon"><svg class="ki-icon" aria-hidden="true"><use href="../../packages/icons/dist/sprite.svg#info"/></svg></span>
+      <div class="ki-banner__body"><p class="ki-banner__text">トークンと部品の CSS だけで組んでいる。React も Tailwind も使わない。</p></div>
+    </div>
+    <div class="player">
+      <button type="button" class="ki-button ki-icon-button" aria-label="再生"><svg class="ki-icon" aria-hidden="true"><use href="../../packages/icons/dist/sprite.svg#play"/></svg></button>
+      <div><strong>今日の回</strong><br /><span class="ki-badge" data-numeric>12:30</span></div>
+    </div>
+    <blockquote class="ki-quote"><p>答えはまだ無い。だから試す。</p></blockquote>
+    <p><a class="ki-link" href="#">記事の一覧へ</a></p>
+  </main>
+  <script src="../../packages/css/dist/ki.js"></script>
+</body>
+</html>

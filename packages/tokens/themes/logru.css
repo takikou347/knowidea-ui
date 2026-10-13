@@ -1,0 +1,15 @@
+/* Logru(カレンダーのアプリ)。角丸を大きく、本文を 15px にし、触る所を広げる。
+   主の色は未決。#016C6C のまま使う。
+   案(決まるまで使わない。変えるときはライトとダークの両方で pnpm --filter tokens check と同じ比を満たす):
+     --color-primary: light-dark(oklch(0.46 0.12 255), oklch(0.74 0.1 255));
+   使い方: <html data-app="logru"> と tokens.css の後にこのファイルを読む。 */
+:root[data-app="logru"] {
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+  --font-size-3: 15px;
+  --font-size-2: 13px;
+  --font-line-height-3: 1.6;
+  --space-3: 14px;
+  --space-4: 18px;
+}

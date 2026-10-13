@@ -2,6 +2,9 @@
 import { nav } from "../nav.mjs";
 import "tokens/dist/tokens.css";
 import "@knowidea/css/index.css";
+import "tokens/themes/admin.css";
+import "tokens/themes/logru.css";
+import "tokens/themes/ruleru.css";
 import "../styles/global.css";
 import sprite from "icons/dist/sprite.svg?raw";
 const { title, description = "" } = Astro.props;
@@ -22,6 +25,8 @@ const path = Astro.url.pathname;
       try {
         var t = localStorage.getItem("ds-theme");
         if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+        var a = localStorage.getItem("ds-app");
+        if (a === "admin" || a === "logru" || a === "ruleru") document.documentElement.dataset.app = a;
       } catch (e) {}
     </script>
   </head>
@@ -32,7 +37,8 @@ const path = Astro.url.pathname;
       <aside class="side">
         <div class="side-head">
           <a class="brand" href="/">KNOW IDEA デザイン</a>
-          <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">テーマ: 自動</button>
+          <button type="button" class="theme-toggle" id="theme-toggle">テーマ: 自動</button>
+          <button type="button" class="theme-toggle" id="app-toggle">アプリ: 既定</button>
         </div>
         <nav aria-label="目次">
           <ul>
@@ -75,6 +81,18 @@ const path = Astro.url.pathname;
           show();
         });
         show();
+        var ab = document.getElementById("app-toggle");
+        var apps = ["", "logru", "ruleru"];
+        var alabel = { "": "既定", logru: "Logru", ruleru: "Ruleru" };
+        function acur() { var a = root.dataset.app; return a === "logru" || a === "ruleru" ? a : ""; }
+        function ashow() { ab.textContent = "アプリ: " + alabel[acur()]; }
+        ab.addEventListener("click", function () {
+          var next = apps[(apps.indexOf(acur()) + 1) % 3];
+          if (next) root.dataset.app = next; else delete root.dataset.app;
+          try { next ? localStorage.setItem("ds-app", next) : localStorage.removeItem("ds-app"); } catch (e) {}
+          ashow();
+        });
+        ashow();
       })();
     </script>
   </body>
