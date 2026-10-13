@@ -132,7 +132,7 @@ export const display = [
       [".ki-table__sort", "並べ替えの見出しのボタン"],
       [".ki-table__handle", "行の掴む所のボタン。data-active は掴んでいる間。見た目だけ。ドラッグの動きは React の Table だけが持つ"],
       ["th/td[data-handle]", "掴む所の列。狭い幅で横に動いても、左端に残る"],
-      ["tr[data-dragging]、tr[data-drop]", "持ち上げた行(弱い影)と、落とす位置の線(before、after)"],
+      ["tr[data-dragging]、tr[data-shift]", "持ち上げた行(弱い影)と、間でずれる行(落とす所に空きができる)"],
     ],
     vars: [["--color-line、--color-surface、--color-surface-2", "枠、行、見出しの背景"], ["--size-hit", "掴む所とチェックボックスの大きさ(44px)"], ["--color-focus", "focus の輪"]],
     a11y: [
