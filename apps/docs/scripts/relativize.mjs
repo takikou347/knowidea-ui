@@ -1,4 +1,6 @@
 // astro build の後に回す。出力した HTML の根からの道(/assets/...、/favicon.svg など)を、ページの深さに合わせた相対の道に直す。
+// og:image と canonical は絶対 URL(site.config.mjs の url)で、"/" で始まらないので、ここでは触らない。
+// 検索の索引(search-index.json)は build-search.mjs が作る。中の道は dist の根からの相対で、読む側が索引の場所を基準に解く。
 // これで dist/ を、静的に配れる任意の場所の下(例: https://example.com/a/b/)に置いても、アセットが壊れない。
 import { readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
@@ -16,9 +18,10 @@ let files = 0, changed = 0, left = 0;
     const prefix = depth === 0 ? "./" : "../".repeat(depth);
     const src = readFileSync(p, "utf8");
     // 引用符か ( の直後の /assets/ と /favicon.svg ... を相対にする
-    const out = src.replace(/(["'(=])\/(assets\/|favicon\.svg|sprite\.svg|mark\.svg|mark-white\.svg)/g, (_, q, rest) => q + prefix + rest);
+    const out = src.replace(/(["'(=])\/(assets\/|favicon\.svg|favicon-32\.png|apple-touch-icon\.png|sprite\.svg|mark\.svg|mark-white\.svg)/g, (_, q, rest) => q + prefix + rest);
     if (out !== src) { writeFileSync(p, out); changed++; }
-    const m = out.match(/(?:href|src|component-url|renderer-url|before-hydration-url)="\/(?!\/)[^"]*"/g);
+    // 404.html の <base href="/サブパス/"> だけは根からの道のまま残す(どの深さの URL で配られても、相対の道がこれを基準にするため)
+    const m = out.replace(/<base\b[^>]*>/g, "").match(/(?:href|src|component-url|renderer-url|before-hydration-url)="\/(?!\/)[^"]*"/g);
     if (m) { left += m.length; console.log("根からの道が残っている:", relative(dist, p), m.slice(0, 3).join(" ")); }
   }
 })(dist);
