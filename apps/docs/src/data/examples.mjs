@@ -12,7 +12,7 @@ pnpm release:pack      # release/ に 4 つの .tgz ができる`,
   // 使う側のプロジェクト。tarball を置く場所は vendor/
   copy: `# 使う側のプロジェクトで
 mkdir -p vendor
-cp /path/to/design-system/release/*.tgz vendor/`,
+cp /path/to/knowidea-ui/release/*.tgz vendor/`,
   pnpm: `pnpm add ./vendor/knowidea-*.tgz`,
   npm: `npm install ./vendor/knowidea-*.tgz`,
   css: `/* src/main.tsx など、アプリの入口で読み込む */
