@@ -3,7 +3,7 @@
   display: inline-block; flex: none;
   width: 1em; height: 1em; border-radius: 50%;
   border: 2px solid currentColor; border-right-color: transparent;
-  animation: ki-spin 800ms linear infinite;
+  animation: ki-spin var(--motion-duration-spin) linear infinite;
 }
 @keyframes ki-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {

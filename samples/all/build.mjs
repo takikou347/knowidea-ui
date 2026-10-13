@@ -61,6 +61,7 @@ ${style}
 </head>
 <body>
 <div id="root">${body}</div>
+<footer class="license"><h2>使った物のライセンス</h2><ul><li>Phosphor Icons(MIT)Copyright (c) 2023 Phosphor Icons</li><li>React(MIT)</li><li>Base UI(MIT)</li><li>IBM Plex(SIL OFL 1.1)Google Fonts から読む</li></ul></footer>
 <script>
 ${js}
 </script>

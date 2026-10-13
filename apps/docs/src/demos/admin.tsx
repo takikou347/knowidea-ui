@@ -11,11 +11,14 @@ const cards = { display: "grid", gap: "var(--space-3)", width: "100%", gridTempl
 
 export function Stats({ forceHover }: { forceHover?: boolean } = {}) {
   return (
-    <div style={cards}>
+    <div style={grid}>
+      <p className="muted" style={{ margin: 0 }}>見本の数</p>
+      <div style={cards}>
       <StatCard label="今日の使用量" icon="usage" value={412300} unit="トークン" delta={{ dir: "up", text: "+12%" }} spark={usageSpark} sparkLabel="直近 7 日の使用量" asOf="10/13 09:41" />
       <StatCard label="動いている Claude" icon="working" value={3} unit="/ 全体 9" delta={{ dir: "down", text: "-1" }} asOf="10/13 09:41" />
       <StatCard label="オーナー待ち" icon="owner-wait" value={2} unit="件" delta={{ dir: "none" }} asOf="10/13 07:52" />
       <StatCard label="今日の成果" icon="merge" value={4} unit="本" sub="PR 3、作品 1" delta={{ dir: "flat" }} asOf="10/13 09:41" stale staleLabel="古い数(GitHub は 2 時間まで)" />
+      </div>
     </div>
   );
 }
@@ -32,6 +35,7 @@ export function Sparks() {
 export function Trend({ type = "bar", compact }: { type?: "bar" | "line"; compact?: boolean }) {
   return (
     <div style={{ width: "100%" }}>
+      <p className="muted" style={{ margin: "0 0 var(--space-2)" }}>見本の数</p>
       <TrendChart data={usageDays} type={type} unit="トークン" ariaLabel="日ごとの使用量(30 日)" height={compact ? 140 : 200} breakdownTitle="部署ごとの内訳" emptyText="記録なし" />
     </div>
   );
@@ -44,6 +48,7 @@ export function TrendToggle() {
         <Button variant="secondary" aria-pressed={type === "bar"} icon={<Icon name="chart-bar" />} onClick={() => setType("bar")}>棒</Button>
         <Button variant="secondary" aria-pressed={type === "line"} icon={<Icon name="chart-line" />} onClick={() => setType("line")}>折れ線</Button>
       </div>
+      <p className="muted" style={{ margin: 0 }}>見本の数</p>
       <TrendChart data={usageDays} type={type} unit="トークン" ariaLabel="日ごとの使用量(30 日)" breakdownTitle="部署ごとの内訳" />
     </div>
   );

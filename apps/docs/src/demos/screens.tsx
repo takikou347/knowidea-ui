@@ -27,6 +27,7 @@ export function HomeScreen({ width, height }: { width: number; height: number })
     <div style={{ width, maxWidth: "100%" }}>
       <AppShell nav={nav} current="home" title="ホーム" asOf="10/13 09:41" frame={height} actions={top}>
         <Banner tone="warn" title="GitHub の数が古い">10/13 07:30 の数を出している。2 時間より古い。</Banner>
+        <p className="muted" style={{ margin: 0 }}>見本の数</p>
         <div className="ki-stats">
           <StatCard label="今日の使用量" icon="usage" value={412300} unit="トークン" delta={{ dir: "up", text: "+12%" }} spark={usageSpark} sparkLabel="直近 7 日の使用量" asOf="10/13 09:41" />
           <StatCard label="動いている Claude" icon="working" value={3} unit="/ 全体 9" delta={{ dir: "down", text: "-1" }} asOf="10/13 09:41" />
@@ -35,7 +36,7 @@ export function HomeScreen({ width, height }: { width: number; height: number })
         </div>
         <div className="ki-screen" data-cols="2">
           <div className="ki-screen__col">
-            <Section title="使用量の推移" action={
+            <Section title="使用量の推移" note="見本の数" action={
               <div className="ki-bar" role="group" aria-label="グラフの形">
                 <Button variant="secondary" aria-pressed={type === "bar"} icon={<Icon name="chart-bar" />} onClick={() => setType("bar")}>棒</Button>
                 <Button variant="secondary" aria-pressed={type === "line"} icon={<Icon name="chart-line" />} onClick={() => setType("line")}>折れ線</Button>

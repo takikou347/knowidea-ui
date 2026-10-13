@@ -9,6 +9,6 @@
 .ki-link:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .ki-link[data-tone="muted"] { color: var(--color-text-muted); }
 /* 文の外に単独で置くときは押せる大きさにする */
-.ki-link[data-standalone] { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); }
+.ki-link[data-standalone] { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); min-width: var(--size-hit); }
 .ki-link[aria-disabled="true"] { color: var(--color-text-muted); text-decoration-style: dotted; cursor: not-allowed; }
 .ki-link[data-loading] { cursor: progress; }

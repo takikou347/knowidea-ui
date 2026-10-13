@@ -2,7 +2,7 @@
    720px 未満: 上のバーと下のタブバー(iPhone)。720px 以上: サイドの目次(iPad)。 */
 .ki-shell {
   --ki-shell-h: 100dvh;
-  container: ki-shell / inline-size; min-height: var(--ki-shell-h); background: var(--color-bg); color: var(--color-text);
+  container: ki-shell / inline-size; width: 100%; box-sizing: border-box; min-height: var(--ki-shell-h); background: var(--color-bg); color: var(--color-text);
   font-size: var(--font-size-3); line-height: var(--font-line-height-3);
 }
 .ki-shell[data-frame] {

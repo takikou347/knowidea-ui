@@ -189,6 +189,14 @@
         },
         "$type": "duration",
         "$description": "状態が変わる時"
+      },
+      "spin": {
+        "$value": {
+          "value": 800,
+          "unit": "ms"
+        },
+        "$type": "duration",
+        "$description": "読み込み中の回転 1 周"
       }
     },
     "ease": {

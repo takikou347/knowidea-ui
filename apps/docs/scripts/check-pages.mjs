@@ -1,5 +1,6 @@
 // docs のビルド物を Chromium で開いて確かめる。
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
+//  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  2. キーボード: ダイアログ(閉じ込め、Esc)、タブ(矢印)、メニュー(矢印、Esc)
 // 使い方: pnpm --filter docs build の後に pnpm --filter docs check:pages
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -72,6 +73,38 @@ for (const [name, opts] of matrix) {
     const page = await open(ctx, path, errors);
     const { sw, iw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
     report(sw <= iw && errors.length === 0, `${name} ${path} scrollWidth ${sw} / ${iw}${errors.length ? "  " + errors.slice(0, 3).join(" | ") : ""}`);
+    await page.close();
+  }
+  await ctx.close();
+}
+
+// 1b. 押せる所の大きさ(390px)。除く: 文中の inline のリンク(行の高さで決まり、44px にできない)、sr-only の隠した物
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: "light" });
+  for (const path of pages) {
+    const page = await open(ctx, path, []);
+    const small = await page.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll('a[href], button, [role="tab"], [role="button"], input, select, textarea, summary')) {
+        const cs = getComputedStyle(el);
+        if (cs.visibility === "hidden" || cs.display === "none" || el.closest("[hidden], [aria-hidden='true'], [inert]")) continue;
+        if (el.tagName === "A" && cs.display === "inline" && el.parentElement && el.parentElement.textContent.trim() !== el.textContent.trim()) continue;
+        if (el.closest(".ki-chart__col")) continue; // 30 本の棒は 44px に収まらない。前の日と次の日のボタンで同じ操作ができる
+        let box = el;
+        if (el.tagName === "INPUT" && ["checkbox", "radio"].includes(el.type)) box = el.closest("label") ?? document.querySelector(`label[for="${el.id}"]`) ?? el; // 選ぶ枠は label 全体で押せる
+        if (getComputedStyle(el, "::after").position === "absolute") { // ::after で行全体に広げたリンクは、広げた先の箱で測る
+          let p = el.parentElement;
+          while (p && getComputedStyle(p).position === "static") p = p.parentElement;
+          if (p) box = p;
+        }
+        const r = box.getBoundingClientRect();
+        if (r.right < 0 || r.bottom < 0 || r.left >= innerWidth) continue; // 画面の外(スキップリンクは focus で出る)
+        if (r.width === 0 || r.height === 0) continue;
+        if (r.width < 43.5 || r.height < 43.5) out.push(`${el.tagName.toLowerCase()}${el.className && typeof el.className === "string" ? "." + el.className.split(" ")[0] : ""} ${Math.round(r.width)}x${Math.round(r.height)}${box !== el ? " in ." + String(box.className).split(" ")[0] : ""} 「${(el.getAttribute("aria-label") || el.textContent || "").trim().slice(0, 16)}」`);
+      }
+      return out;
+    });
+    report(small.length === 0, `390 押せる所 44px ${path}${small.length ? "  " + small.slice(0, 4).join(" | ") + (small.length > 4 ? ` ほか ${small.length - 4}` : "") : ""}`);
     await page.close();
   }
   await ctx.close();
