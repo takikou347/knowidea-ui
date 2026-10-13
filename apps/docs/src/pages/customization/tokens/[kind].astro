@@ -8,7 +8,7 @@ const kinds = {
   color: { name: "Color", lead: "役割を表す名前の変数だけを参照する。ライトとダークは別々に決めており、反転では作らない。" },
   typography: { name: "Typography", lead: "書体は、本文と見出し用の IBM Plex Sans JP と、数字とコード用の IBM Plex Mono の 2 つ。サイズは 5 段階。" },
   spacing: { name: "Spacing", lead: "4px を単位とした 7 段階。コンポーネントの間隔は、この段階から選択する。" },
-  radius: { name: "Radius", lead: "小さな角丸を 3 段階で用意している。大きな角丸を一律には使わない。" },
+  radius: { name: "Radius", lead: "角丸は 3 段階(4px、8px、12px)と、Chip 用の pill。大きさで段を分け、大きな角丸を一律には使わない。" },
   shadow: { name: "Shadow", lead: "影は、浮かび上がる要素(メニュー、ダイアログ、画面に固定されたバー)にだけ使う。" },
   motion: { name: "Motion", lead: "状態が変わるときだけ動かす。prefers-reduced-motion では動きを止める。" },
 };
@@ -141,11 +141,11 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
         <table class="docs-table">
           <thead><tr><th>Variable</th><th class="num">Value</th><th>Preview</th><th>Usage</th></tr></thead>
           <tbody>
-            {radii.map(([n, v]) => <tr><td><code>--radius-{n}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:24px;width:48px;border:1px solid var(--color-line-strong);background:var(--color-surface-2);border-radius:${v}`}></span></td><td>{n === "1" ? "バッジ、ステータス、小さな要素" : n === "2" ? "ボタン、入力欄、メニュー" : "カード、ダイアログ、表の枠"}</td></tr>)}
+            {radii.map(([n, v]) => <tr><td><code>--radius-{n}</code></td><td class="num">{v}</td><td><span style={`display:inline-block;height:24px;width:48px;border:1px solid var(--color-line-strong);background:var(--color-surface-2);border-radius:${v}`}></span></td><td>{n === "1" ? "Checkbox、Badge、Status、Skeleton など小さな部品" : n === "2" ? "Button、入力欄、Select、Alert、メニューの項目" : n === "3" ? "Card、Dialog、Menu、Table の枠など面" : "Chip(全体を丸める)。角丸 0 のテーマでは 0 になる"}</td></tr>)}
           </tbody>
         </table>
       </div>
-      <p>Theme の radius は中(<code>--radius-2</code>)の値で、小は半分、大は 1.5 倍になる。</p>
+      <p>Theme の radius は中(<code>--radius-2</code>)の値で、小は半分、大は 1.5 倍になる。既定の 8px は 4px、8px、12px になり、12px を超えると警告が出る。Focus の輪は角丸を持たず、要素の形に沿う。</p>
     </>
   )}
 

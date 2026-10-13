@@ -15,10 +15,10 @@ function App() {
       </div>
       <Stat label="件数" icon="list" value={1280} unit="件" delta={{ dir: "up", text: "+12%" }} />
       {/* ThemeProvider: この中だけ主の色と角丸を変える */}
-      <ThemeProvider theme={{ primary: "#3c5ba8", radius: 8 }}>
+      <ThemeProvider theme={{ primary: "#3c5ba8", radius: 12 }}>
         <div className="flex flex-wrap gap-3">
           <Button>別の主の色</Button>
-          <Button variant="secondary">角丸 8px</Button>
+          <Button variant="secondary">角丸 12px</Button>
         </div>
       </ThemeProvider>
     </main>

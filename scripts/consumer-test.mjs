@@ -89,7 +89,7 @@ const All = lazy(() => import("./all"));
 export default function App() {
   if (location.hash === "#all") return <Suspense fallback={null}><All /></Suspense>;
   return (
-    <ThemeProvider theme={{ primary: "${PRIMARY}", radius: 4, density: "compact", fontSize: 14 }}>
+    <ThemeProvider theme={{ primary: "${PRIMARY}", radius: 8, density: "compact", fontSize: 14 }}>
       <main style={{ padding: 16, display: "grid", gap: 16 }}>
         <ColorModeButton />
         <section id="doc-basic"><Basic /></section>
