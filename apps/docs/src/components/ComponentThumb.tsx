@@ -7,5 +7,5 @@ export default function ComponentThumb({ slug }: { slug: string }) {
   const p = (pick as Record<string, { fn: string }>)[slug];
   const C = p ? ((demos as Record<string, Record<string, unknown>>)[slug]?.[p.fn] as (() => React.JSX.Element) | undefined) : undefined;
   if (!C) return null;
-  return <div className="cp-fit"><C /></div>;
+  return <div className="cp-fit" data-slug={slug}><C /></div>;
 }
