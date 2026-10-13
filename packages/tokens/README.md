@@ -79,7 +79,7 @@ React 19、Tailwind v4、Vite の形。`examples/tailwind/` が同じ形で Vite
 import { createTheme } from "@knowidea/tokens/create-theme";
 const t = createTheme({ primary: "#016C6C", radius: 4, density: "compact", fontSize: 14 });
 t.css(".brand");   // クラスの下に効く CSS(ライトとダークの両方)。":root" や "[data-theme=x]" も渡せる
-t.warnings;        // コントラストが 4.5:1 に届かない組
+t.warnings;        // 4.5:1 に届かない組(主の色と hover を bg、surface、surface-2 の上で、主の面の文字を主と hover の上で)。角丸 8px 超も入る
 ```
 
 - hover の色は OKLCH の明るさを 0.07 ずらして作る。主の面の文字は、明るい文字と暗い文字から比が高い方を選ぶ

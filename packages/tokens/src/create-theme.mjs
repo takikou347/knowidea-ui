@@ -6,8 +6,8 @@
 // 基準の面の値は dist/tokens.css と同じ。scripts/check-contrast.mjs が同じ値かを確かめる。
 
 export const BASE = {
-  light: { bg: [0.9729, 0.0029, 264.5], surface: [0.9946, 0.0026, 286.4], onLight: [0.9946, 0.0026, 286.4], onDark: [0.1868, 0.0134, 196.1] },
-  dark: { bg: [0.191, 0.0043, 264.5], surface: [0.2348, 0.0041, 264.5], onLight: [0.9946, 0.0026, 286.4], onDark: [0.1868, 0.0134, 196.1] },
+  light: { bg: [0.9729, 0.0029, 264.5], surface: [0.9946, 0.0026, 286.4], surface2: [0.9451, 0.0034, 247.9], onLight: [0.9946, 0.0026, 286.4], onDark: [0.1868, 0.0134, 196.1] },
+  dark: { bg: [0.191, 0.0043, 264.5], surface: [0.2348, 0.0041, 264.5], surface2: [0.2756, 0.0047, 248], onLight: [0.9946, 0.0026, 286.4], onDark: [0.1868, 0.0134, 196.1] },
 };
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -92,6 +92,18 @@ function pickOn(bg, side) {
   return contrast(a, bg) >= contrast(b, bg) ? a : b;
 }
 
+/** 主の色と hover が、bg、surface、surface-2 の上で 4.5:1 以上か。主の面の文字が主と hover の上で 4.5:1 以上か */
+function checkPrimary(mode, label, p, hover, on, warnings) {
+  const faces = ["bg", "surface", "surface2"];
+  const names = { bg: "背景", surface: "surface", surface2: "surface-2" };
+  const worst = (c) => faces.map((f) => [f, contrast(c, BASE[mode][f])]).sort((a, b) => a[1] - b[1])[0];
+  const [pf, pr] = worst(p), [hf, hr] = worst(hover);
+  if (pr < 4.5) warnings.push({ id: "primary-bg", mode, ratio: pr, message: `${label}: 主の色と${names[pf]}が ${pr.toFixed(2)}:1。4.5:1 に届かない(主の色で書く文字とリンクが読みにくい)` });
+  if (hr < 4.5) warnings.push({ id: "hover-bg", mode, ratio: hr, message: `${label}: hover の色と${names[hf]}が ${hr.toFixed(2)}:1。4.5:1 に届かない` });
+  const ro = Math.min(contrast(on, p), contrast(on, hover));
+  if (ro < 4.5) warnings.push({ id: "primary-on", mode, ratio: ro, message: `${label}: 主のボタンの文字が ${ro.toFixed(2)}:1。4.5:1 に届かない` });
+}
+
 const RADIUS = { none: 0, sm: 2, md: 4, lg: 8 };
 function radiusPx(r) {
   if (r == null) return null;
@@ -109,7 +121,8 @@ export function createTheme(options = {}) {
   const light = {}, dark = {}, common = {};
 
   if (options.primary != null) {
-    const p = parseColor(options.primary);
+    const parsed = parseColor(options.primary);
+    const p = parsed && fit(parsed);
     if (!p) {
       warnings.push({ id: "primary-parse", message: `主の色を読めない: ${options.primary}(#rrggbb か oklch(L C h) で書く)` });
     } else {
@@ -121,9 +134,7 @@ export function createTheme(options = {}) {
       light["--color-primary-hover"] = oklchString(hover);
       light["--color-on-primary"] = oklchString(on);
       light["--color-focus"] = oklchString(p);
-      const rb = contrast(p, BASE.light.bg), rs = contrast(p, BASE.light.surface), ro = contrast(on, p), rh = contrast(on, hover);
-      if (Math.min(rb, rs) < 4.5) warnings.push({ id: "primary-bg", mode: "light", ratio: Math.min(rb, rs), message: `ライト: 主の色と背景が ${Math.min(rb, rs).toFixed(2)}:1。4.5:1 に届かない(主の色で書く文字とリンクが読みにくい)` });
-      if (Math.min(ro, rh) < 4.5) warnings.push({ id: "primary-on", mode: "light", ratio: Math.min(ro, rh), message: `ライト: 主のボタンの文字が ${Math.min(ro, rh).toFixed(2)}:1。4.5:1 に届かない` });
+      checkPrimary("light", "ライト", p, hover, on, warnings);
 
       // ダーク: 同じ色相で明るくし、別に決める
       let pd;
@@ -138,15 +149,14 @@ export function createTheme(options = {}) {
       dark["--color-primary-hover"] = oklchString(hoverD);
       dark["--color-on-primary"] = oklchString(onD);
       dark["--color-focus"] = oklchString(pd);
-      const db = contrast(pd, BASE.dark.bg), ds = contrast(pd, BASE.dark.surface), dro = contrast(onD, pd), drh = contrast(onD, hoverD);
-      if (Math.min(db, ds) < 4.5) warnings.push({ id: "primary-bg", mode: "dark", ratio: Math.min(db, ds), message: `ダーク: 主の色と背景が ${Math.min(db, ds).toFixed(2)}:1。4.5:1 に届かない` });
-      if (Math.min(dro, drh) < 4.5) warnings.push({ id: "primary-on", mode: "dark", ratio: Math.min(dro, drh), message: `ダーク: 主のボタンの文字が ${Math.min(dro, drh).toFixed(2)}:1。4.5:1 に届かない` });
+      checkPrimary("dark", "ダーク", pd, hoverD, onD, warnings);
     }
   }
 
   const r = radiusPx(options.radius);
   if (options.radius != null && r == null) warnings.push({ id: "radius", message: `角丸を読めない: ${options.radius}(数、"none"、"sm"、"md"、"lg"、"6px")` });
   if (r != null) {
+    if (r > 8) warnings.push({ id: "radius-large", message: `角丸 ${r}px は大きい。8px(lg)を超えると、部品が柔らかすぎて業務の画面に合わない` });
     common["--radius-1"] = `${Math.max(0, Math.round(r / 2))}px`;
     common["--radius-2"] = `${r}px`;
     common["--radius-3"] = `${Math.round(r * 1.5)}px`;
