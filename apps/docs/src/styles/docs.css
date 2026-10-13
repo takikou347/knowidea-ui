@@ -194,8 +194,8 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 }
 .demo-code .ki-code { border: 0; border-radius: 0; border-top: 1px solid var(--color-line); }
 .demo-note { margin: 0; padding: var(--space-2) var(--space-4); border-top: 1px solid var(--color-line); color: var(--color-text-muted); font-size: var(--font-size-2); }
-.states-table td:first-child { width: 7em; white-space: nowrap; }
-.states-table td { vertical-align: top; padding: var(--space-3); }
+.states-table > tbody > tr > td:first-child { width: 7em; white-space: nowrap; }
+.states-table > tbody > tr > td { vertical-align: top; padding: var(--space-3); }
 .state-cell { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-start; min-width: 0; }
 .state-cell > * { min-width: 0; }
 .state-note { flex-basis: 100%; margin: 0; color: var(--color-text-muted); }
@@ -204,9 +204,9 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 .panel { background: var(--color-bg); color: var(--color-text); border: 1px solid var(--color-line-strong); border-radius: var(--radius-3); padding: var(--space-4); min-width: 0; }
 .panel > h3 { margin: 0 0 var(--space-3); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
 @media (max-width: 800px) { .panels { grid-template-columns: minmax(0, 1fr); } }
-.link-table td:first-child { white-space: nowrap; }
+.link-table > tbody > tr > td:first-child { white-space: nowrap; }
 /* リンクの行の高さ(44px)に、ほかの列の文字をそろえる */
-.link-table td { vertical-align: middle; }
+.link-table > tbody > tr > td { vertical-align: middle; }
 
 /* ページの終わり: 前後の移動、編集のリンク、版 */
 .docs-foot { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--color-line); display: grid; gap: var(--space-4); }
@@ -364,21 +364,22 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 }
 .cp-cats .num { color: var(--color-text-muted); }
 /* 部品のカード(トップと一覧)。1 枚ずつ独立し、見本の面、下の端の Code、外の下に名前と説明 */
-.cp-grid { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; gap: var(--space-5) var(--space-4); grid-template-columns: minmax(0, 1fr); }
+.cp-grid { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; gap: var(--space-6) var(--space-4); grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 720px) { .cp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1100px) { .cp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 720px) { .cp[data-wide] { grid-column: span 2; } .cp-grid { grid-auto-flow: dense; } }
-.cp { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
-.cp-view { flex: 1; display: flex; flex-direction: column; min-height: 13rem; min-width: 0; background: var(--color-surface-2); border-radius: var(--radius-3); }
+/* 面、名前、説明の 3 段を subgrid にして、同じ行のカードで高さをそろえる。名前は自分の面に寄せ、次のカードとは広く空ける */
+.cp { margin: 0; display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; min-width: 0; }
+.cp-view { grid-row: 1; display: flex; flex-direction: column; min-height: 13rem; min-width: 0; background: var(--color-surface-2); border-radius: var(--radius-3); }
 .cp-stage { flex: 1; display: grid; align-items: center; padding: var(--space-4) var(--space-4) 0; min-width: 0; color: var(--color-text); }
 .cp-fit { width: 100%; min-width: 0; display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; align-items: center; }
 .cp-fit > * { min-width: 0; }
 .cp-bar { display: flex; justify-content: flex-end; padding: var(--space-1) var(--space-2) var(--space-2); }
 .cp-codebtn { flex: none; color: var(--color-text); }
-.cp-text { display: grid; gap: 2px; min-width: 0; padding: 0 var(--space-1); }
-.cp-name, .docs-main .cp .cp-name { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
+.cp-text { display: contents; }
+.cp-name, .docs-main .cp .cp-name { grid-row: 2; margin: 0; padding: 0 var(--space-1); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
 .cp-link { color: var(--color-text); text-decoration-color: var(--color-line-strong); text-underline-offset: 3px; display: inline-flex; align-items: center; min-height: var(--size-hit); min-width: var(--size-hit); }
-.cp-desc, .docs-main .cp .cp-desc { margin: 0; color: var(--color-text-muted); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.cp-desc, .docs-main .cp .cp-desc { grid-row: 3; padding: 0 var(--space-1); margin: 0; color: var(--color-text-muted); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
 
 /* コードのダイアログ(部品のタイルの Code から開く) */
 .cp-dialog { width: min(48rem, calc(100vw - 2rem)); }

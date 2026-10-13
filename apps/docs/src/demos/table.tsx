@@ -67,6 +67,6 @@ export function states(): StateRow[] {
     { label: "Focus", node: <Box cls="force-focus">{t({ selectable: true })}</Box>, note: "表の領域には Tab で移り、矢印キーで横にスクロールできる" },
     { label: "Focus (reorder handle)", node: <Box cls="force-focus-handle">{t({ reorderable: true, onReorder: () => {} })}</Box>, note: "掴む所に Tab で移る。Space で持ち上げる" },
     { label: "Hover", node: <Box cls="force-row-hover">{t({})}</Box> },
-    { label: "Active", na: "行は操作できない。並べ替えとチェックボックスは、押すと切り替わる。掴んでいる間の見た目(行の影と落とす位置の線)は、Reorderable のデモで確かめる" },
+    { label: "Active", na: "行は操作できない。並べ替えとチェックボックスは、押すと切り替わる。掴んでいる間の見た目(行の影と、間の行がずれてできる空き)は、Reorderable のデモで確かめる" },
   ];
 }
