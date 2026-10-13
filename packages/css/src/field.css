@@ -1,0 +1,17 @@
+/* 欄。ラベル、補足、誤りを部品にまとめる。data-invalid で誤り。 */
+.ki-field, .ki-fieldset { display: grid; gap: var(--space-1); min-width: 0; margin: 0; padding: 0; border: 0; }
+.ki-field__label, .ki-fieldset > legend {
+  font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: var(--font-line-height-3);
+  color: var(--color-text); padding: 0;
+}
+.ki-field__required { margin-left: var(--space-2); font-size: var(--font-size-1); font-weight: var(--font-weight-regular); color: var(--color-text-muted); }
+.ki-field__hint { margin: 0; font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-text-muted); }
+.ki-field__error {
+  display: flex; align-items: flex-start; gap: var(--space-2); margin: 0;
+  font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-error);
+}
+.ki-field__error > .ki-icon { margin-top: 1px; }
+.ki-field__error[hidden] { display: none; }
+.ki-field__control { display: grid; gap: var(--space-1); }
+.ki-field[data-disabled] .ki-field__label { color: var(--color-text-muted); }
+.ki-choice-group { display: grid; gap: 0; }

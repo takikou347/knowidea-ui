@@ -1,0 +1,16 @@
+---
+import Base from "../layouts/Base.astro";
+import { links } from "../lib/paths.mjs";
+const { href } = links(Astro.url.pathname);
+---
+<Base title="Page not found" description="このアドレスのページは見つからない" toc={false} notFound>
+  <h1>Page not found</h1>
+  <p class="lead">このアドレスのページは見つからない。移動したか、アドレスが違う可能性がある。</p>
+  <p>上の検索(<kbd class="docs-kbd">/</kbd> か <kbd class="docs-kbd">Ctrl</kbd> <kbd class="docs-kbd">K</kbd>)でページを探すか、次のページへ移る。</p>
+  <ul class="plain links">
+    <li><a href={href("")}>Overview</a></li>
+    <li><a href={href("components")}>Components</a></li>
+    <li><a href={href("getting-started/install")}>Installation</a></li>
+    <li><a href={href("changelog")}>Changelog</a></li>
+  </ul>
+</Base>

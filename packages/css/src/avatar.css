@@ -1,0 +1,15 @@
+/* アバター。画像か、無ければ頭文字、無ければ人のアイコン。押せない(押すなら Button で包む)。data-size: sm | lg。data-shape: circle。 */
+.ki-avatar {
+  display: inline-flex; align-items: center; justify-content: center; flex: none; overflow: hidden; vertical-align: middle;
+  width: calc(var(--space-6)); height: calc(var(--space-6)); border-radius: var(--radius-2);
+  background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-line);
+  font-size: var(--font-size-2); font-weight: var(--font-weight-strong); line-height: 1; user-select: none;
+}
+.ki-avatar[data-size="sm"] { width: var(--space-5); height: var(--space-5); font-size: var(--font-size-1); }
+.ki-avatar[data-size="lg"] { width: calc(var(--space-6) + var(--space-3)); height: calc(var(--space-6) + var(--space-3)); font-size: var(--font-size-3); }
+.ki-avatar[data-shape="circle"] { border-radius: 50%; }
+.ki-avatar__image { width: 100%; height: 100%; object-fit: cover; }
+.ki-avatar > .ki-icon { width: 60%; height: 60%; color: var(--color-text-muted); }
+.ki-avatar-group { display: inline-flex; align-items: center; }
+.ki-avatar-group > .ki-avatar { margin-left: calc(var(--space-1) * -1); box-shadow: 0 0 0 2px var(--color-bg); }
+.ki-avatar-group > .ki-avatar:first-child { margin-left: 0; }
