@@ -1,0 +1,38 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Demo, Many } from "../../demos/tabs.tsx";
+const html = `<div class="ki-tabs">
+  <div class="ki-tabs__list" role="tablist" aria-label="routine の表示">
+    <button class="ki-tabs__tab" role="tab" id="t1" aria-selected="true" aria-controls="p1">概要</button>
+    <button class="ki-tabs__tab" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">実行</button>
+  </div>
+  <div class="ki-tabs__panel" role="tabpanel" id="p1" aria-labelledby="t1" tabindex="0"><p>routine の数と、直近の実行。</p></div>
+  <div class="ki-tabs__panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden><p>実行の記録。</p></div>
+</div>`;
+---
+<ComponentPage
+  title="タブ"
+  lead="同じ場所で内容を切り替える。矢印キーで移り、Tab で中身へ入る。選んだタブの下に 2px の主の色(今いる所)。ページの移動にはタブでなくリンクを使う。"
+  props={[
+    ["label", "string", "-", "タブ一覧の名前。必須"],
+    ["items", "{ value, label, content, disabled? }[]", "-", "タブ"],
+    ["value / defaultValue / onValueChange", "string", "先頭", "制御と非制御"],
+  ]}
+  attrs={[[".ki-tabs__list、__tab、__panel", "一覧、タブ、中身。role は tablist、tab、tabpanel"], ['aria-selected="true"、[data-active]', "選んだタブ"], ["[data-disabled]", "無効"]]}
+  vars={[["--color-primary", "選んだタブの下線"], ["--color-line、--color-surface-2", "一覧の線、hover"], ["--color-text、--color-text-muted", "文字"], ["--size-hit", "タブの高さ"]]}
+  html={html}
+  htmlNote="切り替えの動き(aria-selected、hidden、矢印キー)は自分で書く。React の Tabs は持っている。"
+>
+  <Fragment slot="demo"><Demo client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="タブが 0 のときは、タブでなく空の状態を出す" />
+    <StateRow label="読み込み" na="中身が読み込み中のときは、パネルの中にスケルトンを出す。タブ自体は出したままにする" />
+    <StateRow label="失敗" na="中身の失敗は、パネルの中に帯を出す" />
+    <StateRow label="無効" note="「設定」のタブが無効。矢印キーでも飛ばす。"><Demo client:load /></StateRow>
+    <StateRow label="focus" note="Tab でタブに入ると輪が出る。"><Demo className="is-focus" client:load /></StateRow>
+    <StateRow label="hover" na="面が変わるだけ。実機で触れて確かめる" />
+    <StateRow label="押した時" na="押すと選ぶ。押している間の見た目は無い" />
+    <StateRow label="多い時" note="狭い幅では一覧が横に動く。"><Many client:load /></StateRow>
+  </Fragment>
+</ComponentPage>

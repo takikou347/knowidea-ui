@@ -1,0 +1,23 @@
+/* 知らせ。画面の下に積む。素の HTML は .ki-toast を role=status で置く。React は Base UI の Toast。 */
+.ki-toast-viewport {
+  position: fixed; z-index: 50; left: var(--space-4); right: var(--space-4); bottom: var(--space-4);
+  display: grid; gap: var(--space-3); justify-items: end; pointer-events: none;
+}
+.ki-toast-viewport > * { pointer-events: auto; }
+.ki-toast {
+  display: flex; align-items: flex-start; gap: var(--space-3); width: min(100%, calc(var(--space-7) * 8)); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop);
+  transition: opacity var(--motion-duration-state) var(--motion-ease), transform var(--motion-duration-state) var(--motion-ease);
+}
+.ki-toast[data-starting-style], .ki-toast[data-ending-style] { opacity: 0; transform: translateY(var(--space-3)); }
+.ki-toast__icon { flex: none; display: inline-flex; margin-top: var(--space-3); }
+.ki-toast__icon > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-toast[data-type="success"] .ki-toast__icon { color: var(--color-success); }
+.ki-toast[data-type="warn"] .ki-toast__icon { color: var(--color-warn); }
+.ki-toast[data-type="error"] .ki-toast__icon { color: var(--color-error); }
+.ki-toast__content { flex: 1; min-width: 0; display: grid; gap: var(--space-1); padding: var(--space-3) 0; }
+.ki-toast__title { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: var(--font-line-height-3); }
+.ki-toast__description { margin: 0; font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-text-muted); }
+.ki-toast__close { flex: none; }
+@media (prefers-reduced-motion: reduce) { .ki-toast { transition: none; } }

@@ -8,11 +8,22 @@
     "build": "astro build",
     "preview": "astro preview",
     "prebuild": "pnpm --filter tokens build && pnpm --filter icons build",
-    "predev": "pnpm --filter tokens build && pnpm --filter icons build"
+    "predev": "pnpm --filter tokens build && pnpm --filter icons build",
+    "check:pages": "node scripts/check-pages.mjs"
   },
   "dependencies": {
     "astro": "7.3.8",
     "icons": "workspace:*",
-    "tokens": "workspace:*"
+    "tokens": "workspace:*",
+    "@astrojs/react": "7.0.1",
+    "@knowidea/css": "workspace:*",
+    "@knowidea/react": "workspace:*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "playwright-core": "1.64.0"
   }
 }

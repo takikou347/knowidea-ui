@@ -1,0 +1,38 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { RadioGroup } from "@knowidea/react";
+const opts = [{ value: "daily", label: "毎日" }, { value: "weekly", label: "毎週" }, { value: "monthly", label: "毎月", disabled: true }];
+const html = `<fieldset class="ki-fieldset">
+  <legend>間隔</legend>
+  <div class="ki-choice-group">
+    <label class="ki-choice"><input type="radio" name="r" class="ki-radio" checked /><span>毎日</span></label>
+    <label class="ki-choice"><input type="radio" name="r" class="ki-radio" /><span>毎週</span></label>
+  </div>
+</fieldset>`;
+---
+<ComponentPage
+  title="ラジオ"
+  lead="複数から 1 つだけ選ぶ。見出し(legend)が必須。矢印キーで移れる。選択肢は 2 つから 6 つ。それより多いときは選ぶ(Select)を使う。"
+  props={[
+    ["legend", "ReactNode", "-", "見出し。必須"],
+    ["options", "{ value, label, disabled? }[]", "-", "選択肢"],
+    ["value / defaultValue / onValueChange", "string", "-", "制御と非制御"],
+    ["invalid", "boolean", "false", "失敗の枠"],
+    ["disabled", "boolean", "false", "全部を無効にする"],
+  ]}
+  attrs={[[".ki-fieldset", "見出しと選択肢をまとめる(fieldset と legend)"], [".ki-choice > .ki-radio", "素の HTML は <input type=\"radio\">"], ["[data-checked]、:checked", "選んだ状態"]]}
+  vars={[["--color-primary", "選んだ点と枠"], ["--color-line-strong、--color-surface", "選ばない枠と面"], ["--color-error", "失敗"], ["--size-hit", "ラベルを含む押せる高さ"]]}
+  html={html}
+>
+  <Fragment slot="demo"><RadioGroup client:load legend="間隔" options={opts} defaultValue="daily" /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空"><RadioGroup client:load legend="未選択" options={opts} /></StateRow>
+    <StateRow label="読み込み" na="選択肢が読み込み中のときは、見出しの下に回転と文を出し、選択肢は出さない" />
+    <StateRow label="失敗"><RadioGroup client:load legend="選ぶ必要がある" options={opts} invalid /></StateRow>
+    <StateRow label="無効"><RadioGroup client:load legend="全部無効" options={opts} defaultValue="daily" disabled /></StateRow>
+    <StateRow label="focus" note="Tab で入り、矢印で移る。次のスイッチの欄で focus を見せる。" ><RadioGroup client:load legend="focus はキーボードで" options={opts} defaultValue="daily" /></StateRow>
+    <StateRow label="hover" na="見た目は枠が濃くなるだけ。実機で触れて確かめる" />
+    <StateRow label="押した時" na="押すと選ぶ。押している間の見た目は無い" />
+  </Fragment>
+</ComponentPage>

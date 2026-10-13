@@ -1,0 +1,28 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Quotes } from "../../demos/misc.tsx";
+const html = `<figure class="ki-quote">
+  <blockquote>会社は、コンテンツを作り、公開する。</blockquote>
+  <figcaption>会社の定款 第 1 条</figcaption>
+</figure>`;
+---
+<ComponentPage
+  title="引用"
+  lead="ほかの文書から引いた文。左に 2px の線を引き、出典を下に書く。斜体にしない。強調したい自分の文には使わない。"
+  props={[["cite", "ReactNode", "-", "出典"], ["children", "ReactNode", "-", "引いた文"]]}
+  attrs={[[".ki-quote", "figure に付ける"], ["blockquote、figcaption", "引用の文、出典"]]}
+  vars={[["--color-line-strong", "左の線"], ["--color-text、--color-text-muted", "文、出典"], ["--space-4", "線との間"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Quotes client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="文の無い引用は出さない" />
+    <StateRow label="読み込み" na="該当しない。静的な文" />
+    <StateRow label="失敗" na="該当しない。静的な文" />
+    <StateRow label="無効" na="該当しない。押せない" />
+    <StateRow label="focus" na="該当しない。focus を受けない(出典がリンクなら、リンクが受ける)" />
+    <StateRow label="hover" na="該当しない" />
+    <StateRow label="押した時" na="該当しない" />
+  </Fragment>
+</ComponentPage>

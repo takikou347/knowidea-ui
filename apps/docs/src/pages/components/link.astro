@@ -1,0 +1,38 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Link } from "@knowidea/react";
+const html = `<p>詳しくは <a class="ki-link" href="#">routine の一覧</a> を見る。</p>
+<a class="ki-link" data-standalone href="#">PR の一覧へ</a>
+<a class="ki-link" data-tone="muted" href="#">使用量のトークン</a>`;
+---
+<ComponentPage
+  title="リンク"
+  lead="別の場所へ移る。色でなく下線で見分ける(主の色は主のボタンと今いる所だけ)。操作を実行するときはボタンを使う。"
+  props={[
+    ["tone", '"default" | "muted"', '"default"', "muted は補助の文"],
+    ["standalone", "boolean", "false", "文の外に単独で置くとき。44px の高さになる"],
+    ["external", "boolean", "false", "別のタブで開く。「新しいタブで開く」を読み上げに足す"],
+    ["disabled", "boolean", "false", "href を外し、focus も入らない"],
+  ]}
+  attrs={[[".ki-link", "<a> に付ける"], ["data-tone=\"muted\"", "補助の色"], ["data-standalone", "単独で置く(44px)"], ['aria-disabled="true"', "無効"]]}
+  vars={[["--color-text、--color-text-muted", "文字"], ["--color-focus", "focus の輪"], ["--size-hit", "単独のときの高さ"], ["--radius-1", "focus の輪の角"]]}
+  html={html}
+  htmlNote="文の中のリンクは押せる大きさの決まりから外れる。単独のときは data-standalone。"
+>
+  <Fragment slot="demo">
+    <p>詳しくは <Link href="#">routine の一覧</Link> を見る。</p>
+    <Link href="#" standalone>PR の一覧へ</Link>
+    <Link href="#" tone="muted" standalone>使用量のトークン</Link>
+    <Link href="#" external standalone>外のページ</Link>
+  </Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="文字が無いリンクは作らない" />
+    <StateRow label="読み込み"><a class="ki-link" data-loading data-standalone href="#">移動中</a></StateRow>
+    <StateRow label="失敗" na="リンク先が無いときは disabled にして、理由を近くの文で書く" />
+    <StateRow label="無効"><Link disabled standalone>PR の一覧へ</Link></StateRow>
+    <StateRow label="focus"><Link href="#" className="is-focus" standalone>PR の一覧へ</Link></StateRow>
+    <StateRow label="hover"><Link href="#" className="is-hover" standalone>PR の一覧へ</Link></StateRow>
+    <StateRow label="押した時"><Link href="#" className="is-active" standalone>PR の一覧へ</Link></StateRow>
+  </Fragment>
+</ComponentPage>

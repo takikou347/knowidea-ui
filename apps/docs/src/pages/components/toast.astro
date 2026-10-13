@@ -1,0 +1,33 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { ToastDemo } from "../../demos/overlay.tsx";
+const html = `<div class="ki-toast" data-type="success" role="status">
+  <span class="ki-toast__icon"><svg class="ki-icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg></span>
+  <div class="ki-toast__content"><p class="ki-toast__title">成功</p><p class="ki-toast__description">routine review を保存した。</p></div>
+</div>`;
+---
+<ComponentPage
+  title="知らせ(Toast)"
+  lead="操作の結果を、作業を止めずに知らせる。数秒で消え、閉じるボタンがある。読み上げにも伝わる。消えて困る内容(失敗の理由、次にすること)は帯に書く。"
+  props={[
+    ["ToastProvider", "{ timeout?, limit? }", "5000, 3", "アプリの根に 1 つ。消えるまでの ms と同時に出す数"],
+    ["useToast().show", "{ title, description?, tone?, timeout? }", "-", "知らせを出す。tone は info、success、warn、error"],
+    ["useToast().close", "(id?) => void", "-", "閉じる"],
+  ]}
+  attrs={[[".ki-toast-viewport", "知らせの置き場。画面の下、左右 16px"], [".ki-toast[data-type]", "知らせ。data-type は info、success、warn、error"], [".ki-toast__icon、__content、__title、__description、__close", "中の部品"]]}
+  vars={[["--color-surface、--color-line、--color-text-muted", "面、枠、説明"], ["--color-success、--color-warn、--color-error", "アイコンの色"], ["--shadow-pop", "影(ポップする物)"], ["--space-4", "画面との余白(16px)"]]}
+  html={html}
+  htmlNote="消す動きは自分で書く。"
+>
+  <Fragment slot="demo"><ToastDemo client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" na="出ていないときは何も描かない" />
+    <StateRow label="読み込み" na="読み込み中は知らせでなく、その場の回転で示す" />
+    <StateRow label="失敗"><ToastDemo client:load /></StateRow>
+    <StateRow label="無効" na="知らせは押せない物でなく、閉じるボタンだけを持つ" />
+    <StateRow label="focus" note="閉じるボタンに Tab で入ると輪が出る。" ><div class="ki-toast" data-type="error" role="status" style="position: static"><span class="ki-toast__icon"><svg class="ki-icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></svg></span><div class="ki-toast__content"><p class="ki-toast__title">失敗</p><p class="ki-toast__description">PR を作れなかった。</p></div><button type="button" class="ki-button ki-icon-button ki-toast__close is-focus" data-variant="quiet" aria-label="閉じる"><svg class="ki-icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button></div></StateRow>
+    <StateRow label="hover" na="閉じるボタンが変わる" />
+    <StateRow label="押した時" na="閉じるを押すと消える" />
+  </Fragment>
+</ComponentPage>

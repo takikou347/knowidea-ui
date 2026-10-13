@@ -1,6 +1,7 @@
 ---
 import { nav } from "../nav.mjs";
 import "tokens/dist/tokens.css";
+import "@knowidea/css/index.css";
 import "../styles/global.css";
 const { title, description = "" } = Astro.props;
 const path = Astro.url.pathname;
@@ -54,6 +55,9 @@ const path = Astro.url.pathname;
         <slot />
       </main>
     </div>
+    <script>
+      import "@knowidea/css/enhance.js";
+    </script>
     <script is:inline>
       (function () {
         var b = document.getElementById("theme-toggle");

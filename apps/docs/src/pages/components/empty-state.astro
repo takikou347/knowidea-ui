@@ -1,0 +1,34 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Empty } from "../../demos/misc.tsx";
+const html = `<div class="ki-empty">
+  <p class="ki-empty__title">routine が無い</p>
+  <p class="ki-empty__text">routine を作ると、実行の記録がここに並ぶ。</p>
+  <div class="ki-empty__action"><button type="button" class="ki-button" data-variant="secondary">routine を作る</button></div>
+</div>`;
+---
+<ComponentPage
+  title="空の状態"
+  lead="一覧や表が空のとき、理由と次にすることを短い文で書く。行動は 1 つ。大きな絵は使わない(小さなアイコンは任意)。"
+  props={[
+    ["title", "ReactNode", "-", "何が無いか。短く"],
+    ["children", "ReactNode", "-", "理由と次にすること。1〜2 文"],
+    ["action", "ReactNode", "-", "行動 1 つ(ボタンかリンク)"],
+    ["icon", "ReactNode", "-", "小さなアイコン(任意)"],
+  ]}
+  attrs={[[".ki-empty", "外枠"], [".ki-empty__icon、__title、__text、__action", "中の部品"]]}
+  vars={[["--color-text、--color-text-muted", "表題、説明"], ["--space-2、--space-4、--space-6", "間隔、余白"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Empty client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空">この部品そのもの。</StateRow>
+    <StateRow label="読み込み" na="読み込み中は空の状態でなく、スケルトンを出す" />
+    <StateRow label="失敗" na="失敗は空でなく、帯で示す(空と失敗を混ぜない)" />
+    <StateRow label="無効" na="行動を出せないときは、行動を外し、理由を文で書く"><Empty action={false} client:load /></StateRow>
+    <StateRow label="focus" note="行動のボタンに Tab で入る。"><Empty client:load /></StateRow>
+    <StateRow label="hover" na="行動のボタンが変わる" />
+    <StateRow label="押した時" na="行動のボタンが押される" />
+  </Fragment>
+</ComponentPage>

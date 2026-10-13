@@ -60,8 +60,17 @@ td.num, th.num { font-variant-numeric: tabular-nums; }
 @media (max-width: 800px) {
   .shell { display: block; }
   .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--color-line); }
-  .side nav ul { grid-auto-flow: row; }
+  .side nav > ul { display: flex; overflow-x: auto; gap: var(--space-1); }
+  .side nav > ul > li { display: flex; flex: none; align-items: center; }
+  .side nav ul ul { display: flex; margin: 0; }
+  .side nav li { flex: none; }
+  .side a { white-space: nowrap; }
+  .group { white-space: nowrap; }
   .main { padding: var(--space-5) var(--space-4) var(--space-7); }
   .panels { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* 見本のための固定の状態(部品のコードには入れない) */
+.force-row-hover .ki-table tbody tr:first-child { background: var(--color-surface-2); }
+.force-focus .ki-table-wrap { outline: 2px solid var(--color-focus); outline-offset: 2px; }
