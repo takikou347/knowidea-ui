@@ -2,6 +2,17 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.2.0",
+    date: "2026-10-14",
+    summary: "スマホと iPad で使う部品を足した。Sheet、SegmentedControl、Switch の設定の一覧の形と、その動き。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/tokens", "動きのトークン --motion-duration-enter(240ms)を足した。Sheet のような大きな面の出入りに使う。動きを減らす設定では 0ms になる。"],
+      ["@knowidea/css", "46 個にした。.ki-sheet(下から出る面。素の HTML では <dialog> で、開く時に下から出る)と .ki-segmented(選んだ印が滑る切り替え。素の HTML ではラジオで作る)を足した。.ki-choice に、Switch を右端に置く data-placement=\"end\" と、補足の .ki-choice__description を足した。"],
+      ["@knowidea/ui", "46 個にした。Sheet と SheetClose(Base UI の Drawer が土台。指で下へ引いて閉じる。背面の暗さも引いた分だけ薄くなる)、SegmentedControl(Base UI の RadioGroup が土台。矢印キーで選び直す)を足した。Switch に description と placement を足した。"],
+      ["Docs", "Sheet、SegmentedControl のページと、Switch の Settings list の例を足した。Tokens の Motion に、指で引く動きの決まりを書いた。"],
+    ],
+  },
+  {
     version: "0.1.0",
     date: "2026-10-13",
     summary: "最初の版。配布は tarball で、npm など外部の公開先は未決。",

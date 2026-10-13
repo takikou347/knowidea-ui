@@ -85,7 +85,7 @@ ${block(darkOnly, "  ")}
 }
 /* 動きを減らす設定のとき、状態の変わり目の動きを止める(スピナーの回転は進行を伝えるので残す) */
 @media (prefers-reduced-motion: reduce) {
-  :root { --motion-duration-fast: 0ms; --motion-duration-state: 0ms; }
+  :root { --motion-duration-fast: 0ms; --motion-duration-state: 0ms; --motion-duration-enter: 0ms; }
 }
 `;
 

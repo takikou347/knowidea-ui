@@ -6,10 +6,12 @@
 @import "./input.css";
 @import "./select.css";
 @import "./choice.css";
+@import "./segmented.css";
 @import "./field.css";
 @import "./table.css";
 @import "./tabs.css";
 @import "./dialog.css";
+@import "./sheet.css";
 @import "./menu.css";
 @import "./tooltip.css";
 @import "./toast.css";

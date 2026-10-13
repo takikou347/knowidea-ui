@@ -197,6 +197,14 @@
         "$type": "duration",
         "$description": "状態が変わる時"
       },
+      "enter": {
+        "$value": {
+          "value": 240,
+          "unit": "ms"
+        },
+        "$type": "duration",
+        "$description": "大きな面(Sheet、引き出しの Drawer)の出入りと、指を離した後の戻り"
+      },
       "spin": {
         "$value": {
           "value": 800,

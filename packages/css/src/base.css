@@ -16,3 +16,9 @@
   margin: 0; background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans);
   font-size: var(--font-size-3); line-height: var(--font-line-height-3); font-weight: var(--font-weight-regular);
 }
+
+/* 1 文字だけの行を作らない。見出しは行の長さをそろえ、本文は最後の行を短くしすぎない。
+   日本語は文節で折り返す(auto-phrase に対応しないブラウザでは無視される)。詳細度 0 */
+:where(h1, h2, h3, h4, h5, h6) { text-wrap: balance; }
+:where(p, li, dd, figcaption, blockquote) { text-wrap: pretty; }
+:where(:lang(ja)) :where(h1, h2, h3, h4, h5, h6, p, li, dd, figcaption, blockquote) { word-break: auto-phrase; }

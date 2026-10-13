@@ -51,13 +51,23 @@ export interface SwitchProps extends ChoiceCommon {
   checked?: boolean;
   defaultChecked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
+  /** ラベルの下に置く補足。名前には入れず、aria-describedby で説明として結び付く */
+  description?: ReactNode;
+  /** end は、ラベルを左、Switch を右端に置き、行の幅いっぱいに広げる(設定の一覧) */
+  placement?: "start" | "end";
 }
 
-export function Switch({ label, invalid: _invalid, loading, disabled, className, ...rest }: SwitchProps) {
+export function Switch({ label, description, placement = "start", invalid: _invalid, loading, disabled, className, ...rest }: SwitchProps) {
+  const id = useId();
   return (
-    <label className="ki-choice" data-loading={loading ? "" : undefined}>
-      <BaseSwitch.Root className={cx("ki-switch", className)} disabled={disabled || loading} {...rest} />
-      {label != null ? <span>{label}</span> : null}
+    <label className="ki-choice" data-loading={loading ? "" : undefined} data-placement={placement === "end" ? "end" : undefined}>
+      <BaseSwitch.Root className={cx("ki-switch", className)} disabled={disabled || loading} aria-labelledby={description != null && label != null ? `${id}-l` : undefined} aria-describedby={description != null ? `${id}-d` : undefined} {...rest} />
+      {description != null ? (
+        <span className="ki-choice__text">
+          {label != null ? <span id={`${id}-l`}>{label}</span> : null}
+          <span id={`${id}-d`} className="ki-choice__description">{description}</span>
+        </span>
+      ) : label != null ? <span>{label}</span> : null}
       {loading ? <Spinner /> : null}
     </label>
   );

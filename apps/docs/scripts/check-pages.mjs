@@ -2,7 +2,7 @@
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
 //  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  すべて dist を /a/b/ の下で配って確かめる(どの場所に置いても壊れないこと。404 はコンソールの誤りに出る)
-//  2. 操作: ダイアログ(閉じ込め、Esc)、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
+//  2. 操作: ダイアログ(閉じ込め、Esc)、シート(下へ引いて閉じる)、SegmentedControl、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
 // 使い方: pnpm --filter @knowidea/docs build の後に pnpm --filter @knowidea/docs check:pages
 // ONLY=メニュー のように名前の一部を渡すと、その操作だけ回す
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -222,6 +222,40 @@ await kb("確かめる操作(取り消し側が先 → 依頼中 → 止めた)"
   await page.getByRole("button", { name: "停止をリクエスト" }).click();
   await page.getByText("リクエスト中").first().waitFor({ state: "visible" });
   await page.getByText("停止した", { exact: true }).first().waitFor({ state: "visible", timeout: 4000 });
+});
+
+await kb("シート(閉じ込め、Esc、戻る、下へ引いて閉じる)", "components/sheet.html", async (page) => {
+  const trigger = page.getByRole("button", { name: "シートを開く" }).first();
+  await trigger.focus();
+  await page.keyboard.press("Enter");
+  const sheet = page.locator(".ki-sheet__viewport .ki-sheet");
+  await sheet.waitFor({ state: "visible" });
+  for (let i = 0; i < 6; i++) {
+    await press(page, "Tab");
+    assert(await inside(page, ".ki-sheet"), `Tab ${i + 1} 回目で focus がシートの外に出た`);
+  }
+  await page.keyboard.press("Escape");
+  await sheet.waitFor({ state: "detached" });
+  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("シートを開く")), "閉じた後に focus が開いたボタンへ戻らない");
+  await trigger.click();
+  await sheet.waitFor({ state: "visible" });
+  await page.waitForTimeout(400);
+  const h = await page.locator(".ki-sheet__viewport .ki-sheet__handle").boundingBox();
+  await page.mouse.move(h.x + h.width / 2, h.y + 2);
+  await page.mouse.down();
+  for (let i = 1; i <= 20; i++) { await page.mouse.move(h.x + h.width / 2, h.y + 2 + i * 20); await page.waitForTimeout(16); }
+  await page.mouse.up();
+  await sheet.waitFor({ state: "detached", timeout: 3000 });
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("SegmentedControl(矢印で選び直す、印が滑る)", "components/segmented-control.html", async (page) => {
+  const week = page.getByRole("radio", { name: "週" }).first();
+  await week.focus();
+  await press(page, "ArrowRight");
+  assert((await page.getByRole("radio", { name: "月" }).first().getAttribute("aria-checked")) === "true", "矢印で次の項目が選ばれない");
+  const idx = await page.evaluate(() => getComputedStyle(document.querySelector(".ki-segmented")).getPropertyValue("--ki-seg-index").trim());
+  assert(idx === "2", `印の位置が 3 番目にならない(${idx})`);
+  assert(await page.getByText("今の表示: 月").first().isVisible(), "選んだ値が渡らない");
 });
 
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
@@ -447,9 +481,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 44, "カードが 44 枚でない");
+  assert((await page.locator(".cp").count()) === 46, "カードが 46 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 44, "見本が 44 個でない");
+  assert((await page.locator(".cp-fit").count()) === 46, "見本が 46 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();

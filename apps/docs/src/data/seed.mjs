@@ -491,10 +491,13 @@ export default {
     props: [
       ["label", "ReactNode", "-", "ラベル。対象を書く"],
       ["checked / defaultChecked / onCheckedChange", "boolean", "-", "制御と非制御"],
+      ["description", "ReactNode", "-", "ラベルの下の補足。aria-describedby で結び付く"],
+      ["placement", "\"start\" | \"end\"", "\"start\"", "end はラベルを左、Switch を右端に置き、行の幅いっぱいに広げる"],
       ["loading", "boolean", "false", "反映を待つ間。操作できなくなり、スピナーを表示する"],
       ["disabled", "boolean", "false", "操作できない"],
     ],
     classes: [
+      [".ki-choice[data-placement=\"end\"]、.ki-choice__text、__description", "設定の一覧の形と、補足の文"],
       [".ki-choice > .ki-switch", "素の HTML では <input type=\"checkbox\" role=\"switch\"> を使う"],
       ["[data-checked]、:checked", "オン"],
     ],

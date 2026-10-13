@@ -76,3 +76,10 @@
 
 /* ラベルの無い選択肢(表の行の選択)。名前は aria-label で付ける */
 .ki-choice[data-bare] { min-width: var(--size-hit); justify-content: center; }
+
+/* 補足のある選択肢と、設定の一覧の形(Switch を右端に置く) */
+.ki-choice__text { display: grid; gap: var(--space-1); padding: var(--space-2) 0; }
+.ki-choice__description { color: var(--color-text-muted); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.ki-choice[data-placement="end"] { display: flex; width: 100%; flex-direction: row-reverse; }
+.ki-choice[data-placement="end"] > .ki-spinner { order: 1; }
+.ki-choice[data-placement="end"] > :not(.ki-switch, .ki-spinner) { order: 2; margin-right: auto; }

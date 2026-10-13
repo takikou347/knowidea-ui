@@ -12,6 +12,7 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 1c コンポーネント | 44 のコンポーネントを `packages/css`(素の CSS)と `packages/ui`(Base UI 1.9.0 をベースにした React)に置き、`apps/docs` の 1 コンポーネント 1 ページで確かめる。サンプルは `apps/docs`、検査は `pnpm --filter @knowidea/docs check:pages` | 作った。オーナーの目で確かめる |
 | 1d 拡張 | 情報の色(青、色相 250)をトークンに足した。アイコンを 133 個にし、コンポーネントの中のアイコンを `packages/icons` に差し替えた。Tailwind v4 の検査 `examples/tailwind/`、素の HTML の例 `examples/static/`。アプリ別のコンポーネント、アプリ別の上書き(`themes/`)、全部の見本(`samples/all`)は、1e で作り直して消した | 1e に置き換えた |
 | 1e UI ライブラリ | UI ライブラリとして組み直した(オーナー 2026-10-13 14:21 日本時間)。アプリごとに分けず、どのアプリにも属さない 1 つのライブラリにする。パッケージは `@knowidea/tokens`、`@knowidea/icons`、`@knowidea/css`、`@knowidea/ui`(旧 `react`)。コンポーネントから Logru、Ruleru、Claude、提案、スレッド、PR の名前を外し、Stat、Chart、Status、Card、List、SelectionBar、Timeline、AppBar、Drawer、BottomNavigation などの汎用のコンポーネントにした。アプリごとの色は `themes/` をやめ、`createTheme` と `ThemeProvider`(主の色、角丸、密度、字の大きさ)で渡す。ドキュメントサイト `apps/docs` は MUI のような構成(Getting started、Customization、Components、Icons、Templates)に作り直した。サイドメニュー、コンポーネント名、ページの見出しは英語、説明文は日本語にした。`brand/apps` と `samples/all` は消した | 作った。オーナーの目で確かめる |
+| 2a 部品と動き(0.2.0) | issue #3 の最初の 3 つ。Sheet(下から出る面。指で下へ引いて閉じる)、SegmentedControl(選んだ印が滑る切り替え)、Switch の設定の一覧の形(`placement="end"`、`description`)。大きな面の出入りの時間 `--motion-duration-enter`(240ms)を足した。指に付いて動くのは操作なので、動きを減らす設定でも残す。指を離した後の動きは止める | 作った。オーナーの目で確かめる。残りは issue #3 の順(Calendar と DatePicker から) |
 
 | 方向 | 密度、色の温度 | 形、書体 |
 | --- | --- | --- |
@@ -46,6 +47,17 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 配置 | 中央の大見出しと 3 枚のカード、見出しの上の小さなラベル、全部大文字のラベル、完了画面の丸いチェックと大見出し | 内容の順で組む |
 | 文言 | 「〜しましょう」、煽る言葉、見出しの句点、架空の数字、人名、社名 | 平叙で短く。本物のデータを使う。例外: コンポーネントと画面のサンプルに限り、画面に「サンプルの数値」と明記すれば、作った数値を使ってよい |
 | 動き | 全部の節に同じ fade-up、終わらない脈動、数字のカウントアップ | 状態が変わる時だけ。`prefers-reduced-motion` で止める |
+
+## 細かな決まり
+
+2026-10-14 に、elayadesign/ai-design-skills の landing-page-design から 4 つを取り込んだ(オーナー了承)。書体、動き、LP の書き方は方向 B と IBM Plex に合わないので取り込まない。
+
+| 決まり | 中身 |
+| --- | --- |
+| 入れ子の角丸 | 内側の角丸 = 外側の角丸 − すき間。すき間が 32px 未満の時だけ。結果が 2px 以下なら角丸 0。例: SegmentedControl の印は 8px − 3px = 5px |
+| 1 文字だけの行 | 作らない。見出しは `text-wrap: balance`、本文は `text-wrap: pretty`、日本語は `word-break: auto-phrase`。`@knowidea/css` の土台(`base.css`、詳細度 0)に入れた |
+| 読み込み中 | 回るアイコンではなく Skeleton で中身の形をまねる。Spinner はボタンの中など、形の無い短い待ちだけ |
+| リンクとナビ | 飛び先の無いリンクを作らない。押せないなら Disabled に見せる。ナビは今いるページに `aria-current` を付け、見た目でも分かるようにする |
 
 ## レビューの表
 
