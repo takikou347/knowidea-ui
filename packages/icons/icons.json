@@ -423,6 +423,39 @@
    ]
   },
   {
+   "name": "archive",
+   "phosphor": "archive",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "しまう",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "attach",
+   "phosphor": "paperclip",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "添える",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "drag",
+   "phosphor": "dots-six-vertical",
+   "group": "action",
+   "groupLabel": "操作",
+   "ja": "つかんで動かす",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
    "name": "info",
    "phosphor": "info",
    "group": "status",
@@ -566,6 +599,28 @@
    "group": "status",
    "groupLabel": "状態と通知",
    "ja": "旗",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "working",
+   "phosphor": "play-circle",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "動いている(Claude の状態)",
+   "apps": [
+    "admin",
+    "logru"
+   ]
+  },
+  {
+   "name": "thinking",
+   "phosphor": "chat-circle-dots",
+   "group": "status",
+   "groupLabel": "状態と通知",
+   "ja": "考えている(返事を待つ)",
    "apps": [
     "admin",
     "logru"
@@ -727,6 +782,18 @@
    "group": "object",
    "groupLabel": "もの",
    "ja": "ダーク",
+   "apps": [
+    "admin",
+    "logru",
+    "ruleru"
+   ]
+  },
+  {
+   "name": "inbox",
+   "phosphor": "tray",
+   "group": "object",
+   "groupLabel": "もの",
+   "ja": "空の受け皿",
    "apps": [
     "admin",
     "logru",
@@ -916,6 +983,66 @@
    ]
   },
   {
+   "name": "chart-bar",
+   "phosphor": "chart-bar",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "棒グラフ",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "chart-line",
+   "phosphor": "chart-line",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "折れ線グラフ",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "pulse",
+   "phosphor": "pulse",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "最近の動き",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "merge",
+   "phosphor": "git-merge",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "マージ",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "branch",
+   "phosphor": "git-branch",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "ブランチ",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
+   "name": "department",
+   "phosphor": "buildings",
+   "group": "admin",
+   "groupLabel": "管理アプリ",
+   "ja": "部署",
+   "apps": [
+    "admin"
+   ]
+  },
+  {
    "name": "calendar",
    "phosphor": "calendar-dots",
    "group": "logru",
@@ -1065,6 +1192,16 @@
    "group": "logru",
    "groupLabel": "Logru",
    "ja": "新しい",
+   "apps": [
+    "logru"
+   ]
+  },
+  {
+   "name": "today",
+   "phosphor": "calendar-star",
+   "group": "logru",
+   "groupLabel": "Logru",
+   "ja": "今日",
    "apps": [
     "logru"
    ]
@@ -1247,6 +1384,47 @@
    "group": "ruleru",
    "groupLabel": "Ruleru のサイト",
    "ja": "再生の速さ",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "playlist",
+   "phosphor": "playlist",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "再生の順",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "shuffle",
+   "phosphor": "shuffle",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "順不同",
+   "apps": [
+    "ruleru"
+   ]
+  },
+  {
+   "name": "text-size",
+   "phosphor": "text-aa",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "文字の大きさ",
+   "apps": [
+    "ruleru",
+    "logru"
+   ]
+  },
+  {
+   "name": "quote",
+   "phosphor": "quotes",
+   "group": "ruleru",
+   "groupLabel": "Ruleru のサイト",
+   "ja": "引用",
    "apps": [
     "ruleru"
    ]

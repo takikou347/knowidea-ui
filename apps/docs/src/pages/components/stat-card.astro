@@ -1,0 +1,49 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Stats, StatStates, Sparks } from "../../demos/admin.tsx";
+import { ic } from "../../lib/html.mjs";
+const html = `<div class="ki-stat" role="group" aria-label="今日の使用量">
+  <p class="ki-stat__head">${ic("usage")}今日の使用量</p>
+  <p class="ki-stat__value"><span class="ki-stat__num">412,300</span><span class="ki-stat__unit">トークン</span></p>
+  <div class="ki-stat__foot">
+    <p class="ki-stat__delta" data-dir="up">${ic("arrow-up")}<span>前日比 +12%</span></p>
+    <svg class="ki-spark" width="96" height="28" viewBox="0 0 96 28" role="img" aria-label="直近 7 日の使用量"><polyline class="ki-spark__line" points="3,22 19,18 35,20 51,12 67,14 83,8 93,5"/><circle class="ki-spark__dot" cx="93" cy="5" r="2.5"/></svg>
+  </div>
+  <p class="ki-stat__asof"><span>日本時間 <time>10/13 09:41</time> の数</span></p>
+</div>`;
+---
+<ComponentPage
+  title="数のカード(StatCard)"
+  lead="ホームの上に 4 枚並べる。数、単位、前の日との差、小さな推移の線、いつの数か。差は矢印と符号と字で出し、良し悪しの色は付けない(使用量が増えるのは悪いとは限らない)。前日の数が無ければ「無し」と出す。"
+  props={[
+    ["label", "string", "-", "何の数か(今日の使用量など)"],
+    ["icon", "IconName", "-", "先頭のアイコン(任意)"],
+    ["value", "number | string | null", "-", "数。null は「不明」と出す"],
+    ["unit", "string", "-", "単位(トークン、件、本)"],
+    ["delta", "{ dir: 'up' | 'down' | 'flat' | 'none'; text? }", "-", "前との差。none は「無し」、flat は「変わらず」"],
+    ["deltaLabel", "string", '"前日比"', "差の前の語"],
+    ["sub", "string", "-", "数の下の補足"],
+    ["spark", "number[]", "-", "小さな推移の線の値(Sparkline)"],
+    ["asOf", "string", "-", "いつの数か(日本時間の文)。F-14"],
+    ["stale", "boolean", "false", "数が古い印(GitHub は 2 時間、セッションは 26 時間)"],
+    ["state", '"ready" | "loading" | "error"', '"ready"', "読み込み中、失敗"],
+    ["error", "string", "-", "失敗の理由"],
+  ]}
+  attrs={[[".ki-stat[data-state]", "数のカード。data-state は loading、error"], [".ki-stat__head、__value、__num、__unit、__foot、__delta[data-dir]、__sub、__spark、__asof、__error", "中の部品"], [".ki-stats", "カードを並べる grid(幅で 2 列から 4 列)"], [".ki-spark、__line、__dot", "推移の線"]]}
+  vars={[["--color-surface、--color-line、--radius-3", "面、線、角丸"], ["--font-mono、--font-size-5", "数(等幅、24px)"], ["--color-text-muted", "ラベル、単位、いつの数か、線"], ["--color-primary", "線の最後の点(今いる所)"], ["--color-error、--color-warn(-soft)", "失敗、古い印"]]}
+  html={html}
+  htmlNote="アイコンは icons/dist/sprite.svg を body の頭に置き、use の href に #usage のように名前を書く。"
+>
+  <Fragment slot="demo"><Stats client:load /><Sparks client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" note="数の無い日は不明でなく、記録が無いと書く。前日の数が無ければ差は「無し」。"><StatStates kind="empty" client:load /></StateRow>
+    <StateRow label="読み込み" note="数の形のスケルトンを出す。動かさない。"><StatStates kind="loading" client:load /></StateRow>
+    <StateRow label="失敗" note="数は「不明」。理由を 1 行で出し、枠を失敗の色にする。"><StatStates kind="error" client:load /></StateRow>
+    <StateRow label="古い" note="いつの数かの横に、古い印(字つき)を出す。"><StatStates kind="stale" client:load /></StateRow>
+    <StateRow label="無効" na="数のカードは操作しない" />
+    <StateRow label="focus" na="カード自体は focus を受けない(押せる物にするときは、カードを a で包み、枠に focus の輪を出す)" />
+    <StateRow label="hover" na="変わらない" />
+    <StateRow label="押した時" na="押せない" />
+  </Fragment>
+</ComponentPage>

@@ -33,4 +33,27 @@ export const nav = [
       { href: "/components/pagination/", label: "ページ送り" },
     ],
   },
+  {
+    label: "管理アプリの部品",
+    children: [
+      { href: "/components/stat-card/", label: "数のカード" },
+      { href: "/components/trend-chart/", label: "推移のグラフ" },
+      { href: "/components/claude-card/", label: "Claude のカード" },
+      { href: "/components/status-mark/", label: "状態の印" },
+      { href: "/components/proposal-card/", label: "提案とプロジェクト" },
+      { href: "/components/thread-list/", label: "スレッドと PR の行" },
+      { href: "/components/decision/", label: "承認、否認、コメント" },
+      { href: "/components/send-tray/", label: "まとめて送るトレイ" },
+      { href: "/components/activity-list/", label: "最近の動き" },
+      { href: "/components/stop-button/", label: "止めるボタン" },
+      { href: "/components/app-shell/", label: "アプリの枠" },
+    ],
+  },
+  {
+    label: "画面の見本",
+    children: [
+      { href: "/screens/home/", label: "ホーム" },
+      { href: "/screens/threads/", label: "スレッドと PR" },
+    ],
+  },
 ];

@@ -1,0 +1,49 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Claudes, ClaudeStates } from "../../demos/admin.tsx";
+import { ic, status } from "../../lib/html.mjs";
+const html = `<article class="ki-claude">
+  <header class="ki-claude__head">
+    <h3 class="ki-claude__role"><a class="ki-claude__link" href="#">レビュー</a></h3>
+    ${status("success", "working", "動いている")}
+  </header>
+  <p class="ki-claude__model">Opus</p>
+  <p class="ki-claude__doing">ruleru #61 の判定を書いている</p>
+  <dl class="ki-claude__meta">
+    <div><dt>最後に動いた</dt><dd>09:42</dd></div>
+    <div><dt>今日の使用量</dt><dd>96,250 トークン</dd></div>
+  </dl>
+</article>`;
+---
+<ComponentPage
+  title="Claude のカード(ClaudeCard)"
+  lead="Claude 1 人に 1 枚。役の名前、モデル、状態、今していること 1 行、最後に動いた時刻、今日の使用量。カード全体が 1 つのリンクで、押すと詳細へ行く。オーナーに要ることがあれば一番下に出す。"
+  props={[
+    ["role", "string", "-", "役の名前(routine の name かスレッドの題)"],
+    ["model", "string", "-", "モデル"],
+    ["status", "ClaudeStatus", "-", "working、blocked、review、done、failed"],
+    ["doing", "string", "-", "今していること 1 行(status_detail)。長ければ省略する"],
+    ["lastActive", "string", "-", "最後に動いた時刻(日本時間)"],
+    ["usage", "number | null", "-", "今日の使用量(トークン)。null は不明"],
+    ["needsAction", "string", "-", "オーナーに要ること(needs_action)"],
+    ["href / onOpen", "string / () => void", "-", "カード全体のリンク。href があれば a、無ければ button"],
+    ["state", '"ready" | "loading" | "error"', '"ready"', "読み込み中、失敗"],
+    ["disabled", "boolean", "false", "押せない(会社が止めた役など)"],
+  ]}
+  attrs={[[".ki-claude[data-state | data-disabled]", "カード"], [".ki-claude__head、__role、__link、__model、__doing、__meta、__need、__error", "中の部品。__link の ::after でカード全体を押せる"], [".ki-claude-grid", "カードを並べる grid"]]}
+  vars={[["--color-surface、--color-line、--color-line-strong", "面、線、hover の線"], ["--color-warn(-soft)", "オーナーに要ること"], ["--color-error", "失敗の枠と文"], ["--color-focus", "focus の輪"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Claudes client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" note="記録が無い役。時刻は「記録なし」、使用量は「不明」。"><ClaudeStates kind="empty" client:load /></StateRow>
+    <StateRow label="読み込み" note="スケルトンを出す。"><ClaudeStates kind="loading" client:load /></StateRow>
+    <StateRow label="失敗" note="状態が取れない。枠を失敗の色にし、理由を出す。"><ClaudeStates kind="error" client:load /></StateRow>
+    <StateRow label="無効" note="リンクにせず、面を薄くする。"><ClaudeStates kind="disabled" client:load /></StateRow>
+    <StateRow label="focus" note="カードの外側に 2px の輪。"><ClaudeStates kind="focus" client:load /></StateRow>
+    <StateRow label="hover" note="線が 1 段濃くなる。"><ClaudeStates kind="hover" client:load /></StateRow>
+    <StateRow label="押した時" na="詳細へ移る" />
+    <StateRow label="オーナーに要ること" note="帯でなく、カードの下に色の面と字で出す。"><ClaudeStates kind="need" client:load /></StateRow>
+  </Fragment>
+</ComponentPage>

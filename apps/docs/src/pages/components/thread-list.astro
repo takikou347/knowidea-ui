@@ -1,0 +1,42 @@
+---
+import ComponentPage from "../../components/ComponentPage.astro";
+import StateRow from "../../components/StateRow.astro";
+import { Threads, ThreadsFixed } from "../../demos/admin.tsx";
+import { ic, status } from "../../lib/html.mjs";
+const html = `<ul class="ki-rows">
+  <li class="ki-row">
+    <div class="ki-row__pick"><label class="ki-choice" data-bare><input class="ki-check" type="checkbox" aria-label="「ruleru #61」を選ぶ" /></label></div>
+    <div class="ki-row__main">
+      <h3 class="ki-row__title"><a href="#">ruleru #61 守りの網と憲法の参照先</a></h3>
+      <p class="ki-row__meta">${status("info", "review", "見てほしい")}<span>最後に動いた <time class="ki-row__num">07:59</time></span><span class="ki-row__wait" data-owner>${ic("owner-wait")}待っているのは: オーナーのマージ</span></p>
+    </div>
+    <div class="ki-row__side"><a class="ki-row__pr" href="#">${ic("pr")}#61</a>${status("warn", "clock", "マージ待ち")}${status("success", "success", "CI 通過")}<span class="ki-badge" data-tone="success">レビュー 可</span></div>
+  </li>
+</ul>`;
+---
+<ComponentPage
+  title="スレッドと PR の一覧の行(ThreadList)"
+  lead="スレッドが 1 行ずつ並ぶ。題、状態、最後に動いた時刻、何を待っているか。つながる PR があれば同じ行に PR の状態、CI、レビュー部の判定。行頭のチェックで選び、選んだ分をまとめて送る(承認、否認、コメント)。幅で組み替える(行の幅 560px 以上で 1 行、未満で PR の印が下に回る)。"
+  props={[
+    ["items", "ThreadItem[]", "-", "{ id, title, status, lastActive, waiting?, waitingOwner?, href?, pr? }。pr は { number, state, ci, review, href? }"],
+    ["selected", "string[]", "[]", "選んだ行の id"],
+    ["onSelectedChange", "(ids) => void", "-", "無ければ選べない一覧(チェックを出さない)"],
+    ["state", '"ready" | "loading" | "empty" | "error"', '"ready"', "一覧の状態"],
+    ["summary", "ReactNode", "-", "上の行の右に出す文(8 件)"],
+    ["emptyText / errorText", "string", "-", "空と失敗の文"],
+  ]}
+  attrs={[[".ki-rows", "一覧。container を持ち、幅で組み替える"], [".ki-row[data-selected]", "行。選んだ行は薄い主の色の面と左の線"], [".ki-row__pick、__main、__title、__meta、__wait[data-owner]、__side、__pr", "中の部品"], [".ki-rows__head、__state", "全部を選ぶ行、空と失敗"]]}
+  vars={[["--color-primary", "選んだ行(8% の面と 2px の線。今いる所)"], ["--color-surface(-2)、--color-line", "面、hover、区切り"], ["--color-warn", "オーナーを待つ印"], ["--size-hit", "チェックの押せる所(44px)"]]}
+  html={html}
+>
+  <Fragment slot="demo"><Threads picked={["t2"]} client:load /></Fragment>
+  <Fragment slot="states">
+    <StateRow label="空" note="空の状態(EmptyState)を出す。"><Threads state="empty" client:load /></StateRow>
+    <StateRow label="読み込み" note="行の形のスケルトンを 3 行。"><Threads state="loading" client:load /></StateRow>
+    <StateRow label="失敗" note="失敗の文を出す。"><Threads state="error" client:load /></StateRow>
+    <StateRow label="無効" note="onSelectedChange を渡さないと選べない(読むだけの一覧)。"><ThreadsFixed kind="readonly" client:load /></StateRow>
+    <StateRow label="focus" note="題のリンクとチェックに輪が出る。Tab で行ごとに進む。" />
+    <StateRow label="hover" note="行の面が 1 段濃くなる。"><ThreadsFixed kind="hover" client:load /></StateRow>
+    <StateRow label="押した時" note="題はスレッドか GitHub を開く。チェックは行を選ぶ。" />
+  </Fragment>
+</ComponentPage>
