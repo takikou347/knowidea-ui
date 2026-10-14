@@ -1,4 +1,4 @@
-import { Accordion } from "@knowidea/ui";
+import { Accordion } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items = [

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileUpload } from "@knowidea/ui";
+import { FileUpload } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

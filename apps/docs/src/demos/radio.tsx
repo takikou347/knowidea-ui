@@ -1,4 +1,4 @@
-import { RadioGroup } from "@knowidea/ui";
+import { RadioGroup } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const options = [

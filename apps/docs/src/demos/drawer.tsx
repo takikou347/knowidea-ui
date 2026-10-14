@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Drawer, Button, Icon, type NavItem } from "@knowidea/ui";
+import { Drawer, Button, Icon, type NavItem } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: NavItem[] = [

@@ -1,24 +1,24 @@
 {
   "name": "@knowidea/docs",
-  "version": "0.0.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "node scripts/copy-brand.mjs && astro dev",
     "build": "node scripts/copy-brand.mjs && astro build && node scripts/relativize.mjs && node scripts/build-search.mjs",
     "preview": "astro preview",
-    "predev": "pnpm --filter @knowidea/tokens build && pnpm --filter @knowidea/icons build",
+    "predev": "pnpm --filter knowidea-tokens build && pnpm --filter knowidea-icons build",
     "check:pages": "node scripts/check-pages.mjs"
   },
   "dependencies": {
     "astro": "7.3.8",
     "@astrojs/react": "7.0.1",
-    "@knowidea/css": "workspace:*",
+    "knowidea-css": "workspace:*",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "@knowidea/icons": "workspace:*",
-    "@knowidea/tokens": "workspace:*",
-    "@knowidea/ui": "workspace:*"
+    "knowidea-icons": "workspace:*",
+    "knowidea-tokens": "workspace:*",
+    "knowidea-ui": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

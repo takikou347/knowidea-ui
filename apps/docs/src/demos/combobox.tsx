@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Combobox, Field, type ComboboxOption } from "@knowidea/ui";
+import { Combobox, Field, type ComboboxOption } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

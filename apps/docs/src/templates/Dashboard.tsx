@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Button, Card, Chart, Grid, IconButton, Icon, List, SelectionBar, Stat, Status, Table, Timeline, type ChartPoint, type Column, type ListEntry, type TimelineEntry } from "@knowidea/ui";
+import { Alert, Button, Card, Chart, Grid, IconButton, Icon, List, SelectionBar, Stat, Status, Table, Timeline, type ChartPoint, type Column, type ListEntry, type TimelineEntry } from "knowidea-ui";
 import Shell from "./Shell";
 
 // 数値はすべてサンプル。

@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import ApiTable from "../../components/ApiTable.astro";
 import DemoBlock from "../../components/DemoBlock.tsx";
 import StatesBlock from "../../components/StatesBlock.tsx";
-import { CodeBlock } from "@knowidea/ui";
+import { CodeBlock } from "knowidea-ui";
 import { components } from "../../lib/registry.mjs";
 import { snippet } from "../../lib/snippet.mjs";
 import { links } from "../../lib/paths.mjs";
@@ -17,7 +17,7 @@ const { href, rel } = links(Astro.url.pathname);
 const raws = import.meta.glob("../../demos/*.tsx", { query: "?raw", import: "default", eager: true });
 const src = raws[`../../demos/${c.slug}.tsx`];
 const demos = c.demos.map((d) => ({ ...d, code: snippet(src, d.fn) }));
-const importLine = `import { ${c.imports.join(", ")} } from "@knowidea/ui";`;
+const importLine = `import { ${c.imports.join(", ")} } from "knowidea-ui";`;
 const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="#${n}"/></svg>`;
 const html = c.html ? c.html.replace(/\$\{icon\("([\w-]+)"\)\}/g, (_, n) => icon(n)) : null;
 const slug = (s) => s.toLowerCase();
@@ -41,7 +41,7 @@ const same = components.filter((x) => x.cat === c.cat && x.slug !== c.slug);
   {html && (
     <>
       <h3 id="demo-html">Plain HTML</h3>
-      <p>React を使わないページでは、<code>@knowidea/css</code> の CSS を読み込み、クラスを指定する。{c.htmlNote}</p>
+      <p>React を使わないページでは、<code>knowidea-css</code> の CSS を読み込み、クラスを指定する。{c.htmlNote}</p>
       <div class="demo">
         <div class="demo-stage" data-block set:html={html.replace(/<use href="#([\w-]+)"/g, `<use href="${rel}sprite.svg#$1"`)}></div>
         <details class="demo-code">
@@ -57,7 +57,7 @@ const same = components.filter((x) => x.cat === c.cat && x.slug !== c.slug);
   <StatesBlock client:load slug={c.slug} />
 
   <h2 id="api">API</h2>
-  {c.props.length > 0 ? <ApiTable rows={c.props} label="Props" /> : <p class="muted">固有のプロパティはない。HTML 属性と、デモで使っているプロパティを受け付ける。型は <code>@knowidea/ui</code> の型定義を参照する。</p>}
+  {c.props.length > 0 ? <ApiTable rows={c.props} label="Props" /> : <p class="muted">固有のプロパティはない。HTML 属性と、デモで使っているプロパティを受け付ける。型は <code>knowidea-ui</code> の型定義を参照する。</p>}
 
   <h2 id="css">CSS</h2>
   {c.classes.length > 0 && (

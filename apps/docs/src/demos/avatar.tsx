@@ -1,4 +1,4 @@
-import { Avatar } from "@knowidea/ui";
+import { Avatar } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

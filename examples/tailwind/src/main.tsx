@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { Badge, Button, Icon, Stat, ThemeProvider } from "@knowidea/ui";
+import { Badge, Button, Icon, Stat, ThemeProvider } from "knowidea-ui";
 import "./app.css";
 
 function App() {

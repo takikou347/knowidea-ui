@@ -1,0 +1,43 @@
+# 4 つのパッケージ(knowidea-tokens、knowidea-css、knowidea-icons、knowidea-ui)を npm に出す。
+# 手で動かす: GitHub の Actions → Publish → Run workflow。dry_run を外した時だけ本当に出す。
+# 出すのは npm に無い版だけ(pnpm publish -r が、もう出した版を飛ばす)。workspace:^ は出す時に実際の版に置き換わる。
+# 鍵は repo の secret NPM_TOKEN(npm の Granular Access Token、Read and write)。
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 試しに流すだけで、npm には出さない
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # 本当に出すのは main からだけ。ほかのブランチでは dry_run だけ流せる
+    if: github.ref == 'refs/heads/main' || inputs.dry_run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      # build して tarball を作り、workspace: が残っていないことを確かめる。test:consumer は Chromium が要るので、出す前に手元で流す
+      - run: pnpm release:pack
+      - run: pnpm check
+      - name: Publish
+        run: pnpm -r --filter "./packages/*" publish --no-git-checks ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

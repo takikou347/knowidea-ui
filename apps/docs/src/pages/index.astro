@@ -1,12 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
 import HomeLive from "../components/HomeLive.tsx";
-import { CodeBlock } from "@knowidea/ui";
+import { CodeBlock } from "knowidea-ui";
 import { links } from "../lib/paths.mjs";
 import { components, categories } from "../lib/registry.mjs";
 import { pick, tileCode } from "../lib/tiles.mjs";
-import ui from "@knowidea/ui/package.json";
-import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
+import ui from "knowidea-ui/package.json";
+import all from "knowidea-icons/dist/icons-data.json" with { type: "json" };
 const { href, rel } = links(Astro.url.pathname);
 const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${n}"/></svg>`;
 

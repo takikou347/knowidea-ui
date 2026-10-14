@@ -1,4 +1,4 @@
-import { BottomNavigation, type NavItem } from "@knowidea/ui";
+import { BottomNavigation, type NavItem } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: NavItem[] = [

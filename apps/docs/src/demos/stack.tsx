@@ -1,4 +1,4 @@
-import { Stack, Button, Chip } from "@knowidea/ui";
+import { Stack, Button, Chip } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const Box = ({ children }: { children: React.ReactNode }) => (

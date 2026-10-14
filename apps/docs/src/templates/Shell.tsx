@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { AppBar, BottomNavigation, Drawer, Icon, IconButton, type NavItem } from "@knowidea/ui";
+import { AppBar, BottomNavigation, Drawer, Icon, IconButton, type NavItem } from "knowidea-ui";
 
 export const navItems: NavItem[] = [
   { id: "home", label: "ホーム", icon: "home", href: "#home" },

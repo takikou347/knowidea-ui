@@ -1,4 +1,4 @@
-import { Card, Grid, Status, Button, Icon, Badge } from "@knowidea/ui";
+import { Card, Grid, Status, Button, Icon, Badge } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

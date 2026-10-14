@@ -7,11 +7,11 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@knowidea/css": "workspace:*",
-    "@knowidea/ui": "workspace:*",
+    "knowidea-css": "workspace:*",
+    "knowidea-ui": "workspace:*",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "@knowidea/tokens": "workspace:*"
+    "knowidea-tokens": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",

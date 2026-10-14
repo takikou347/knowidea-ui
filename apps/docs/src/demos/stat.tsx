@@ -1,4 +1,4 @@
-import { Stat, Sparkline, Grid } from "@knowidea/ui";
+import { Stat, Sparkline, Grid } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const trend = [12, 14, 13, 18, 17, 22, 24];

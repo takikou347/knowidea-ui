@@ -1,4 +1,4 @@
-import { Field, Input, Textarea, Select, Checkbox } from "@knowidea/ui";
+import { Field, Input, Textarea, Select, Checkbox } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const opts = [{ value: "daily", label: "毎日" }, { value: "weekly", label: "毎週" }];

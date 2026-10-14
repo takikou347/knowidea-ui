@@ -1,4 +1,4 @@
-import { Link } from "@knowidea/ui";
+import { Link } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {
