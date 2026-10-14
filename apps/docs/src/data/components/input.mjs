@@ -87,6 +87,33 @@ export const input = [
     a11y: ["Base UI の Select を使う。Enter と矢印キーで開き、矢印で移動し、Enter で決定し、Esc で閉じる", "名前は Field のラベルか aria-label で付ける"],
   },
   {
+    slug: "combobox", name: "Combobox", imports: ["Combobox", "Field"],
+    lead: "打って絞り込み、1 つを選ぶ欄。候補が多く(目安は 10 個より多い)、Select では探しにくい時に使う。ひらがなとカタカナ、全角と半角、大文字と小文字を同じに見て探す。読み仮名は keywords に入れる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "47 の都道府県から探す例。「とうきょう」「トウキョウ」でも東京都が出る。" },
+      { fn: "WithDescription", title: "With description", text: "候補の下に補足を出す。補足でも探せる(「UTC+9」で東京とソウル)。" },
+    ],
+    props: [
+      ["options", "{ value, label, description?, keywords?, disabled? }[]", "-", "候補。keywords は画面に出さず、探す時だけ使う"],
+      ["value / defaultValue / onValueChange", "string | null", "null", "制御と非制御"],
+      ["placeholder", "string", "\"入力して探す\"", "空の時の文"],
+      ["emptyText", "string", "\"合う物が無い\"", "合う候補が無い時の文"],
+      ["loading", "boolean", "false", "候補を読み込み中。欄に回転、開くと「読み込み中」"],
+      ["invalid / disabled", "boolean", "false", "エラーの枠、操作できない"],
+      ["name / id / aria-label", "string", "-", "フォームの名前、Field の label と結ぶ id、読み上げの名前"],
+    ],
+    classes: [
+      [".ki-combobox", "欄(Base UI の InputGroup)。data-invalid"],
+      [".ki-combobox__input、__button", "打つ所と、「消す」「開く」のボタン(44px 四方)"],
+      [".ki-combobox__popup、__item、__empty、__status", "候補の面、候補、合う物が無い時、読み込み中"],
+    ],
+    vars: [["--color-line-strong、--color-surface", "欄の枠と背景(Input と同じ)"], ["--color-surface-2、--color-focus", "選びかけの候補の背景と輪"], ["--shadow-pop、--radius-3", "候補の面の影と角丸"]],
+    html: `<!-- React を使わない時は、ブラウザの候補つきの入力が近い(絞り込みの仕方はブラウザに任せる) -->
+<input class="ki-input" list="pref" aria-label="都道府県" placeholder="入力して探す" />
+<datalist id="pref"><option value="東京都"></option><option value="大阪府"></option></datalist>`,
+    a11y: ["Base UI の Combobox。role=\"combobox\" の入力と role=\"listbox\" の候補。上下の矢印で候補を移り、Enter で選び、Esc で閉じる", "合う物が無い時と読み込み中は、読み上げで知らせる", "「消す」と「開く」のボタンには名前がある"],
+  },
+  {
     slug: "date-picker", name: "DatePicker", imports: ["DatePicker", "Field"],
     lead: "日付を 1 つ選ぶ欄。押すとカレンダーが開き、日を押すと閉じる。見た目は Select と同じ欄で、値は「2026年1月5日(月)」のように曜日まで出す。フォームで送ると YYYY-MM-DD になる。",
     demos: [
