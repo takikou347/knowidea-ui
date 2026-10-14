@@ -1,7 +1,21 @@
 {
-  "name": "@knowidea/tokens",
-  "version": "0.7.0",
-  "private": true,
+  "name": "knowidea-tokens",
+  "version": "0.8.0",
+  "description": "KNOW IDEA UI のデザイントークン(DTCG、OKLCH)と createTheme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takikou347/knowidea-ui.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://takikou347.github.io/knowidea-ui/",
+  "bugs": {
+    "url": "https://github.com/takikou347/knowidea-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
@@ -27,7 +41,8 @@
     "src",
     "scripts",
     "bin",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "bin": {
     "knowidea-theme": "./bin/knowidea-theme.mjs"

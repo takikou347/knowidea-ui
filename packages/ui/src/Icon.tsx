@@ -1,4 +1,4 @@
-import { Icon as BaseIcon, type IconName, type IconProps as BaseIconProps } from "@knowidea/icons/react";
+import { Icon as BaseIcon, type IconName, type IconProps as BaseIconProps } from "knowidea-icons/react";
 import { cx } from "./utils.js";
 
 export type { IconName };

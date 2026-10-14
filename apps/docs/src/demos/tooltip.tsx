@@ -1,4 +1,4 @@
-import { Tooltip, IconButton, Icon, Button } from "@knowidea/ui";
+import { Tooltip, IconButton, Icon, Button } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

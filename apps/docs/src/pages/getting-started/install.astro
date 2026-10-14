@@ -10,22 +10,22 @@ const { href } = links(Astro.url.pathname);
   <p class="lead">4 つのパッケージを、tarball(<code>.tgz</code>)で配っている。リポジトリで作り、使う側のプロジェクトに入れる。</p>
 
   <h2 id="distribution">How it is distributed</h2>
-  <p>npm など外部の公開先にはまだ出していない。<strong>公開先をどこにするか(npm、GitHub Packages など)はまだ決まっていない</strong>。決まるまでは tarball で配る。パッケージは <code>private: true</code> にしてあり、誤って <code>npm publish</code> しても止まる。</p>
-  <p>そのため、<code>pnpm add @knowidea/ui</code> のようにパッケージ名だけを書いても入らない(レジストリに無く、404 になる)。次の手順で、tarball のパスを指して入れる。</p>
+  <p>npm には <code>knowidea-tokens</code>、<code>knowidea-css</code>、<code>knowidea-icons</code>、<code>knowidea-ui</code> の名前で出す(MIT ライセンス)。<strong>最初の版を npm に出すまでは、tarball で配る</strong>。出したら、このページを npm の手順に書き換える。</p>
+  <p>そのため、<code>pnpm add knowidea-ui</code> のようにパッケージ名だけを書いても、最初の版を出すまでは入らない(レジストリに無く、404 になる)。次の手順で、tarball のパスを指して入れる。</p>
 
   <h2 id="packages">Packages</h2>
   <div class="table-wrap">
     <table class="docs-table">
       <thead><tr><th>Package</th><th>Contents</th><th>When needed</th></tr></thead>
       <tbody>
-        <tr><td><code>@knowidea/tokens</code></td><td>CSS 変数(色、フォント、余白、角丸、影、モーション)、<code>createTheme</code>、テーマの CSS を作るコマンド <code>knowidea-theme</code></td><td>常に</td></tr>
-        <tr><td><code>@knowidea/css</code></td><td>コンポーネントの見た目。<code>ki-</code> のクラスと <code>data-*</code> 属性。素の HTML でも動く</td><td>常に</td></tr>
-        <tr><td><code>@knowidea/ui</code></td><td>React コンポーネント。土台は Base UI</td><td>React を使うとき</td></tr>
-        <tr><td><code>@knowidea/icons</code></td><td>SVG アイコン、スプライト、React コンポーネント</td><td>アイコンを使うとき(<code>@knowidea/ui</code> は内部で使う)</td></tr>
+        <tr><td><code>knowidea-tokens</code></td><td>CSS 変数(色、フォント、余白、角丸、影、モーション)、<code>createTheme</code>、テーマの CSS を作るコマンド <code>knowidea-theme</code></td><td>常に</td></tr>
+        <tr><td><code>knowidea-css</code></td><td>コンポーネントの見た目。<code>ki-</code> のクラスと <code>data-*</code> 属性。素の HTML でも動く</td><td>常に</td></tr>
+        <tr><td><code>knowidea-ui</code></td><td>React コンポーネント。土台は Base UI</td><td>React を使うとき</td></tr>
+        <tr><td><code>knowidea-icons</code></td><td>SVG アイコン、スプライト、React コンポーネント</td><td>アイコンを使うとき(<code>knowidea-ui</code> は内部で使う)</td></tr>
       </tbody>
     </table>
   </div>
-  <p><code>@knowidea/ui</code> は、ほかの 3 つを <code>peerDependencies</code> に持つ。<strong>4 つを同じコマンドで入れる</strong>(React を使わなくても、tokens と css は必要)。</p>
+  <p><code>knowidea-ui</code> は、ほかの 3 つを <code>peerDependencies</code> に持つ。<strong>4 つを同じコマンドで入れる</strong>(React を使わなくても、tokens と css は必要)。</p>
 
   <h2 id="pack">1. Build the tarballs</h2>
   <p>このリポジトリで作る。Node 20 以上と pnpm が要る。<code>release/</code> は git に入らない。</p>
@@ -40,7 +40,7 @@ const { href } = links(Astro.url.pathname);
 
   <h2 id="css">3. Load the CSS</h2>
   <Code code={install.css} lang="ts" label="CSS imports" />
-  <p>この 2 行で足りる。<code>@knowidea/css</code> は <code>body</code> の背景、文字色、書体、余白 0 の既定も与える(詳細度 0 なので、アプリ側の指定があればそちらが勝つ)。これが無いと、ダークに切り替えても背景が変わらない。</p>
+  <p>この 2 行で足りる。<code>knowidea-css</code> は <code>body</code> の背景、文字色、書体、余白 0 の既定も与える(詳細度 0 なので、アプリ側の指定があればそちらが勝つ)。これが無いと、ダークに切り替えても背景が変わらない。</p>
   <p>プライマリカラーを変更したい場合は、<a href={href("customization/theme")}>Theme</a> を参照。</p>
 
   <h2 id="fonts">4. Fonts</h2>
@@ -50,8 +50,8 @@ const { href } = links(Astro.url.pathname);
 
   <h2 id="requirements">Requirements</h2>
   <ul class="plain">
-    <li>React 19(<code>react</code> と <code>react-dom</code>)。<code>@knowidea/ui</code> を使うときだけ</li>
-    <li>TypeScript は <code>moduleResolution</code> が <code>bundler</code> か <code>node16</code> 以上(Vite の <code>react-ts</code> の雛形は <code>bundler</code>)。型は <code>@knowidea/ui</code> が持つ</li>
+    <li>React 19(<code>react</code> と <code>react-dom</code>)。<code>knowidea-ui</code> を使うときだけ</li>
+    <li>TypeScript は <code>moduleResolution</code> が <code>bundler</code> か <code>node16</code> 以上(Vite の <code>react-ts</code> の雛形は <code>bundler</code>)。型は <code>knowidea-ui</code> が持つ</li>
     <li>CSS の <code>oklch()</code> が使えるブラウザ(Chrome 111、Safari 15.4、Firefox 113 以降)</li>
   </ul>
 

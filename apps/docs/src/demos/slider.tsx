@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Slider } from "@knowidea/ui";
+import { Slider } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

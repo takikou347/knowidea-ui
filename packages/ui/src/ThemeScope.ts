@@ -6,7 +6,11 @@ import { createContext, useContext } from "react";
  */
 export const ThemeScopeContext = createContext<string | null>(null);
 
-export function useThemeScope(): { "data-ki-theme"?: string } {
+/** ThemeProvider の見た目(look)。ポータルにも data-ki-look で届ける。外に gradient が無ければ null */
+export const ThemeLookContext = createContext<"gradient" | "flat" | null>(null);
+
+export function useThemeScope(): { "data-ki-theme"?: string; "data-ki-look"?: string } {
   const id = useContext(ThemeScopeContext);
-  return id ? { "data-ki-theme": id } : {};
+  const look = useContext(ThemeLookContext);
+  return { ...(id ? { "data-ki-theme": id } : null), ...(look ? { "data-ki-look": look } : null) };
 }

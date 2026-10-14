@@ -20,21 +20,21 @@ importers:
       '@astrojs/react':
         specifier: 7.0.1
         version: 7.0.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(yaml@2.9.1)
-      '@knowidea/css':
-        specifier: workspace:*
-        version: link:../../packages/css
-      '@knowidea/icons':
-        specifier: workspace:*
-        version: link:../../packages/icons
-      '@knowidea/tokens':
-        specifier: workspace:*
-        version: link:../../packages/tokens
-      '@knowidea/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       astro:
         specifier: 7.3.8
         version: 7.3.8(jiti@2.7.0)(yaml@2.9.1)
+      knowidea-css:
+        specifier: workspace:*
+        version: link:../../packages/css
+      knowidea-icons:
+        specifier: workspace:*
+        version: link:../../packages/icons
+      knowidea-tokens:
+        specifier: workspace:*
+        version: link:../../packages/tokens
+      knowidea-ui:
+        specifier: workspace:*
+        version: link:../../packages/ui
       react:
         specifier: 19.3.0
         version: 19.3.0
@@ -54,13 +54,13 @@ importers:
 
   examples/tailwind:
     dependencies:
-      '@knowidea/css':
+      knowidea-css:
         specifier: workspace:*
         version: link:../../packages/css
-      '@knowidea/tokens':
+      knowidea-tokens:
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@knowidea/ui':
+      knowidea-ui:
         specifier: workspace:*
         version: link:../../packages/ui
       react:
@@ -118,21 +118,21 @@ importers:
         specifier: 1.9.0
         version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
-      '@knowidea/css':
-        specifier: workspace:*
-        version: link:../css
-      '@knowidea/icons':
-        specifier: workspace:*
-        version: link:../icons
-      '@knowidea/tokens':
-        specifier: workspace:*
-        version: link:../tokens
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
       '@types/react-dom':
         specifier: 19.3.0
         version: 19.3.0(@types/react@19.3.0)
+      knowidea-css:
+        specifier: workspace:*
+        version: link:../css
+      knowidea-icons:
+        specifier: workspace:*
+        version: link:../icons
+      knowidea-tokens:
+        specifier: workspace:*
+        version: link:../tokens
       react:
         specifier: 19.3.0
         version: 19.3.0

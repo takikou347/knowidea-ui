@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SegmentedControl, Icon } from "@knowidea/ui";
+import { SegmentedControl, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const range = [

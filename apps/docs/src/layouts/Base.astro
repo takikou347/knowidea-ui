@@ -1,6 +1,6 @@
 ---
-import "@knowidea/tokens/dist/tokens.css";
-import "@knowidea/css/index.css";
+import "knowidea-tokens/dist/tokens.css";
+import "knowidea-css/index.css";
 import "../styles/docs.css";
 import DocsNav from "../components/DocsNav.astro";
 import { links } from "../lib/paths.mjs";
@@ -8,7 +8,7 @@ import { components } from "../lib/registry.mjs";
 import { flat, topNav } from "../lib/nav.mjs";
 import { editUrl } from "../lib/source.mjs";
 import { site, basePath } from "../site.config.mjs";
-import ui from "@knowidea/ui/package.json";
+import ui from "knowidea-ui/package.json";
 
 // notFound: 404 ページ。どの深さの URL でも配られるので、<base> で根を固定する(相対の道がそれを基準にする)
 const { title, description = site.description, toc = true, notFound = false, home = false } = Astro.props;
@@ -93,7 +93,7 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
           <ul class="docs-meta">
             <li><a class="docs-meta-link" href={href("changelog")}>Changelog</a></li>
             <li><a class="docs-meta-link" href={site.repo} rel="noopener">GitHub</a></li>
-            <li class="docs-meta-ver"><code>@knowidea/ui</code> <span class="num">v{ui.version}</span></li>
+            <li class="docs-meta-ver"><code>knowidea-ui</code> <span class="num">v{ui.version}</span></li>
           </ul>
         </footer>
       </main>
@@ -116,7 +116,7 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
               {edit && <li><a class="docs-meta-link" href={edit} rel="noopener">Edit this page</a></li>}
               <li><a class="docs-meta-link" href={href("changelog")}>Changelog</a></li>
               <li><a class="docs-meta-link" href={site.repo} rel="noopener">GitHub</a></li>
-              <li class="docs-meta-ver"><code>@knowidea/ui</code> <span class="num">v{ui.version}</span></li>
+              <li class="docs-meta-ver"><code>knowidea-ui</code> <span class="num">v{ui.version}</span></li>
             </ul>
           </footer>
         )}
@@ -166,7 +166,7 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
       window.__docsIndex = index;
     </script>
     <script>
-      import "@knowidea/css/enhance.js";
+      import "knowidea-css/enhance.js";
       import "../scripts/chrome.js";
     </script>
   </body>

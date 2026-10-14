@@ -123,6 +123,8 @@ export async function checkReactApp(page, rec, { primary, tailwind = false }) {
     ok("Tabs: 高さ 44px 以上", tabs.h >= 43.5, tabs.h);
     const before = await page.locator("#ex-tabs .ki-tabs__panel:visible").first().innerText();
     await page.locator("#ex-tabs .ki-tabs__tab").nth(1).click();
+    // 押した直後は前の内容が残ることがあるので、変わるまで少し待つ
+    await page.waitForFunction((b) => { const el = [...document.querySelectorAll("#ex-tabs .ki-tabs__panel")].find((p) => p.offsetParent); return el && el.innerText !== b; }, before, { timeout: 2000 }).catch(() => {});
     const after = await page.locator("#ex-tabs .ki-tabs__panel:visible").first().innerText();
     ok("Tabs: 押すと内容が変わる", before !== after, `${before} -> ${after}`);
   }

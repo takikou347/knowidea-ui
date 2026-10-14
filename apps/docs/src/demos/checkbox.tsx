@@ -1,4 +1,4 @@
-import { Checkbox } from "@knowidea/ui";
+import { Checkbox } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
-import { Button, Chip, CodeBlock, Icon as UiIcon } from "@knowidea/ui";
-import data from "@knowidea/icons/dist/icons-data.json";
+import { Button, Chip, CodeBlock, Icon as UiIcon } from "knowidea-ui";
+import data from "knowidea-icons/dist/icons-data.json";
 
 interface Def { viewBox: string; attrs: Record<string, string>; inner: string }
 interface Item { name: string; ja: string; group: string; groupLabel: string }
@@ -57,7 +57,7 @@ export default function IconBrowser() {
     timer.current = window.setTimeout(() => setMsg(""), 2500);
   };
 
-  const importLine = (n: string) => `import { ${pascal(n)} } from "@knowidea/icons/react";`;
+  const importLine = (n: string) => `import { ${pascal(n)} } from "knowidea-icons/react";`;
   const choose = (n: string) => { setSel(n); void copy(importLine(n), "import line"); };
   const item = sel ? items.find((i) => i.name === sel) : null;
 

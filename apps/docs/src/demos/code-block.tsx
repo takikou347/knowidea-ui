@@ -1,4 +1,4 @@
-import { CodeBlock } from "@knowidea/ui";
+import { CodeBlock } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const sample = `name: sample

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Badge, Button, Chart, Chip, CodeBlock, Select, Stat, Switch, Table, Tabs, ThemeProvider, type ChartPoint, type Column, type SortState } from "@knowidea/ui";
+import { Badge, Button, Chart, Chip, CodeBlock, Select, Stat, Switch, Table, Tabs, ThemeProvider, type ChartPoint, type Column, type SortState } from "knowidea-ui";
 import { demos } from "../demos/index";
 
 /**
  * トップの動く見本。主の色、角丸、密度、ダークを切り替えると、下の画面と部品の格子が同じ場で変わる。
- * 数値はすべてサンプル。部品は @knowidea/ui の本物で、デモのページと同じものを使う。
+ * 数値はすべてサンプル。部品は knowidea-ui の本物で、デモのページと同じものを使う。
  */
 interface Cell { slug: string; fn: string; name: string; desc: string; href: string; react: string; html: string }
 interface Props { cells: Cell[] }

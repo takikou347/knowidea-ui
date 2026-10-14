@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Progress, Button, Stack } from "@knowidea/ui";
+import { Progress, Button, Stack } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

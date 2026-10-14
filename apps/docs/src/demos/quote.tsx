@@ -1,4 +1,4 @@
-import { Quote } from "@knowidea/ui";
+import { Quote } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

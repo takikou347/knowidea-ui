@@ -1,4 +1,4 @@
-import { Switch } from "@knowidea/ui";
+import { Switch } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

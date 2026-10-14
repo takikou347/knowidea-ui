@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { List, Status, Button, SelectionBar, Stack, Alert, Icon, Badge, type ListEntry } from "@knowidea/ui";
+import { List, Status, Button, SelectionBar, Stack, Alert, Icon, Badge, type ListEntry } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: ListEntry[] = [

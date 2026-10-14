@@ -824,6 +824,33 @@ await kb("Table の Error と Empty が 360px で重ならない", "components/t
   }
 }, { width: 360, height: 740 });
 
+await kb("グラデーションの見た目(選んだ所だけ、flat の既定は変わらない、Theme で切り替え)", "components/button.html", async (page) => {
+  const bg = (loc) => loc.evaluate((el) => getComputedStyle(el).backgroundImage);
+  const look = page.locator('[data-ki-look="gradient"]').first();
+  await look.waitFor({ state: "attached" });
+  const g = await bg(look.locator(".ki-button[data-variant=primary]").first());
+  assert(g.includes("linear-gradient"), `gradient の主のボタンにグラデーションが無い: ${g}`);
+  const s = await bg(look.locator(".ki-button[data-variant=secondary]").first());
+  assert(s === "none", `gradient でもセカンダリは平らのはず: ${s}`);
+  const sw = await bg(look.locator(".ki-switch").first());
+  assert(sw.includes("linear-gradient"), `入れた Switch にグラデーションが無い: ${sw}`);
+  const bar = await bg(look.locator(".ki-progress__bar").first());
+  assert(bar.includes("linear-gradient"), `Progress の線にグラデーションが無い: ${bar}`);
+  const flat = await page.locator(".ki-button[data-variant=primary]:not([data-ki-look] *)").first().evaluate((el) => getComputedStyle(el).backgroundImage);
+  assert(flat === "none", `既定(flat)の主のボタンにグラデーションが掛かっている: ${flat}`);
+  // ダークでも掛かり、終わりの色が主の色と違う
+  await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
+  const d = await bg(look.locator(".ki-button[data-variant=primary]").first());
+  assert(d.includes("linear-gradient") && d !== g, `ダークでグラデーションが変わらない: ${d}`);
+  await page.goto(page.url().replace(/components\/button\.html.*$/, "customization/theme.html"));
+  await page.getByRole("button", { name: "gradient" }).click();
+  const pane = page.locator('.tc-pane[data-ki-look="gradient"]').first();
+  await pane.waitFor({ state: "attached" });
+  const pb = await bg(pane.locator(".ki-button[data-variant=primary]").first());
+  assert(pb.includes("linear-gradient"), `Theme の見本の主のボタンにグラデーションが無い: ${pb}`);
+  assert(await page.getByText("グラデーションの終わりの色の上の文字").count() === 2, "コントラストの表に、グラデーションの行がライトとダークの 2 つ無い");
+});
+
 await kb("角丸の段(小 4px、ボタンと入力 8px、面 12px、Chip は丸)", "components/chip.html", async (page) => {
   const v = await page.evaluate(() => { const s = getComputedStyle(document.documentElement); return [1, 2, 3].map((n) => s.getPropertyValue("--radius-" + n).trim()).concat(s.getPropertyValue("--radius-pill").trim()); });
   assert(v.slice(0, 3).join() === "4px,8px,12px" && v[3] === "999px", "角丸のトークンが違う: " + v);
@@ -866,7 +893,7 @@ await kb("アイコン(探す、太さ、写す)", "icons.html", async (page) =>
   await page.getByRole("button", { name: "bold" }).click();
   await page.locator(".ib-tile").first().click();
   const clip = await page.evaluate(() => navigator.clipboard.readText());
-  assert(clip.startsWith("import {") && clip.includes("@knowidea/icons/react"), "import の行が写っていない: " + clip);
+  assert(clip.startsWith("import {") && clip.includes("knowidea-icons/react"), "import の行が写っていない: " + clip);
   await page.getByRole("button", { name: "Copy SVG" }).click();
   const svg = await page.evaluate(() => navigator.clipboard.readText());
   assert(svg.startsWith("<svg"), "SVG が写っていない");

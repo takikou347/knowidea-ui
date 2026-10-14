@@ -1,7 +1,21 @@
 {
-  "name": "@knowidea/css",
-  "version": "0.7.0",
-  "private": true,
+  "name": "knowidea-css",
+  "version": "0.8.0",
+  "description": "KNOW IDEA UI の素の CSS(ki- のクラス)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takikou347/knowidea-ui.git",
+    "directory": "packages/css"
+  },
+  "homepage": "https://takikou347.github.io/knowidea-ui/",
+  "bugs": {
+    "url": "https://github.com/takikou347/knowidea-ui/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "exports": {
     "./dist/*": "./dist/*",
@@ -14,6 +28,7 @@
   "files": [
     "src",
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ]
 }

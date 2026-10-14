@@ -1,4 +1,4 @@
-import { TextField } from "@knowidea/ui";
+import { TextField } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

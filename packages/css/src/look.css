@@ -1,0 +1,51 @@
+/* 見た目(look)の切り替え。data-ki-look="gradient" の下で、主の色の面に、主の色から色相を回した色へのグラデーションを掛ける。
+   既定は flat(何もしない)。ThemeProvider の theme.look で付くほか、html などに手で付けてもよい。
+   終わりの色は oklch(from ...) で主の色から作るので、テーマとダークに付いてくる。読めないブラウザでは var() ごと捨てられ、平らな主の色に戻る。
+   回す角度は --ki-gradient-shift(既定 40)。createTheme の gradient-on の警告は 40 度で確かめるので、変えた時は自分で確かめる。
+   中に data-ki-look="flat" があれば、その下は平らに戻す。flat の中でもう一度 gradient にすることはできない。 */
+[data-ki-look="gradient"] :is(
+  .ki-button:is([data-variant="primary"], :not([data-variant])),
+  .ki-progress__bar, .ki-slider__indicator, .ki-switch, .ki-check, .ki-calendar__day, .ki-pagination__item
+):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  --ki-gradient-to: oklch(from var(--color-primary) l c calc(h + var(--ki-gradient-shift, 40)));
+  --ki-gradient-to-hover: oklch(from var(--color-primary-hover) l c calc(h + var(--ki-gradient-shift, 40)));
+  --ki-gradient: linear-gradient(135deg, var(--color-primary), var(--ki-gradient-to));
+}
+
+/* 主のボタン。枠は塗りに溶かす(片側だけ主の色の枠が残らないように) */
+[data-ki-look="gradient"] .ki-button:is([data-variant="primary"], :not([data-variant])):not(:disabled, [aria-disabled="true"]):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  background-image: var(--ki-gradient); background-origin: border-box; border-color: transparent;
+}
+[data-ki-look="gradient"] .ki-button:is([data-variant="primary"], :not([data-variant])):is(.is-hover, :active, .is-active):not(:disabled, [aria-disabled="true"]):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  background-image: linear-gradient(135deg, var(--color-primary-hover), var(--ki-gradient-to-hover)); border-color: transparent;
+}
+/* 押した間は、平らな時と同じく文字の色の枠を出す */
+[data-ki-look="gradient"] .ki-button:is([data-variant="primary"], :not([data-variant])):is(:active, .is-active):not(:disabled, [aria-disabled="true"]):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  border-color: var(--color-text);
+}
+@media (hover: hover) {
+  [data-ki-look="gradient"] .ki-button:is([data-variant="primary"], :not([data-variant])):hover:not(:disabled, [aria-disabled="true"]):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+    background-image: linear-gradient(135deg, var(--color-primary-hover), var(--ki-gradient-to-hover)); border-color: transparent;
+  }
+}
+
+/* 進み具合と量の線。色の付いた tone と、止めた物は平らのまま */
+[data-ki-look="gradient"] .ki-progress:not([data-tone], [data-disabled]) .ki-progress__bar:not([data-ki-look="gradient"] [data-ki-look="flat"] *),
+[data-ki-look="gradient"] .ki-slider:not([data-disabled]) .ki-slider__indicator:not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  background-image: linear-gradient(90deg, var(--color-primary), var(--ki-gradient-to));
+}
+
+/* 選んだ印。Switch、Checkbox、カレンダーの選んだ日、Pagination の今の頁 */
+[data-ki-look="gradient"] :is(
+  .ki-switch:is(:checked, [data-checked]),
+  .ki-check:is(:checked, [data-checked], [data-indeterminate], :indeterminate),
+  .ki-calendar__day[data-selected]:not([aria-disabled="true"]),
+  .ki-pagination__item[aria-current="page"]
+):not(:disabled, [data-disabled], [aria-disabled="true"]):not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  background-image: var(--ki-gradient); background-origin: border-box; border-color: transparent;
+}
+
+/* カード。上の角から主の色をごく薄く差す。文字の地はほぼ surface のまま */
+[data-ki-look="gradient"] .ki-card:not([data-ki-look="gradient"] [data-ki-look="flat"] *) {
+  background-image: linear-gradient(160deg, color-mix(in oklab, var(--color-primary) 8%, transparent), transparent 55%);
+}

@@ -5,7 +5,7 @@ KNOW IDEA の共通のトークン。DTCG 2025.10 の JSON(`src/`)から CSS を
 | コマンド | 中身 |
 | --- | --- |
 | `pnpm --filter tokens build` | `dist/tokens.css`(CSS 変数。ライトは `:root`、ダークは `prefers-color-scheme` と `data-theme="dark"`)と `dist/theme.css`(Tailwind v4 の `@theme`)を作る |
-| `pnpm --filter @knowidea/tokens check` | 色の組み合わせをライトとダークで検査する。本文は 4.5:1、線とフォーカスリングは 3:1。基準を満たさなければ exit 1 で終了する |
+| `pnpm --filter knowidea-tokens check` | 色の組み合わせをライトとダークで検査する。本文は 4.5:1、線とフォーカスリングは 3:1。基準を満たさなければ exit 1 で終了する |
 
 ## テーマの CSS を作るコマンド
 
@@ -68,9 +68,9 @@ React 19、Tailwind v4、Vite の構成を想定している。`examples/tailwin
 
 ```css
 @import "tailwindcss";
-@import "@knowidea/tokens/theme.css";    /* = dist/theme.css。@theme にライトの値と名前を渡す */
-@import "@knowidea/tokens/tokens.css";   /* ダークモードの値と、テーマでは変わらない値 */
-@import "@knowidea/css/index.css";   /* コンポーネントの見た目(ki- クラス) */
+@import "knowidea-tokens/theme.css";    /* = dist/theme.css。@theme にライトの値と名前を渡す */
+@import "knowidea-tokens/tokens.css";   /* ダークモードの値と、テーマでは変わらない値 */
+@import "knowidea-css/index.css";   /* コンポーネントの見た目(ki- クラス) */
 ```
 
 `theme.css` は名前(`--color-*`、`--text-1`、`--spacing-1`、`--radius-1`)を Tailwind に渡すため、`bg-surface`、`text-text-muted`、`rounded-2`、`text-5` のようなユーティリティクラスがトークンを参照する。ダークモードの値は、`tokens.css` が同じ変数を再定義する。
@@ -84,7 +84,7 @@ React 19、Tailwind v4、Vite の構成を想定している。`examples/tailwin
 アプリごとのファイルは置かない。プライマリカラー、角丸、密度、フォントサイズを渡して、CSS 変数のオーバーライドを生成する。
 
 ```js
-import { createTheme } from "@knowidea/tokens/create-theme";
+import { createTheme } from "knowidea-tokens/create-theme";
 const t = createTheme({ primary: "#016C6C", radius: 8, density: "compact", fontSize: 14 });
 t.css(".brand");   // クラスの内側で効く CSS(ライトとダークの両方)。":root" や "[data-theme=x]" も渡せる
 t.warnings;        // コントラスト比が 4.5:1 に届かない組み合わせ(プライマリカラーと hover の色を bg、surface、surface-2 の上に置く場合と、プライマリ面の文字色をプライマリカラーと hover の色の上に置く場合)。角丸が 12px を超えた場合も入る
@@ -93,8 +93,8 @@ t.warnings;        // コントラスト比が 4.5:1 に届かない組み合わ
 - hover の色は、OKLCH の明るさを 0.07 ずらして作る。プライマリ面の文字色は、明るい色と暗い色のうち、コントラスト比が高い方を採用する
 - ダークモードのプライマリカラーは、ライトを反転せず、同じ色相で明るさを 0.74 以上にして別に生成する(`primaryDark` で指定することもできる)
 - 色域を超える色は、彩度を下げて収める
-- 基準となる背景の値は `src/create-theme.mjs` の `BASE` にある。`pnpm --filter @knowidea/tokens check` が、`dist/tokens.css` と同じ値であることを検査する
-- React では、`@knowidea/ui` の `ThemeProvider` が同じ内容を `<style>` として出力する。CSS だけで使う場合は、変数を直接書き換えてもよい。値を試せるのはドキュメントサイトの Theme ページ
+- 基準となる背景の値は `src/create-theme.mjs` の `BASE` にある。`pnpm --filter knowidea-tokens check` が、`dist/tokens.css` と同じ値であることを検査する
+- React では、`knowidea-ui` の `ThemeProvider` が同じ内容を `<style>` として出力する。CSS だけで使う場合は、変数を直接書き換えてもよい。値を試せるのはドキュメントサイトの Theme ページ
 
 ## 成功の色
 

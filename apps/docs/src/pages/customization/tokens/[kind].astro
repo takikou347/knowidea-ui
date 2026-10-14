@@ -30,7 +30,7 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
 <Base title={`${k.name} tokens`} description={`${k.name} のトークン`}>
   <h1>{k.name} tokens</h1>
   <p class="lead">{k.lead}</p>
-  <p>トークンは CSS 変数で、<code>@knowidea/tokens/tokens.css</code> を読み込むと使える。コンポーネントは役割を表す名前の変数だけを参照し、素の値は参照しない。変更の方法は <a href={href("customization/theme")}>Theme</a> と <a href={href("customization/overriding")}>Overriding</a> を参照。</p>
+  <p>トークンは CSS 変数で、<code>knowidea-tokens/tokens.css</code> を読み込むと使える。コンポーネントは役割を表す名前の変数だけを参照し、素の値は参照しない。変更の方法は <a href={href("customization/theme")}>Theme</a> と <a href={href("customization/overriding")}>Overriding</a> を参照。</p>
 
   {kind === "color" && (
     <>
@@ -71,7 +71,7 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
         </table>
       </div>
       <h2 id="contrast">Contrast ratios</h2>
-      <p>本文は 4.5:1 以上、線とフォーカスリングは 3:1 以上。<code>pnpm --filter @knowidea/tokens check</code> が同じ計算で判定する。</p>
+      <p>本文は 4.5:1 以上、線とフォーカスリングは 3:1 以上。<code>pnpm --filter knowidea-tokens check</code> が同じ計算で判定する。</p>
       <div class="table-wrap">
         <table class="docs-table">
           <thead><tr><th>Foreground</th><th>Background</th><th class="num">Required</th><th class="num">Light</th><th class="num">Dark</th></tr></thead>

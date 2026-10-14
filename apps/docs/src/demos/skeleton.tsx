@@ -1,4 +1,4 @@
-import { Skeleton, SkeletonText } from "@knowidea/ui";
+import { Skeleton, SkeletonText } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Text() {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pagination } from "@knowidea/ui";
+import { Pagination } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

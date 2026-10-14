@@ -1,4 +1,4 @@
-import { Badge, Icon } from "@knowidea/ui";
+import { Badge, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Tones() {

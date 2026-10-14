@@ -31,7 +31,7 @@ const write = (dir, rel, text) => { mkdirSync(join(dir, rel, ".."), { recursive:
 // テストのテスト: MUTATE=nocss(部品の CSS を読まない)、MUTATE=nolayer(Tailwind の layer を外す)で、確かめが失敗することを見る
 const mutate = (where, text) => {
   const m = process.env.MUTATE;
-  if (m === "nocss") return text.split("\n").filter((l) => !l.includes("@knowidea/css/index.css")).join("\n");
+  if (m === "nocss") return text.split("\n").filter((l) => !l.includes("knowidea-css/index.css")).join("\n");
   if (m === "nolayer") return text.replace(" layer(components);", ";");
   return text;
 };
@@ -62,7 +62,7 @@ function writeReactApp(dir, { tailwind: tw }) {
   const imp = pick.map(([s, f], i) => `import { ${f} as E${i} } from "./examples/${s}__${f}";`).join("\n");
   const sections = pick.map(([s], i) => `        <section id="ex-${s}"><E${i} /></section>`).join("\n");
   write(dir, "src/App.tsx", `import { lazy, Suspense } from "react";
-import { ThemeProvider } from "@knowidea/ui";
+import { ThemeProvider } from "knowidea-ui";
 import "./brand.css";
 import "./overrides.css";
 import { Basic } from "./docs/Basic";
@@ -73,7 +73,7 @@ import { IconsPageExample } from "./docs/IconsPage";
 import { ColorModeButton } from "./docs/ColorMode";
 import { Buttons as OverrideButtons } from "./docs/Overriding";
 ${tw ? 'import { TailwindUse } from "./docs/TailwindUse";\n' : ""}${imp}
-import { Button, Stack, Grid, ToastProvider, useToast } from "@knowidea/ui";
+import { Button, Stack, Grid, ToastProvider, useToast } from "knowidea-ui";
 
 // ToastProvider を ThemeProvider の外に置いても、useToast を呼んだ所のテーマが当たるか
 function OuterToastButton() {

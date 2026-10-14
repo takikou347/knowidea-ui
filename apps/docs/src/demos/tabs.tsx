@@ -1,4 +1,4 @@
-import { Tabs } from "@knowidea/ui";
+import { Tabs } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items = [

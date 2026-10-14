@@ -1,4 +1,4 @@
-import { Grid } from "@knowidea/ui";
+import { Grid } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const Box = ({ children }: { children: React.ReactNode }) => (

@@ -1,4 +1,4 @@
-import { Menu, Button, IconButton, Icon, type MenuEntry } from "@knowidea/ui";
+import { Menu, Button, IconButton, Icon, type MenuEntry } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const entries: MenuEntry[] = [

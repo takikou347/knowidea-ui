@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SelectionBar, Button, Icon } from "@knowidea/ui";
+import { SelectionBar, Button, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

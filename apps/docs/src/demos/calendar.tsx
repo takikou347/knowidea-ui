@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar } from "@knowidea/ui";
+import { Calendar } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

@@ -1,4 +1,4 @@
-import { Divider } from "@knowidea/ui";
+import { Divider } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

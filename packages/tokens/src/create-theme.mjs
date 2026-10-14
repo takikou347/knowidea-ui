@@ -104,6 +104,20 @@ function checkPrimary(mode, label, p, hover, on, warnings) {
   if (ro < 4.5) warnings.push({ id: "primary-on", mode, ratio: ro, message: `${label}: 主のボタンの文字が ${ro.toFixed(2)}:1。4.5:1 に届かない` });
 }
 
+/** 基本の主の色と hover(dist/tokens.css と同じ値)。主の色を渡さずに gradient を選んだ時の確かめに使う */
+const DEFAULT_PRIMARY = {
+  light: { p: [0.4811, 0.0819, 194.8], hover: [0.4137, 0.0703, 194.8], on: BASE.light.onLight },
+  dark: { p: [0.7402, 0.1025, 195.2], hover: [0.7992, 0.091, 195.5], on: BASE.dark.onDark },
+};
+/** グラデーションの終わりの色。主の色の色相を回す。look.css の oklch(from ...) と同じ計算 */
+export const GRADIENT_SHIFT = 40;
+export const gradientEnd = ([L, C, h]) => fit([L, C, (h + GRADIENT_SHIFT) % 360]);
+/** グラデーションの終わりの色の上でも、主の面の文字が 4.5:1 以上か */
+function checkGradient(mode, label, { p, hover, on }, warnings) {
+  const r = Math.min(contrast(on, gradientEnd(p)), contrast(on, gradientEnd(hover)));
+  if (r < 4.5) warnings.push({ id: "gradient-on", mode, ratio: r, message: `${label}: グラデーションの終わりの色の上で、主のボタンの文字が ${r.toFixed(2)}:1。4.5:1 に届かない` });
+}
+
 const RADIUS = { none: 0, sm: 4, md: 8, lg: 12 };
 function radiusPx(r) {
   if (r == null) return null;
@@ -114,11 +128,13 @@ function radiusPx(r) {
 }
 
 /**
- * @param {{ primary?: string, primaryDark?: string, radius?: number|string, density?: "compact"|"comfortable", fontSize?: number }} options
+ * @param {{ primary?: string, primaryDark?: string, radius?: number|string, density?: "compact"|"comfortable", fontSize?: number, look?: "flat"|"gradient" }} options
  */
 export function createTheme(options = {}) {
   const warnings = [];
   const light = {}, dark = {}, common = {};
+  // グラデーションの確かめに使う、ライトとダークの主の色(主の色を渡した時は下で置き換える)
+  const used = { light: DEFAULT_PRIMARY.light, dark: DEFAULT_PRIMARY.dark };
 
   if (options.primary != null) {
     const parsed = parseColor(options.primary);
@@ -135,6 +151,7 @@ export function createTheme(options = {}) {
       light["--color-on-primary"] = oklchString(on);
       light["--color-focus"] = oklchString(p);
       checkPrimary("light", "ライト", p, hover, on, warnings);
+      used.light = { p, hover, on };
 
       // ダーク: 同じ色相で明るくし、別に決める
       let pd;
@@ -150,6 +167,7 @@ export function createTheme(options = {}) {
       dark["--color-on-primary"] = oklchString(onD);
       dark["--color-focus"] = oklchString(pd);
       checkPrimary("dark", "ダーク", pd, hoverD, onD, warnings);
+      used.dark = { p: pd, hover: hoverD, on: onD };
     }
   }
 
@@ -183,6 +201,14 @@ export function createTheme(options = {}) {
         "--font-size-4": `${Math.round(f * 1.29)}px`, "--font-size-5": `${Math.round(f * 1.71)}px`,
       });
     }
+  }
+
+  // 見た目。値は CSS 変数でなく data-ki-look の属性で切り替える(ThemeProvider が付ける)
+  if (options.look === "gradient") {
+    checkGradient("light", "ライト", used.light, warnings);
+    checkGradient("dark", "ダーク", used.dark, warnings);
+  } else if (options.look != null && options.look !== "flat") {
+    warnings.push({ id: "look", message: `見た目を読めない: ${options.look}("flat" か "gradient")` });
   }
 
   const block = (sel, vars) => `${sel} {\n${Object.entries(vars).map(([k, v]) => `  ${k}: ${v};`).join("\n")}\n}`;

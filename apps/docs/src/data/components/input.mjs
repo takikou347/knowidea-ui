@@ -6,6 +6,7 @@ export const input = [
       { fn: "Variants", title: "Variants", text: "プライマリは 1 画面に 1 つまでとする。セカンダリは複数並べてもよい。quiet は枠線も背景もないボタン。" },
       { fn: "Sizes", title: "Sizes", text: "標準(md)の高さは 44px、大きいサイズ(lg)は 52px。どちらもタップ領域の基準を満たす。" },
       { fn: "WithIcon", title: "With icon", text: "アイコンはラベルの前に置く。アイコンだけのボタンには IconButton を使う。" },
+      { fn: "GradientLook", title: "Gradient look", text: "ThemeProvider の theme に look: \"gradient\" を渡すと、プライマリのボタン、選んだ印、進み具合の線に、主の色から色相を 40 度回した色へのグラデーションが掛かる。既定は flat。セカンダリ、quiet、danger は変わらない。" },
     ],
     a11y: [
       "<button> 要素として描画する。Enter と Space で操作できる。ページ遷移には Link を使う",

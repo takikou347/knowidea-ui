@@ -1,4 +1,4 @@
-# @knowidea/icons
+# knowidea-icons
 
 UI ライブラリのアイコン。ベースは Phosphor の regular。比較は `apps/docs` の Icons ページと `samples/tokens/index.html` で確認できる。
 
@@ -62,7 +62,7 @@ Phosphor の regular を使う。
 | 決まり | 中身 |
 | --- | --- |
 | 名前 | 用途の名前(`chevron-right`、`clock-clockwise`)。Phosphor の名前とは別。同じ Phosphor を別の役で使ってよい(`approve` と `check`) |
-| 足し方 | `icons.json` に 1 行足して `pnpm --filter @knowidea/icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
+| 足し方 | `icons.json` に 1 行足して `pnpm --filter knowidea-icons build`。Phosphor に無いときだけ `custom/<名前>.svg` を描く |
 | 使う側での差し替え | 使う側は、必要な名前のコンポーネントを選んで使う。形を変えたいときは、`icons.json` に自作を足し、同じ名前でオーバーライドする |
 
 ### 自作(2 個)
@@ -76,7 +76,7 @@ Phosphor の regular を使う。
 
 ## 出す形
 
-`pnpm --filter @knowidea/icons build` が `dist/` に出す。
+`pnpm --filter knowidea-icons build` が `dist/` に出す。
 
 | ファイル | 使う所 |
 | --- | --- |
@@ -92,7 +92,7 @@ import { Icon, SearchIcon } from "icons/react";
 <SearchIcon size={16} weight="bold" title="検索" />   // 16px は bold。title があれば読み上げる
 ```
 
-`pnpm --filter @knowidea/icons check` が数、`currentColor`、React の描画、型を確かめる。
+`pnpm --filter knowidea-icons check` が数、`currentColor`、React の描画、型を確かめる。
 
 ## ライセンス
 
@@ -100,4 +100,4 @@ import { Icon, SearchIcon } from "icons/react";
 
 ## 比較用の作り方(1b)
 
-`pnpm --filter @knowidea/icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。比較の表だけに使う。全アイコンは上の `build-set.mjs` が作る。
+`pnpm --filter knowidea-icons build` が `map.json` の 16 個を 3 組から取り出し、`dist/icons.json` と `dist/render.mjs` を作る。比較の表だけに使う。全アイコンは上の `build-set.mjs` が作る。

@@ -2,6 +2,19 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.8.0",
+    date: "2026-10-15",
+    summary: "グラデーションの見た目を選べるようにした。パッケージの名前を knowidea-* に変え、MIT ライセンスで npm に出す準備をした。部品の数は 54 のまま。",
+    rows: [
+      ["名前", "パッケージの名前を変えた。@knowidea/tokens は knowidea-tokens、@knowidea/css は knowidea-css、@knowidea/icons は knowidea-icons、@knowidea/ui は knowidea-ui。import の文字を置き換える。"],
+      ["knowidea-tokens", "createTheme に look(\"flat\" | \"gradient\")を足した。gradient の時、グラデーションの終わりの色の上でも主のボタンの文字が 4.5:1 以上かを確かめ、足りなければ gradient-on の警告を出す。終わりの色を作る gradientEnd も出した。"],
+      ["knowidea-css", "look.css を足した。data-ki-look=\"gradient\" の下で、プライマリの Button、Switch と Checkbox の選んだ印、カレンダーの選んだ日、Pagination の今の頁、Progress と Slider の線にグラデーションを掛け、Card にごく薄い差し色を入れる。終わりの色は主の色から色相を 40 度回す(--ki-gradient-shift で変えられる)。既定は flat で、今までと同じ見た目。"],
+      ["knowidea-ui", "ThemeProvider の theme.look で見た目を選べる。ポータルに出る物(Dialog、Menu、Toast など)にも data-ki-look が届く。中の ThemeProvider で look: \"flat\" と書くと、その下は平らに戻る。"],
+      ["配布", "MIT ライセンスにした。npm に出す GitHub Actions(Publish、手で動かす)を足した。最初の版を出すまでは tarball で配る。"],
+      ["Docs", "Button に Gradient look の見本。Theme の Look で flat と gradient を切り替え、グラデーションの終わりの色の上の文字のコントラストも表に出す。"],
+    ],
+  },
+  {
     version: "0.7.0",
     date: "2026-10-14",
     summary: "issue #3 の動きを足した。部品の数は 54 のまま。配布は tarball のまま。",

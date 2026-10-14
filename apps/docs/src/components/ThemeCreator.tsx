@@ -1,6 +1,6 @@
 import { useMemo, useState, type CSSProperties } from "react";
-import { Alert, Button, Card, Chip, CodeBlock, Progress, Switch, TextField, ThemeProvider } from "@knowidea/ui";
-import { createTheme, parseColor, contrast, BASE, type ThemeOptions } from "@knowidea/tokens/create-theme";
+import { Alert, Button, Card, Chip, CodeBlock, Progress, Switch, TextField, ThemeProvider } from "knowidea-ui";
+import { createTheme, parseColor, contrast, gradientEnd, BASE, type ThemeOptions } from "knowidea-tokens/create-theme";
 
 interface Props {
   /** ベースとなるライト、ダークの色(themeStyle の出力。ビルド時にサーバー側で作る) */
@@ -40,7 +40,7 @@ function Preview() {
 
 const toStyle = (o: Record<string, string>) => o as unknown as CSSProperties;
 
-function ratioRows(t: ReturnType<typeof createTheme>) {
+function ratioRows(t: ReturnType<typeof createTheme>, look: "flat" | "gradient") {
   const rows: { mode: string; label: string; ratio: number | null }[] = [];
   for (const mode of ["light", "dark"] as const) {
     const v = t[mode];
@@ -52,6 +52,7 @@ function ratioRows(t: ReturnType<typeof createTheme>) {
     rows.push({ mode: name, label: "プライマリカラーと背景(リンク、文字)", ratio: contrast(p, BASE[mode].bg) });
     rows.push({ mode: name, label: "プライマリボタンの文字", ratio: contrast(on, p) });
     rows.push({ mode: name, label: "ホバー時のボタンの文字", ratio: contrast(on, h) });
+    if (look === "gradient") rows.push({ mode: name, label: "グラデーションの終わりの色の上の文字", ratio: Math.min(contrast(on, gradientEnd(p)), contrast(on, gradientEnd(h))) });
   }
   return rows;
 }
@@ -61,20 +62,21 @@ export default function ThemeCreator({ baseLight, baseDark }: Props) {
   const [radius, setRadius] = useState(4);
   const [density, setDensity] = useState<"compact" | "comfortable">("compact");
   const [fontSize, setFontSize] = useState(14);
+  const [look, setLook] = useState<"flat" | "gradient">("flat");
   const [selector, setSelector] = useState<":root" | ".brand">(".brand");
 
-  const options: ThemeOptions = { primary, radius, density, fontSize };
-  const theme = useMemo(() => createTheme(options), [primary, radius, density, fontSize]); // eslint-disable-line react-hooks/exhaustive-deps
+  const options: ThemeOptions = { primary, radius, density, fontSize, look };
+  const theme = useMemo(() => createTheme(options), [primary, radius, density, fontSize, look]); // eslint-disable-line react-hooks/exhaustive-deps
   const parseError = theme.warnings.find((w) => w.id === "primary-parse");
   // 読み取れない値の間は、直前の有効な値で表示する
   const [lastGood, setLastGood] = useState(theme);
   const shown = parseError ? lastGood : theme;
   if (!parseError && shown !== lastGood) setLastGood(theme);
 
-  const rows = ratioRows(shown);
+  const rows = ratioRows(shown, look);
   const hexForPicker = /^#[0-9a-f]{6}$/i.test(primary) ? primary : "#000000";
   const css = shown.css(selector);
-  const code = `<ThemeProvider theme={{ primary: "${primary}", radius: ${radius}, density: "${density}", fontSize: ${fontSize} }}>\n  <App />\n</ThemeProvider>`;
+  const code = `<ThemeProvider theme={{ primary: "${primary}", radius: ${radius}, density: "${density}", fontSize: ${fontSize}${look === "gradient" ? `, look: "gradient"` : ""} }}>\n  <App />\n</ThemeProvider>`;
   const lightStyle = toStyle({ ...baseLight, ...shown.common, ...shown.light });
   const darkStyle = toStyle({ ...baseDark, ...shown.common, ...shown.dark });
 
@@ -106,6 +108,13 @@ export default function ThemeCreator({ baseLight, baseDark }: Props) {
             <Chip label="comfortable" selected={density === "comfortable"} onClick={() => setDensity("comfortable")} />
           </div>
         </fieldset>
+        <fieldset className="tc-field">
+          <legend>Look</legend>
+          <div className="tc-row" role="group" aria-label="Look">
+            <Chip label="flat" selected={look === "flat"} onClick={() => setLook("flat")} />
+            <Chip label="gradient" selected={look === "gradient"} onClick={() => setLook("gradient")} />
+          </div>
+        </fieldset>
       </div>
 
       <h3 id="tc-contrast">Contrast ratios</h3>
@@ -129,11 +138,11 @@ export default function ThemeCreator({ baseLight, baseDark }: Props) {
 
       <h3 id="tc-preview">Preview</h3>
       <div className="tc-panes">
-        <section className="tc-pane" style={{ ...lightStyle, colorScheme: "light" }} aria-label="Light preview">
+        <section className="tc-pane" data-ki-look={look} style={{ ...lightStyle, colorScheme: "light" }} aria-label="Light preview">
           <p className="tc-pane-title">Light</p>
           <Preview />
         </section>
-        <section className="tc-pane" style={{ ...darkStyle, colorScheme: "dark" }} aria-label="Dark preview">
+        <section className="tc-pane" data-ki-look={look} style={{ ...darkStyle, colorScheme: "dark" }} aria-label="Dark preview">
           <p className="tc-pane-title">Dark</p>
           <Preview />
         </section>

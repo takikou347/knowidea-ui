@@ -1,4 +1,4 @@
-import { AppBar, IconButton, Icon } from "@knowidea/ui";
+import { AppBar, IconButton, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

@@ -1,4 +1,4 @@
-import { Alert, Button, Spinner } from "@knowidea/ui";
+import { Alert, Button, Spinner } from "knowidea-ui";
 import { useState } from "react";
 import type { StateRow } from "./types";
 

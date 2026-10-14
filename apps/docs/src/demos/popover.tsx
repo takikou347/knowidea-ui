@@ -1,4 +1,4 @@
-import { Popover, Button, IconButton, Icon, Switch, SegmentedControl } from "@knowidea/ui";
+import { Popover, Button, IconButton, Icon, Switch, SegmentedControl } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

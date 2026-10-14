@@ -1,12 +1,12 @@
-# @knowidea/css
+# knowidea-css
 
 KNOW IDEA の UI コンポーネントの見た目。素の CSS で、クラス名は `ki-` で始まる。値は semantic な CSS 変数(`--color-*`、`--space-*`、`--radius-*`、`--font-*`、`--size-hit`、`--motion-*`、`--shadow-pop`)だけを参照する。
 
 | 使い方 | 中身 |
 | --- | --- |
-| バンドラーを使う場合 | `import "@knowidea/tokens/tokens.css"; import "@knowidea/css/index.css";`(tarball の入れ方は `apps/docs` の Installation) |
+| バンドラーを使う場合 | `import "knowidea-tokens/tokens.css"; import "knowidea-css/index.css";`(tarball の入れ方は `apps/docs` の Installation) |
 | 素の HTML | tarball から `dist/ki.css` と `dist/ki.js` を取り出し、tokens.css と一緒に置く(手順は Plain HTML のページ)。`ki.js` はコピーボタンと `<dialog>` の開閉だけ |
-| コンポーネントごと | `src/<コンポーネント>.css` を個別に読み込む(`@knowidea/css/button.css`) |
+| コンポーネントごと | `src/<コンポーネント>.css` を個別に読み込む(`knowidea-css/button.css`) |
 
 `base.css` は `body` の背景、文字色、書体、余白 0 の既定も与える。詳細度 0(`:where`)なので、アプリ側の指定が勝つ。これが無いと、ダークに切り替えても背景が変わらない。
 
@@ -28,7 +28,7 @@ KNOW IDEA の UI コンポーネントの見た目。素の CSS で、クラス�
 
 ## アイコン
 
-コンポーネント内のアイコンは、`packages/icons`(`@knowidea/icons`)のものを使う。React では `@knowidea/ui` の `Icon` がラップする。素の HTML では sprite の `<use>` で表示する。
+コンポーネント内のアイコンは、`packages/icons`(`knowidea-icons`)のものを使う。React では `knowidea-ui` の `Icon` がラップする。素の HTML では sprite の `<use>` で表示する。
 
 ```html
 <!-- ページに 1 回: sprite を置く(icons/dist/sprite.svg の中身を body の先頭に入れる。外部ファイルの <use href="/sprite.svg#name"> でも同じ) -->

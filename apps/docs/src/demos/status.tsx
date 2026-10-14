@@ -1,4 +1,4 @@
-import { Status, type StatusKind } from "@knowidea/ui";
+import { Status, type StatusKind } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Kinds() {

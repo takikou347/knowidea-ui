@@ -22,7 +22,7 @@ const pairs = [["text", "bg", "本文と背景"], ["text-muted", "bg", "補足�
   <p>ダークモードの値は <code>:root</code> にだけ書いてあるため、要素に <code>data-theme</code> を付けても、その要素だけは変わらない。一部だけ変えたいときは、その要素に変数をまとめて指定する(このサイトのサンプルの背景がそうしている)。</p>
   <Code code={scoped} lang="html" label="Scoped example" />
   <h2 id="contrast">Contrast</h2>
-  <p>本文は 4.5:1 以上、境界線とフォーカスリングは 3:1 以上を満たす。<code>pnpm --filter @knowidea/tokens check</code> がすべての組み合わせを検査する。</p>
+  <p>本文は 4.5:1 以上、境界線とフォーカスリングは 3:1 以上を満たす。<code>pnpm --filter knowidea-tokens check</code> がすべての組み合わせを検査する。</p>
   <div class="table-wrap">
     <table class="docs-table">
       <thead><tr><th>Pair</th><th class="num">Light</th><th class="num">Dark</th></tr></thead>

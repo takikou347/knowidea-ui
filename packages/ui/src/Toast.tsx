@@ -1,4 +1,4 @@
-import { ThemeScopeContext, useThemeScope } from "./ThemeScope.js";
+import { ThemeLookContext, ThemeScopeContext, useThemeScope } from "./ThemeScope.js";
 import { useContext, type ReactNode } from "react";
 import { Toast as BaseToast } from "@base-ui/react/toast";
 import { Icon, type IconName } from "./Icon.js";
@@ -13,9 +13,9 @@ function ToastList() {
       {toasts.map((t) => {
         const tone = (t.type as ToastTone | undefined) ?? "info";
         // useToast を呼んだ所の ThemeProvider を、1 件ずつに付ける。ToastProvider が ThemeProvider の外にあっても色が当たる
-        const theme = (t.data as { theme?: string } | undefined)?.theme;
+        const { theme, look } = (t.data as { theme?: string; look?: string } | undefined) ?? {};
         return (
-          <BaseToast.Root key={t.id} toast={t} className="ki-toast" data-type={tone} data-ki-theme={theme} swipeDirection={["right", "down"]}>
+          <BaseToast.Root key={t.id} toast={t} className="ki-toast" data-type={tone} data-ki-theme={theme} data-ki-look={look} swipeDirection={["right", "down"]}>
             {/* 後ろに重なっている間は中身を隠す(data-behind) */}
             <BaseToast.Content className="ki-toast__body">
               <span className="ki-toast__icon"><Icon name={toneIcon[tone]} /></span>
@@ -67,8 +67,9 @@ export interface ToastOptions {
 export function useToast() {
   const m = BaseToast.useToastManager();
   const theme = useContext(ThemeScopeContext) ?? undefined;
+  const look = useContext(ThemeLookContext) ?? undefined;
   return {
-    show: (o: ToastOptions) => m.add({ title: o.title, description: o.description, type: o.tone ?? "info", timeout: o.timeout, data: { theme } }),
+    show: (o: ToastOptions) => m.add({ title: o.title, description: o.description, type: o.tone ?? "info", timeout: o.timeout, data: { theme, look } }),
     close: (id?: string) => m.close(id),
   };
 }

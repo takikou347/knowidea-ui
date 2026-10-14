@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Badge, Button, type Column, type SortState } from "@knowidea/ui";
+import { Table, Badge, Button, type Column, type SortState } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 type Row = { id: string; name: string; status: string; runs: number; size: number };

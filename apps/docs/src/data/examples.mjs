@@ -16,8 +16,8 @@ cp /path/to/knowidea-ui/release/*.tgz vendor/`,
   pnpm: `pnpm add ./vendor/knowidea-*.tgz`,
   npm: `npm install ./vendor/knowidea-*.tgz`,
   css: `/* src/main.tsx など、アプリの入口で読み込む */
-import "@knowidea/tokens/tokens.css";   /* 色、フォント、余白、角丸の CSS 変数(ライトとダーク) */
-import "@knowidea/css/index.css";       /* 部品の見た目(ki- のクラス)と、body の既定 */`,
+import "knowidea-tokens/tokens.css";   /* 色、フォント、余白、角丸の CSS 変数(ライトとダーク) */
+import "knowidea-css/index.css";       /* 部品の見た目(ki- のクラス)と、body の既定 */`,
   fonts: `<link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+JP:wght@400;600&display=swap" rel="stylesheet" />`,
@@ -38,8 +38,8 @@ npm install`,
   clean: `rm src/index.css src/App.css`,
   main: `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@knowidea/tokens/tokens.css";
-import "@knowidea/css/index.css";
+import "knowidea-tokens/tokens.css";
+import "knowidea-css/index.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(
@@ -47,7 +47,7 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );`,
-  basic: `import { Button, Alert, Stack } from "@knowidea/ui";
+  basic: `import { Button, Alert, Stack } from "knowidea-ui";
 
 export default function App() {
   return (
@@ -57,7 +57,7 @@ export default function App() {
     </Stack>
   );
 }`,
-  theme: `import { ThemeProvider, Button } from "@knowidea/ui";
+  theme: `import { ThemeProvider, Button } from "knowidea-ui";
 
 export default function App() {
   return (
@@ -66,7 +66,7 @@ export default function App() {
     </ThemeProvider>
   );
 }`,
-  toast: `import { ToastProvider, useToast, Button } from "@knowidea/ui";
+  toast: `import { ToastProvider, useToast, Button } from "knowidea-ui";
 
 function SaveButton() {
   const toast = useToast();
@@ -81,8 +81,8 @@ export default function App() {
     </ToastProvider>
   );
 }`,
-  icons: `import { Icon } from "@knowidea/ui";
-import { CalendarIcon } from "@knowidea/icons/react";
+  icons: `import { Icon } from "knowidea-ui";
+import { CalendarIcon } from "knowidea-icons/react";
 
 export function Icons() {
   return (
@@ -94,7 +94,7 @@ export function Icons() {
   );
 }`,
   colorMode: `import { useEffect, useState } from "react";
-import { Button } from "@knowidea/ui";
+import { Button } from "knowidea-ui";
 
 type Mode = "auto" | "light" | "dark";
 
@@ -172,10 +172,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
 });`,
   css: `@import "tailwindcss";
-@import "@knowidea/tokens/theme.css";    /* @theme に色、フォント、余白、角丸を渡す */
-@import "@knowidea/tokens/tokens.css";   /* ダークモードの値と、実際の変数 */
+@import "knowidea-tokens/theme.css";    /* @theme に色、フォント、余白、角丸を渡す */
+@import "knowidea-tokens/tokens.css";   /* ダークモードの値と、実際の変数 */
 /* layer(components) を付ける。付けないと ki- の CSS がユーティリティ(px-8、rounded-none など)に勝つ */
-@import "@knowidea/css/index.css" layer(components);`,
+@import "knowidea-css/index.css" layer(components);`,
   main: `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
@@ -186,7 +186,7 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </StrictMode>,
 );`,
-  use: `import { Button } from "@knowidea/ui";
+  use: `import { Button } from "knowidea-ui";
 
 export default function App() {
   return (
@@ -201,7 +201,7 @@ export default function App() {
 /* ---------- Customization ---------- */
 
 export const theme = {
-  provider: `import { ThemeProvider } from "@knowidea/ui";
+  provider: `import { ThemeProvider } from "knowidea-ui";
 
 export default function App() {
   return (
@@ -214,7 +214,7 @@ export default function App() {
   cli: `npx knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > src/brand.css`,
   // プロジェクトに入れていない(素の HTML など)ときは、tarball を指す
   cliTgz: `npx --package ./vendor/knowidea-tokens-*.tgz knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > assets/brand.css`,
-  script: `import { createTheme } from "@knowidea/tokens/create-theme";
+  script: `import { createTheme } from "knowidea-tokens/create-theme";
 
 const t = createTheme({ primary: "#2255CC", radius: 6 });
 t.css(".brand");   // CSS 変数をオーバーライドする文字列(ライトとダーク)
@@ -257,7 +257,7 @@ export const overriding = {
 .my-list { --ki-gap: var(--space-5); }`,
   own: `/* 3. クラスを足してオーバーライドする。詳細度をそろえ、@layer か後ろの記述順で勝たせる */
 .save-button.ki-button { min-width: 8rem; }`,
-  react: `import { Button } from "@knowidea/ui";
+  react: `import { Button } from "knowidea-ui";
 
 export function Buttons() {
   return (
@@ -273,7 +273,7 @@ export function Buttons() {
 /* ---------- Icons ---------- */
 
 export const icons = {
-  react: `import { CalendarIcon, Icon } from "@knowidea/icons/react";
+  react: `import { CalendarIcon, Icon } from "knowidea-icons/react";
 
 export function IconsPageExample() {
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DatePicker, Field } from "@knowidea/ui";
+import { DatePicker, Field } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

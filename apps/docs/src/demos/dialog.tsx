@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogClose, ConfirmDialog, Button, Field, Input, Alert, Icon, Spinner, Status } from "@knowidea/ui";
+import { Dialog, DialogClose, ConfirmDialog, Button, Field, Input, Alert, Icon, Spinner, Status } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

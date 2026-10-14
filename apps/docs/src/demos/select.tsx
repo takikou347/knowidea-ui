@@ -1,4 +1,4 @@
-import { Select } from "@knowidea/ui";
+import { Select } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const options = [
