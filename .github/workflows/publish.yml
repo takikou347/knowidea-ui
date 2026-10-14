@@ -1,12 +1,18 @@
 # 4 つのパッケージ(knowidea-tokens、knowidea-css、knowidea-icons、knowidea-ui)を npm に出す。
-# 動かし方は 2 つ。main の版に v0.8.0 のようなタグを付けて push すると、本当に出す。
-# または GitHub の Actions → Publish → Run workflow。dry_run を外した時だけ本当に出す。
+# 動かし方は 3 つ。どれも、npm にまだ無い版だけを出す。
+# 1. main で packages/*/package.json(版)かこのファイルが変わった時。版を上げて main に入れると、そのまま出る
+# 2. v0.8.0 のようなタグを push した時
+# 3. GitHub の Actions → Publish → Run workflow。dry_run を外した時だけ本当に出す
 # 出すのは npm に無い版だけ(pnpm publish -r が、もう出した版を飛ばす)。workspace:^ は出す時に実際の版に置き換わる。
 # 鍵は repo の secret NPM_TOKEN(npm の Granular Access Token、Read and write)。
 name: Publish
 
 on:
   push:
+    branches: [main]
+    paths:
+      - "packages/*/package.json"
+      - ".github/workflows/publish.yml"
     tags: ["v*"]
   workflow_dispatch:
     inputs:
