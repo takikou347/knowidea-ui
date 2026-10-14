@@ -2,7 +2,7 @@
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
 //  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  すべて dist を /a/b/ の下で配って確かめる(どの場所に置いても壊れないこと。404 はコンソールの誤りに出る)
-//  2. 操作: ダイアログ(閉じ込め、Esc)、シート(下へ引いて閉じる)、SegmentedControl、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
+//  2. 操作: ダイアログ(閉じ込め、Esc)、シート(下へ引いて閉じる)、SegmentedControl、Calendar、DatePicker、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
 // 使い方: pnpm --filter @knowidea/docs build の後に pnpm --filter @knowidea/docs check:pages
 // ONLY=メニュー のように名前の一部を渡すと、その操作だけ回す
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -258,6 +258,41 @@ await kb("SegmentedControl(矢印で選び直す、印が滑る)", "components/s
   assert(await page.getByText("今の表示: 月").first().isVisible(), "選んだ値が渡らない");
 });
 
+await kb("Calendar(矢印で日、PageDown で月、Enter で選ぶ)", "components/calendar.html", async (page) => {
+  const demo = page.locator(".demo").first();
+  const start = demo.locator(".ki-calendar__day[tabindex='0']");
+  await start.focus();
+  const from = await start.getAttribute("data-day");
+  await press(page, "ArrowRight");
+  await press(page, "PageDown");
+  const to = await page.evaluate(() => document.activeElement?.getAttribute("data-day"));
+  const [y, m, d] = from.split("-").map(Number);
+  const want = new Date(y, m - 1, d + 1);
+  const next = new Date(want.getFullYear(), want.getMonth() + 1, Math.min(want.getDate(), new Date(want.getFullYear(), want.getMonth() + 2, 0).getDate()));
+  const key = `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, "0")}-${String(next.getDate()).padStart(2, "0")}`;
+  assert(to === key, `focus が ${key} でなく ${to}`);
+  await press(page, "Enter");
+  assert((await demo.locator("[data-selected]").getAttribute("data-day")) === key, "Enter で選ばれない");
+});
+
+await kb("DatePicker(開くと日へ focus、選ぶと閉じて欄に戻る、390px で収まる)", "components/date-picker.html", async (page) => {
+  const trigger = page.getByRole("button", { name: /^締め切り、/ }).first();
+  await trigger.click();
+  const popup = page.locator(".ki-datepicker__popup");
+  await popup.waitFor({ state: "visible" });
+  await page.waitForTimeout(200);
+  assert(await inside(page, ".ki-calendar"), "開いた時に focus がカレンダーへ移らない");
+  const box = await popup.boundingBox();
+  assert(box.x >= 0 && box.x + box.width <= 390, `開いた面が画面の外に出る(${Math.round(box.x)}..${Math.round(box.x + box.width)})`);
+  const over = await popup.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+  assert(!over, "開いた面の中で、カレンダーがはみ出す");
+  await press(page, "ArrowRight");
+  await press(page, "Enter");
+  await popup.waitFor({ state: "hidden" });
+  assert(!(await trigger.getAttribute("aria-label")).endsWith("未選択"), "選んだ値が欄に出ない");
+  assert(await page.evaluate(() => document.activeElement?.classList.contains("ki-select")), "閉じた後に focus が欄へ戻らない");
+}, { width: 390, height: 844 }, { hasTouch: true });
+
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
   await tabs.first().focus();
@@ -481,9 +516,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 46, "カードが 46 枚でない");
+  assert((await page.locator(".cp").count()) === 48, "カードが 48 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 46, "見本が 46 個でない");
+  assert((await page.locator(".cp-fit").count()) === 48, "見本が 48 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();

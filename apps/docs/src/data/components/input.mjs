@@ -87,6 +87,66 @@ export const input = [
     a11y: ["Base UI の Select を使う。Enter と矢印キーで開き、矢印で移動し、Enter で決定し、Esc で閉じる", "名前は Field のラベルか aria-label で付ける"],
   },
   {
+    slug: "date-picker", name: "DatePicker", imports: ["DatePicker", "Field"],
+    lead: "日付を 1 つ選ぶ欄。押すとカレンダーが開き、日を押すと閉じる。見た目は Select と同じ欄で、値は「2026年1月5日(月)」のように曜日まで出す。フォームで送ると YYYY-MM-DD になる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "Field と一緒に使う。clearable で「消す」を出し、未選択に戻せる。" },
+      { fn: "Limits", title: "Min, max and week start", text: "選べる期間を min と max で決める。weekStartsOn=1 で月曜始まり。name を渡すと、隠した input で YYYY-MM-DD を送る。" },
+    ],
+    props: [
+      ["value / defaultValue / onValueChange", "Date | null", "null", "制御と非制御"],
+      ["placeholder", "string", "\"日付を選ぶ\"", "未選択の時の文"],
+      ["clearable", "boolean", "false", "「消す」を出す"],
+      ["min / max / isDateDisabled", "Date / Date / (date) => boolean", "-", "選べる期間と、選べない日"],
+      ["isDateMarked", "(date) => boolean", "-", "点を付ける日(予定のある日など)"],
+      ["weekStartsOn", "0 | 1", "0", "週の始まり。0 は日曜、1 は月曜"],
+      ["invalid / disabled", "boolean", "false", "エラーの枠、操作できない"],
+      ["name", "string", "-", "フォームで送る名前。値は YYYY-MM-DD"],
+      ["aria-label", "string", "-", "欄の名前。Field の中では label と同じ文を渡す。読み上げでは今の値も続けて読む"],
+    ],
+    classes: [
+      [".ki-datepicker > .ki-select", "欄。Select と同じクラス"],
+      [".ki-datepicker__popup、__foot", "開いた面と、「今日」「消す」の行"],
+    ],
+    vars: [["--color-line-strong、--color-surface", "欄の枠と背景(Select と同じ)"], ["--shadow-pop、--radius-3", "開いた面の影と角丸"], ["--motion-duration-fast", "開く時の動き。prefers-reduced-motion で止まる"]],
+    html: `<!-- 素の HTML では、ブラウザの日付の欄を使う -->
+<input class="ki-input" type="date" aria-label="締め切り" />`,
+    a11y: ["欄は Base UI の Popover の Trigger。開くと、選んだ日(無ければ今日)に focus が移り、Esc で閉じて欄に戻る", "読み上げは「締め切り、2026年1月5日(月)」のように、名前と今の値を続けて読む", "カレンダーの操作は Calendar と同じ"],
+  },
+  {
+    slug: "calendar", name: "Calendar", imports: ["Calendar"],
+    lead: "月のカレンダー。日を 1 つ選ぶ。今日は枠、選んだ日は主の色で塗り、予定のある日には点を付ける。1 日は 44px 四方で、360px の画面にも収まる。月を移ると、表が移った向きから少し滑って出る。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "isDateMarked で、予定のある日に点を付ける。点は色だけでなく、読み上げでも「予定あり」と伝える。" },
+      { fn: "Limits", title: "Disabled dates", text: "min と max で期間を決め、isDateDisabled で土日を選べなくした例。月曜始まり。" },
+    ],
+    props: [
+      ["value / defaultValue / onValueChange", "Date | null", "null", "選んだ日。制御と非制御"],
+      ["month / defaultMonth / onMonthChange", "Date", "選んだ日か今日の月", "表示する月"],
+      ["min / max", "Date", "-", "選べる最初と最後の日。外の月へは移れない"],
+      ["isDateDisabled", "(date) => boolean", "-", "選べない日"],
+      ["isDateMarked", "(date) => boolean", "-", "点を付ける日"],
+      ["weekStartsOn", "0 | 1", "0", "週の始まり。0 は日曜、1 は月曜"],
+      ["label", "string", "表示中の年月", "表の名前"],
+      ["autoFocus", "boolean", "false", "出た時に、選んだ日(無ければ今日)へ focus を移す"],
+    ],
+    classes: [
+      [".ki-calendar、__head、__title", "本体、上の行、年月"],
+      [".ki-calendar__grid[role=grid]、__row、__weekday", "表、行、曜日。data-dir は月を移った向き"],
+      [".ki-calendar__day", "日のボタン。data-selected、data-outside、data-marked、aria-current=\"date\"(今日)、aria-disabled"],
+    ],
+    vars: [
+      ["--color-primary、--color-on-primary", "選んだ日の塗りと字、予定の点"],
+      ["--color-line-strong", "今日の枠"],
+      ["--size-hit、--radius-2", "1 日の大きさ(44px)と角丸"],
+      ["--font-mono", "日の数字(等幅)"],
+      ["--motion-duration-state", "月を移った時の動き。prefers-reduced-motion で止まる"],
+    ],
+    html: `<!-- Calendar は React だけ。素の HTML では、ブラウザの日付の欄を使う -->
+<input class="ki-input" type="date" aria-label="受け取る日" />`,
+    a11y: ["表は role=\"grid\"。Tab で入るのは 1 日だけで、矢印キーで日、Home と End で週の頭と終わり、PageUp と PageDown で月、Shift と一緒で年を移る", "日のボタンは「2026年1月5日月曜日、今日、予定あり」のように読む。選んだ日は aria-selected", "年月の見出しは aria-live で、月を移ると読み上げる"],
+  },
+  {
     slug: "checkbox", name: "Checkbox", imports: ["Checkbox"],
     demos: [
       { fn: "Basic", title: "Basic" },

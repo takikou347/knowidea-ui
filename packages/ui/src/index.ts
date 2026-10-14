@@ -6,6 +6,8 @@ export { Link, type LinkProps } from "./Link.js";
 export { Input, Textarea, type InputProps, type TextareaProps } from "./Input.js";
 export { Select, type SelectProps, type SelectOption } from "./Select.js";
 export { Checkbox, Switch, RadioGroup, type CheckboxProps, type SwitchProps, type RadioGroupProps, type RadioOption } from "./Choice.js";
+export { Calendar, sameDay, type CalendarProps } from "./Calendar.js";
+export { DatePicker, type DatePickerProps } from "./DatePicker.js";
 export { SegmentedControl, type SegmentedControlProps, type SegmentedOption } from "./SegmentedControl.js";
 export { Field, type FieldProps } from "./Field.js";
 export { Table, type TableProps, type Column, type SortState, type SortDirection } from "./Table.js";

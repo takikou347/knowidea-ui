@@ -1,0 +1,56 @@
+/* 月のカレンダー(Calendar)と、日付を選ぶ欄(DatePicker)。React だけ(素の HTML は <input type="date"> を使う)。
+   1 日は 44px 四方。7 列で 308px なので、360px の画面でも左右 16px の余白に収まる。 */
+.ki-calendar { display: grid; gap: var(--space-2); width: max-content; max-width: 100%; }
+.ki-calendar__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.ki-calendar__title { font-size: var(--font-size-3); font-weight: var(--font-weight-strong); font-variant-numeric: tabular-nums; }
+.ki-calendar__grid { display: grid; gap: var(--space-1); }
+.ki-calendar__row { display: grid; grid-template-columns: repeat(7, var(--size-hit)); }
+.ki-calendar__row > [role="gridcell"] { display: grid; }
+.ki-calendar__weekday { display: grid; place-items: center; height: var(--space-6); font-size: var(--font-size-1); color: var(--color-text-muted); }
+
+.ki-calendar__day {
+  position: relative; display: grid; place-items: center; width: var(--size-hit); height: var(--size-hit); margin: 0; padding: 0;
+  border: 1px solid transparent; border-radius: var(--radius-2); background: transparent; color: var(--color-text);
+  font: inherit; font-size: var(--font-size-3); font-family: var(--font-mono); font-variant-numeric: tabular-nums; cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-calendar__day.is-hover { background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-calendar__day:hover { background: var(--color-surface-2); }
+}
+.ki-calendar__day:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ki-calendar__day[data-outside] { color: var(--color-text-muted); }
+/* 今日は枠で示す。選んだ日は主の色で塗る */
+.ki-calendar__day[aria-current="date"] { border-color: var(--color-line-strong); font-weight: var(--font-weight-strong); }
+.ki-calendar__day[data-selected] { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); font-weight: var(--font-weight-strong); }
+.ki-calendar__day[aria-disabled="true"] { color: var(--color-text-muted); text-decoration: line-through; cursor: not-allowed; background: transparent; }
+/* 予定のある日の点。選んだ日では字の色に合わせる */
+.ki-calendar__day[data-marked]::after {
+  content: ""; position: absolute; bottom: var(--space-1); left: 50%; width: var(--space-1); height: var(--space-1);
+  border-radius: 50%; background: var(--color-primary); transform: translateX(-50%);
+}
+.ki-calendar__day[data-selected][data-marked]::after { background: var(--color-on-primary); }
+
+/* 月を移った時だけ、表が移った向きから少し滑って出る */
+.ki-calendar__grid[data-dir] { animation: ki-calendar-in var(--motion-duration-state) var(--motion-ease); }
+.ki-calendar__grid[data-dir="prev"] { --ki-calendar-from: calc(-1 * var(--space-2)); }
+.ki-calendar__grid[data-dir="next"] { --ki-calendar-from: var(--space-2); }
+@keyframes ki-calendar-in { from { opacity: 0; transform: translateX(var(--ki-calendar-from, 0)); } }
+
+/* DatePicker。欄は Select と同じ形 */
+.ki-datepicker { display: flex; align-items: stretch; gap: var(--space-2); width: 100%; }
+.ki-datepicker > .ki-select { flex: 1; min-width: 0; }
+.ki-datepicker__value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ki-datepicker__positioner { z-index: 20; max-width: calc(100vw - var(--space-4) * 2); }
+.ki-datepicker__popup {
+  padding: var(--space-2); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop); outline: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease), transform var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-datepicker__popup[data-starting-style], .ki-datepicker__popup[data-ending-style] { opacity: 0; transform: translateY(calc(-1 * var(--space-1))); }
+.ki-datepicker__foot { display: flex; justify-content: space-between; gap: var(--space-2); margin-top: var(--space-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ki-calendar__grid[data-dir] { animation: none; }
+  .ki-calendar__day, .ki-datepicker__popup { transition: none; }
+}

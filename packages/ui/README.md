@@ -1,6 +1,6 @@
 # @knowidea/ui
 
-KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定のアプリに依存しない。見た目は `@knowidea/css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer、Sheet、SegmentedControl)は `@base-ui/react` 1.9.0 をベースに実装している。
+KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定のアプリに依存しない。見た目は `@knowidea/css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer、Sheet、SegmentedControl、DatePicker)は `@base-ui/react` 1.9.0 をベースに実装している。
 
 | コマンド | 中身 |
 | --- | --- |
@@ -16,7 +16,7 @@ npm などには出していない(公開先はまだ決まっていない)。�
 
 | Category | Components |
 | --- | --- |
-| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Checkbox、Radio、SegmentedControl、Switch、Field |
+| Inputs | Button、IconButton、TextField、Input、Textarea、Select、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Switch、Field |
 | Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、CodeBlock、Quote |
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |
