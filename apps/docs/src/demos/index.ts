@@ -14,6 +14,7 @@ import * as dChart from "./chart";
 import * as dCheckbox from "./checkbox";
 import * as dChip from "./chip";
 import * as dCodeBlock from "./code-block";
+import * as dCombobox from "./combobox";
 import * as dContainer from "./container";
 import * as dDatePicker from "./date-picker";
 import * as dDialog from "./dialog";
@@ -28,6 +29,7 @@ import * as dLink from "./link";
 import * as dList from "./list";
 import * as dMenu from "./menu";
 import * as dPagination from "./pagination";
+import * as dPopover from "./popover";
 import * as dProgress from "./progress";
 import * as dQuote from "./quote";
 import * as dRadio from "./radio";
@@ -64,6 +66,7 @@ export const demos = {
   "checkbox": dCheckbox,
   "chip": dChip,
   "code-block": dCodeBlock,
+  "combobox": dCombobox,
   "container": dContainer,
   "date-picker": dDatePicker,
   "dialog": dDialog,
@@ -78,6 +81,7 @@ export const demos = {
   "list": dList,
   "menu": dMenu,
   "pagination": dPagination,
+  "popover": dPopover,
   "progress": dProgress,
   "quote": dQuote,
   "radio": dRadio,

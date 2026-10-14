@@ -2,6 +2,16 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.4.0",
+    date: "2026-10-14",
+    summary: "ボタンの近くに出る面と、打って絞り込む欄を足した。Popover と Combobox。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/css", "50 個にした。.ki-popover(ボタンの近くに出る小さな面。素の HTML では popover 属性で開く)と .ki-combobox(Input と同じ形の欄。右に「消す」と「開く」、どちらも 44px 四方)を足した。"],
+      ["@knowidea/ui", "50 個にした。Popover(Base UI の Popover が土台。中で押せる物を置ける。Esc で閉じ、開いたボタンへ focus が戻る)と Combobox(Base UI の Combobox が土台。ひらがなとカタカナ、全角と半角を同じに見て探す。keywords に読み仮名を入れる。読み込み中と合う物が無い時の文)を足した。探す時の文字の揃え方 normalizeForSearch も出した。"],
+      ["Docs", "Popover と Combobox のページ。check-pages に 2 つの操作を足した。"],
+    ],
+  },
+  {
     version: "0.3.0",
     date: "2026-10-14",
     summary: "日付の部品を足した。Calendar と DatePicker。配布は tarball のまま。",

@@ -1,0 +1,80 @@
+/* ボタンの近くに出る小さな面(Popover)と、打って絞り込む欄(Combobox)。React だけ。
+   Popover の素の HTML は popover 属性(<div popover>)、Combobox は <input list> と <datalist> が近い。 */
+.ki-popover__positioner { z-index: 20; max-width: calc(100vw - var(--space-4) * 2); }
+.ki-popover {
+  display: grid; gap: var(--space-2); width: max-content; max-width: min(calc(var(--space-7) * 7), calc(100vw - var(--space-4) * 2));
+  padding: var(--space-3) var(--space-4) var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop); outline: 0;
+  transform-origin: var(--transform-origin);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease), transform var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-popover[data-starting-style], .ki-popover[data-ending-style] { opacity: 0; transform: scale(0.98); }
+/* 押せる物が無い時は面そのものに focus が来るので、輪を出す */
+.ki-popover:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+/* 素の HTML の popover 属性。閉じている間は出さない */
+[popover].ki-popover:not(:popover-open) { display: none; }
+.ki-popover__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+/* 閉じるボタンがある時だけ、44px の行にする */
+.ki-popover__head:has(> button) { min-height: var(--size-hit); margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-2)) 0 0; }
+.ki-popover__title { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
+.ki-popover__description { margin: 0; color: var(--color-text-muted); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.ki-popover__body { display: grid; gap: var(--space-3); }
+
+/* Combobox。欄は Input と同じ形。右に「消す」と「開く」(どちらも 44px 四方) */
+.ki-combobox {
+  position: relative; display: flex; align-items: center; width: 100%; min-width: 0; min-height: var(--size-hit);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-combobox.is-hover { border-color: var(--color-text-muted); }
+@media (hover: hover) {
+  .ki-combobox:hover { border-color: var(--color-text-muted); }
+}
+.ki-combobox:has(.ki-combobox__input:focus-visible), .ki-combobox.is-focus { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-text); }
+.ki-combobox[data-invalid] { border-color: var(--color-error); }
+.ki-combobox:has(.ki-combobox__input:disabled) { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); }
+.ki-combobox__search { display: inline-flex; flex: none; padding-left: var(--space-3); color: var(--color-text-muted); }
+.ki-combobox__search > .ki-icon, .ki-combobox__button > .ki-icon { width: var(--space-4); height: var(--space-4); }
+.ki-combobox__input {
+  /* width: 0 で、欄の幅は親に合わせる(input の元の幅で Field からはみ出さない) */
+  flex: 1; width: 0; min-width: 0; height: var(--size-hit); margin: -1px 0; padding: 0 var(--space-2); border: 0; background: transparent; color: inherit;
+  font: inherit; font-size: var(--font-size-3); outline: 0;
+}
+/* 輪は欄の外枠に出すので、打つ所そのものには出さない */
+.ki-combobox .ki-combobox__input:focus-visible { outline: 0; }
+.ki-combobox__input::placeholder { color: var(--color-text-muted); opacity: 1; }
+.ki-combobox > .ki-spinner { flex: none; margin-right: var(--space-1); }
+.ki-combobox__button {
+  display: inline-grid; place-items: center; flex: none; width: var(--size-hit); height: var(--size-hit); margin: -1px 0; padding: 0;
+  border: 0; border-radius: var(--radius-2); background: transparent; color: var(--color-text-muted); cursor: pointer;
+}
+.ki-combobox__button:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-combobox__button:disabled { cursor: not-allowed; }
+@media (hover: hover) {
+  .ki-combobox__button:hover { color: var(--color-text); }
+}
+
+.ki-combobox__positioner { z-index: 20; }
+.ki-combobox__popup {
+  width: var(--anchor-width); max-width: calc(100vw - var(--space-4) * 2); max-height: min(calc(var(--size-hit) * 7.5), var(--available-height)); overflow-y: auto; overscroll-behavior: contain;
+  padding: var(--space-1); border: 1px solid var(--color-line); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop);
+  transition: opacity var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-combobox__popup[data-starting-style], .ki-combobox__popup[data-ending-style] { opacity: 0; }
+.ki-combobox__list:empty { display: none; }
+.ki-combobox__item {
+  display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-2); font-size: var(--font-size-3); cursor: pointer; outline: none;
+}
+.ki-combobox__item[data-highlighted] { background: var(--color-surface-2); outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-combobox__item[data-disabled] { color: var(--color-text-muted); cursor: not-allowed; }
+.ki-combobox__mark { display: inline-flex; flex: none; width: var(--space-4); height: var(--space-4); }
+.ki-combobox__mark > .ki-icon { width: 100%; height: 100%; }
+.ki-combobox__item:not([data-selected]) .ki-combobox__mark { visibility: hidden; }
+.ki-combobox__text { display: grid; gap: 2px; min-width: 0; }
+.ki-combobox__description { color: var(--color-text-muted); font-size: var(--font-size-2); }
+.ki-combobox__item[data-highlighted] .ki-combobox__description { color: var(--color-text); }
+.ki-combobox__empty:not(:empty), .ki-combobox__status:not(:empty) { display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); padding: 0 var(--space-3); color: var(--color-text-muted); font-size: var(--font-size-3); }
+
+@media (prefers-reduced-motion: reduce) { .ki-popover, .ki-combobox__popup { transition: none; } }
