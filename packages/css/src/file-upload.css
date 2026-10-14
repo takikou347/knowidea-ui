@@ -1,0 +1,52 @@
+/* ファイルを選ぶ、置く(FileUpload)と、キーボードのキー(Kbd)。
+   FileUpload の素の HTML は <label class="ki-file-upload__zone"> の中に <input type="file" class="ki-file-upload__input">。
+   置いた時の受け取りと、選んだ物の一覧は React だけ。 */
+.ki-file-upload { display: grid; gap: var(--space-2); width: 100%; min-width: 0; }
+.ki-file-upload__zone {
+  position: relative; display: grid; justify-items: center; gap: var(--space-1); min-height: calc(var(--size-hit) * 2);
+  padding: var(--space-4); border: 1px dashed var(--color-line-strong); border-radius: var(--radius-3);
+  background: var(--color-surface); color: var(--color-text); text-align: center; cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-file-upload__zone > .ki-icon { width: var(--space-5); height: var(--space-5); color: var(--color-text-muted); }
+.ki-file-upload__label { font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
+.ki-file-upload__sub, .ki-file-upload__hint { color: var(--color-text-muted); font-size: var(--font-size-2); overflow-wrap: anywhere; }
+/* input は置き場いっぱいに広げて見えなくする */
+.ki-file-upload__input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: inherit; }
+.ki-file-upload__zone:is(:has(.ki-file-upload__input:focus-visible), .is-focus) { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ki-file-upload__zone.is-hover { border-color: var(--color-text-muted); background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-file-upload__zone:hover { border-color: var(--color-text-muted); background: var(--color-surface-2); }
+}
+/* ファイルを持って上に来た時。枠を主の色の実線にする */
+.ki-file-upload__zone[data-dragging] { border-style: solid; border-color: var(--color-primary); background: var(--color-surface-2); }
+.ki-file-upload[data-invalid] .ki-file-upload__zone { border-color: var(--color-error); }
+.ki-file-upload__zone:has(.ki-file-upload__input:disabled) { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); cursor: not-allowed; }
+.ki-file-upload__error { margin: 0; color: var(--color-error); font-size: var(--font-size-2); overflow-wrap: anywhere; }
+.ki-file-upload__error:empty { display: none; }
+
+.ki-file-upload__list { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.ki-file-upload__item {
+  display: flex; align-items: center; gap: var(--space-2); min-height: var(--size-hit); padding-left: var(--space-3);
+  border: 1px solid var(--color-line); border-radius: var(--radius-2); background: var(--color-surface);
+  animation: ki-file-in var(--motion-duration-state) var(--motion-ease);
+}
+.ki-file-upload__item > .ki-icon { flex: none; color: var(--color-text-muted); }
+.ki-file-upload__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--font-size-3); }
+.ki-file-upload__size { flex: none; color: var(--color-text-muted); font-size: var(--font-size-2); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/* 加えた行は、上から少し滑って出る */
+@keyframes ki-file-in { from { opacity: 0; transform: translateY(calc(-1 * var(--space-1))); } }
+
+/* Kbd。同時に押すキーは + でつなぐ。中の <kbd> が 1 つのキー */
+.ki-kbd { display: inline-flex; align-items: center; gap: 2px; font: inherit; vertical-align: baseline; white-space: nowrap; }
+.ki-kbd__key {
+  display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; padding: 0 0.35em; box-sizing: border-box;
+  border: 1px solid var(--color-line-strong); border-bottom-width: 2px; border-radius: var(--radius-1);
+  background: var(--color-surface); color: var(--color-text); font-family: var(--font-mono); font-size: 0.85em; line-height: 1;
+}
+.ki-kbd__plus { color: var(--color-text-muted); font-size: 0.85em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ki-file-upload__zone { transition: none; }
+  .ki-file-upload__item { animation: none; }
+}

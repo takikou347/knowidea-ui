@@ -2,6 +2,16 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.6.0",
+    date: "2026-10-14",
+    summary: "添付とショートカットの部品を足した。FileUpload と Kbd。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/css", "54 個にした。.ki-file-upload(置き場は点線の枠。ファイルを持って来ると主の色の実線になる。選んだ行は滑って出る)と .ki-kbd(キーの形。同時に押すキーは + でつなぐ)を足した。"],
+      ["@knowidea/ui", "54 個にした。FileUpload(押して選ぶか置く。選んだ物は一覧で 1 つずつ外せる。maxSize を超えた物は加えず知らせる。name でフォームで送れる)と Kbd(⌘ や ↵ は読み上げで名前にする)を足した。バイトを「1.2 MB」にする formatBytes も出した。"],
+      ["Docs", "FileUpload と Kbd のページ。check-pages に 2 つの操作を足した。"],
+    ],
+  },
+  {
     version: "0.5.0",
     date: "2026-10-14",
     summary: "量と段の入力を足した。Slider と Stepper。配布は tarball のまま。",

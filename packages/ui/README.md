@@ -16,8 +16,8 @@ npm などには出していない(公開先はまだ決まっていない)。�
 
 | Category | Components |
 | --- | --- |
-| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Slider、Stepper、Switch、Field |
-| Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、CodeBlock、Quote |
+| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Slider、Stepper、FileUpload、Switch、Field |
+| Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、Kbd、CodeBlock、Quote |
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |
 | Navigation | Link、Tabs、Menu、Breadcrumbs、Pagination、AppBar、Drawer、BottomNavigation |

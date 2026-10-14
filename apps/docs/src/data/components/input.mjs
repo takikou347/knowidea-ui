@@ -277,6 +277,36 @@ export const input = [
     a11y: ["欄は数を入れる textbox。上下の矢印で step、PageUp と PageDown で largeStep ずつ変わる", "− と + には「減らす」「増やす」の名前がある。端の値では押せなくなる", "Field の中では、Field の label が欄の名前になる", "素の HTML の例は、端でボタンを押せなくしない。要る時は min と max を見て disabled を付ける"],
   },
   {
+    slug: "file-upload", name: "FileUpload", imports: ["FileUpload"],
+    lead: "ファイルを選ぶ、または置く。スマホと iPad では押すと選ぶ画面が開き、パソコンではファイルを持ってきて置ける。選んだ物は下に並び、1 つずつ外せる。送る処理は持たない(フォームで送るか、onFilesChange で受け取って送る)。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "画像か PDF を、いくつでも選ぶ。maxSize を超えた物は加えず、名前と理由を出す。" },
+      { fn: "Single", title: "Single", text: "multiple を付けないと 1 つだけ。選び直すと入れ替わる。" },
+    ],
+    props: [
+      ["label", "string", "\"ファイルを選ぶ\"", "置き場の見出し。読み上げの名前にもなる"],
+      ["accept / multiple", "string / boolean", "- / false", "選べる形式(input の accept と同じ)、いくつも選べるか"],
+      ["maxSize", "number(バイト)", "-", "1 つの上限。超えた物は加えず、理由を出す"],
+      ["hint", "string", "-", "置き場の下の補足。欄の説明として読み上げる"],
+      ["value / defaultValue / onFilesChange", "File[]", "[]", "制御と非制御"],
+      ["invalid / disabled / name", "boolean / string", "-", "エラーの枠、操作できない、フォームで送る名前"],
+    ],
+    classes: [
+      [".ki-file-upload", "本体。data-invalid、data-disabled"],
+      [".ki-file-upload__zone", "置き場(<label>)。data-dragging はファイルを持って上に来た時"],
+      [".ki-file-upload__input", "置き場いっぱいに広げた、見えない <input type=\"file\">"],
+      [".ki-file-upload__list、__item、__name、__size", "選んだ物の一覧。行は加えた時に滑って出る"],
+      [".ki-file-upload__error", "加えなかった理由(role=\"alert\")"],
+    ],
+    vars: [["--color-line-strong、--color-primary", "置き場の点線と、持って来た時の実線"], ["--radius-3、--radius-2", "置き場と、一覧の行の角丸"], ["--motion-duration-state", "行が出る動き。prefers-reduced-motion で止まる"]],
+    html: `<label class="ki-file-upload__zone">
+  <span class="ki-file-upload__label">添付を選ぶ</span>
+  <span class="ki-file-upload__hint">画像か PDF、1 つ 5 MB まで</span>
+  <input class="ki-file-upload__input" type="file" accept="image/*,.pdf" multiple />
+</label>`,
+    a11y: ["中身はブラウザの <input type=\"file\">。Tab で移り、Enter か Space で選ぶ画面が開く", "label が名前、hint が説明になる", "選んだ物の「外す」ボタンは「(名前) を外す」と読み上げる。外した後は置き場へ focus が戻る", "加えなかった物は、role=\"alert\" で知らせる"],
+  },
+  {
     slug: "switch", name: "Switch", imports: ["Switch"],
     demos: [
       { fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定には Checkbox を使う。" },
