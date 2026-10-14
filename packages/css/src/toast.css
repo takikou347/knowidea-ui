@@ -21,4 +21,36 @@
 .ki-toast__title { margin: 0; font-size: var(--font-size-3); font-weight: var(--font-weight-strong); line-height: var(--font-line-height-3); }
 .ki-toast__description { margin: 0; font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-text-muted); }
 .ki-toast__close { flex: none; }
-@media (prefers-reduced-motion: reduce) { .ki-toast { transition: none; } }
+
+/* React の Toast は重ねて積む。前の 1 枚だけを見せ、後ろは少しずつ小さくのぞかせる。
+   指かポインターを乗せるか focus すると(data-expanded)、全部を縦に並べる。右か下へ払うと消える。
+   --toast-index、--toast-offset-y、--toast-height、--toast-swipe-movement-x/y は Base UI が書く。 */
+.ki-toast-viewport[data-stack] { display: block; left: auto; width: min(calc(100vw - var(--space-4) * 2), calc(var(--space-7) * 8)); }
+.ki-toast-viewport[data-stack] > .ki-toast {
+  --ki-toast-peek: var(--space-2);
+  --ki-toast-scale: max(0, 1 - var(--toast-index) * 0.05);
+  --ki-toast-height: var(--toast-frontmost-height, var(--toast-height));
+  position: absolute; right: 0; bottom: 0; width: 100%; box-sizing: border-box; padding: 0; height: var(--ki-toast-height);
+  z-index: calc(100 - var(--toast-index)); transform-origin: bottom center;
+  transform: translateX(var(--toast-swipe-movement-x, 0px))
+    translateY(calc(var(--toast-swipe-movement-y, 0px) - var(--toast-index) * var(--ki-toast-peek) - (1 - var(--ki-toast-scale)) * var(--ki-toast-height)))
+    scale(var(--ki-toast-scale));
+  transition: transform var(--motion-duration-enter) var(--motion-ease), opacity var(--motion-duration-enter) var(--motion-ease), height var(--motion-duration-fast) var(--motion-ease);
+}
+/* 並べた時に、間を指が通っても畳まないよう、すき間を埋める */
+.ki-toast-viewport[data-stack] > .ki-toast[data-expanded]::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: calc(var(--space-3) + 1px); }
+.ki-toast-viewport[data-stack] > .ki-toast[data-expanded] {
+  height: var(--toast-height);
+  transform: translateX(var(--toast-swipe-movement-x, 0px)) translateY(calc(var(--toast-offset-y) * -1 - var(--toast-index) * var(--space-3) + var(--toast-swipe-movement-y, 0px)));
+}
+.ki-toast-viewport[data-stack] > .ki-toast[data-swiping] { transition-duration: 0ms; user-select: none; }
+.ki-toast-viewport[data-stack] > .ki-toast[data-starting-style] { opacity: 0; transform: translateY(100%); }
+.ki-toast-viewport[data-stack] > .ki-toast[data-ending-style] { opacity: 0; transform: translateY(calc(var(--toast-swipe-movement-y, 0px) + 100%)); }
+/* 右へ払って消した時は、右へ抜ける */
+.ki-toast-viewport[data-stack] > .ki-toast[data-ending-style][data-swipe-direction="right"] { transform: translateX(calc(var(--toast-swipe-movement-x, 0px) + 100%)) translateY(var(--toast-swipe-movement-y, 0px)); }
+.ki-toast-viewport[data-stack] > .ki-toast[data-limited] { opacity: 0; }
+.ki-toast__body { display: flex; align-items: flex-start; gap: var(--space-3); width: 100%; padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); box-sizing: border-box; transition: opacity var(--motion-duration-fast) var(--motion-ease); }
+.ki-toast__body[data-behind] { opacity: 0; }
+.ki-toast__body[data-behind][data-expanded] { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) { .ki-toast, .ki-toast-viewport[data-stack] > .ki-toast, .ki-toast__body { transition: none; } }

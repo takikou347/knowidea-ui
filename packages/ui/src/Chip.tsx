@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "./Icon.js";
 import { Spinner } from "./Spinner.js";
 import { cx } from "./utils.js";
@@ -24,8 +24,19 @@ export interface ChipProps {
 export function Chip({ label, icon, onClick, selected, onDelete, deleteLabel, disabled, loading, className }: ChipProps) {
   const text = typeof label === "string" ? label : undefined;
   const lead = loading ? <Spinner /> : onClick && selected ? <Icon name="check" /> : icon;
+  // 選んだ時だけ、チェックを小さく開いて出す(初めから選んである時は動かさない)
+  const was = useRef(selected);
+  const [pop, setPop] = useState(false);
+  useLayoutEffect(() => {
+    if (selected && was.current === false) setPop(true);
+    was.current = selected;
+  }, [selected]);
   return (
-    <span className={cx("ki-chip", className)} data-selected={selected ? "" : undefined} data-disabled={disabled ? "" : undefined} data-loading={loading ? "" : undefined}>
+    <span
+      className={cx("ki-chip", className)}
+      data-pop={pop && selected ? "" : undefined}
+      onAnimationEnd={pop ? () => setPop(false) : undefined}
+      data-selected={selected ? "" : undefined} data-disabled={disabled ? "" : undefined} data-loading={loading ? "" : undefined}>
       {onClick ? (
         <button type="button" className="ki-chip__main" aria-pressed={selected ?? false} disabled={disabled || loading} onClick={onClick}>{lead}{label}</button>
       ) : (

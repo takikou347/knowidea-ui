@@ -154,6 +154,7 @@ export const display = [
       { fn: "Basic", title: "Basic", text: "タイトルはリンクで、行全体がクリック領域になる。", block: true },
       { fn: "Selectable", title: "Selectable", text: "左端のチェックボックスで行を選択する。上部のチェックボックスですべてを選択する。", block: true },
       { fn: "Queue", title: "Queue before sending", text: "選択して操作すると「送信待ち」の一覧に追加され、あとからまとめて 1 回で送信する。SelectionBar と組み合わせた例。", block: true },
+      { fn: "Motion", title: "Motion", text: "足した行は上から少し滑って出る。消した時と並べ替えた時は、残った行が新しい位置へ滑る。初めて出た時と、動きを減らす設定では動かない。", block: true },
     ],
     props: [
       ["label", "string", "-", "一覧の名前。必須(スクリーンリーダーが読み上げる)"],
