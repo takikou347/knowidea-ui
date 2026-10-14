@@ -4,7 +4,8 @@
 # 2. v0.8.0 のようなタグを push した時
 # 3. GitHub の Actions → Publish → Run workflow。dry_run を外した時だけ本当に出す
 # 出すのは npm に無い版だけ(pnpm publish -r が、もう出した版を飛ばす)。workspace:^ は出す時に実際の版に置き換わる。
-# 鍵は repo の secret NPM_TOKEN(npm の Granular Access Token、Read and write)。
+# 鍵は repo の secret NPM_TOKEN(npm の Granular Access Token、Read and write、Bypass 2FA に印)。
+# npm は 2FA を飛ばすトークンでの公開を 2027 年 1 月にやめる。それまでに、トークン無しの Trusted Publishing(GitHub Actions の OIDC)へ移す。
 name: Publish
 
 on:
