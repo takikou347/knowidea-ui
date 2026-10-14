@@ -4,7 +4,7 @@ import { releases } from "../data/changelog.mjs";
 ---
 <Base title="Changelog" description="KNOW IDEA UI の版ごとの変更の履歴" toc={false}>
   <h1>Changelog</h1>
-  <p class="lead">版ごとの変更。4 つのパッケージ(<code>@knowidea/tokens</code>、<code>@knowidea/icons</code>、<code>@knowidea/css</code>、<code>@knowidea/ui</code>)は同じ版の番号で上げる。</p>
+  <p class="lead">版ごとの変更。4 つのパッケージ(<code>knowidea-tokens</code>、<code>knowidea-icons</code>、<code>knowidea-css</code>、<code>knowidea-ui</code>)は同じ版の番号で上げる。</p>
   {releases.map((r) => (
     <>
       <h2 id={"v" + r.version.replaceAll(".", "-")}><span class="num">{r.version}</span> <span class="release-date">{r.date}</span></h2>

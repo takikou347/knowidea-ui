@@ -1,4 +1,4 @@
-import { Textarea } from "@knowidea/ui";
+import { Textarea } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

@@ -9,7 +9,7 @@ const raws = import.meta.glob("../../demos/*.tsx", { query: "?raw", import: "def
 const first = (s) => ((s ?? "").split("。")[0] ?? "") + "。";
 const code = Object.fromEntries(components.map((c) => {
   const t = tileCode(c, raws[`../../demos/${c.slug}.tsx`], pick[c.slug].fn);
-  const imp = `import { ${c.imports.join(", ")} } from "@knowidea/ui";\n\n`;
+  const imp = `import { ${c.imports.join(", ")} } from "knowidea-ui";\n\n`;
   return [c.slug, { react: t.react, html: t.html }];
 }));
 ---

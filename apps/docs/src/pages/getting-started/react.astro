@@ -7,7 +7,7 @@ const { href } = links(Astro.url.pathname);
 ---
 <Base title="Usage with React" description="Vite の雛形から、部品を表示するまで">
   <h1>Usage with React</h1>
-  <p class="lead">React 19 と Vite で、新しいプロジェクトから部品を表示するまでを、上から順に写せば動く形で書く。コンポーネントの挙動は Base UI に任せ、見た目は <code>@knowidea/css</code> が担う。</p>
+  <p class="lead">React 19 と Vite で、新しいプロジェクトから部品を表示するまでを、上から順に写せば動く形で書く。コンポーネントの挙動は Base UI に任せ、見た目は <code>knowidea-css</code> が担う。</p>
   <p>先に<a href={href("getting-started/install")}>Installation</a>の 1 を終えて、<code>release/</code> に tarball を作っておく。</p>
 
   <h2 id="create">1. Create a project</h2>
@@ -42,7 +42,7 @@ const { href } = links(Astro.url.pathname);
   <Code code={react.toast} label="Toast example" />
 
   <h2 id="icons">Icons</h2>
-  <p><code>@knowidea/ui</code> の <code>Icon</code> は、文字と同じ色で 1.25em に描く。名前は型で補完される。名前ごとのコンポーネントは <code>@knowidea/icons/react</code> から取れる。</p>
+  <p><code>knowidea-ui</code> の <code>Icon</code> は、文字と同じ色で 1.25em に描く。名前は型で補完される。名前ごとのコンポーネントは <code>knowidea-icons/react</code> から取れる。</p>
   <Code code={react.icons} label="Icon example" />
   <p>一覧は <a href={href("icons")}>Icons</a> を参照。</p>
 

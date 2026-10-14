@@ -48,7 +48,7 @@ p { margin: 28px 0 0; font-size: 38px; line-height: 1.5; color: var(--color-text
   <div class="mark">${mark}</div>
   <h1>KNOW IDEA UI</h1>
   <p>特定のアプリに依存しない UI ライブラリ</p>
-  <div class="foot"><b>@knowidea/ui</b><span>v${version}</span></div>
+  <div class="foot"><b>knowidea-ui</b><span>v${version}</span></div>
 </div>`;
 
 const browser = await chromium.launch({ executablePath: findChromium(), args: ["--no-sandbox", "--allow-file-access-from-files"] });

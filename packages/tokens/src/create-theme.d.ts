@@ -11,6 +11,8 @@ export interface ThemeOptions {
   density?: "compact" | "comfortable";
   /** 本文の字の大きさ(px、12〜20)。ほかの段はこれを元に決まる */
   fontSize?: number;
+  /** 見た目。flat が既定。gradient は主の色の面(主のボタン、進み具合、選んだ印)に、主の色から色相を 40 度回した色へのグラデーションを掛ける */
+  look?: "flat" | "gradient";
 }
 
 export interface ThemeWarning {
@@ -37,4 +39,7 @@ export function luminance(c: OklchTriple): number;
 export function hex(c: OklchTriple): string;
 export function oklchString(c: OklchTriple): string;
 export function oklchToLinear(c: OklchTriple): [number, number, number];
+/** グラデーションの終わりの色(主の色の色相を GRADIENT_SHIFT 度回す) */
+export function gradientEnd(c: OklchTriple): OklchTriple;
+export const GRADIENT_SHIFT: number;
 export const BASE: Record<"light" | "dark", Record<"bg" | "surface" | "onLight" | "onDark", OklchTriple>>;

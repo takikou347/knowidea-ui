@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chip, Icon } from "@knowidea/ui";
+import { Chip, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Filter() {

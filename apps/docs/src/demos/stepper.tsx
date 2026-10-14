@@ -1,4 +1,4 @@
-import { Field, Stepper } from "@knowidea/ui";
+import { Field, Stepper } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

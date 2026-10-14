@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { CodeBlock } from "@knowidea/ui";
+import { CodeBlock } from "knowidea-ui";
 import { demos } from "../demos/index";
 
 interface Props {

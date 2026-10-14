@@ -41,7 +41,7 @@ const rows = [
   <h2 id="plain">CSS only</h2>
   <p>React を使わない場合は、変数を書き換えるだけでよい。クラスでも <code>[data-theme]</code> でも、好きなセレクターで指定できる。</p>
   <Code code={plain} lang="css" label="CSS variable overrides" />
-  <p>ダークモードの値も必要になるため、CSS の生成は <code>knowidea-theme</code> コマンドに任せるのが早い。<code>@knowidea/tokens</code> を入れたプロジェクトで流す。</p>
+  <p>ダークモードの値も必要になるため、CSS の生成は <code>knowidea-theme</code> コマンドに任せるのが早い。<code>knowidea-tokens</code> を入れたプロジェクトで流す。</p>
   <Code code={cli} lang="bash" label="knowidea-theme command" />
   <p>出力はライトとダークの両方を持つ CSS で、警告(コントラスト比が足りない組み合わせ)は標準エラーに出る。<code>--strict</code> を付けると、警告があれば終了コード 1 になる。指定できる項目は <code>--primary</code>、<code>--primary-dark</code>、<code>--radius</code>、<code>--density</code>、<code>--font-size</code>、<code>--selector</code>。</p>
   <p>プロジェクトに入れていない(素の HTML など)ときは、tarball を指す。</p>

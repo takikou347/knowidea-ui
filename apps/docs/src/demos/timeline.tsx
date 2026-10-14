@@ -1,4 +1,4 @@
-import { Timeline, type TimelineEntry } from "@knowidea/ui";
+import { Timeline, type TimelineEntry } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: TimelineEntry[] = [

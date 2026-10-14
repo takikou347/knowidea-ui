@@ -1,4 +1,4 @@
-import { Button, ToastProvider, useToast, type ToastTone } from "@knowidea/ui";
+import { Button, ToastProvider, useToast, type ToastTone } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 function Buttons() {

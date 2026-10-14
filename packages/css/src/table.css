@@ -35,7 +35,7 @@
 .ki-table__state-body { display: flex; align-items: center; gap: var(--space-3); color: var(--color-text-muted); }
 .ki-table[aria-busy="true"] tbody { opacity: 1; }
 
-/* 行の並べ替え。掴む所の見た目だけ。ドラッグとキーボードの動きは @knowidea/ui の Table(React)が持つ */
+/* 行の並べ替え。掴む所の見た目だけ。ドラッグとキーボードの動きは knowidea-ui の Table(React)が持つ */
 .ki-table :is(th, td)[data-handle] { width: var(--size-hit); padding: 0 0 0 var(--space-1); position: sticky; left: 0; z-index: 1; background: var(--color-surface); }
 .ki-table thead th[data-handle] { background: var(--color-surface-2); }
 .ki-table tbody tr[aria-selected="true"] > td[data-handle] { background: var(--color-surface-2); }

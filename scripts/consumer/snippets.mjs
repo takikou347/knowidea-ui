@@ -19,7 +19,7 @@ export function reactSnippets() {
 
 /** 部品ページの import の行(ページ上部) */
 export function importLines() {
-  return components.map((c) => ({ slug: c.slug, code: `import { ${c.imports.join(", ")} } from "@knowidea/ui";` }));
+  return components.map((c) => ({ slug: c.slug, code: `import { ${c.imports.join(", ")} } from "knowidea-ui";` }));
 }
 
 /** 部品ページの Plain HTML の例。アイコンは sprite 参照に置き換える */

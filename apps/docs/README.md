@@ -1,6 +1,6 @@
 # @knowidea/docs
 
-UI ライブラリ(`@knowidea/tokens`、`@knowidea/icons`、`@knowidea/css`、`@knowidea/ui`)のドキュメントサイト。Astro 7.3.8 と React アイランド(`client:load`)で作っている。外部には公開しない。デプロイの設定は置かない。
+UI ライブラリ(`knowidea-tokens`、`knowidea-icons`、`knowidea-css`、`knowidea-ui`)のドキュメントサイト。Astro 7.3.8 と React アイランド(`client:load`)で作っている。外部には公開しない。デプロイの設定は置かない。
 
 サイトの言語方針は次のとおり。説明文は日本語で書く。サイドメニュー、コンポーネント名、ページ内の見出し(Demos、States、API、CSS、Accessibility)、Props の表の列名(Name、Type、Default、Description)、上部バーの文言、コード中の名前は英語にする。デモの中の UI 文言は、実際の画面を想定した日本語にする。
 

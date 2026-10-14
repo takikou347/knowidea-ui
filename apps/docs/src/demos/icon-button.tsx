@@ -1,4 +1,4 @@
-import { IconButton, Icon, type ButtonVariant } from "@knowidea/ui";
+import { IconButton, Icon, type ButtonVariant } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Variants() {

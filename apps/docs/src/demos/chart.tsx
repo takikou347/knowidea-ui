@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Chart, Sparkline, Button, type ChartPoint } from "@knowidea/ui";
+import { Chart, Sparkline, Button, type ChartPoint } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const days = Array.from({ length: 30 }, (_, i) => {

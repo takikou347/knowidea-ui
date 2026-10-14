@@ -1,4 +1,4 @@
-import { Breadcrumbs } from "@knowidea/ui";
+import { Breadcrumbs } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

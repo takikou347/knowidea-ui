@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sheet, SheetClose, Button, Field, Input, Switch, Icon } from "@knowidea/ui";
+import { Sheet, SheetClose, Button, Field, Input, Switch, Icon } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {

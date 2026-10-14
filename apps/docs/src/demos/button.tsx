@@ -1,4 +1,4 @@
-import { Button, Icon, type ButtonVariant } from "@knowidea/ui";
+import { Button, Icon, Progress, Switch, ThemeProvider, type ButtonVariant } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Variants() {
@@ -26,6 +26,23 @@ export function WithIcon() {
     <>
       <Button icon={<Icon name="check" />}>完了にする</Button>
       <Button variant="secondary" icon={<Icon name="download" />}>エクスポート</Button>
+    </>
+  );
+}
+
+export function GradientLook() {
+  return (
+    <>
+      <ThemeProvider theme={{ look: "gradient" }}>
+        <div style={{ display: "grid", gap: "var(--space-3)", width: "min(100%, 320px)" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
+            <Button>保存する</Button>
+            <Button variant="secondary">下書きにする</Button>
+          </div>
+          <Switch label="自動で更新する" defaultChecked />
+          <Progress label="進み具合" value={60} />
+        </div>
+      </ThemeProvider>
     </>
   );
 }

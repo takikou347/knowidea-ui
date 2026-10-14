@@ -4,7 +4,7 @@ import Code from "../components/Code.astro";
 import IconBrowser from "../components/IconBrowser.tsx";
 import { icons } from "../data/examples.mjs";
 import { links } from "../lib/paths.mjs";
-import all from "@knowidea/icons/dist/icons-data.json" with { type: "json" };
+import all from "knowidea-icons/dist/icons-data.json" with { type: "json" };
 const { react, html } = icons;
 const { href } = links(Astro.url.pathname);
 ---
