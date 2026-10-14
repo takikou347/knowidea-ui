@@ -2,6 +2,16 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.7.0",
+    date: "2026-10-14",
+    summary: "issue #3 の動きを足した。部品の数は 54 のまま。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/css", "Drawer の引き出しを、指に付いて動き、左へ払うと閉じる形にした(.ki-drawer__viewport、.ki-drawer__backdrop を足した)。Toast を重ねて積む形にした(前の 1 枚だけ中身を見せ、乗せると並び、右か下へ払うと消える)。Chip は押すと小さく沈み、選ぶとチェックが小さく開いて出る。どれも動きを減らす設定で止まる。"],
+      ["@knowidea/ui", "Drawer の temporary を Base UI の Drawer に移した(左へ払って閉じる)。Toast に重ねる形と払って消す動きを足した。List は、行を足すと上から少し滑って出し、消した時と並べ替えた時は残った行が新しい位置へ滑る。初めて出た時は動かさない。"],
+      ["Docs", "ページを移る時に、見出しを前のページの見出しからつなぎ、本文を少し滑らせて出す(View Transitions。使えないブラウザではふつうに移る)。List に Motion の見本。check-pages に 3 つの操作を足した。Skeleton の光は、終わらない動きを使わない決まりに合わせて足さなかった。"],
+    ],
+  },
+  {
     version: "0.6.0",
     date: "2026-10-14",
     summary: "添付とショートカットの部品を足した。FileUpload と Kbd。配布は tarball のまま。",

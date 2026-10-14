@@ -76,3 +76,19 @@ export function states(): StateRow[] {
     { label: "Selected", node: <W><List label="選択中" items={items.slice(0, 2)} selected={["a"]} onSelectedChange={() => {}} /></W> },
   ];
 }
+
+/** 足す、消す、並べ替える時に、行が滑る */
+export function Motion() {
+  const [rows, setRows] = useState<ListEntry[]>(items);
+  const [n, setN] = useState(1);
+  return (
+    <div style={{ display: "grid", gap: "var(--space-3)", width: "100%" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
+        <Button variant="secondary" onClick={() => { setRows([{ id: `n${n}`, title: `新しい項目 ${n}` }, ...rows]); setN(n + 1); }}>上に足す</Button>
+        <Button variant="secondary" disabled={rows.length === 0} onClick={() => setRows(rows.slice(1))}>先頭を消す</Button>
+        <Button variant="secondary" disabled={rows.length < 2} onClick={() => setRows([...rows].reverse())}>逆に並べる</Button>
+      </div>
+      <List label="動きの見本" items={rows} state={rows.length ? "ready" : "empty"} />
+    </div>
+  );
+}

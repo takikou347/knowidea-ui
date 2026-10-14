@@ -1,7 +1,8 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { Checkbox } from "./Choice.js";
 import { EmptyState } from "./EmptyState.js";
 import { Icon } from "./Icon.js";
+import { useListMotion } from "./motion.js";
 import { Skeleton } from "./Skeleton.js";
 import { cx } from "./utils.js";
 
@@ -33,7 +34,7 @@ export interface ListItemProps {
 export function ListItem({ item, selected, onSelectedChange, selectLabel }: ListItemProps) {
   const text = typeof item.title === "string" ? item.title : undefined;
   return (
-    <li className="ki-list__item" data-selected={selected ? "" : undefined} data-disabled={item.disabled ? "" : undefined}>
+    <li className="ki-list__item" data-id={item.id} data-selected={selected ? "" : undefined} data-disabled={item.disabled ? "" : undefined}>
       {onSelectedChange ? (
         <div className="ki-list__pick">
           <Checkbox aria-label={selectLabel ?? `${text ?? "この行"} を選択`} checked={!!selected} disabled={item.disabled} onCheckedChange={onSelectedChange} />
@@ -77,9 +78,12 @@ export function List({
   const selectableItems = items.filter((i) => !i.disabled);
   const all = selectableItems.length > 0 && selectableItems.every((i) => sel.has(i.id));
   const some = items.some((i) => sel.has(i.id));
+  const box = useRef<HTMLUListElement>(null);
+  // 行を足す、消す、並べ替える時に滑らせる
+  useListMotion(box, state === "ready" ? items.map((i) => i.id).join("\n") : state);
   return (
     <div className={className}>
-      <ul className="ki-list" aria-label={label} aria-busy={state === "loading" || undefined} data-selectable={selectable ? "" : undefined}>
+      <ul ref={box} className="ki-list" aria-label={label} aria-busy={state === "loading" || undefined} data-selectable={selectable ? "" : undefined}>
         {selectable && state === "ready" && items.length > 0 ? (
           <li className="ki-list__head">
             <Checkbox

@@ -15,15 +15,18 @@ function ToastList() {
         // useToast を呼んだ所の ThemeProvider を、1 件ずつに付ける。ToastProvider が ThemeProvider の外にあっても色が当たる
         const theme = (t.data as { theme?: string } | undefined)?.theme;
         return (
-          <BaseToast.Root key={t.id} toast={t} className="ki-toast" data-type={tone} data-ki-theme={theme}>
-            <span className="ki-toast__icon"><Icon name={toneIcon[tone]} /></span>
-            <div className="ki-toast__content">
-              <BaseToast.Title className="ki-toast__title" />
-              <BaseToast.Description className="ki-toast__description" />
-            </div>
-            <BaseToast.Close className="ki-button ki-icon-button ki-toast__close" data-variant="quiet" aria-label="閉じる">
-              <Icon name="close" />
-            </BaseToast.Close>
+          <BaseToast.Root key={t.id} toast={t} className="ki-toast" data-type={tone} data-ki-theme={theme} swipeDirection={["right", "down"]}>
+            {/* 後ろに重なっている間は中身を隠す(data-behind) */}
+            <BaseToast.Content className="ki-toast__body">
+              <span className="ki-toast__icon"><Icon name={toneIcon[tone]} /></span>
+              <div className="ki-toast__content">
+                <BaseToast.Title className="ki-toast__title" />
+                <BaseToast.Description className="ki-toast__description" />
+              </div>
+              <BaseToast.Close className="ki-button ki-icon-button ki-toast__close" data-variant="quiet" aria-label="閉じる">
+                <Icon name="close" />
+              </BaseToast.Close>
+            </BaseToast.Content>
           </BaseToast.Root>
         );
       })}
@@ -46,7 +49,7 @@ export function ToastProvider({ children, timeout = 5000, limit = 3 }: ToastProv
     <BaseToast.Provider timeout={timeout} limit={limit}>
       {children}
       <BaseToast.Portal>
-        <BaseToast.Viewport className="ki-toast-viewport" {...scope}>
+        <BaseToast.Viewport className="ki-toast-viewport" data-stack="" {...scope}>
           <ToastList />
         </BaseToast.Viewport>
       </BaseToast.Portal>

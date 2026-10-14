@@ -1,6 +1,6 @@
 import { useThemeScope } from "./ThemeScope.js";
 import type { ReactNode } from "react";
-import { Dialog as BaseDialog } from "@base-ui/react/dialog";
+import { Drawer as BaseDrawer } from "@base-ui/react/drawer";
 import { Icon } from "./Icon.js";
 import { IconButton } from "./IconButton.js";
 import type { NavItem } from "./NavItems.js";
@@ -53,7 +53,7 @@ function Nav({ groups, current, label }: { groups: DrawerGroup[]; current?: stri
   );
 }
 
-/** サイドの目次。permanent はその場に、temporary は Esc や外を押して閉じる引き出しになる。 */
+/** サイドの目次。permanent はその場に、temporary は左へ払うか、Esc や外を押して閉じる引き出しになる。 */
 export function Drawer({ items, groups, current, brand, label = "ナビゲーション", variant = "permanent", open, defaultOpen, onOpenChange, closeLabel = "ナビゲーションを閉じる", footer, className }: DrawerProps) {
   const scope = useThemeScope();
   const g = groups ?? [{ items: items ?? [] }];
@@ -68,18 +68,20 @@ export function Drawer({ items, groups, current, brand, label = "ナビゲーシ
     );
   }
   return (
-    <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (o) => onOpenChange(o) : undefined}>
-      <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="ki-dialog__backdrop" {...scope} />
-        <BaseDialog.Popup className={cx("ki-drawer", className)} data-variant="temporary" aria-label={label} {...scope}>
-          <div className="ki-drawer__head">
-            {head ?? <span />}
-            <BaseDialog.Close render={<IconButton variant="quiet" label={closeLabel} icon={<Icon name="close" />} />} />
-          </div>
-          <Nav groups={g} current={current} label={label} />
-          {footer}
-        </BaseDialog.Popup>
-      </BaseDialog.Portal>
-    </BaseDialog.Root>
+    <BaseDrawer.Root swipeDirection="left" open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange ? (o) => onOpenChange(o) : undefined}>
+      <BaseDrawer.Portal>
+        <BaseDrawer.Backdrop className="ki-drawer__backdrop" {...scope} />
+        <BaseDrawer.Viewport className="ki-drawer__viewport" {...scope}>
+          <BaseDrawer.Popup className={cx("ki-drawer", className)} data-variant="temporary" aria-label={label}>
+            <div className="ki-drawer__head">
+              {head ?? <span />}
+              <BaseDrawer.Close render={<IconButton variant="quiet" label={closeLabel} icon={<Icon name="close" />} />} />
+            </div>
+            <Nav groups={g} current={current} label={label} />
+            {footer}
+          </BaseDrawer.Popup>
+        </BaseDrawer.Viewport>
+      </BaseDrawer.Portal>
+    </BaseDrawer.Root>
   );
 }
