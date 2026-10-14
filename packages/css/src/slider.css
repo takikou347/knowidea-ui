@@ -1,0 +1,70 @@
+/* 量を指で選ぶ(Slider)と、段のある数を − と + で変える(Stepper)。
+   Slider の素の HTML は <input type="range" class="ki-range">、Stepper は <input type="number"> を − と + のボタンで挟む。 */
+.ki-slider { display: grid; gap: var(--space-1); width: 100%; min-width: 0; }
+.ki-slider__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); font-size: var(--font-size-3); }
+.ki-slider__label { color: var(--color-text); }
+.ki-slider__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--color-text-muted); }
+/* 押せる所は 44px の高さ。線はその真ん中に細く引く */
+.ki-slider__control { display: flex; align-items: center; height: var(--size-hit); touch-action: none; cursor: pointer; }
+.ki-slider__track { position: relative; flex: 1; height: var(--space-1); border-radius: var(--radius-1); background: var(--color-line-strong); }
+.ki-slider__indicator { height: 100%; border-radius: inherit; background: var(--color-primary); }
+.ki-slider__thumb {
+  position: relative; width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1));
+  border: 2px solid var(--color-primary); border-radius: 50%; box-sizing: border-box; background: var(--color-surface);
+  box-shadow: var(--shadow-pop); outline: 2px solid transparent; outline-offset: 2px;
+  transition: transform var(--motion-duration-fast) var(--motion-ease);
+}
+/* 見た目は 20px、押せる所は 44px 四方 */
+.ki-slider__thumb::before { content: ""; position: absolute; inset: 50% auto auto 50%; width: var(--size-hit); height: var(--size-hit); transform: translate(-50%, -50%); border-radius: 50%; }
+.ki-slider__thumb:is(:has(:focus-visible), .is-focus) { outline-color: var(--color-focus); }
+/* 掴んでいる間は少し大きく。位置は指に付いて動くので、動きを減らす設定でも残る */
+.ki-slider__thumb[data-dragging] { transform: scale(1.15); }
+/* キーや線を押して動いた時だけ、つまみと色の帯が滑る。掴んでいる間は指に付いて動く */
+.ki-slider:not([data-dragging]) .ki-slider__thumb { transition: transform var(--motion-duration-fast) var(--motion-ease), inset-inline-start var(--motion-duration-fast) var(--motion-ease); }
+.ki-slider:not([data-dragging]) .ki-slider__indicator { transition: width var(--motion-duration-fast) var(--motion-ease), inset-inline-start var(--motion-duration-fast) var(--motion-ease); }
+.ki-slider[data-disabled] .ki-slider__control { cursor: not-allowed; }
+.ki-slider[data-disabled] .ki-slider__indicator { background: var(--color-text-muted); }
+.ki-slider[data-disabled] .ki-slider__thumb { border-color: var(--color-text-muted); box-shadow: none; }
+.ki-slider[data-disabled] .ki-slider__label { color: var(--color-text-muted); }
+
+/* 素の HTML の range。形はブラウザに任せ、色と高さだけをそろえる */
+.ki-range { width: 100%; height: var(--size-hit); margin: 0; background: transparent; accent-color: var(--color-primary); cursor: pointer; }
+.ki-range:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.ki-range:disabled { cursor: not-allowed; accent-color: var(--color-text-muted); }
+
+/* Stepper。− と + は 44px 四方。真ん中の欄に打っても入れられる */
+.ki-stepper { display: inline-flex; max-width: 100%; }
+.ki-stepper__group {
+  display: inline-flex; align-items: stretch; min-width: 0; height: var(--size-hit);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text);
+}
+.ki-stepper__group:has(.ki-stepper__input:focus-visible) { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-text); }
+.ki-stepper__group[data-invalid] { border-color: var(--color-error); }
+.ki-stepper__group:has(.ki-stepper__input:disabled) { background: var(--color-surface-2); border-color: var(--color-line); color: var(--color-text-muted); }
+.ki-stepper__input {
+  width: calc(var(--space-7) + var(--space-4)); min-width: 0; height: var(--size-hit); margin: -1px 0; padding: 0 var(--space-1); border: 0;
+  background: transparent; color: inherit; font: inherit; font-size: var(--font-size-3); font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  text-align: center; outline: 0; appearance: textfield; -moz-appearance: textfield;
+}
+/* 素の HTML の type="number" の、ブラウザの上下のボタンを消す(− と + を使う) */
+.ki-stepper__input::-webkit-inner-spin-button, .ki-stepper__input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.ki-stepper .ki-stepper__input:focus-visible { outline: 0; }
+.ki-stepper__button {
+  display: inline-grid; place-items: center; flex: none; width: var(--size-hit); height: var(--size-hit); margin: -1px 0; padding: 0;
+  border: 0; border-radius: var(--radius-2); background: transparent; color: var(--color-text); font: inherit; font-size: var(--font-size-4); cursor: pointer;
+  transition: transform var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease);
+}
+.ki-stepper__button > .ki-icon { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-stepper__button:is(:focus-visible, .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-stepper__button.is-hover { background: var(--color-surface-2); }
+@media (hover: hover) {
+  .ki-stepper__button:hover:not(:disabled) { background: var(--color-surface-2); }
+}
+/* 押した時に小さく沈む */
+.ki-stepper__button:active:not(:disabled) { transform: scale(0.92); }
+.ki-stepper__button:disabled { color: var(--color-text-muted); cursor: not-allowed; opacity: 0.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ki-slider__thumb, .ki-slider:not([data-dragging]) .ki-slider__thumb, .ki-slider:not([data-dragging]) .ki-slider__indicator, .ki-stepper__button { transition: none; }
+  .ki-stepper__button:active:not(:disabled) { transform: none; }
+}

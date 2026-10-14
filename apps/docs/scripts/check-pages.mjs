@@ -166,6 +166,12 @@ if (!process.env.ONLY) {
           while (p && getComputedStyle(p).position === "static") p = p.parentElement;
           if (p) box = p;
         }
+        const thumb = el.tagName === "INPUT" && el.type === "range" ? el.closest(".ki-slider__thumb") : null;
+        if (thumb) { // Slider のつまみは、見えない input ではなく、つまみの ::before(押せる所)で測る
+          const b = getComputedStyle(thumb, "::before");
+          if (parseFloat(b.width) < 43.5 || parseFloat(b.height) < 43.5) out.push(`.ki-slider__thumb::before ${b.width}x${b.height}`);
+          continue;
+        }
         const r = box.getBoundingClientRect();
         if (r.right < 0 || r.bottom < 0 || r.left >= innerWidth) continue; // 画面の外(スキップリンクは focus で出る)
         if (r.width === 0 || r.height === 0) continue;
@@ -327,6 +333,34 @@ await kb("Popover(開くと中へ focus、Tab で中を移る、Esc で閉じて
   const plain = page.locator("[popover].ki-popover");
   assert(!(await plain.first().isVisible()), "素の HTML の popover が閉じているのに出ている");
 });
+
+await kb("Slider(矢印で 1 ずつ、End で端、値と読み上げがそろう、範囲は下限と上限)", "components/slider.html", async (page) => {
+  const thumb = page.getByRole("slider", { name: "読み上げの音量" }).first();
+  await thumb.focus();
+  await press(page, "ArrowRight");
+  assert((await thumb.getAttribute("aria-valuetext")) === "61%", `矢印で 61% にならない(${await thumb.getAttribute("aria-valuetext")})`);
+  assert((await page.locator(".ki-slider__value").first().textContent()) === "61%", "上の値が読み上げとそろわない");
+  await press(page, "End");
+  assert((await thumb.getAttribute("aria-valuenow")) === "100", "End で端へ動かない");
+  assert(await page.getByRole("slider", { name: "下限" }).count() === 1 && await page.getByRole("slider", { name: "上限" }).count() === 1, "範囲のつまみに下限と上限の名前が無い");
+});
+
+await kb("Stepper(+ で増える、端で押せない、打って入れる、390px で 44px)", "components/stepper.html", async (page) => {
+  const input = page.getByRole("textbox", { name: "人数" }).first();
+  const group = page.locator(".ki-stepper", { has: input });
+  const plus = group.getByRole("button", { name: "増やす" });
+  await plus.click();
+  assert((await input.inputValue()) === "3", `+ で 3 にならない(${await input.inputValue()})`);
+  await input.fill("10");
+  await input.press("Enter");
+  await page.waitForTimeout(120);
+  assert(await plus.isDisabled(), "max で + が押せるまま");
+  await input.focus();
+  await press(page, "ArrowDown");
+  assert((await input.inputValue()) === "9", "下の矢印で 1 減らない");
+  const box = await plus.boundingBox();
+  assert(box.width >= 44 && box.height >= 44, `+ が 44px より小さい(${box.width}x${box.height})`);
+}, { width: 390, height: 844 }, { hasTouch: true });
 
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
@@ -551,9 +585,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 50, "カードが 50 枚でない");
+  assert((await page.locator(".cp").count()) === 52, "カードが 52 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 50, "見本が 50 個でない");
+  assert((await page.locator(".cp-fit").count()) === 52, "見本が 52 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();

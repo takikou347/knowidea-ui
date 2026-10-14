@@ -221,6 +221,62 @@ export const input = [
     a11y: ["ラジオのグループ。矢印キーで選び直し、Tab はグループの外へ移る", "label がグループの名前になる。必須", "選んだことは、印の位置だけでなく、字の太さと色でも示す"],
   },
   {
+    slug: "slider", name: "Slider", imports: ["Slider"],
+    lead: "量を指で選ぶ。音量や明るさのように、ちょうどの数より加減が大事な時に使う。ちょうどの数を入れる時は Stepper か Input を使う。value を [下限, 上限] にすると範囲を選べる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "上に名前と今の値を出す。formatValue で「60%」のように見せ、読み上げも同じにする。" },
+      { fn: "Range", title: "Range", text: "つまみを 2 つにして範囲を選ぶ。つまみは「下限」「上限」と読み上げ、全体の名前は label の「価格帯」になる。" },
+    ],
+    props: [
+      ["label", "string", "-", "何の量か。必須。上に出し、読み上げの名前にもなる"],
+      ["value / defaultValue / onValueChange", "number | number[]", "min", "制御と非制御。配列にすると範囲"],
+      ["onValueCommitted", "(value) => void", "-", "指を離した時、キーで変えた時に 1 度呼ぶ。保存はこちらで"],
+      ["min / max / step / largeStep", "number", "0 / 100 / 1 / 10", "範囲と、矢印、PageUp と PageDown で動く幅"],
+      ["formatValue", "(value: number) => string", "-", "値の見せ方。読み上げにも使う"],
+      ["thumbLabels", "[string, string]", "[\"下限\", \"上限\"]", "範囲の時の、つまみの名前"],
+      ["hideValue / disabled / name", "boolean / string", "-", "値を出さない、操作できない、フォームの名前"],
+    ],
+    classes: [
+      [".ki-slider", "本体。data-dragging、data-disabled"],
+      [".ki-slider__head、__label、__value", "名前と今の値"],
+      [".ki-slider__control、__track、__indicator", "押せる所(44px の高さ)、線、選んだ分の色の帯"],
+      [".ki-slider__thumb", "つまみ。見た目は 20px、押せる所は 44px 四方"],
+      [".ki-range", "素の HTML の <input type=\"range\">"],
+    ],
+    vars: [["--color-line-strong、--color-primary", "線と、選んだ分の帯とつまみの枠"], ["--size-hit", "押せる所の大きさ(44px)"], ["--motion-duration-fast", "キーで動いた時の滑り。掴んでいる間は指に付いて動く"]],
+    html: `<label class="ki-field__label" for="vol">読み上げの音量</label>
+<input class="ki-range" id="vol" type="range" min="0" max="100" value="60" />`,
+    a11y: ["つまみは role=\"slider\"。左右と上下の矢印で step、PageUp と PageDown で largeStep、Home と End で端へ動く", "label が全体の名前になる。範囲の時は、つまみごとに「下限」「上限」の名前を付ける", "formatValue で、読み上げも「60%」のように単位まで言う"],
+  },
+  {
+    slug: "stepper", name: "Stepper", imports: ["Stepper", "Field"],
+    lead: "段のある数を、− と + で 1 つずつ変える。人数や何分前のように、小さな範囲のちょうどの数に使う。欄に打っても入れられる。端の値では、その向きのボタンが押せなくなる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "Field で名前と補足を付ける。min と max で範囲を決める。" },
+      { fn: "WithUnit", title: "With unit and step", text: "format で「15 分」のように単位を付け、step で 5 ずつ変える。" },
+    ],
+    props: [
+      ["value / defaultValue / onValueChange", "number | null", "-", "制御と非制御。空の時は null"],
+      ["min / max / step / largeStep", "number", "- / - / 1 / step × 10", "範囲と、ボタンと矢印、PageUp と PageDown で変わる幅"],
+      ["format", "Intl.NumberFormatOptions", "-", "数の見せ方。{ style: \"unit\", unit: \"minute\" } で「15 分」"],
+      ["invalid / disabled", "boolean", "false", "エラーの枠、操作できない"],
+      ["name / id / aria-label", "string", "-", "フォームの名前、Field の外で使う時の読み上げの名前"],
+      ["decrementLabel / incrementLabel", "string", "\"減らす\" / \"増やす\"", "− と + の読み上げの名前"],
+    ],
+    classes: [
+      [".ki-stepper、__group", "本体と枠。data-invalid"],
+      [".ki-stepper__input", "真ん中の欄。等幅の数字で、真ん中にそろえる"],
+      [".ki-stepper__button", "− と +(44px 四方)。押すと小さく沈む"],
+    ],
+    vars: [["--color-line-strong、--color-surface", "枠と背景(Input と同じ)"], ["--size-hit", "高さとボタンの幅(44px)"], ["--motion-duration-fast", "押した時の沈み。prefers-reduced-motion で止まる"]],
+    html: `<div class="ki-stepper"><div class="ki-stepper__group">
+  <button class="ki-stepper__button" type="button" aria-label="減らす" onclick="const i = this.nextElementSibling; i.stepDown(); i.dispatchEvent(new Event('change', { bubbles: true }))">−</button>
+  <input class="ki-stepper__input" type="number" aria-label="人数" min="1" max="10" value="2" />
+  <button class="ki-stepper__button" type="button" aria-label="増やす" onclick="const i = this.previousElementSibling; i.stepUp(); i.dispatchEvent(new Event('change', { bubbles: true }))">+</button>
+</div></div>`,
+    a11y: ["欄は数を入れる textbox。上下の矢印で step、PageUp と PageDown で largeStep ずつ変わる", "− と + には「減らす」「増やす」の名前がある。端の値では押せなくなる", "Field の中では、Field の label が欄の名前になる", "素の HTML の例は、端でボタンを押せなくしない。要る時は min と max を見て disabled を付ける"],
+  },
+  {
     slug: "switch", name: "Switch", imports: ["Switch"],
     demos: [
       { fn: "Basic", title: "Basic", text: "操作するとすぐに反映される設定に使う。保存してから反映される設定には Checkbox を使う。" },
