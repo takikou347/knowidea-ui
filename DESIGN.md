@@ -7,11 +7,11 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 
 | 段 | 中身 | 状態 |
 | --- | --- | --- |
-| 1a 方向の見本 | 軸を分けた 3 つの方向。`samples/direction-a`、`b`、`c` | B に決定(オーナー 2026-10-13 08:36 日本時間)。A と C は比べた記録として残す |
-| 1b 土台 | 会社の主の色と会社のアイコン、トークン、UI のアイコン、ドキュメントサイトの骨組み | 主の色 #016C6C(ダーク #4CBFBF)とロゴ「ループ」に決定(オーナー 2026-10-13 09:28 日本時間)。決まりは `brand/README.md`。書体は今の IBM Plex Sans / Sans JP / Mono のまま(オーナー 2026-10-13 09:45 日本時間、候補は `samples/fonts/`)。トークン(`packages/tokens`、DTCG、OKLCH)、UI のアイコンの比較(`packages/icons`)、ドキュメントサイトの骨組み(`apps/docs`、Astro)を置いた。見本は `samples/tokens/`。オーナーの選択待ち: 成功の色(おすすめは候補 a、色相 145)、アイコンの組(おすすめは Phosphor regular)、ドキュメントサイトに Astro を採用するか。1c 以降はおすすめの案(成功の色 a、Phosphor regular、Astro)で組んだ。オーナーが別の案を選んだら差し替える |
+| 1a 方向の見本 | 軸を分けた 3 つの方向。`samples/direction-a`、`b`、`c` | B に決定。A と C は比べた記録として残す |
+| 1b 土台 | 会社の主の色と会社のアイコン、トークン、UI のアイコン、ドキュメントサイトの骨組み | 主の色 #016C6C(ダーク #4CBFBF)とロゴ「ループ」に決定。決まりは `brand/README.md`。書体は今の IBM Plex Sans / Sans JP / Mono のまま(候補は `samples/fonts/`)。トークン(`packages/tokens`、DTCG、OKLCH)、UI のアイコンの比較(`packages/icons`)、ドキュメントサイトの骨組み(`apps/docs`、Astro)を置いた。見本は `samples/tokens/`。オーナーの選択待ち: 成功の色(おすすめは候補 a、色相 145)、アイコンの組(おすすめは Phosphor regular)、ドキュメントサイトに Astro を採用するか。1c 以降はおすすめの案(成功の色 a、Phosphor regular、Astro)で組んだ。オーナーが別の案を選んだら差し替える |
 | 1c コンポーネント | 44 のコンポーネントを `packages/css`(素の CSS)と `packages/ui`(Base UI 1.9.0 をベースにした React)に置き、`apps/docs` の 1 コンポーネント 1 ページで確かめる。サンプルは `apps/docs`、検査は `pnpm --filter @knowidea/docs check:pages` | 作った。オーナーの目で確かめる |
 | 1d 拡張 | 情報の色(青、色相 250)をトークンに足した。アイコンを 133 個にし、コンポーネントの中のアイコンを `packages/icons` に差し替えた。Tailwind v4 の検査 `examples/tailwind/`、素の HTML の例 `examples/static/`。アプリ別のコンポーネント、アプリ別の上書き(`themes/`)、全部の見本(`samples/all`)は、1e で作り直して消した | 1e に置き換えた |
-| 1e UI ライブラリ | UI ライブラリとして組み直した(オーナー 2026-10-13 14:21 日本時間)。アプリごとに分けず、どのアプリにも属さない 1 つのライブラリにする。パッケージは `@knowidea/tokens`、`@knowidea/icons`、`@knowidea/css`、`@knowidea/ui`(旧 `react`)。コンポーネントから Logru、Ruleru、Claude、提案、スレッド、PR の名前を外し、Stat、Chart、Status、Card、List、SelectionBar、Timeline、AppBar、Drawer、BottomNavigation などの汎用のコンポーネントにした。アプリごとの色は `themes/` をやめ、`createTheme` と `ThemeProvider`(主の色、角丸、密度、字の大きさ)で渡す。ドキュメントサイト `apps/docs` は MUI のような構成(Getting started、Customization、Components、Icons、Templates)に作り直した。サイドメニュー、コンポーネント名、ページの見出しは英語、説明文は日本語にした。`brand/apps` と `samples/all` は消した | 作った。オーナーの目で確かめる |
+| 1e UI ライブラリ | UI ライブラリとして組み直した。アプリごとに分けず、どのアプリにも属さない 1 つのライブラリにする。パッケージは `@knowidea/tokens`、`@knowidea/icons`、`@knowidea/css`、`@knowidea/ui`(旧 `react`)。コンポーネントから Logru、Ruleru、Claude、提案、スレッド、PR の名前を外し、Stat、Chart、Status、Card、List、SelectionBar、Timeline、AppBar、Drawer、BottomNavigation などの汎用のコンポーネントにした。アプリごとの色は `themes/` をやめ、`createTheme` と `ThemeProvider`(主の色、角丸、密度、字の大きさ)で渡す。ドキュメントサイト `apps/docs` は MUI のような構成(Getting started、Customization、Components、Icons、Templates)に作り直した。サイドメニュー、コンポーネント名、ページの見出しは英語、説明文は日本語にした。`brand/apps` と `samples/all` は消した | 作った。オーナーの目で確かめる |
 | 2a 部品と動き(0.2.0) | issue #3 の最初の 3 つ。Sheet(下から出る面。指で下へ引いて閉じる)、SegmentedControl(選んだ印が滑る切り替え)、Switch の設定の一覧の形(`placement="end"`、`description`)。大きな面の出入りの時間 `--motion-duration-enter`(240ms)を足した。指に付いて動くのは操作なので、動きを減らす設定でも残す。指を離した後の動きは止める | 作った。オーナーの目で確かめる。残りは issue #3 の順(Calendar と DatePicker から) |
 | 2b 日付(0.3.0) | Calendar と DatePicker。1 日は 44px 四方で、360px の画面にも収まる。今日は枠、選んだ日は主の色、予定のある日は点。週の始まりは Logru に合わせて日曜が既定(月曜にもできる)。月を移った時だけ、表が向きに合わせて少し滑る。素の HTML は `<input type="date">` | 作った。オーナーの目で確かめる。Popover と Combobox は 2c |
 | 2c 面と探す欄(0.4.0) | Popover(ボタンの近くの小さな面。中で押せる物を置ける点が Tooltip と違う。Esc と外を押すと閉じ、開いたボタンへ focus が戻る)と Combobox(打って絞り込み 1 つを選ぶ。候補が 10 個より多い時。ひらがなとカタカナ、全角と半角を同じに見る。読み仮名は keywords)。素の HTML は popover 属性と `<input list>` | 作った。オーナーの目で確かめる。Slider と Stepper は 2d |
@@ -22,12 +22,12 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 方向 | 密度、色の温度 | 形、書体 |
 | --- | --- | --- |
 | A | ゆったり、冷たい | 直角に近い、明朝の見出し |
-| B | 詰めた、中間 | 小さな角丸(オーナーの 2026-10-13 20:46 日本時間の指示で、丸みを増やした。小さな部品 4px、ボタンと入力 8px、面 12px)、ゴシックと等幅 |
+| B | 詰めた、中間 | 小さな角丸(小さな部品 4px、ボタンと入力 8px、面 12px)、ゴシックと等幅 |
 | C | 中くらい、暖かい | 役ごとに変える、丸みのあるゴシック |
 
 ## 角丸
 
-オーナーの 2026-10-13 20:46 日本時間の指示で、丸みを増やした。大きさで 3 段に分け、全部に同じ値は使わない。
+大きさで 3 段に分け、全部に同じ値は使わない。
 
 | 段 | 値 | 使う所 |
 | --- | --- | --- |
@@ -85,7 +85,7 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 
 今回は作らない。
 
-- 選んで使う見た目の版(例: グラデーションの Button や Card)。既定は今の見た目のまま、使う側が選んだ時だけ当たる。オーナーの案 2026-10-13
+- 選んで使う見た目の版(例: グラデーションの Button や Card)。既定は今の見た目のまま、使う側が選んだ時だけ当たる
 
 ## 出どころ
 
