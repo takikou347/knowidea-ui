@@ -4,10 +4,10 @@ import { snippet } from "./snippet.mjs";
 
 export const pick = {
   button: { fn: "Variants" }, "icon-button": { fn: "Variants" }, "text-field": { fn: "Basic" }, input: { fn: "Basic" },
-  textarea: { fn: "Basic" }, select: { fn: "Basic" }, combobox: { fn: "Basic" }, "date-picker": { fn: "Basic" }, calendar: { fn: "Basic" }, checkbox: { fn: "Basic" }, radio: { fn: "Basic" }, switch: { fn: "Basic" }, "segmented-control": { fn: "Basic" }, slider: { fn: "Basic" }, stepper: { fn: "Basic" },
+  textarea: { fn: "Basic" }, select: { fn: "Basic" }, combobox: { fn: "Basic" }, "date-picker": { fn: "Basic" }, calendar: { fn: "Basic" }, checkbox: { fn: "Basic" }, radio: { fn: "Basic" }, switch: { fn: "Basic" }, "segmented-control": { fn: "Basic" }, slider: { fn: "Basic" }, stepper: { fn: "Basic" }, "file-upload": { fn: "Basic" },
   field: { fn: "WithInput" }, avatar: { fn: "Sizes" }, badge: { fn: "Tones" }, chip: { fn: "Filter" }, status: { fn: "Kinds" },
   stat: { fn: "Basic", wide: true }, table: { fn: "Sortable", wide: true }, list: { fn: "Basic", wide: true }, timeline: { fn: "Basic", wide: true },
-  tooltip: { fn: "Basic" }, popover: { fn: "Basic" }, "code-block": { fn: "Basic", wide: true }, quote: { fn: "Basic" }, alert: { fn: "Closable" }, toast: { fn: "Tones" },
+  tooltip: { fn: "Basic" }, popover: { fn: "Basic" }, "code-block": { fn: "Basic", wide: true }, kbd: { fn: "Combination" }, quote: { fn: "Basic" }, alert: { fn: "Closable" }, toast: { fn: "Tones" },
   dialog: { fn: "Basic" }, sheet: { fn: "Basic" }, progress: { fn: "Basic" }, skeleton: { fn: "Shapes" }, spinner: { fn: "Basic" }, "empty-state": { fn: "Basic" },
   card: { fn: "Basic", wide: true }, accordion: { fn: "Basic" }, "selection-bar": { fn: "Basic", wide: true }, link: { fn: "Basic" },
   tabs: { fn: "Basic" }, menu: { fn: "Basic" }, breadcrumbs: { fn: "Basic" }, pagination: { fn: "Basic" }, "app-bar": { fn: "Basic", wide: true },

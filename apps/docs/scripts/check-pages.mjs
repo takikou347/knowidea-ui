@@ -362,6 +362,37 @@ await kb("Stepper(+ で増える、端で押せない、打って入れる、390
   assert(box.width >= 44 && box.height >= 44, `+ が 44px より小さい(${box.width}x${box.height})`);
 }, { width: 390, height: 844 }, { hasTouch: true });
 
+await kb("FileUpload(選ぶと一覧に並ぶ、上限を超えた物は加えず知らせる、外すと置き場へ戻る、390px)", "components/file-upload.html", async (page) => {
+  const input = page.locator(".ki-file-upload__input").first();
+  const zone = page.locator(".ki-file-upload__zone").first();
+  const box = await zone.boundingBox();
+  assert(box.x >= 0 && box.x + box.width <= 390, "置き場が画面からはみ出す");
+  await input.setInputFiles([
+    { name: "見積もり.pdf", mimeType: "application/pdf", buffer: Buffer.alloc(2048) },
+    { name: "大きい写真.png", mimeType: "image/png", buffer: Buffer.alloc(6 * 1024 * 1024) },
+  ]);
+  await page.waitForTimeout(150);
+  const items = page.locator(".ki-file-upload").first().locator(".ki-file-upload__item");
+  assert(await items.count() === 1, `上限の内の 1 つだけが並ばない(${await items.count()})`);
+  const err = await page.locator(".ki-file-upload__error").first().textContent();
+  assert(err.includes("大きい写真.png"), "上限を超えた物の名前が出ない");
+  await page.getByRole("button", { name: "見積もり.pdf を外す" }).click();
+  await page.waitForTimeout(150);
+  assert(await items.count() === 0, "外しても一覧に残る");
+  assert(await page.evaluate(() => document.activeElement?.classList.contains("ki-file-upload__input")), "最後の 1 つを外した後に置き場へ focus が戻らない");
+  await input.setInputFiles([{ name: "メモ.txt", mimeType: "text/plain", buffer: Buffer.from("x") }]);
+  await page.waitForTimeout(150);
+  assert(await items.count() === 0, "accept に合わない物が加わる");
+  assert((await page.locator(".ki-file-upload__error").first().textContent()).includes("形式が合わない"), "形式が合わない理由が出ない");
+  assert(await input.evaluate((el) => el.files.length === 0), "加えなかった物がフォームで送られる(input に残る)");
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("Kbd(記号は読み上げで名前、+ は読まない)", "components/kbd.html", async (page) => {
+  const k = page.locator(".ki-kbd").filter({ hasText: "⌘" }).first();
+  assert((await k.locator(".ki-sr-only").textContent()) === "Command", "⌘ の読み上げの名前が無い");
+  assert((await k.locator(".ki-kbd__plus").getAttribute("aria-hidden")) === "true", "+ が読み上げられる");
+});
+
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
   await tabs.first().focus();
@@ -585,9 +616,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 52, "カードが 52 枚でない");
+  assert((await page.locator(".cp").count()) === 54, "カードが 54 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 52, "見本が 52 個でない");
+  assert((await page.locator(".cp-fit").count()) === 54, "見本が 54 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
