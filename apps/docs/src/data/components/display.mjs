@@ -192,6 +192,29 @@ export const display = [
     a11y: ["フォーカスでも表示される。Esc で閉じる", "補足であり、名前の代わりにはならない(IconButton には label が必要)", "タッチ端末では表示されない前提で、なくても使えるようにする"],
   },
   {
+    slug: "popover", name: "Popover", imports: ["Popover", "Button"],
+    lead: "ボタンの近くに出る小さな面。表示の設定や、言葉の説明のように、今の画面から離れずに済む短い中身に使う。中で押せる物があってよい点が Tooltip と違う。外を押すか Esc で閉じ、開いたボタンに focus が戻る。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "表示の設定を開く例。closable で右上に閉じるボタンを出す。" },
+      { fn: "Info", title: "Explanation", text: "言葉の横の i から説明を出す。指で触る画面では Tooltip が出ないので、説明は Popover にする。" },
+    ],
+    props: [
+      ["trigger", "ReactElement", "-", "開くボタン。必須"],
+      ["title / description", "ReactNode", "-", "見出しと説明。見出しが読み上げの名前になる"],
+      ["children", "ReactNode", "-", "中身"],
+      ["side / align", "\"top\" | \"bottom\" | \"left\" | \"right\" / \"start\" | \"center\" | \"end\"", "\"bottom\" / \"start\"", "開く向き。画面の端では反対へ回る"],
+      ["closable / closeLabel", "boolean / string", "false / \"閉じる\"", "右上の閉じるボタン"],
+      ["aria-label", "string", "-", "見出しが無い時の名前"],
+      ["open / defaultOpen / onOpenChange", "boolean", "-", "制御と非制御"],
+    ],
+    classes: [[".ki-popover", "面。data-starting-style と data-ending-style で出入りする"], [".ki-popover__head、__title、__description、__body", "見出しの行、見出し、説明、中身"]],
+    vars: [["--color-surface、--color-line、--shadow-pop", "背景、枠線、影"], ["--radius-3", "角丸"], ["--motion-duration-fast", "出入りの動き。prefers-reduced-motion で止まる"]],
+    html: `<!-- React を使わない時は、ブラウザの popover 属性を使う -->
+<button type="button" class="ki-button" data-variant="secondary" popovertarget="p1">表示</button>
+<div id="p1" popover class="ki-popover" style="position: fixed; inset: auto; margin: auto"><p class="ki-popover__description">ブラウザの popover は、外を押すか Esc で閉じる。</p></div>`,
+    a11y: ["Base UI の Popover。開くと中へ focus が移り、Esc で閉じて開いたボタンに戻る", "見出しが無い時は aria-label で名前を付ける", "説明だけの時も、指で触る画面で読めるように Tooltip ではなく Popover を使う"],
+  },
+  {
     slug: "code-block", name: "CodeBlock", imports: ["CodeBlock"],
     demos: [
       { fn: "Basic", title: "Basic", text: "コピーボタンが付く。" },

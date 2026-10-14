@@ -293,6 +293,41 @@ await kb("DatePicker(開くと日へ focus、選ぶと閉じて欄に戻る、39
   assert(await page.evaluate(() => document.activeElement?.classList.contains("ki-select")), "閉じた後に focus が欄へ戻らない");
 }, { width: 390, height: 844 }, { hasTouch: true });
 
+await kb("Combobox(読みで探す、矢印と Enter で選ぶ、合う物が無い、390px で欄が Field に収まる)", "components/combobox.html", async (page) => {
+  const input = page.getByRole("combobox", { name: "都道府県" }).first();
+  const fits = await page.evaluate(() => [...document.querySelectorAll(".ki-field > .ki-combobox")].every((e) => e.getBoundingClientRect().right <= e.parentElement.getBoundingClientRect().right + 0.5));
+  assert(fits, "欄が Field の幅からはみ出す");
+  await input.click();
+  await input.fill("トウキョウ");
+  await page.waitForTimeout(200);
+  const options = await page.getByRole("option").allTextContents();
+  assert(options.length === 1 && options[0].includes("東京都"), `カタカナの読みで東京都だけが出ない(${options.join("、")})`);
+  await press(page, "ArrowDown");
+  await press(page, "Enter");
+  assert((await input.inputValue()) === "東京都", "Enter で選んだ値が欄に入らない");
+  await input.fill("ぞぞぞ");
+  await page.waitForTimeout(200);
+  assert((await page.locator(".ki-combobox__empty").first().textContent()).includes("合う物が無い"), "合う物が無い時の文が出ない");
+  await press(page, "Escape");
+  await page.locator(".ki-combobox__popup").first().waitFor({ state: "hidden", timeout: 3000 }).catch(() => { throw new Error("Esc で候補が閉じない"); });
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("Popover(開くと中へ focus、Tab で中を移る、Esc で閉じて開いたボタンに戻る)", "components/popover.html", async (page) => {
+  const trigger = page.getByRole("button", { name: "表示" }).first();
+  await trigger.click();
+  const popup = page.locator(".ki-popover:not([popover])").first();
+  await popup.waitFor({ state: "visible" });
+  await page.waitForTimeout(200);
+  assert(await inside(page, ".ki-popover"), "開いた時に focus が面の中へ移らない");
+  await press(page, "Tab");
+  assert(await inside(page, ".ki-popover"), "Tab で面の中の操作へ移れない");
+  await press(page, "Escape");
+  await popup.waitFor({ state: "hidden" });
+  assert(await page.evaluate(() => document.activeElement?.textContent?.trim() === "表示"), "閉じた後に focus が開いたボタンへ戻らない");
+  const plain = page.locator("[popover].ki-popover");
+  assert(!(await plain.first().isVisible()), "素の HTML の popover が閉じているのに出ている");
+});
+
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
   await tabs.first().focus();
@@ -516,9 +551,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 48, "カードが 48 枚でない");
+  assert((await page.locator(".cp").count()) === 50, "カードが 50 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 48, "見本が 48 個でない");
+  assert((await page.locator(".cp-fit").count()) === 50, "見本が 50 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
