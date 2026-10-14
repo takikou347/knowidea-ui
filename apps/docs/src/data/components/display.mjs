@@ -223,6 +223,25 @@ export const display = [
     a11y: ["横スクロールする領域は tabindex=\"0\" と名前を持つ。Tab で入り、矢印キーでスクロールする", "コピーの結果は role=\"status\" で伝える"],
   },
   {
+    slug: "kbd", name: "Kbd", imports: ["Kbd"],
+    lead: "キーボードのキー。ショートカットを文の中や一覧に出す。同時に押すキーは + でつなぐ。⌘ や ↵ のような記号は、読み上げでは名前(Command、Enter)にする。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "文の中に置く。字の大きさは周りに合わせる。" },
+      { fn: "Combination", title: "Combination", text: "keys を配列にすると、同時に押すキーになる。" },
+    ],
+    props: [
+      ["keys", "string | string[]", "-", "1 つのキーか、同時に押すキーの並び"],
+    ],
+    classes: [
+      [".ki-kbd", "全体(<kbd>)。字の大きさは周りに合わせる"],
+      [".ki-kbd__key", "1 つのキー(中の <kbd>)。下の線を太くして、キーの形に見せる"],
+      [".ki-kbd__plus", "キーの間の +(読み上げない)"],
+    ],
+    vars: [["--color-line-strong、--color-surface", "キーの枠と背景"], ["--font-mono、--radius-1", "等幅の字と、小さな角丸"]],
+    html: `<kbd class="ki-kbd"><kbd class="ki-kbd__key">Ctrl</kbd><span class="ki-kbd__plus" aria-hidden="true">+</span><kbd class="ki-kbd__key">K</kbd></kbd>`,
+    a11y: ["<kbd> の中に、キーごとの <kbd> を入れる(HTML の決まりの、同時に押すキーの書き方)", "記号のキーは、見た目は記号のまま、読み上げでは名前にする", "押せる物ではないので、focus しない"],
+  },
+  {
     slug: "quote", name: "Quote", imports: ["Quote"],
     demos: [{ fn: "Basic", title: "Basic", text: "出典は figcaption に入る。" }],
     a11y: ["<figure> と <blockquote> を使う。出典は <figcaption> に書く"],

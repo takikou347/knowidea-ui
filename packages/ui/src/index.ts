@@ -9,6 +9,8 @@ export { Checkbox, Switch, RadioGroup, type CheckboxProps, type SwitchProps, typ
 export { Calendar, sameDay, type CalendarProps } from "./Calendar.js";
 export { DatePicker, type DatePickerProps } from "./DatePicker.js";
 export { Combobox, normalizeForSearch, type ComboboxProps, type ComboboxOption } from "./Combobox.js";
+export { FileUpload, formatBytes, type FileUploadProps } from "./FileUpload.js";
+export { Kbd, type KbdProps } from "./Kbd.js";
 export { Slider, type SliderProps } from "./Slider.js";
 export { Stepper, type StepperProps } from "./Stepper.js";
 export { SegmentedControl, type SegmentedControlProps, type SegmentedOption } from "./SegmentedControl.js";
