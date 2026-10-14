@@ -2,6 +2,16 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.3.0",
+    date: "2026-10-14",
+    summary: "日付の部品を足した。Calendar と DatePicker。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/css", "48 個にした。.ki-calendar(1 日 44px 四方の月のカレンダー。月を移ると、移った向きから少し滑って出る)と .ki-datepicker(Select と同じ欄から開く)を足した。"],
+      ["@knowidea/ui", "48 個にした。Calendar(矢印キーで日、PageUp と PageDown で月。min、max、選べない日、予定の点、週の始まり)と DatePicker(Base UI の Popover が土台。開くと日へ focus が移り、選ぶと閉じる。name で YYYY-MM-DD を送る)を足した。日付だけを比べる sameDay も出した。"],
+      ["Docs", "Calendar と DatePicker のページ。check-pages に 2 つの操作を足した。"],
+    ],
+  },
+  {
     version: "0.2.0",
     date: "2026-10-14",
     summary: "スマホと iPad で使う部品を足した。Sheet、SegmentedControl、Switch の設定の一覧の形と、その動き。配布は tarball のまま。",
