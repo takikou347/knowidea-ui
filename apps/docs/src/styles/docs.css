@@ -421,3 +421,18 @@ table.docs-table { border-collapse: collapse; width: 100%; }
   .states-table[data-stack] > tbody > tr > td:first-child::before { content: none; }
   .docs-table[data-stack] > tbody > tr > td code { overflow-wrap: anywhere; }
 }
+
+/* ページの移り(View Transitions)。上のバーは動かさず、見出しは前のページの見出しから形を変えてつなぎ、本文は少し上へ滑って出る。
+   使えないブラウザでは、ふつうに移る。動きを減らす設定では止める。 */
+@view-transition { navigation: auto; }
+.docs-top { view-transition-name: docs-top; }
+.docs-main { view-transition-name: docs-main; }
+.docs-main > h1:first-of-type { view-transition-name: docs-title; }
+::view-transition-group(docs-title) { animation-duration: var(--motion-duration-enter); animation-timing-function: var(--motion-ease); }
+::view-transition-old(docs-main) { animation: docs-vt-out var(--motion-duration-fast) var(--motion-ease) both; }
+::view-transition-new(docs-main) { animation: docs-vt-in var(--motion-duration-enter) var(--motion-ease) both; }
+@keyframes docs-vt-out { to { opacity: 0; } }
+@keyframes docs-vt-in { from { opacity: 0; transform: translateY(var(--space-2)); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}

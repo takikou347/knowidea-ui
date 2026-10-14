@@ -22,14 +22,30 @@
 .ki-drawer__item[aria-current="page"] > .ki-icon { color: var(--color-primary); }
 .ki-drawer__item[aria-disabled="true"] { color: var(--color-text-muted); cursor: not-allowed; }
 
-/* 引き出し。<dialog class="ki-drawer" data-variant="temporary"> か、Base UI の Dialog.Popup に付ける */
+/* 引き出し。素の HTML は <dialog class="ki-drawer" data-variant="temporary">。React は Base UI の Drawer(左へ払って閉じる)。
+   --drawer-swipe-movement-x と --drawer-swipe-progress は Base UI が指の動きに合わせて書く。素の HTML では 0 のまま。 */
 .ki-drawer[data-variant="temporary"] {
   position: fixed; top: 0; bottom: 0; left: 0; z-index: 31; margin: 0; width: min(calc(var(--space-7) * 6), calc(100vw - var(--space-7))); max-width: none; height: 100dvh; max-height: none;
-  border: 0; border-right: 1px solid var(--color-line-strong); box-shadow: var(--shadow-pop); overflow: auto;
-  transition: transform var(--motion-duration-state) var(--motion-ease);
+  border: 0; border-right: 1px solid var(--color-line-strong); box-shadow: var(--shadow-pop); overflow: auto; overscroll-behavior: contain; outline: 0;
+  transform: translateX(var(--drawer-swipe-movement-x, 0px));
+  transition: transform var(--motion-duration-enter) var(--motion-ease);
 }
+.ki-drawer[data-variant="temporary"][data-swiping] { transition-duration: 0ms; user-select: none; }
+.ki-drawer[data-variant="temporary"][data-starting-style], .ki-drawer[data-variant="temporary"][data-ending-style] { transform: translateX(-100%); }
+/* 指で払って閉じた時は、払った強さで速くなる */
+.ki-drawer[data-variant="temporary"][data-ending-style] { transition-duration: calc(var(--drawer-swipe-strength, 1) * var(--motion-duration-enter)); }
+.ki-drawer__viewport { position: fixed; inset: 0; z-index: 31; pointer-events: none; }
+.ki-drawer__viewport > .ki-drawer { pointer-events: auto; }
+.ki-drawer__backdrop {
+  position: fixed; inset: 0; z-index: 30; min-height: 100dvh;
+  background: color-mix(in oklch, var(--color-bg) 70%, transparent);
+  opacity: calc(1 - var(--drawer-swipe-progress, 0));
+  transition: opacity var(--motion-duration-enter) var(--motion-ease);
+}
+.ki-drawer__backdrop[data-swiping] { transition-duration: 0ms; }
+.ki-drawer__backdrop[data-starting-style], .ki-drawer__backdrop[data-ending-style] { opacity: 0; }
 dialog.ki-drawer[data-variant="temporary"] { inset: 0 auto 0 0; }
 dialog.ki-drawer[data-variant="temporary"]:not([open]) { display: none; }
 dialog.ki-drawer[data-variant="temporary"]::backdrop { background: color-mix(in oklch, var(--color-bg) 70%, transparent); }
-.ki-drawer[data-variant="temporary"][data-starting-style], .ki-drawer[data-variant="temporary"][data-ending-style] { transform: translateX(-100%); }
-@media (prefers-reduced-motion: reduce) { .ki-drawer[data-variant="temporary"] { transition: none; } }
+@starting-style { dialog.ki-drawer[data-variant="temporary"][open] { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) { .ki-drawer[data-variant="temporary"], .ki-drawer__backdrop { transition: none; } }

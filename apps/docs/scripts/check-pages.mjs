@@ -393,6 +393,60 @@ await kb("Kbd(記号は読み上げで名前、+ は読まない)", "components/
   assert((await k.locator(".ki-kbd__plus").getAttribute("aria-hidden")) === "true", "+ が読み上げられる");
 });
 
+await kb("Drawer の引き出し(開くと focus が中へ、Esc で戻る、左へ払って閉じる)", "components/drawer.html", async (page) => {
+  const trigger = page.getByRole("button", { name: "メニューを開く" }).first();
+  await trigger.click();
+  const drawer = page.locator(".ki-drawer__viewport .ki-drawer");
+  await drawer.waitFor({ state: "visible" });
+  await page.waitForTimeout(400);
+  assert(await inside(page, ".ki-drawer"), "開いても focus が引き出しに入らない");
+  await page.keyboard.press("Escape");
+  await drawer.waitFor({ state: "detached" });
+  assert(await page.evaluate(() => document.activeElement?.textContent?.includes("メニューを開く")), "閉じた後に focus が開いたボタンへ戻らない");
+  await trigger.click();
+  await drawer.waitFor({ state: "visible" });
+  await page.waitForTimeout(400);
+  const b = await drawer.boundingBox();
+  const y = b.y + b.height - 40;
+  await page.mouse.move(b.x + b.width - 20, y);
+  await page.mouse.down();
+  for (let i = 1; i <= 20; i++) { await page.mouse.move(b.x + b.width - 20 - i * 16, y); await page.waitForTimeout(16); }
+  await page.mouse.up();
+  await drawer.waitFor({ state: "detached", timeout: 3000 });
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("Toast(重ねて積む、前の 1 枚だけ中身を見せる、乗せると並ぶ)", "components/toast.html", async (page) => {
+  for (const l of ["情報", "成功", "警告"]) { await page.getByRole("button", { name: `${l}のトーストを表示` }).first().click(); await page.waitForTimeout(80); }
+  await page.waitForTimeout(400);
+  const toasts = page.locator(".ki-toast-viewport[data-stack] > .ki-toast");
+  assert(await toasts.count() === 3, `3 枚が積まれない(${await toasts.count()})`);
+  const behind = await page.locator(".ki-toast__body[data-behind]").count();
+  assert(behind === 2, `後ろの 2 枚の中身が隠れない(${behind})`);
+  const front = await toasts.last().boundingBox();
+  await page.mouse.move(front.x + front.width / 2, front.y + front.height / 2);
+  await page.waitForTimeout(400);
+  const tops = await toasts.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+  assert(new Set(tops).size === 3 && Math.max(...tops) - Math.min(...tops) > 60, `乗せても縦に並ばない(${tops.join(", ")})`);
+});
+
+await kb("List の動き(足すと滑って出る、初めは動かない)", "components/list.html", async (page) => {
+  const list = page.getByRole("list", { name: "動きの見本" });
+  assert(await list.evaluate((ul) => ul.getAnimations({ subtree: true }).length === 0), "初めて出た時に動く");
+  await page.getByRole("button", { name: "上に足す" }).click();
+  assert(await list.evaluate((ul) => ul.getAnimations({ subtree: true }).length > 0), "足しても行が動かない");
+  await page.waitForTimeout(300);
+  await page.getByRole("button", { name: "逆に並べる" }).click();
+  assert(await list.evaluate((ul) => ul.getAnimations({ subtree: true }).length >= 2), "並べ替えても行が滑らない");
+});
+
+await kb("Chip の動き(初めから選んである物は動かない、選ぶとチェックが開く)", "components/chip.html", async (page) => {
+  assert(await page.locator(".ki-chip[data-pop]").count() === 0, "初めから選んであるチップが動く");
+  const off = page.locator(".ki-chip:not([data-selected]) .ki-chip__main").first();
+  const chip = await off.evaluateHandle((el) => el.closest(".ki-chip"));
+  await off.click();
+  assert(await chip.evaluate((el) => el.hasAttribute("data-pop") && el.getAnimations({ subtree: true }).length > 0), "選んでもチェックが動かない");
+});
+
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
   await tabs.first().focus();

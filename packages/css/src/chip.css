@@ -3,6 +3,7 @@
   display: inline-flex; align-items: stretch; min-height: calc(var(--space-6)); max-width: 100%; margin: var(--space-1) 0;
   border: 1px solid var(--color-line-strong); border-radius: var(--radius-pill); background: var(--color-surface); color: var(--color-text);
   font-size: var(--font-size-2); line-height: 1; white-space: nowrap;
+  transition: transform var(--motion-duration-fast) var(--motion-ease), background-color var(--motion-duration-fast) var(--motion-ease), color var(--motion-duration-fast) var(--motion-ease), border-color var(--motion-duration-fast) var(--motion-ease);
 }
 .ki-chip__label { display: inline-flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-3); min-width: 0; }
 .ki-chip__label > .ki-icon { width: var(--space-4); height: var(--space-4); color: var(--color-text-muted); }
@@ -36,3 +37,12 @@
 }
 .ki-chip[data-loading] .ki-chip__label { color: var(--color-text-muted); }
 .ki-chips { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); align-items: center; }
+/* 押した時に小さく沈む。選んだ時は先頭のチェックが小さく開いて出る(data-pop は React が選んだ時だけ付ける) */
+.ki-chip:not([data-disabled]):has(:is(.ki-chip__main, .ki-chip__remove):active) { transform: scale(0.96); }
+.ki-chip[data-pop] .ki-chip__main > .ki-icon:first-child { animation: ki-chip-check var(--motion-duration-state) var(--motion-ease); }
+@keyframes ki-chip-check { from { opacity: 0; transform: scale(0.5); } }
+@media (prefers-reduced-motion: reduce) {
+  .ki-chip { transition: none; }
+  .ki-chip:not([data-disabled]):has(:is(.ki-chip__main, .ki-chip__remove):active) { transform: none; }
+  .ki-chip[data-pop] .ki-chip__main > .ki-icon:first-child { animation: none; }
+}
