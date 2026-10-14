@@ -8,12 +8,14 @@ import * as dBadge from "./badge";
 import * as dBottomNavigation from "./bottom-navigation";
 import * as dBreadcrumbs from "./breadcrumbs";
 import * as dButton from "./button";
+import * as dCalendar from "./calendar";
 import * as dCard from "./card";
 import * as dChart from "./chart";
 import * as dCheckbox from "./checkbox";
 import * as dChip from "./chip";
 import * as dCodeBlock from "./code-block";
 import * as dContainer from "./container";
+import * as dDatePicker from "./date-picker";
 import * as dDialog from "./dialog";
 import * as dDivider from "./divider";
 import * as dDrawer from "./drawer";
@@ -56,12 +58,14 @@ export const demos = {
   "bottom-navigation": dBottomNavigation,
   "breadcrumbs": dBreadcrumbs,
   "button": dButton,
+  "calendar": dCalendar,
   "card": dCard,
   "chart": dChart,
   "checkbox": dCheckbox,
   "chip": dChip,
   "code-block": dCodeBlock,
   "container": dContainer,
+  "date-picker": dDatePicker,
   "dialog": dDialog,
   "divider": dDivider,
   "drawer": dDrawer,

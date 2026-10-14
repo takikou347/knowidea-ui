@@ -4,7 +4,7 @@ import { snippet } from "./snippet.mjs";
 
 export const pick = {
   button: { fn: "Variants" }, "icon-button": { fn: "Variants" }, "text-field": { fn: "Basic" }, input: { fn: "Basic" },
-  textarea: { fn: "Basic" }, select: { fn: "Basic" }, checkbox: { fn: "Basic" }, radio: { fn: "Basic" }, switch: { fn: "Basic" }, "segmented-control": { fn: "Basic" },
+  textarea: { fn: "Basic" }, select: { fn: "Basic" }, "date-picker": { fn: "Basic" }, calendar: { fn: "Basic" }, checkbox: { fn: "Basic" }, radio: { fn: "Basic" }, switch: { fn: "Basic" }, "segmented-control": { fn: "Basic" },
   field: { fn: "WithInput" }, avatar: { fn: "Sizes" }, badge: { fn: "Tones" }, chip: { fn: "Filter" }, status: { fn: "Kinds" },
   stat: { fn: "Basic", wide: true }, table: { fn: "Sortable", wide: true }, list: { fn: "Basic", wide: true }, timeline: { fn: "Basic", wide: true },
   tooltip: { fn: "Basic" }, "code-block": { fn: "Basic", wide: true }, quote: { fn: "Basic" }, alert: { fn: "Closable" }, toast: { fn: "Tones" },
