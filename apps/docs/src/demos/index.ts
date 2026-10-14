@@ -35,6 +35,8 @@ import * as dQuote from "./quote";
 import * as dRadio from "./radio";
 import * as dSelect from "./select";
 import * as dSegmentedControl from "./segmented-control";
+import * as dSlider from "./slider";
+import * as dStepper from "./stepper";
 import * as dSelectionBar from "./selection-bar";
 import * as dSheet from "./sheet";
 import * as dSkeleton from "./skeleton";
@@ -87,6 +89,8 @@ export const demos = {
   "radio": dRadio,
   "select": dSelect,
   "segmented-control": dSegmentedControl,
+  slider: dSlider,
+  stepper: dStepper,
   "selection-bar": dSelectionBar,
   "sheet": dSheet,
   "skeleton": dSkeleton,

@@ -2,6 +2,16 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.5.0",
+    date: "2026-10-14",
+    summary: "量と段の入力を足した。Slider と Stepper。配布は tarball のまま。",
+    rows: [
+      ["@knowidea/css", "52 個にした。.ki-slider(つまみは見た目 20px、押せる所 44px 四方。キーで動いた時だけ滑り、掴んでいる間は指に付いて動く)と .ki-range(素の HTML の range)、.ki-stepper(− と + は 44px 四方で、押すと小さく沈む)を足した。"],
+      ["@knowidea/ui", "52 個にした。Slider(Base UI の Slider が土台。value を配列にすると範囲。formatValue で見せ方と読み上げをそろえる)と Stepper(Base UI の NumberField が土台。format で単位を付ける。端ではその向きのボタンが押せなくなる)を足した。"],
+      ["Docs", "Slider と Stepper のページ。check-pages に 2 つの操作を足した。"],
+    ],
+  },
+  {
     version: "0.4.0",
     date: "2026-10-14",
     summary: "ボタンの近くに出る面と、打って絞り込む欄を足した。Popover と Combobox。配布は tarball のまま。",

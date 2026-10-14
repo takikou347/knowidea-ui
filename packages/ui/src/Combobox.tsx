@@ -58,9 +58,9 @@ export function Combobox({
       disabled={disabled}
       name={name}
     >
-      <BaseCombobox.InputGroup className={cx("ki-combobox", className)} data-invalid={invalid ? "" : undefined}>
+      <BaseCombobox.InputGroup className={cx("ki-combobox", className)} {...(invalid ? { "data-invalid": "" } : null)}>
         <span className="ki-combobox__search" aria-hidden="true"><Icon name="search" /></span>
-        <BaseCombobox.Input className="ki-combobox__input" placeholder={placeholder} id={id} aria-invalid={invalid || undefined} aria-label={rest["aria-label"]} />
+        <BaseCombobox.Input className="ki-combobox__input" placeholder={placeholder} id={id} {...(invalid ? { "aria-invalid": true } : null)} aria-label={rest["aria-label"]} />
         {loading ? <Spinner /> : null}
         <BaseCombobox.Clear className="ki-combobox__button" aria-label="消す"><Icon name="close" /></BaseCombobox.Clear>
         <BaseCombobox.Trigger className="ki-combobox__button" aria-label="候補を開く"><Icon name="chevron-down" /></BaseCombobox.Trigger>
