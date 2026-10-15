@@ -19,7 +19,7 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 2e 添付とキー(0.6.0) | FileUpload(置き場全体が押せて、置ける。スマホと iPad では押すと選ぶ画面。選んだ物は一覧で 1 つずつ外せる。上限を超えた物は加えず、名前と理由を出す)と Kbd(同時に押すキーは + でつなぐ。記号は読み上げで名前)。送る処理は部品に持たせない | 作った。issue #3 の部品はこれで全部。動きは 2f |
 | 2f 動き(0.7.0) | issue #3 の動き。Drawer の引き出しは指に付いて動き、左へ払うと閉じる。Toast は重ねて積み、乗せると並び、払うと消える。List の行は、足すと滑って出て、消すと並べ替えで残りが滑る(初めて出た時は動かさない)。Chip は押すと沈み、選ぶとチェックが開く(Button の沈みは前から)。ページの移りは View Transitions で見出しをつなぐ(Docs で使い、部品には入れない)。Skeleton の光は「終わらない脈動は使わない」の決まりに合わせて足さない | 作った。issue #3 はこれで全部 |
 | 2g 選べる見た目(0.8.0) | グラデーションの見た目 `look: "gradient"`。既定は flat のまま、使う側が ThemeProvider の theme か `data-ki-look="gradient"` で選んだ時だけ当たる。掛かるのは主の色の面(プライマリの Button、Switch と Checkbox の選んだ印、カレンダーの選んだ日、Pagination の今の頁、Progress と Slider の線)と、Card のごく薄い差し色。終わりの色は主の色から色相を 40 度回して作るので、テーマとダークに付いてくる。文字は両端で 4.5:1 以上を createTheme が確かめる。読めないブラウザでは平らな主の色に戻る | 作った |
-| 2h 配る名前(0.8.0) | パッケージの名前を `knowidea-tokens`、`knowidea-css`、`knowidea-icons`、`knowidea-ui` に変えた。npm の組織は作らず、オーナー個人のアカウントで出す。MIT ライセンス。出すのは GitHub Actions の Publish を手で動かした時だけ。package.json にメールアドレスを書かない | 道具を置いた。オーナーのトークン待ち |
+| 2h 配る名前(0.8.0) | パッケージの名前を `knowidea-tokens`、`knowidea-css`、`knowidea-icons`、`knowidea-ui` に変えた。npm の組織は作らず、オーナー個人のアカウントで出す。MIT ライセンス。出すのは GitHub Actions の Publish を手で動かした時だけ。package.json にメールアドレスを書かない | 0.8.0 を npm に出した。0.8.1 で npm のページの説明を短くし、文書の入れ方を npm にした |
 
 | 方向 | 密度、色の温度 | 形、書体 |
 | --- | --- | --- |

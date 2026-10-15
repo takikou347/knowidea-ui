@@ -42,8 +42,8 @@ const features = [
         </div>
       </div>
       <div class="hero-side">
-        <CodeBlock client:load language="bash" code="pnpm add ./vendor/knowidea-*.tgz" label="Install" />
-        <p class="hero-note">外部の公開先にはまだ出していない。tarball で配る(<a href={href("getting-started/install")}>Installation</a>)。現在の版は <span class="num">v{ui.version}</span>。</p>
+        <CodeBlock client:load language="bash" code="npm install knowidea-ui knowidea-css knowidea-tokens knowidea-icons" label="Install" />
+        <p class="hero-note">npm で配っている(<a href={href("getting-started/install")}>Installation</a>)。現在の版は <span class="num">v{ui.version}</span>。</p>
       </div>
     </section>
 

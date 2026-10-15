@@ -1,7 +1,7 @@
 // 4 つのパッケージを build し、配る tarball を release/ に作る。
 //   pnpm release:pack
 // release/ は git に入れない。workspace:* と workspace:^ は pack のときに実際の版へ置き換わる。
-// 使う側は pnpm add <path>.tgz(または npm install <path>.tgz)で入れる。手順は文書サイトの Installation。
+// npm に出す前の確かめに使う(pnpm test:consumer が、文書の npm install の名前をこの tarball に置き換えて入れる)。
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readdirSync, rmSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

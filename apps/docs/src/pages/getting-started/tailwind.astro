@@ -8,7 +8,6 @@ const { href } = links(Astro.url.pathname);
 <Base title="Tailwind v4" description="トークンを Tailwind のユーティリティとして使う">
   <h1>Tailwind v4</h1>
   <p class="lead">トークンを <code>@theme</code> に渡すため、<code>bg-surface</code> や <code>text-text-muted</code> のようなユーティリティが、同じ CSS 変数を参照する。Vite と React で、新しいプロジェクトから動くまでを書く。</p>
-  <p>先に<a href={href("getting-started/install")}>Installation</a>の 1 を終えて、<code>release/</code> に tarball を作っておく。</p>
 
   <h2 id="create">1. Create a project</h2>
   <Code code={tailwind.create.pnpm} lang="bash" label="Create a project with pnpm" />
@@ -16,7 +15,6 @@ const { href } = links(Astro.url.pathname);
   <Code code={tailwind.create.npm} lang="bash" label="Create a project with npm" />
 
   <h2 id="install">2. Add the packages</h2>
-  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
   <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
   <p>npm なら <code>{install.npm}</code>。</p>
 
