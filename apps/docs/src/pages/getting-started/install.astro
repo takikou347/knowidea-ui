@@ -5,13 +5,9 @@ import { links } from "../../lib/paths.mjs";
 import { install } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
 ---
-<Base title="Installation" description="tarball を作って入れる、CSS とフォントを読み込む">
+<Base title="Installation" description="npm で入れる、CSS とフォントを読み込む">
   <h1>Installation</h1>
-  <p class="lead">4 つのパッケージを、tarball(<code>.tgz</code>)で配っている。リポジトリで作り、使う側のプロジェクトに入れる。</p>
-
-  <h2 id="distribution">How it is distributed</h2>
-  <p>npm には <code>knowidea-tokens</code>、<code>knowidea-css</code>、<code>knowidea-icons</code>、<code>knowidea-ui</code> の名前で出す(MIT ライセンス)。<strong>最初の版を npm に出すまでは、tarball で配る</strong>。出したら、このページを npm の手順に書き換える。</p>
-  <p>そのため、<code>pnpm add knowidea-ui</code> のようにパッケージ名だけを書いても、最初の版を出すまでは入らない(レジストリに無く、404 になる)。次の手順で、tarball のパスを指して入れる。</p>
+  <p class="lead">4 つのパッケージを npm で配っている(MIT ライセンス)。使う側のプロジェクトに、同じコマンドで入れる。</p>
 
   <h2 id="packages">Packages</h2>
   <div class="table-wrap">
@@ -27,23 +23,17 @@ const { href } = links(Astro.url.pathname);
   </div>
   <p><code>knowidea-ui</code> は、ほかの 3 つを <code>peerDependencies</code> に持つ。<strong>4 つを同じコマンドで入れる</strong>(React を使わなくても、tokens と css は必要)。</p>
 
-  <h2 id="pack">1. Build the tarballs</h2>
-  <p>このリポジトリで作る。Node 20 以上と pnpm が要る。<code>release/</code> は git に入らない。</p>
-  <Code code={install.pack} lang="bash" label="Build the tarballs" />
-
-  <h2 id="add">2. Add to your project</h2>
-  <p>使う側のプロジェクトの <code>vendor/</code> に置き(git に入れておくと、ほかの人と CI も同じ版で入れられる)、4 つ全部を入れる。</p>
-  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+  <h2 id="add">1. Add to your project</h2>
+  <p>Node 20 以上が要る。4 つ全部を入れる。</p>
   <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
   <Code code={install.npm} lang="bash" label="Install with npm" />
-  <p>tarball の中身を変えたときは、各 <code>package.json</code> の <code>version</code> を上げてから <code>pnpm release:pack</code> し直す。同じ版のままだと、使う側の lockfile の値と合わず、入れ直しが要る。</p>
 
-  <h2 id="css">3. Load the CSS</h2>
+  <h2 id="css">2. Load the CSS</h2>
   <Code code={install.css} lang="ts" label="CSS imports" />
   <p>この 2 行で足りる。<code>knowidea-css</code> は <code>body</code> の背景、文字色、書体、余白 0 の既定も与える(詳細度 0 なので、アプリ側の指定があればそちらが勝つ)。これが無いと、ダークに切り替えても背景が変わらない。</p>
   <p>プライマリカラーを変更したい場合は、<a href={href("customization/theme")}>Theme</a> を参照。</p>
 
-  <h2 id="fonts">4. Fonts</h2>
+  <h2 id="fonts">3. Fonts</h2>
   <p>書体は IBM Plex Sans JP と IBM Plex Mono。<strong>パッケージには入れていない</strong>。<code>index.html</code> の <code>&lt;head&gt;</code> に次の行を足すと、Google Fonts から読み込める。足さなくても動き、その場合は <code>BIZ UDPGothic</code>、<code>Noto Sans CJK JP</code>、<code>Hiragino Sans</code>、<code>Yu Gothic</code> の順に、端末にある書体が使われる(文字の幅が少し変わる)。</p>
   <Code code={install.fonts} lang="html" label="Google Fonts" />
   <p>外部に接続したくない場合は、同じ書体を自分のサーバーで配り、<code>--font-sans</code> と <code>--font-mono</code> を<a href={href("customization/overriding")}>上書き</a>する。</p>

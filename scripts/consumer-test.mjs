@@ -1,4 +1,5 @@
 // 配る tarball(release/)を、リポジトリの外の新しいプロジェクトに入れて、文書の手順どおりに動くことを確かめる。
+// 文書の npm install の名前は、release/ の tarball に置き換えて入れる(出す前の版を確かめるため)。
 //   pnpm release:pack の後に: pnpm test:consumer
 //   a: Vite + React 19 + TypeScript(pnpm)   b: 素の HTML   c: Vite + React + Tailwind v4(npm)
 //   a-npm: a と同じ手順を npm で(入れる、型検査、build まで)
@@ -21,7 +22,6 @@ const subst = {
   "vite@latest": "vite@9.2.1",
   "--template react-ts": "--template react-ts --no-interactive",
   "tailwindcss @tailwindcss/vite": "tailwindcss@4.3.3 @tailwindcss/vite@4.3.3",
-  "/path/to/knowidea-ui": root.replace(/\/$/, ""),
 };
 const PRIMARY = "#2255CC";
 const only = process.env.ONLY ? process.env.ONLY.split(",") : null;
@@ -41,6 +41,14 @@ const reports = [];
 // ---------- release/ ----------
 if (!process.env.SKIP_PACK) { log("pnpm release:pack"); run("pnpm", ["release:pack"], { cwd: root }); }
 if (!existsSync(join(root, "release")) || readdirSync(join(root, "release")).filter((f) => f.endsWith(".tgz")).length !== 4) throw new Error("release/ に tarball が 4 つ無い。pnpm release:pack を先に流す");
+// 文書は npm の名前で入れる。確かめる時は、その名前を release/ の tarball に置き換え、まだ出していない版を確かめる
+const tgz = (n) => join(root, "release", readdirSync(join(root, "release")).find((f) => f.startsWith(`${n}-`) && f.endsWith(".tgz")));
+subst["knowidea-ui knowidea-css knowidea-tokens knowidea-icons"] = ["knowidea-ui", "knowidea-css", "knowidea-tokens", "knowidea-icons"].map(tgz).join(" ");
+subst["knowidea-tokens knowidea-css knowidea-icons"] = ["knowidea-tokens", "knowidea-css", "knowidea-icons"].map(tgz).join(" ");
+// 文書の文字列が変わって置き換えが外れると、npm の出した版を確かめてしまう。外れたら止める
+for (const [name, text] of [["install.pnpm", install.pnpm], ["install.npm", install.npm], ["html.extract", html.extract]]) {
+  if (!Object.keys(subst).some((k) => k.startsWith("knowidea-") && text.includes(k))) throw new Error(`${name} のパッケージの並びが subst に無い。consumer-test.mjs の subst を直す`);
+}
 
 // ---------- React のアプリ(a、a-npm、c で共通) ----------
 function writeReactApp(dir, { tailwind: tw }) {
@@ -165,7 +173,6 @@ async function scenarioReact(name, pm) {
   const dir = join(base, name);
   mkdirSync(dir, { recursive: true });
   const proj = runScript(react.create[pm], { cwd: dir, subst });
-  runScript(install.copy, { cwd: proj, subst });
   runScript(install[pm], { cwd: proj, subst });
   runScript(react.clean, { cwd: proj });
   write(proj, "src/main.tsx", mutate("main", react.main) + "\n");
@@ -183,7 +190,6 @@ async function scenarioTailwind() {
   const dir = join(base, "c");
   mkdirSync(dir, { recursive: true });
   const proj = runScript(tailwind.create.npm, { cwd: dir, subst });
-  runScript(install.copy, { cwd: proj, subst });
   runScript(install.npm, { cwd: proj, subst });
   write(proj, "vite.config.ts", tailwind.vite + "\n");
   write(proj, "src/index.css", mutate("css", tailwind.css) + "\n");
@@ -202,9 +208,8 @@ async function scenarioTailwind() {
 async function scenarioHtml() {
   const proj = join(base, "b");
   mkdirSync(proj, { recursive: true });
-  runScript(install.copy, { cwd: proj, subst });
-  runScript(html.extract, { cwd: proj });
-  runScript(theme.cliTgz, { cwd: proj, subst });
+  runScript(html.extract, { cwd: proj, subst });
+  runScript(theme.cliHtml, { cwd: proj, subst });
   const pickHtml = (slug) => htmlSnippets().find((s) => s.slug === slug).code.replace(/href="#([\w-]+)"/g, 'href="assets/sprite.svg#$1"');
   const sections = ["button", "text-field", "select", "checkbox", "table", "badge", "tabs", "toast", "menu", "alert"].map((s) => `    <section id="ex-${s}">\n${pickHtml(s)}\n    </section>`).join("\n");
   // 部品ページの Plain HTML の例を、全部並べたページ
@@ -300,7 +305,7 @@ async function browserHtml(proj) {
     ok("Badge: 角丸と余白", st.badge && parseFloat(st.badge.pad) > 0, JSON.stringify(st.badge));
     ok("Tabs: 高さ 44px", st.tab && st.tab.h >= 43.5, JSON.stringify(st.tab));
     ok("Toast: 影と余白", st.toast && st.toast.sh !== "none" && parseFloat(st.toast.pad) > 0, JSON.stringify(st.toast));
-    ok("createTheme CLI(tarball 指定)の CSS: brand クラスで primary #2255CC、角丸 6px", st.brand && Math.abs(st.brand.bg[0] - 0x22) <= 3 && Math.abs(st.brand.bg[2] - 0xcc) <= 3 && st.brand.r === "6px", JSON.stringify(st.brand));
+    ok("createTheme CLI の CSS: brand クラスで primary #2255CC、角丸 6px", st.brand && Math.abs(st.brand.bg[0] - 0x22) <= 3 && Math.abs(st.brand.bg[2] - 0xcc) <= 3 && st.brand.r === "6px", JSON.stringify(st.brand));
     // sprite の形が出ているか: アイコン部分のスクリーンショットが空白でないこと
     const shot = await page.locator("#doc-body .ki-icon").first().screenshot();
     const pixels = await page.evaluate(async (b64) => { const img = new Image(); img.src = "data:image/png;base64," + b64; await img.decode(); const c = document.createElement("canvas"); c.width = img.width; c.height = img.height; const x = c.getContext("2d"); x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, c.width, c.height).data; let n = 0; const bg = [d[0], d[1], d[2]]; for (let i = 0; i < d.length; i += 4) if (Math.abs(d[i] - bg[0]) + Math.abs(d[i + 1] - bg[1]) + Math.abs(d[i + 2] - bg[2]) > 40) n++; return n; }, shot.toString("base64"));
@@ -355,7 +360,7 @@ async function step(name, fn) {
 const okRec = (msg) => { const r = recorder(); r.ok(msg, true); return r; };
 if (want("a")) await step("a: Vite + React 19 + TypeScript(pnpm)", async () => { const p = await scenarioReact("a", "pnpm"); const r = await browserReact("a", p, { tailwind: false }); r.results.unshift({ name: "手順(作る、入れる、tsc --noEmit、vite build)が通る", ok: true, detail: "" }); return r; });
 if (want("a-npm")) await step("a-npm: 同じ手順を npm で", async () => { await scenarioReact("a-npm", "npm"); return okRec("npm で入れる、tsc --noEmit、vite build が通る"); });
-if (want("b")) await step("b: 素の HTML(静的サーバー)", async () => { const p = await scenarioHtml(); const r = await browserHtml(p); r.results.unshift({ name: "手順(tarball から取り出す、CLI でテーマを作る)が通る", ok: true, detail: "" }); return r; });
+if (want("b")) await step("b: 素の HTML(静的サーバー)", async () => { const p = await scenarioHtml(); const r = await browserHtml(p); r.results.unshift({ name: "手順(npm で入れて写す、CLI でテーマを作る)が通る", ok: true, detail: "" }); return r; });
 if (want("c")) await step("c: Vite + React + Tailwind v4(npm)", async () => { const p = await scenarioTailwind(); const r = await browserReact("c", p, { tailwind: true }); r.results.unshift({ name: "手順(作る、入れる、tsc --noEmit、vite build)が通る", ok: true, detail: "" }); return r; });
 
 log("\n== 結果");

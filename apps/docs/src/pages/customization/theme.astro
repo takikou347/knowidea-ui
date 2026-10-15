@@ -10,7 +10,7 @@ const toObj = (theme) => Object.fromEntries(colorNames.map((k) => [`--color-${k}
 const baseLight = toObj("light");
 const baseDark = toObj("dark");
 
-const { provider, cli, cliTgz, script, makeUse, plain } = theme;
+const { provider, cli, script, makeUse, plain } = theme;
 const rows = [
   ["primary", "string", "プライマリカラー。#rrggbb か oklch(L C h) で指定する", "ブランドカラー #016C6C"],
   ["primaryDark", "string", "ダークモードのプライマリカラー。省略すると、同じ色相で明るくして自動的に生成する", "自動"],
@@ -44,8 +44,6 @@ const rows = [
   <p>ダークモードの値も必要になるため、CSS の生成は <code>knowidea-theme</code> コマンドに任せるのが早い。<code>knowidea-tokens</code> を入れたプロジェクトで流す。</p>
   <Code code={cli} lang="bash" label="knowidea-theme command" />
   <p>出力はライトとダークの両方を持つ CSS で、警告(コントラスト比が足りない組み合わせ)は標準エラーに出る。<code>--strict</code> を付けると、警告があれば終了コード 1 になる。指定できる項目は <code>--primary</code>、<code>--primary-dark</code>、<code>--radius</code>、<code>--density</code>、<code>--font-size</code>、<code>--selector</code>。</p>
-  <p>プロジェクトに入れていない(素の HTML など)ときは、tarball を指す。</p>
-  <Code code={cliTgz} lang="bash" label="knowidea-theme from a tarball" />
   <p>できた CSS を読み込み、変えたい範囲にクラスを付ける。</p>
   <Code code={makeUse} label="Use the generated CSS" />
   <p>コードの中で作るときは <code>createTheme</code> を直接呼べる。</p>

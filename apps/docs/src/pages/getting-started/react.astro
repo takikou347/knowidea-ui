@@ -8,7 +8,6 @@ const { href } = links(Astro.url.pathname);
 <Base title="Usage with React" description="Vite の雛形から、部品を表示するまで">
   <h1>Usage with React</h1>
   <p class="lead">React 19 と Vite で、新しいプロジェクトから部品を表示するまでを、上から順に写せば動く形で書く。コンポーネントの挙動は Base UI に任せ、見た目は <code>knowidea-css</code> が担う。</p>
-  <p>先に<a href={href("getting-started/install")}>Installation</a>の 1 を終えて、<code>release/</code> に tarball を作っておく。</p>
 
   <h2 id="create">1. Create a project</h2>
   <Code code={react.create.pnpm} lang="bash" label="Create a Vite project with pnpm" />
@@ -16,8 +15,7 @@ const { href } = links(Astro.url.pathname);
   <Code code={react.create.npm} lang="bash" label="Create a Vite project with npm" />
 
   <h2 id="install">2. Add the packages</h2>
-  <p>Installation の 2 と同じ。tarball を <code>vendor/</code> に置いて、4 つ全部を入れる。</p>
-  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
+  <p>4 つ全部を入れる(<a href={href("getting-started/install")}>Installation</a>と同じ)。</p>
   <Code code={install.pnpm} lang="bash" label="Install with pnpm" />
   <p>npm なら <code>{install.npm}</code>。</p>
 

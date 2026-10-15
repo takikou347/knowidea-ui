@@ -5,16 +5,9 @@
 /* ---------- Installation ---------- */
 
 export const install = {
-  // 配る側(このリポジトリ)
-  pack: `# このリポジトリで、配る tarball を作る
-pnpm install
-pnpm release:pack      # release/ に 4 つの .tgz ができる`,
-  // 使う側のプロジェクト。tarball を置く場所は vendor/
-  copy: `# 使う側のプロジェクトで
-mkdir -p vendor
-cp /path/to/knowidea-ui/release/*.tgz vendor/`,
-  pnpm: `pnpm add ./vendor/knowidea-*.tgz`,
-  npm: `npm install ./vendor/knowidea-*.tgz`,
+  // 4 つを同じコマンドで入れる(knowidea-ui はほかの 3 つを peerDependencies に持つ)
+  pnpm: `pnpm add knowidea-ui knowidea-css knowidea-tokens knowidea-icons`,
+  npm: `npm install knowidea-ui knowidea-css knowidea-tokens knowidea-icons`,
   css: `/* src/main.tsx など、アプリの入口で読み込む */
 import "knowidea-tokens/tokens.css";   /* 色、フォント、余白、角丸の CSS 変数(ライトとダーク) */
 import "knowidea-css/index.css";       /* 部品の見た目(ki- のクラス)と、body の既定 */`,
@@ -122,11 +115,12 @@ export function ColorModeButton() {
 /* ---------- 素の HTML ---------- */
 
 export const html = {
-  // tarball の中から、使うファイルだけを取り出す
-  extract: `mkdir -p assets
-tar -xzf vendor/knowidea-tokens-*.tgz -C assets --strip-components=2 package/dist/tokens.css
-tar -xzf vendor/knowidea-css-*.tgz    -C assets --strip-components=2 package/dist/ki.css package/dist/ki.js
-tar -xzf vendor/knowidea-icons-*.tgz  -C assets --strip-components=2 package/dist/sprite.svg`,
+  // npm で入れて、使うファイルだけを assets/ に写す
+  extract: `npm install knowidea-tokens knowidea-css knowidea-icons
+mkdir -p assets
+cp node_modules/knowidea-tokens/dist/tokens.css assets/
+cp node_modules/knowidea-css/dist/ki.css node_modules/knowidea-css/dist/ki.js assets/
+cp node_modules/knowidea-icons/dist/sprite.svg assets/`,
   head: `<link rel="stylesheet" href="assets/tokens.css" />
 <link rel="stylesheet" href="assets/ki.css" />
 <script src="assets/ki.js" defer></script>`,
@@ -212,8 +206,8 @@ export default function App() {
 }`,
   // 作った CSS をファイルにして読み込む。React を使わない場合もこれ
   cli: `npx knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > src/brand.css`,
-  // プロジェクトに入れていない(素の HTML など)ときは、tarball を指す
-  cliTgz: `npx --package ./vendor/knowidea-tokens-*.tgz knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > assets/brand.css`,
+  // 素の HTML では、作った CSS を assets/ に置く
+  cliHtml: `npx knowidea-theme --primary "#2255CC" --radius 6 --selector .brand > assets/brand.css`,
   script: `import { createTheme } from "knowidea-tokens/create-theme";
 
 const t = createTheme({ primary: "#2255CC", radius: 6 });

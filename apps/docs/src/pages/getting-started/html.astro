@@ -2,17 +2,16 @@
 import Base from "../../layouts/Base.astro";
 import Code from "../../components/Code.astro";
 import { links } from "../../lib/paths.mjs";
-import { html, install, theme } from "../../data/examples.mjs";
+import { html, theme } from "../../data/examples.mjs";
 const { href } = links(Astro.url.pathname);
 ---
 <Base title="Plain HTML" description="CSS だけで使う">
   <h1>Plain HTML</h1>
   <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。Node は、テーマの CSS を作るときしか要らない。</p>
 
-  <h2 id="files">1. Take the files out of the tarballs</h2>
-  <p><a href={href("getting-started/install")}>Installation</a>の 1 で作った tarball を、プロジェクトの <code>vendor/</code> に置く。そこから、使う 4 つのファイルを <code>assets/</code> に取り出す。</p>
-  <Code code={install.copy} lang="bash" label="Copy the tarballs" />
-  <Code code={html.extract} lang="bash" label="Extract the files" />
+  <h2 id="files">1. Get the files</h2>
+  <p>npm で入れて、使う 4 つのファイルを <code>assets/</code> に写す。</p>
+  <Code code={html.extract} lang="bash" label="Copy the files" />
   <div class="table-wrap">
     <table class="docs-table">
       <thead><tr><th>File</th><th>Contents</th></tr></thead>
@@ -43,7 +42,7 @@ const { href } = links(Astro.url.pathname);
   <Code code={html.colorMode} lang="html" label="Apply the saved mode" />
 
   <h2 id="theme">Theme</h2>
-  <p>プライマリカラーなどの変更は、CSS 変数のオーバーライドだけでできる。ライトとダークの値は、コマンドで作る。tarball を指せば、プロジェクトに Node のパッケージを入れなくても動く。</p>
-  <Code code={theme.cliTgz} lang="bash" label="Generate the theme CSS" />
+  <p>プライマリカラーなどの変更は、CSS 変数のオーバーライドだけでできる。ライトとダークの値は、1 で入れた <code>knowidea-tokens</code> のコマンドで作る。</p>
+  <Code code={theme.cliHtml} lang="bash" label="Generate the theme CSS" />
   <p>作った <code>assets/brand.css</code> を <code>ki.css</code> の後に読み込み、変えたい範囲に <code>class="brand"</code> を付ける。詳しくは <a href={href("customization/theme")}>Theme</a> を参照。</p>
 </Base>

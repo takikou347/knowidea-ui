@@ -2,6 +2,15 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.8.1",
+    date: "2026-10-15",
+    summary: "npm に出した。npm のページの説明を短くし、文書の入れ方を npm にした。部品は変えていない。",
+    rows: [
+      ["配布", "4 つを npm に出した(0.8.0 から)。各パッケージの README を、入れ方と短い使い方だけにした。作る人向けの話は DEVELOP.md に移した。"],
+      ["Docs", "Installation、Usage with React、Tailwind v4、Plain HTML、Theme の入れ方を、tarball から npm install に変えた。"],
+    ],
+  },
+  {
     version: "0.8.0",
     date: "2026-10-15",
     summary: "グラデーションの見た目を選べるようにした。パッケージの名前を knowidea-* に変え、MIT ライセンスで npm に出す準備をした。部品の数は 54 のまま。",
