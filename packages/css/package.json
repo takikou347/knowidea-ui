@@ -1,8 +1,8 @@
 {
   "name": "knowidea-css",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "KNOW IDEA UI の素の CSS(ki- のクラス)",
-  "license": "MIT",
+  "license": "MIT AND OFL-1.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/takikou347/knowidea-ui.git",

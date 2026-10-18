@@ -149,7 +149,8 @@ body {
 .dn .dn-title a { font-size: inherit; color: inherit; }
 
 /* 本文 */
-.docs-main h1:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *) { margin: 0 0 var(--space-3); font-size: var(--font-size-5); line-height: var(--font-line-height-5); font-weight: var(--font-weight-strong); }
+/* ページの題だけを見出しの書体(--font-display)で大きくする。節の h2 は本文の書体のまま */
+.docs-main h1:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *) { margin: 0 0 var(--space-4); font-family: var(--font-display); font-size: var(--font-size-display-2); line-height: var(--font-line-height-display-2); font-weight: var(--font-weight-display); letter-spacing: -0.01em; font-feature-settings: "palt"; overflow-wrap: anywhere; }
 .docs-main h2:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *) { margin: var(--space-7) 0 var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-line); font-size: var(--font-size-4); line-height: var(--font-line-height-4); font-weight: var(--font-weight-strong); }
 .docs-main h1 + h2:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *), .docs-main .lead + h2:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *) { margin-top: var(--space-6); }
 .docs-main h3:not(:is(.demo, .state-cell, .cp-view, .hl-stage, .tpl) *) { margin: var(--space-5) 0 var(--space-2); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
@@ -315,7 +316,7 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 @media (min-width: 1024px) { .home-in { padding: var(--space-7) var(--space-5) 0; } }
 .hero { display: grid; gap: var(--space-5); }
 @media (min-width: 1024px) { .hero { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: end; gap: var(--space-7); } }
-.hero h1 { margin: 0 0 var(--space-3); font-size: clamp(28px, 5vw, 44px); line-height: 1.2; font-weight: var(--font-weight-strong); max-width: 26ch; }
+.hero h1 { margin: 0 0 var(--space-4); font-family: var(--font-display); font-size: var(--font-size-display-1); line-height: var(--font-line-height-display-1); font-weight: var(--font-weight-display); letter-spacing: -0.01em; font-feature-settings: "palt"; max-width: 20ch; overflow-wrap: anywhere; }
 .hero-lead { margin: 0 0 var(--space-4); font-size: var(--font-size-4); line-height: var(--font-line-height-4); max-width: 46ch; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .hero-side { display: grid; gap: var(--space-2); min-width: 0; }

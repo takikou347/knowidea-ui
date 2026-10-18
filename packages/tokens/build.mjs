@@ -96,8 +96,9 @@ for (const [k, v] of Object.entries(light)) {
   if (k.startsWith("color.")) tw["--color-" + k.slice(6)] = v;
   else if (k === "font.sans") tw["--font-sans"] = v;
   else if (k === "font.mono") tw["--font-mono"] = v;
-  else if ((m = k.match(/^font\.size\.(\d)$/))) tw[`--text-${m[1]}`] = v;
-  else if ((m = k.match(/^font\.line-?[hH]eight\.(\d)$/))) tw[`--text-${m[1]}--line-height`] = v;
+  else if (k === "font.display") tw["--font-display"] = v;
+  else if ((m = k.match(/^font\.size\.(\d|display-\d)$/))) tw[`--text-${m[1]}`] = v;
+  else if ((m = k.match(/^font\.line-?[hH]eight\.(\d|display-\d)$/))) tw[`--text-${m[1]}--line-height`] = v;
   else if ((m = k.match(/^space\.(\d)$/))) tw[`--spacing-${m[1]}`] = v;
   else if ((m = k.match(/^radius\.(\d)$/))) tw[`--radius-${m[1]}`] = v;
   else if (k === "radius.pill") tw["--radius-pill"] = v;

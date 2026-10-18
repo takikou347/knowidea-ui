@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { root, run, runScript, serve, launch, openPage } from "./consumer/lib.mjs";
 import { reactSnippets, importLines, htmlSnippets } from "./consumer/snippets.mjs";
-import { recorder, checkReactApp, installHelpers, hexToRgb } from "./consumer/checks.mjs";
+import { recorder, checkReactApp, checkDisplayFont, installHelpers, hexToRgb } from "./consumer/checks.mjs";
 import { install, react, html, tailwind, theme, dark, overriding, icons } from "../apps/docs/src/data/examples.mjs";
 
 // 確かめる版(文書の「最新」を、繰り返せるように固定する)
@@ -66,7 +66,7 @@ function writeReactApp(dir, { tailwind: tw }) {
   for (const s of rs) write(dir, `src/examples/${s.slug}__${s.fn}.tsx`, s.code + `\nexport { ${s.fn} };\n`);
   for (const s of importLines()) write(dir, `src/examples/import__${s.slug}.ts`, s.code + `\nexport { ${s.code.match(/\{(.*)\}/)[1].trim()} };\n`);
 
-  const pick = [["button", "Variants"], ["text-field", "Basic"], ["select", "Basic"], ["checkbox", "Basic"], ["dialog", "Basic"], ["tabs", "Basic"], ["menu", "Basic"], ["toast", "Tones"], ["table", "Sortable"], ["chart", "Bars"]];
+  const pick = [["button", "Variants"], ["text-field", "Basic"], ["select", "Basic"], ["checkbox", "Basic"], ["dialog", "Basic"], ["tabs", "Basic"], ["menu", "Basic"], ["toast", "Tones"], ["table", "Sortable"], ["chart", "Bars"], ["jacket", "Basic"]];
   const imp = pick.map(([s, f], i) => `import { ${f} as E${i} } from "./examples/${s}__${f}";`).join("\n");
   const sections = pick.map(([s], i) => `        <section id="ex-${s}"><E${i} /></section>`).join("\n");
   write(dir, "src/App.tsx", `import { lazy, Suspense } from "react";
@@ -211,7 +211,7 @@ async function scenarioHtml() {
   runScript(html.extract, { cwd: proj, subst });
   runScript(theme.cliHtml, { cwd: proj, subst });
   const pickHtml = (slug) => htmlSnippets().find((s) => s.slug === slug).code.replace(/href="#([\w-]+)"/g, 'href="assets/sprite.svg#$1"');
-  const sections = ["button", "text-field", "select", "checkbox", "table", "badge", "tabs", "toast", "menu", "alert"].map((s) => `    <section id="ex-${s}">\n${pickHtml(s)}\n    </section>`).join("\n");
+  const sections = ["button", "text-field", "select", "checkbox", "table", "badge", "tabs", "toast", "menu", "alert", "jacket"].map((s) => `    <section id="ex-${s}">\n${pickHtml(s)}\n    </section>`).join("\n");
   // 部品ページの Plain HTML の例を、全部並べたページ
   const allHtml = htmlSnippets().map((s) => `    <section data-example="${s.slug}">\n${s.code.replace(/href="#([\w-]+)"/g, 'href="assets/sprite.svg#$1"')}\n    </section>`).join("\n");
   write(proj, "all.html", `<!doctype html>
@@ -296,6 +296,7 @@ async function browserHtml(proj) {
       };
     });
     ok("body: 背景、IBM Plex Sans JP、余白 0", st.body.bg && /IBM Plex Sans JP/.test(st.body.font) && st.body.margin === "0px", JSON.stringify(st.body));
+    await checkDisplayFont(page, rec);
     ok("Button: 高さ 44px、背景が primary、角丸が --radius-2", st.btn && st.btn.h >= 43.5 && st.btn.bg && st.btn.r === st.btn.rv, JSON.stringify(st.btn));
     ok("Alert: 背景と余白が当たる", st.alert && st.alert.bg !== "rgba(0, 0, 0, 0)" && parseFloat(st.alert.pad) > 0, JSON.stringify(st.alert));
     ok("Icon(sprite): 1.25em で、外部の sprite.svg の形が描かれる", st.icon && Math.abs(st.icon.w - st.icon.fs * 1.25) < 0.6, JSON.stringify(st.icon));

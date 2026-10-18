@@ -247,4 +247,62 @@ export const display = [
     demos: [{ fn: "Basic", title: "Basic", text: "出典は figcaption に入る。" }],
     a11y: ["<figure> と <blockquote> を使う。出典は <figcaption> に書く"],
   },
+  {
+    slug: "display", name: "Display", imports: ["Display"],
+    lead: "大きな見出し。ページの題と、節の頭の大きな見出しだけに使い、1 画面に 1〜2 か所にする。書体は見出し用の Murecho(800)で、本文の IBM Plex Sans JP と形で分ける。大きさは画面の幅に付いてくる(size 1 は 40〜56px、size 2 は 32〜44px)。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "既定は h1、size 1。本文は今までの大きさのまま、題だけを大きくする。" },
+      { fn: "Sizes", title: "Sizes", text: "size 1 は画面で一番大きな字、size 2 は節の頭。ふつうの見出し(18px、Plex)と並べた時の差。" },
+    ],
+    props: [
+      ["as", '"h1" | "h2" | "h3" | "p"', '"h1"', "見出しの段。見た目の大きさとは別に、文書の構造で選ぶ"],
+      ["size", "1 | 2", "1", "1 は 1 画面に 1 か所、2 は節の頭"],
+      ["children", "ReactNode", "-", "見出しの文字"],
+    ],
+    classes: [[".ki-display", "本体。data-size=\"2\" で 2 段目"]],
+    vars: [["--font-display、--font-weight-display", "見出しの書体(Murecho)と太さ 800"], ["--font-size-display-1、--font-size-display-2", "clamp() の大きさ"], ["--font-line-height-display-1、--font-line-height-display-2", "行の高さ 1.12 と 1.2"]],
+    html: `<h1 class="ki-display">夜更けの台所ラジオ</h1>
+<h2 class="ki-display" data-size="2">今週の回</h2>`,
+    a11y: ["見出しの段(h1〜h3)は文書の構造で選び、大きさのために段を飛ばさない", "書体が届く前も IBM Plex Sans JP で読める(font-display: swap)"],
+  },
+  {
+    slug: "jacket", name: "Jacket", imports: ["Jacket"],
+    lead: "題字のジャケット。番組、回、記事、作品の顔を、色の面に題字を組んで出す。アイコンを色の四角に入れたタイルの代わりに使う。画像の面なので角は直角で、テーマの角丸にも付いていかない。題字の大きさはジャケットの幅と題の長さに付いてくる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "title の \\n で行を切る。meta は題の後ろに添える 1 行で、題の上には置かない。" },
+      { fn: "Tones", title: "Tones and colors", text: "primary、ink、paper の 3 つと、番組ごとの color と textColor。color を渡す時は、字との差を 3:1 以上にする(題字は大きな字)。" },
+      { fn: "Layouts", title: "Layouts", text: "縦書き(orientation=\"vertical\")、下寄せ(align=\"end\")、4:5 の portrait。長い題は自動で字を小さくする。" },
+      { fn: "WithTitle", title: "Next to a title", text: "一覧の行で、隣に同じ題が文字で出ている時は decorative にして、読み上げを 1 回にする。" },
+    ],
+    props: [
+      ["title", "string", "-", "題字。\"\\n\" で行を切れる"],
+      ["meta", "ReactNode", "-", "題の後ろに添える 1 行(番組名、回の番号など)"],
+      ["tone", '"primary" | "ink" | "paper"', '"primary"', "面の色。ink は字の色の面、paper は淡い面"],
+      ["color、textColor", "string", "-", "番組ごとの面の色と字の色。組で渡す"],
+      ["ratio", '"square" | "portrait" | "landscape"', '"square"', "1:1、4:5、16:9"],
+      ["align", '"start" | "end"', '"start"', "題を上に置くか、下に寄せるか"],
+      ["orientation", '"horizontal" | "vertical"', '"horizontal"', "vertical は題を縦書きにする"],
+      ["fit", '"auto" | "xl" | "l" | "m" | "s"', '"auto"', "題字の大きさ(幅の 24%、19%、15%、11%)。auto は題の長さから選ぶ(jacketFit)"],
+      ["decorative", "boolean", "false", "隣に同じ題が出ている時に読み上げから外す"],
+    ],
+    classes: [
+      [".ki-jacket", "本体。data-tone、data-ratio、data-align、data-orientation、data-fit。container query の入れ物"],
+      [".ki-jacket__face", "中の余白(幅の 7%)と並び"],
+      [".ki-jacket__title", "題字。--font-display、大きさは cqw"],
+      [".ki-jacket__meta", "添える 1 行"],
+    ],
+    vars: [["--ki-jacket-bg、--ki-jacket-fg", "面の色と字の色(既定は --color-primary と --color-on-primary)"], ["--ki-jacket-size", "題字の大きさ(既定 15cqw)"], ["--font-display、--font-weight-display", "題字の書体と太さ"]],
+    html: `<div class="ki-jacket">
+  <div class="ki-jacket__face">
+    <p class="ki-jacket__title">夜更けの<br>台所ラジオ</p>
+    <p class="ki-jacket__meta">第 12 回 しょうがと鶏の話</p>
+  </div>
+</div>
+<div class="ki-jacket" data-tone="ink" data-orientation="vertical" data-fit="l">
+  <div class="ki-jacket__face">
+    <p class="ki-jacket__title">雨の日の本棚</p>
+  </div>
+</div>`,
+    a11y: ["題字はふつうの文字なので、読み上げでそのまま読まれる。画像にして alt を書く必要が無い", "隣に同じ題が文字で出ている時は decorative(aria-hidden)にする", "Jacket は操作できない。押せる物にする時は <a> で包み、包んだ側が focus の輪と 44px を持つ"],
+  },
 ];

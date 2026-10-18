@@ -6,7 +6,7 @@
 
 ## 配り方
 
-npm に `knowidea-tokens`、`knowidea-css`、`knowidea-icons`、`knowidea-ui` の名前で出している(MIT)。4 つの版はそろえる。版を上げて main に入れると、GitHub Actions の Publish が npm に出す。各パッケージの `README.md` は npm のページに出る短い説明で、作る人向けの細かな話は同じ場所の `DEVELOP.md`。
+npm に `knowidea-tokens`、`knowidea-css`、`knowidea-icons`、`knowidea-ui` の名前で出している(MIT。`knowidea-css` の中の見出しの書体 Murecho は SIL OFL 1.1)。4 つの版はそろえる。版を上げて main に入れると、GitHub Actions の Publish が npm に出す。各パッケージの `README.md` は npm のページに出る短い説明で、作る人向けの細かな話は同じ場所の `DEVELOP.md`。
 
 | コマンド | 中身 |
 | --- | --- |

@@ -10,7 +10,7 @@ const { href } = links(Astro.url.pathname);
   <p class="lead">React も Tailwind も不要。CSS を 2 つ読み込み、<code>ki-</code> のクラスを付けるだけで使える。Node は、テーマの CSS を作るときしか要らない。</p>
 
   <h2 id="files">1. Get the files</h2>
-  <p>npm で入れて、使う 4 つのファイルを <code>assets/</code> に写す。</p>
+  <p>npm で入れて、使う 4 つのファイルと <code>fonts/</code> を <code>assets/</code> に写す。</p>
   <Code code={html.extract} lang="bash" label="Copy the files" />
   <div class="table-wrap">
     <table class="docs-table">
@@ -20,13 +20,14 @@ const { href } = links(Astro.url.pathname);
         <tr><td><code>ki.css</code></td><td>部品の見た目と、<code>body</code> の既定</td></tr>
         <tr><td><code>ki.js</code></td><td>任意。dialog の開閉とコピーボタン用</td></tr>
         <tr><td><code>sprite.svg</code></td><td>アイコンを使うとき</td></tr>
+        <tr><td><code>fonts/</code></td><td>見出しの書体(Display と Jacket)。<code>ki.css</code> と同じ場所に置く</td></tr>
       </tbody>
     </table>
   </div>
 
   <h2 id="head">2. Add to head</h2>
   <Code code={html.head} lang="html" label="head example" />
-  <p>書体は、Installation の<a href={href("getting-started/install") + "#fonts"}>Fonts</a>の <code>&lt;link&gt;</code> を足す。</p>
+  <p>見出しの書体の woff2 は <code>dist/fonts/</code> にあり、<code>ki.css</code> が <code>fonts/</code> の中を指す。<code>ki.css</code> と同じ場所に <code>fonts/</code> を写す(1 のコマンドに入っている)。本文の書体は、Installation の<a href={href("getting-started/install") + "#fonts"}>Fonts</a>の <code>&lt;link&gt;</code> を足す。</p>
 
   <h2 id="body">3. Classes and attributes</h2>
   <p>見た目の違いは <code>data-variant</code>、<code>data-tone</code> などの属性で指定する。クラスと属性は、各コンポーネントのページの CSS セクションに記載している。</p>

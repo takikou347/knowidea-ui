@@ -41,4 +41,4 @@ Tailwind v4 では `knowidea-tokens/theme.css` を読み込むと、`bg-surface`
 | [knowidea-tokens](https://www.npmjs.com/package/knowidea-tokens) | 色、余白、角丸、書体の CSS 変数と、テーマを作る `createTheme` |
 | [knowidea-css](https://www.npmjs.com/package/knowidea-css) | 部品の見た目(`ki-` のクラス)。素の HTML でも使える |
 | [knowidea-icons](https://www.npmjs.com/package/knowidea-icons) | アイコン 133 個(SVG のスプライトと React) |
-| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 54 個。土台は Base UI |
+| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 56 個。土台は Base UI |

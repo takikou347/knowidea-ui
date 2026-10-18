@@ -1,6 +1,6 @@
 # knowidea-ui
 
-KNOW IDEA UI の React の部品。54 個。ボタン、入力、表、ダイアログ、トーストなど。ライトとダークの両方に対応し、押せる所はすべて 44px 以上。
+KNOW IDEA UI の React の部品。56 個。ボタン、入力、表、ダイアログ、トースト、大きな見出しと題字のジャケットなど。ライトとダークの両方に対応し、押せる所はすべて 44px 以上。
 
 [ドキュメント](https://takikou347.github.io/knowidea-ui/) / [GitHub](https://github.com/takikou347/knowidea-ui) / MIT
 
@@ -35,4 +35,4 @@ export function App() {
 | [knowidea-tokens](https://www.npmjs.com/package/knowidea-tokens) | 色、余白、角丸、書体の CSS 変数と、テーマを作る `createTheme` |
 | [knowidea-css](https://www.npmjs.com/package/knowidea-css) | 部品の見た目(`ki-` のクラス)。素の HTML でも使える |
 | [knowidea-icons](https://www.npmjs.com/package/knowidea-icons) | アイコン 133 個(SVG のスプライトと React) |
-| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 54 個。土台は Base UI |
+| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 56 個。土台は Base UI |

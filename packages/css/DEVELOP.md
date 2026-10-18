@@ -12,7 +12,7 @@ KNOW IDEA の UI コンポーネントの見た目。素の CSS で、クラス�
 
 状態は `:hover`、`:focus-visible`、`:disabled`、`aria-invalid`、`data-loading` などで表現する。ドキュメントで状態を固定して見せるための `.is-hover`、`.is-focus`、`.is-active` も効く(実際のアプリでは使わない)。
 
-汎用コンポーネントの CSS: `status.css`、`stat.css`、`chart.css`、`card.css`、`list.css`、`timeline.css`、`selection-bar.css`、`appbar.css`、`drawer.css`、`bottom-navigation.css`、`layout.css`(Stack、Grid、Container)ほか、全部で 38 ファイル(`src/index.css` が束ねている)。
+汎用コンポーネントの CSS: `status.css`、`stat.css`、`chart.css`、`card.css`、`list.css`、`timeline.css`、`selection-bar.css`、`appbar.css`、`drawer.css`、`bottom-navigation.css`、`layout.css`(Stack、Grid、Container)、`display.css`(大きな見出し)、`jacket.css`(題字のジャケット)ほか、全部で 49 ファイル(`src/index.css` が束ねている)。
 
 レイアウト系のコンポーネントは、画面の幅ではなく、置かれた場所の幅(container query)でレイアウトを切り替える。Drawer には permanent と temporary があり、`<dialog>` でも Base UI の Dialog でも同じ見た目になる。
 
@@ -25,6 +25,19 @@ KNOW IDEA の UI コンポーネントの見た目。素の CSS で、クラス�
 - 情報の色は `--color-info`(青、色相 250)。Alert と Badge の info がこれを使う。成功の緑、プライマリカラーの青緑とは色相が離れている
 - danger ボタンの文字色は `--color-bg`(ライトでは明るく、ダークでは暗くなり、どちらもコントラスト比 4.5:1 以上)
 - Skeleton は動かさない(終わらない脈動は使わない)
+- 画像の面(`.ki-jacket`、写真、サムネイル)は角丸 0。テーマの `--radius-*` を参照しない
+
+## 見出しの書体
+
+`fonts.css` が Murecho の 800(`"KI Murecho"`)を `src/fonts/` の woff2 から読む。`--font-display` の先頭がこの名前。外の配信は使わない。`build.mjs` は `src/fonts/` を `dist/fonts/` に写し、`ki.css` の `url("./fonts/…")` がそこを指す。
+
+| ファイル | 中身 |
+| --- | --- |
+| `murecho-800-base.woff2` | 英数字、記号、かな、全角の英数字(約 26 KB) |
+| `murecho-800-kanji.woff2` | 元の書体にある漢字の全部、約 2,300 字(約 260 KB)。`unicode-range` で分けたので、漢字の無い見出しでは読まれない |
+| `OFL-Murecho.txt` | SIL Open Font License 1.1。woff2 と一緒に配る |
+
+作り直す時は `scripts/subset-font.py`(fonttools と brotli が要る)。元は google/fonts の `ofl/murecho/Murecho[wght].ttf`。Murecho に無い漢字(人名用の一部など)は、`--font-display` の次の IBM Plex Sans JP で出る。
 
 ## アイコン
 

@@ -2,7 +2,7 @@
 
 KNOW IDEA UI の見た目。素の CSS で、クラス名は `ki-` で始まる。React が無くても、クラスを付けるだけで使える。
 
-[ドキュメント](https://takikou347.github.io/knowidea-ui/) / [GitHub](https://github.com/takikou347/knowidea-ui) / MIT
+[ドキュメント](https://takikou347.github.io/knowidea-ui/) / [GitHub](https://github.com/takikou347/knowidea-ui) / MIT(見出しの書体は SIL OFL 1.1)
 
 ## 入れる
 
@@ -21,7 +21,7 @@ import "knowidea-css/index.css";
 <button class="ki-button" type="button">保存する</button>
 ```
 
-素の HTML では、`node_modules/knowidea-css/dist/ki.css` と `node_modules/knowidea-tokens/dist/tokens.css` をページの近くに写し、`<link>` で読み込む。部品ごとの書き方はドキュメントにある。
+素の HTML では、`node_modules/knowidea-css/dist/ki.css` と `node_modules/knowidea-tokens/dist/tokens.css` をページの近くに写し、`<link>` で読み込む。見出しの書体を使うなら `dist/fonts/` も `ki.css` の隣に写す。部品ごとの書き方はドキュメントにある。
 
 ## 4 つのパッケージ
 
@@ -30,4 +30,8 @@ import "knowidea-css/index.css";
 | [knowidea-tokens](https://www.npmjs.com/package/knowidea-tokens) | 色、余白、角丸、書体の CSS 変数と、テーマを作る `createTheme` |
 | [knowidea-css](https://www.npmjs.com/package/knowidea-css) | 部品の見た目(`ki-` のクラス)。素の HTML でも使える |
 | [knowidea-icons](https://www.npmjs.com/package/knowidea-icons) | アイコン 133 個(SVG のスプライトと React) |
-| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 54 個。土台は Base UI |
+| [knowidea-ui](https://www.npmjs.com/package/knowidea-ui) | React 19 の部品 56 個。土台は Base UI |
+
+## 書体のライセンス
+
+`src/fonts/` と `dist/fonts/` の見出しの書体は Murecho(Copyright 2021 The Murecho Project Authors)を絞った物で、SIL Open Font License 1.1(`src/fonts/OFL-Murecho.txt`)。ほかは MIT。

@@ -1,0 +1,11 @@
+/* 大きな見出し。ページの題と、節の頭の大きな見出しだけに使う。1 画面に 1〜2 か所。
+   書体は --font-display(Murecho 800)。本文、ボタン、ラベル、数字には使わない。 */
+.ki-display {
+  margin: 0; color: var(--color-text);
+  font-family: var(--font-display); font-weight: var(--font-weight-display);
+  font-size: var(--font-size-display-1); line-height: var(--font-line-height-display-1);
+  letter-spacing: -0.01em; font-feature-settings: "palt";
+  text-wrap: balance; overflow-wrap: anywhere;
+}
+.ki-display[data-size="2"] { font-size: var(--font-size-display-2); line-height: var(--font-line-height-display-2); }
+:where(:lang(ja)) .ki-display { word-break: auto-phrase; }

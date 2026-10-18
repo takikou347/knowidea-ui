@@ -6,7 +6,7 @@ import { links } from "../../../lib/paths.mjs";
 
 const kinds = {
   color: { name: "Color", lead: "役割を表す名前の変数だけを参照する。ライトとダークは別々に決めており、反転では作らない。" },
-  typography: { name: "Typography", lead: "書体は、本文と見出し用の IBM Plex Sans JP と、数字とコード用の IBM Plex Mono の 2 つ。サイズは 5 段階。" },
+  typography: { name: "Typography", lead: "書体は 3 つ。本文とふつうの見出しは IBM Plex Sans JP、ページの題と大きな見出しは Murecho、数字とコードは IBM Plex Mono。本文のサイズは 5 段階、大きな見出しは 2 段階。" },
   spacing: { name: "Spacing", lead: "4px を単位とした 7 段階。コンポーネントの間隔は、この段階から選択する。" },
   radius: { name: "Radius", lead: "角丸は 3 段階(4px、8px、12px)と、Chip 用の pill。大きさで段を分け、大きな角丸を一律には使わない。" },
   shadow: { name: "Shadow", lead: "影は、浮かび上がる要素(メニュー、ダイアログ、画面に固定されたバー)にだけ使う。" },
@@ -99,8 +99,9 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
         <table class="docs-table">
           <thead><tr><th>Variable</th><th>Typeface</th><th>Usage</th></tr></thead>
           <tbody>
-            <tr><td><code>--font-sans</code></td><td>IBM Plex Sans JP、BIZ UDPGothic、Noto Sans CJK JP ほか</td><td>見出し、本文、日本語</td></tr>
+            <tr><td><code>--font-sans</code></td><td>IBM Plex Sans JP、BIZ UDPGothic、Noto Sans CJK JP ほか</td><td>本文、ふつうの見出し、部品の文字</td></tr>
             <tr><td><code>--font-mono</code></td><td>IBM Plex Mono、JetBrains Mono、ui-monospace ほか</td><td>数字、コード</td></tr>
+            <tr><td><code>--font-display</code></td><td style="font-family: var(--font-display); font-weight: var(--font-weight-display)">Murecho 800(KI Murecho)、IBM Plex Sans JP ほか</td><td>ページの題、大きな見出し、Jacket の題字だけ</td></tr>
           </tbody>
         </table>
       </div>
@@ -116,6 +117,20 @@ const durations = Object.entries(core.motion.duration).map(([n, t]) => [n, px(t)
           </tbody>
         </table>
       </div>
+      <h2 id="display">Display sizes</h2>
+      <p>画面の幅に付いてくる大きさ(<code>clamp()</code>)。1 画面に 1〜2 か所だけに使い、ほかの見出しは上の 5 段階のままにする。書体は <code>--font-display</code>、太さは <code>--font-weight-display</code>(800)。</p>
+      <div class="table-wrap">
+        <table class="docs-table">
+          <thead><tr><th>Step</th><th class="num">Size</th><th class="num">Line height</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><code>--font-size-display-1</code></td><td class="num">40〜56px</td><td class="num">1.12</td><td>ページの題、番組や回の題。1 画面に 1 か所</td></tr>
+            <tr><td><code>--font-size-display-2</code></td><td class="num">32〜44px</td><td class="num">1.2</td><td>節の頭の大きな見出し。このサイトのページの題</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ki-display" style="margin-top: var(--space-4)">答えはまだ無い。</p>
+      <p class="ki-display" data-size="2" style="margin-top: var(--space-3)">だから試す。</p>
+      <p>書体は <code>knowidea-css</code> の <code>fonts.css</code>(<code>index.css</code> に入っている)がパッケージの中から配る。外の配信は使わない。太さ 800 の 1 つだけを、英数字とかな(約 26 KB)と漢字(約 260 KB)の 2 つに絞り、使う字が画面に出た時だけ読まれる。Murecho に無い字は IBM Plex Sans JP で出る。ライセンスは SIL Open Font License 1.1。</p>
       <p class="muted">本文は 3 段目(14px)。<a href={href("customization/theme")}>Theme</a> の fontSize を変えると、5 段階すべてが本文を基準にまとめて変わる。</p>
     </>
   )}

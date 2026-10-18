@@ -34,7 +34,8 @@ const { href } = links(Astro.url.pathname);
   <p>プライマリカラーを変更したい場合は、<a href={href("customization/theme")}>Theme</a> を参照。</p>
 
   <h2 id="fonts">3. Fonts</h2>
-  <p>書体は IBM Plex Sans JP と IBM Plex Mono。<strong>パッケージには入れていない</strong>。<code>index.html</code> の <code>&lt;head&gt;</code> に次の行を足すと、Google Fonts から読み込める。足さなくても動き、その場合は <code>BIZ UDPGothic</code>、<code>Noto Sans CJK JP</code>、<code>Hiragino Sans</code>、<code>Yu Gothic</code> の順に、端末にある書体が使われる(文字の幅が少し変わる)。</p>
+  <p>見出しの書体 Murecho(<code>--font-display</code>)は <code>knowidea-css/index.css</code> に入っていて、パッケージの中の woff2 を読む。足す物は無い。</p>
+  <p>本文の書体 IBM Plex Sans JP と IBM Plex Mono は<strong>パッケージには入れていない</strong>。<code>index.html</code> の <code>&lt;head&gt;</code> に次の行を足すと、Google Fonts から読み込める。足さなくても動き、その場合は <code>BIZ UDPGothic</code>、<code>Noto Sans CJK JP</code>、<code>Hiragino Sans</code>、<code>Yu Gothic</code> の順に、端末にある書体が使われる(文字の幅が少し変わる)。</p>
   <Code code={install.fonts} lang="html" label="Google Fonts" />
   <p>外部に接続したくない場合は、同じ書体を自分のサーバーで配り、<code>--font-sans</code> と <code>--font-mono</code> を<a href={href("customization/overriding")}>上書き</a>する。</p>
 
