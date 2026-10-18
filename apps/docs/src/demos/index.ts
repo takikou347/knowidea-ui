@@ -38,6 +38,8 @@ import * as dSegmentedControl from "./segmented-control";
 import * as dSlider from "./slider";
 import * as dFileUpload from "./file-upload";
 import * as dKbd from "./kbd";
+import * as dDisplay from "./display";
+import * as dJacket from "./jacket";
 import * as dStepper from "./stepper";
 import * as dSelectionBar from "./selection-bar";
 import * as dSheet from "./sheet";
@@ -94,6 +96,8 @@ export const demos = {
   slider: dSlider,
   "file-upload": dFileUpload,
   kbd: dKbd,
+  display: dDisplay,
+  jacket: dJacket,
   stepper: dStepper,
   "selection-bar": dSelectionBar,
   "sheet": dSheet,

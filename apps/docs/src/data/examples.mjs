@@ -120,6 +120,7 @@ export const html = {
 mkdir -p assets
 cp node_modules/knowidea-tokens/dist/tokens.css assets/
 cp node_modules/knowidea-css/dist/ki.css node_modules/knowidea-css/dist/ki.js assets/
+cp -r node_modules/knowidea-css/dist/fonts assets/
 cp node_modules/knowidea-icons/dist/sprite.svg assets/`,
   head: `<link rel="stylesheet" href="assets/tokens.css" />
 <link rel="stylesheet" href="assets/ki.css" />

@@ -2,6 +2,17 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.9.0",
+    date: "2026-10-19",
+    summary: "見出しの書体と大きな字の段を足し、題字のジャケット Jacket を足した。部品は 56 個。",
+    rows: [
+      ["knowidea-tokens", "--font-display(Murecho 800、次に IBM Plex Sans JP)、--font-weight-display(800)、--font-size-display-1(clamp で 40〜56px)と --font-size-display-2(32〜44px)、その行の高さを足した。本文の 5 段階は変えていない。Tailwind の @theme に --font-display と --text-display-1、--text-display-2 を渡す。"],
+      ["knowidea-css", "fonts.css(Murecho 800 を英数字とかな、漢字の 2 つの woff2 に絞り、パッケージの中から配る。SIL OFL 1.1)、.ki-display(大きな見出し)、.ki-jacket(題字のジャケット。角丸 0、題字の大きさは幅に付いてくる、縦書きもできる)を足した。dist/fonts/ を ki.css の隣に置く。"],
+      ["knowidea-ui", "Display(as、size)と Jacket(title、meta、tone、color と textColor、ratio、align、orientation、fit、decorative)を足した。題の長さから字の段を選ぶ jacketFit も出した。"],
+      ["Docs", "ページの題とトップの見出しを見出しの書体にした。Display と Jacket のページ、Typography の Display sizes。Plain HTML は fonts/ も写す。"],
+    ],
+  },
+  {
     version: "0.8.1",
     date: "2026-10-15",
     summary: "npm に出した。npm のページの説明を短くし、文書の入れ方を npm にした。部品は変えていない。",

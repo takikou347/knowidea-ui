@@ -45,6 +45,18 @@ export function colorIs(page, sel, prop, varName, { within } = {}) {
   }, [sel, prop, varName]);
 }
 
+/** 見出しの書体: Jacket の題字が "KI Murecho" で、パッケージの woff2 が読めている(道が壊れていない) */
+export async function checkDisplayFont(page, { ok }) {
+  const f = await page.evaluate(async () => {
+    const t = document.querySelector("#ex-jacket .ki-jacket__title");
+    if (!t) return null;
+    await document.fonts.ready;
+    const faces = [...document.fonts].filter((x) => /KI Murecho/.test(x.family));
+    return { family: getComputedStyle(t).fontFamily, faces: faces.map((x) => x.status), check: document.fonts.check('800 16px "KI Murecho"', t.textContent.slice(0, 4)) };
+  });
+  ok("Jacket: 題字が見出しの書体(KI Murecho)で、woff2 が読めている", f && /KI Murecho/.test(f.family) && f.faces.includes("loaded") && !f.faces.includes("error") && f.check, JSON.stringify(f));
+}
+
 /**
  * React の 2 つ(Vite、Vite + Tailwind)で共通の確かめ。
  * 約束: 画面は #ex-<部品> の中に部品の例がある。外側に ThemeProvider(primary = opts.primary)。
@@ -63,6 +75,7 @@ export async function checkReactApp(page, rec, { primary, tailwind = false }) {
   ok("body: 文字色が --color-text", body.colorOk);
   ok("body: 書体が --font-sans(IBM Plex Sans JP が先頭)", /IBM Plex Sans JP/.test(body.font), body.font);
   ok("body: 余白 0、文字 14px", body.margin === "0px" && body.size === "14px", `${body.margin} ${body.size}`);
+  await checkDisplayFont(page, rec);
 
   // --- Button
   const btn = await page.evaluate(() => {
