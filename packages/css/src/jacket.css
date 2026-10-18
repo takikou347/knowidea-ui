@@ -1,0 +1,42 @@
+/* 題字のジャケット。番組、回、記事、作品の顔。色の面に --font-display の題字を組む。
+   画像の面なので角丸は持たない(テーマの角丸にも付いていかない)。押せる物にする時は外の <a> に focus の輪を出す。
+   字の大きさはジャケットの幅に付いてくる(container query の cqw)。data-fit で題の長さに合わせる。 */
+.ki-jacket {
+  --ki-jacket-bg: var(--color-primary); --ki-jacket-fg: var(--color-on-primary);
+  container-type: inline-size; position: relative; display: block; margin: 0; width: 100%;
+  aspect-ratio: 1; overflow: hidden; border-radius: 0;
+  background: var(--ki-jacket-bg); color: var(--ki-jacket-fg);
+}
+.ki-jacket[data-ratio="portrait"] { aspect-ratio: 4 / 5; }
+.ki-jacket[data-ratio="landscape"] { aspect-ratio: 16 / 9; }
+.ki-jacket[data-tone="ink"] { --ki-jacket-bg: var(--color-text); --ki-jacket-fg: var(--color-bg); }
+.ki-jacket[data-tone="paper"] { --ki-jacket-bg: var(--color-surface-2); --ki-jacket-fg: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-line); }
+
+.ki-jacket__face {
+  box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: 4cqw;
+  height: 100%; padding: 7cqw;
+}
+.ki-jacket[data-align="end"] .ki-jacket__face { justify-content: flex-end; }
+
+.ki-jacket__title {
+  --ki-jacket-size: 15cqw;
+  margin: 0; color: inherit;
+  font-family: var(--font-display); font-weight: var(--font-weight-display);
+  font-size: var(--ki-jacket-size); line-height: 1.06; letter-spacing: -0.01em; font-feature-settings: "palt";
+  overflow-wrap: anywhere; word-break: auto-phrase; text-wrap: balance;
+}
+.ki-jacket[data-fit="xl"] .ki-jacket__title { --ki-jacket-size: 24cqw; }
+.ki-jacket[data-fit="l"] .ki-jacket__title { --ki-jacket-size: 19cqw; }
+.ki-jacket[data-fit="s"] .ki-jacket__title { --ki-jacket-size: 11cqw; }
+.ki-jacket[data-ratio="landscape"] .ki-jacket__title { font-size: calc(var(--ki-jacket-size) * 0.62); }
+
+/* 添える 1 行(番組名、回の番号など)。題の後ろに置き、題の上には置かない */
+.ki-jacket__meta {
+  margin: 0; color: inherit; font-family: var(--font-sans); font-weight: var(--font-weight-strong);
+  font-size: clamp(11px, 5cqw, 16px); line-height: 1.3; overflow-wrap: anywhere;
+}
+
+/* 縦書き。題は右上から縦に組み、添える行は左下に横で置く */
+.ki-jacket[data-orientation="vertical"] .ki-jacket__face { flex-direction: row-reverse; align-items: flex-start; }
+.ki-jacket[data-orientation="vertical"] .ki-jacket__title { writing-mode: vertical-rl; text-orientation: mixed; max-height: 100%; line-height: 1.1; letter-spacing: 0.02em; font-feature-settings: normal; text-wrap: wrap; }
+.ki-jacket[data-orientation="vertical"] .ki-jacket__meta { align-self: flex-end; }

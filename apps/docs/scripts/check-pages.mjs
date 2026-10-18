@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const dist = resolve(fileURLToPath(new URL("../dist/", import.meta.url)));
 const failedRequests = [];
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".svg": "image/svg+xml", ".json": "application/json", ".png": "image/png" };
+const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".mjs": "text/javascript", ".svg": "image/svg+xml", ".json": "application/json", ".png": "image/png", ".woff2": "font/woff2" };
 
 function findChromium() {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
@@ -447,6 +447,31 @@ await kb("Chip の動き(初めから選んである物は動かない、選ぶ�
   assert(await chip.evaluate((el) => el.hasAttribute("data-pop") && el.getAnimations({ subtree: true }).length > 0), "選んでもチェックが動かない");
 });
 
+await kb("Jacket(角丸 0、題字は見出しの書体で読めて、面からはみ出さない、390px)", "components/jacket.html", async (page) => {
+  await page.evaluate(() => document.fonts.ready);
+  const jackets = page.locator(".demo .ki-jacket");
+  assert(await jackets.count() >= 8, "見本のジャケットが足りない");
+  for (const el of await jackets.all()) {
+    const r = await el.evaluate((j) => {
+      const t = j.querySelector(".ki-jacket__title"); const jb = j.getBoundingClientRect(); const tb = t.getBoundingClientRect();
+      return { radius: getComputedStyle(j).borderTopLeftRadius, family: getComputedStyle(t).fontFamily, inside: tb.left >= jb.left - 0.5 && tb.right <= jb.right + 0.5 && tb.top >= jb.top - 0.5 && tb.bottom <= jb.bottom + 0.5, text: t.textContent };
+    });
+    assert(r.radius === "0px", `ジャケットに角丸がある(${r.radius})`);
+    assert(/KI Murecho/.test(r.family), `題字が見出しの書体でない(${r.family})`);
+    assert(r.inside, `題字が面からはみ出す(${r.text})`);
+  }
+  assert(await page.evaluate(() => document.fonts.check('800 16px "KI Murecho"', "夜更けの台所ラジオ")), "見出しの書体が読めていない");
+}, { width: 390, height: 844 });
+
+await kb("Display(見出しの書体、390px で 40px 以上、ページの題は display-2)", "components/display.html", async (page) => {
+  await page.evaluate(() => document.fonts.ready);
+  const d = await page.locator(".demo .ki-display").first().evaluate((el) => ({ size: parseFloat(getComputedStyle(el).fontSize), family: getComputedStyle(el).fontFamily, weight: getComputedStyle(el).fontWeight }));
+  assert(d.size >= 40 && d.size <= 56, `size 1 が 40〜56px でない(${d.size})`);
+  assert(/KI Murecho/.test(d.family) && d.weight === "800", `見出しの書体と太さでない(${d.family} ${d.weight})`);
+  const h1 = await page.locator(".docs-main h1").first().evaluate((el) => ({ size: parseFloat(getComputedStyle(el).fontSize), family: getComputedStyle(el).fontFamily }));
+  assert(h1.size >= 32 && h1.size <= 44 && /KI Murecho/.test(h1.family), `ページの題が display-2 でない(${h1.size} ${h1.family})`);
+}, { width: 390, height: 844 });
+
 await kb("タブ(矢印、Tab で中身へ)", "components/tabs.html", async (page) => {
   const tabs = page.getByRole("tab");
   await tabs.first().focus();
@@ -537,7 +562,8 @@ await kb("検索(/ で開く、日本語と英語、矢印、Enter で移る、E
   await page.getByText("No results", { exact: true }).first().waitFor({ state: "visible" });
   await page.keyboard.press("Escape");
   await dlg.waitFor({ state: "hidden" });
-  assert(await page.evaluate(() => !document.activeElement?.closest("#docs-sd")), "閉じた後も focus が検索の中にある");
+  // 隠れた後、focus が戻るのは次の描画の後になることがあるので、少し待つ
+  assert(await page.waitForFunction(() => !document.activeElement?.closest("#docs-sd"), null, { timeout: 2000 }).then(() => true, () => false), "閉じた後も focus が検索の中にある");
   await page.getByRole("button", { name: "Search" }).focus();
   await press(page, "Enter");
   await dlg.waitFor({ state: "visible" });
@@ -670,9 +696,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 54, "カードが 54 枚でない");
+  assert((await page.locator(".cp").count()) === 56, "カードが 56 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 54, "見本が 54 個でない");
+  assert((await page.locator(".cp-fit").count()) === 56, "見本が 56 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();

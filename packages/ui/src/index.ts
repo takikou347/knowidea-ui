@@ -27,6 +27,8 @@ export { Alert, type AlertProps, type Tone } from "./Alert.js";
 export { Badge, type BadgeProps } from "./Badge.js";
 export { CodeBlock, type CodeBlockProps } from "./CodeBlock.js";
 export { Quote, type QuoteProps } from "./Quote.js";
+export { Display, type DisplayProps } from "./Display.js";
+export { Jacket, jacketFit, type JacketProps, type JacketFit } from "./Jacket.js";
 export { Skeleton, SkeletonText, type SkeletonProps, type SkeletonTextProps } from "./Skeleton.js";
 export { EmptyState, type EmptyStateProps } from "./EmptyState.js";
 export { Divider, type DividerProps } from "./Divider.js";
