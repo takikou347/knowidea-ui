@@ -10,11 +10,9 @@ import all from "knowidea-icons/dist/icons-data.json" with { type: "json" };
 const { href, rel } = links(Astro.url.pathname);
 const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${n}"/></svg>`;
 
-// 動く部品の格子に置くもの。どれもデモのページと同じ部品
+// トップの格子に置く代表的な操作。全部の見本とコードは Components と各部品のページにある
 const picks = [
-  ["button", "Variants"], ["text-field", "Basic"], ["select", "Basic"], ["checkbox", "Basic"], ["switch", "Basic"], ["radio", "Basic"],
-  ["chip", "Filter"], ["badge", "Tones"], ["tabs", "Basic"], ["accordion", "Basic"], ["progress", "Basic"], ["alert", "Closable"],
-  ["pagination", "Basic"], ["menu", "Basic"], ["dialog", "Basic"], ["tooltip", "Basic"], ["breadcrumbs", "Basic"], ["avatar", "Sizes"],
+  ["button", "Variants"], ["text-field", "Basic"], ["checkbox", "Basic"], ["switch", "Basic"], ["tabs", "Basic"], ["chip", "Filter"],
 ];
 const raws = import.meta.glob("../demos/*.tsx", { query: "?raw", import: "default", eager: true });
 const first = (t) => ((t ?? "").split("。")[0] ?? "") + "。";
@@ -23,19 +21,20 @@ const cells = picks.map(([slug, fn]) => {
   const t = tileCode(c, raws[`../demos/${slug}.tsx`], fn);
   return { slug, fn, name: c.name, desc: first(c.lead), href: href("components/" + slug), react: t.react, html: t.html };
 });
+// 4 つの特長。言葉で褒めず、上の実物のどこを見ればよいかを示す
 const features = [
-  { icon: "settings", title: "Theming", text: "プライマリカラー、角丸、密度、字の大きさを createTheme で変える。変わるのは CSS 変数だけで、コンポーネントのコードには触らない。", to: "customization/theme", link: "Theme" },
-  { icon: "eye", title: "Accessibility", text: "押せる所は 44px 以上。focus の輪は 2px で、本文のコントラスト比は 4.5:1 以上。キーボード操作は Base UI に任せている。", to: "components", link: "Components" },
-  { icon: "moon", title: "Dark mode", text: "ライトを反転せず、ダークは別に決めた値を持つ。OS の設定にも、data-theme にも従う。", to: "customization/dark-mode", link: "Dark mode" },
-  { icon: "star", title: "Icons", text: `${all.icons.length} 個のアイコンを regular と bold で用意している。SVG、sprite、React のコンポーネントから使える。`, to: "icons", link: "Icons" },
+  { icon: "settings", title: "Theming", text: "上の Primary と Radius を押すと、画面と部品の色と角丸がその場で変わる。変わるのは CSS 変数だけで、コンポーネントのコードには触らない。", at: "#hl-controls", atLabel: "上の画面で試す", to: "customization/theme", link: "Theme" },
+  { icon: "eye", title: "Accessibility", text: "Compact でも、押せる所は 44px 以上。focus の輪は 2px で、本文のコントラスト比は 4.5:1 以上。Density を Comfortable にすると余白だけが広がる。", at: "#hl-stage", atLabel: "上の画面で試す", to: "components", link: "Components" },
+  { icon: "moon", title: "Dark mode", text: "上の Dark を入れると、反転ではなく別に決めた値に切り替わる。OS の設定にも、data-theme にも従う。", at: "#hl-controls", atLabel: "上の画面で試す", to: "customization/dark-mode", link: "Dark mode" },
+  { icon: "star", title: "Icons", text: `上の Stat のアイコンも、${all.icons.length} 個のうちの 1 つ。regular と bold があり、SVG、sprite、React のコンポーネントから使える。`, at: "#hl-stage", atLabel: "上の画面で見る", to: "icons", link: "Icons" },
 ];
 ---
 <Base title="KNOW IDEA UI" description="Base UI を土台にした React のコンポーネントと、色、角丸、密度を変えられるトークン。特定のアプリに依存しない。" home toc={false}>
   <div class="home-in">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-text">
-        <h1 id="hero-title">React components for dense, themeable interfaces</h1>
-        <p class="hero-lead">Base UI を土台にした {components.length} 個のコンポーネントと、色、角丸、密度を変えられるトークン。特定のアプリに依存しない。</p>
+        <h1 id="hero-title">詰めても、操作できる画面の部品</h1>
+        <p class="hero-lead">Base UI を土台にした {components.length} 個の React コンポーネント。下の画面は本物の部品で、Compact のまま 44px の操作領域を保つ。</p>
         <div class="hero-actions">
           <a class="ki-button" href={href("getting-started/install")}>Get started</a>
           <a class="ki-button" data-variant="secondary" href={href("components")}>Browse components</a>
@@ -49,30 +48,31 @@ const features = [
 
     <section class="live" aria-labelledby="live-title">
       <h2 id="live-title">Live components</h2>
-      <p class="live-lead">色、角丸、密度、ダークを切り替えると、下の画面と部品がその場で変わる。部品はどれも本物で、そのまま操作できる。</p>
+      <p class="live-lead">色、角丸、密度、ダークを切り替えると、画面と部品がその場で変わる。数値はサンプル。</p>
       <HomeLive client:load cells={cells} />
-    </section>
-
-    <section class="features" aria-labelledby="features-title">
-      <h2 id="features-title">Features</h2>
-      <ul class="features-grid">
-        {features.map((f) => (
-          <li>
-            <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
-            <p>{f.text}</p>
-            <a href={href(f.to)}>{f.link}</a>
-          </li>
-        ))}
-      </ul>
     </section>
 
     <section class="entry" aria-labelledby="entry-title">
       <h2 id="entry-title">Components</h2>
-      <p>{components.length} 個を {categories.length} つのカテゴリに分けている。各部品のページに、デモ、5 つの状態、props、CSS 変数、アクセシビリティの注意がある。</p>
+      <p>この見本は代表だけ。{components.length} 個の全部を {categories.length} つのカテゴリに分けてある。各部品のページに、デモ、5 つの状態、props、CSS 変数、アクセシビリティの注意とコードがある。</p>
       <ul class="entry-cats">
         {categories.map((c) => <li><a href={href("components") + "#" + c.id}>{c.name}<span class="num">{c.list.length}</span></a></li>)}
       </ul>
       <a class="ki-button" data-variant="secondary" href={href("components")}>Browse components</a>
     </section>
+    <section class="features" aria-labelledby="features-title">
+      <h2 id="features-title">Features</h2>
+      <p class="features-lead">それぞれ、上の実物のどこを見ればよいかを書いた。</p>
+      <ul class="features-grid">
+        {features.map((f) => (
+          <li>
+            <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
+            <p>{f.text}</p>
+            <p class="features-links"><a href={f.at}>{f.atLabel}</a><a href={href(f.to)}>{f.link}</a></p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
   </div>
 </Base>

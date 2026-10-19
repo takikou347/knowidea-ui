@@ -113,7 +113,7 @@ export default function HomeLive({ cells }: Props) {
 
   return (
     <div className="hl">
-      <div className="hl-controls" role="group" aria-label="Theme controls">
+      <div className="hl-controls" id="hl-controls" role="group" aria-label="Theme controls">
         <div className="hl-ctl">
           <span className="hl-ctl-name" id="hl-primary">Primary</span>
           <div className="hl-row" role="group" aria-labelledby="hl-primary">
@@ -139,7 +139,7 @@ export default function HomeLive({ cells }: Props) {
       </div>
 
       <ThemeProvider theme={options} onWarn={() => {}}>
-        <div className="hl-stage">
+        <div className="hl-stage" id="hl-stage">
           <Dashboard />
         </div>
         <ul className="cp-grid" aria-label="Live components">
