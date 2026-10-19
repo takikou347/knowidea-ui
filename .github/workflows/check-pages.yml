@@ -1,0 +1,54 @@
+# ドキュメントサイト(apps/docs)を build して check-pages を走らせる。外へは何も出さない
+# 試す間(1 週)は check:pages が落ちても赤にしない(install と build の失敗は赤になる)。結果、かかった秒、Chrome の版を run の要約に残す
+name: Check pages
+
+on:
+  pull_request:
+    paths:
+      - "apps/docs/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/check-pages.yml"
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r build
+      - id: check
+        continue-on-error: true
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: |
+          echo "start=$(date +%s)" >> "$GITHUB_OUTPUT"
+          "$CHROMIUM_PATH" --version
+          pnpm --filter ./apps/docs check:pages
+      - if: always()
+        env:
+          OUTCOME: ${{ steps.check.outcome }}
+          START: ${{ steps.check.outputs.start }}
+        run: |
+          {
+            echo "| 項目 | 値 |"
+            echo "| --- | --- |"
+            echo "| 結果 | $OUTCOME |"
+            echo "| かかった秒 | $(( $(date +%s) - ${START:-$(date +%s)} )) |"
+            echo "| Chrome | $(/usr/bin/google-chrome --version) |"
+          } >> "$GITHUB_STEP_SUMMARY"
