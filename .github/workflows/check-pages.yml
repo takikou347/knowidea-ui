@@ -1,5 +1,5 @@
 # ドキュメントサイト(apps/docs)を build して check-pages を走らせる。外へは何も出さない
-# 試す間(1 週)は落ちても赤にしない。結果、かかった秒、Chrome の版を run の要約に残す
+# 試す間(1 週)は check:pages が落ちても赤にしない(install と build の失敗は赤になる)。結果、かかった秒、Chrome の版を run の要約に残す
 name: Check pages
 
 on:
@@ -17,7 +17,7 @@ permissions:
 
 concurrency:
   group: check-pages-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   check:
