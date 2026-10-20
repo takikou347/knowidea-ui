@@ -14,6 +14,7 @@ export { Kbd, type KbdProps } from "./Kbd.js";
 export { Slider, type SliderProps } from "./Slider.js";
 export { Stepper, type StepperProps } from "./Stepper.js";
 export { SegmentedControl, type SegmentedControlProps, type SegmentedOption } from "./SegmentedControl.js";
+export { Rating, type RatingProps } from "./Rating.js";
 export { Field, type FieldProps } from "./Field.js";
 export { Table, type TableProps, type Column, type SortState, type SortDirection } from "./Table.js";
 export { Tabs, type TabsProps, type TabItem } from "./Tabs.js";

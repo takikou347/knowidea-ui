@@ -1,0 +1,20 @@
+/* 星の評価(Rating)。素の HTML は role="radiogroup" の中に <label class="ki-rating__item"><input type="radio" class="ki-rating__input"> と星の svg。
+   見るだけの時は <span class="ki-rating" role="img" aria-label="..."> の中に <span class="ki-rating__item">。 */
+.ki-rating { display: inline-flex; align-items: center; }
+.ki-rating__item {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: var(--size-hit); height: var(--size-hit); cursor: pointer; user-select: none;
+  color: var(--color-primary);
+}
+.ki-rating__star { width: calc(var(--space-5) + var(--space-1)); height: calc(var(--space-5) + var(--space-1)); fill: none; stroke: var(--color-line-strong); stroke-width: 1.5; stroke-linejoin: round; transition: fill var(--motion-duration-fast) var(--motion-ease), stroke var(--motion-duration-fast) var(--motion-ease); }
+.ki-rating__item[data-filled] .ki-rating__star { fill: currentColor; stroke: currentColor; }
+.ki-rating__input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: inherit; }
+.ki-rating__item:is(:has(:focus-visible), .is-focus) { outline: 2px solid var(--color-focus); outline-offset: -2px; border-radius: var(--radius-2); }
+@media (hover: hover) {
+  .ki-rating:not([data-disabled]):not([data-readonly]) .ki-rating__item:hover .ki-rating__star { stroke: currentColor; }
+}
+/* 見るだけの星は押せないので、44px の枠を取らず、星の大きさに詰める */
+.ki-rating[data-readonly] .ki-rating__item { width: auto; height: auto; cursor: default; }
+.ki-rating[data-readonly] .ki-rating__star { width: calc(var(--space-4) + var(--space-1)); height: calc(var(--space-4) + var(--space-1)); }
+.ki-rating[data-disabled] .ki-rating__item { color: var(--color-text-muted); cursor: not-allowed; opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) { .ki-rating__star { transition: none; } }

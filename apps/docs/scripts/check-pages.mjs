@@ -264,6 +264,20 @@ await kb("SegmentedControl(矢印で選び直す、印が滑る)", "components/s
   assert(await page.getByText("今の表示: 月").first().isVisible(), "選んだ値が渡らない");
 });
 
+await kb("Rating(矢印で選び直す、見るだけは 1 つの画像)", "components/rating.html", async (page) => {
+  const group = page.getByRole("radiogroup", { name: "この回の評価" }).first();
+  await group.getByRole("radio").nth(2).focus();
+  await press(page, "ArrowRight");
+  assert(await group.getByRole("radio", { name: "5 段階中 4" }).isChecked(), "矢印で次の星が選ばれない");
+  const nf = await group.locator("[data-filled]").count();
+  assert(nf === 4, `選んだ星までが塗られない(${nf})`);
+  assert(await page.getByText("今の評価: 5 段階中 4").first().isVisible(), "選んだ値が渡らない");
+  const ro = page.getByRole("img", { name: "読者の評価: 5 段階中 4" });
+  assert((await ro.count()) === 1, "見るだけの星が 1 つの画像として読まれない");
+  const box = await group.getByRole("radio").first().locator("xpath=..").boundingBox();
+  assert(box.width >= 44 && box.height >= 44, "星の押せる所が 44px に届かない");
+});
+
 await kb("Calendar(矢印で日、PageDown で月、Enter で選ぶ)", "components/calendar.html", async (page) => {
   const demo = page.locator(".demo").first();
   const start = demo.locator(".ki-calendar__day[tabindex='0']");
@@ -696,9 +710,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 56, "カードが 56 枚でない");
+  assert((await page.locator(".cp").count()) === 57, "カードが 57 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 56, "見本が 56 個でない");
+  assert((await page.locator(".cp-fit").count()) === 57, "見本が 57 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
