@@ -16,7 +16,7 @@ npm に出している。使う側は 4 つ全部を同じコマンドで入れ�
 
 | Category | Components |
 | --- | --- |
-| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Slider、Stepper、FileUpload、Switch、Field |
+| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Rating、Slider、Stepper、FileUpload、Switch、Field |
 | Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、Kbd、CodeBlock、Quote、Display、Jacket |
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |

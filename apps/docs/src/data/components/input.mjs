@@ -222,6 +222,37 @@ export const input = [
     a11y: ["ラジオのグループ。矢印キーで選び直し、Tab はグループの外へ移る", "label がグループの名前になる。必須", "選んだことは、印の位置だけでなく、字の太さと色でも示す"],
   },
   {
+    slug: "rating", name: "Rating", imports: ["Rating"],
+    lead: "星で段階を付ける、または見せる。回や記事の評価のように、3〜7 段階で好みを聞く時に使う。onValueChange を渡すと選べる評価に、渡さないと見るだけの表示になる。数値で比べる物には Stat を使う。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "選べる評価。星の 1 つ 1 つが 44px で押せ、選んだ星までが塗られる。" },
+      { fn: "ReadOnly", title: "Read only", text: "見るだけの表示は、全体を 1 つの画像として「5 段階中 4」と読み上げる。数字も並べて書く。max で段の数を変えられる。" },
+    ],
+    props: [
+      ["label", "string", "-", "何の評価か。必須(読み上げの名前)"],
+      ["value / defaultValue / onValueChange", "number", "0", "制御と非制御。onValueChange が無いと見るだけの表示になる。0 は未選択"],
+      ["max", "number", "5", "段の数。3〜7 を目安にする"],
+      ["name", "string", "自動", "フォームで送る時の名前"],
+      ["disabled", "boolean", "false", "選べなくする"],
+    ],
+    classes: [
+      [".ki-rating", "本体。選べる時は role=\"radiogroup\"、見るだけの時は role=\"img\" と aria-label。data-readonly、data-disabled"],
+      [".ki-rating__item", "星 1 つ。素の HTML では <label>。data-filled で塗る"],
+      [".ki-rating__input", "見えなくした radio。星の上いっぱいに広げる"],
+      [".ki-rating__star", "星の svg"],
+    ],
+    vars: [
+      ["--color-primary、--color-line-strong", "塗った星の色と、塗っていない星の線(隣の色と 3:1 以上)"],
+      ["--size-hit", "選べる星の押せる範囲(44px)"],
+      ["--motion-duration-fast", "塗りの切り替わり。prefers-reduced-motion で止まる"],
+    ],
+    html: `<div class="ki-rating" role="radiogroup" aria-label="この回の評価">
+  <label class="ki-rating__item" data-filled><input class="ki-rating__input" type="radio" name="score" value="1" aria-label="5 段階中 1" /><svg class="ki-rating__star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2.8 14.8,8.9 21.4,9.6 16.5,14.1 17.9,20.7 12,17.4 6.1,20.7 7.5,14.1 2.6,9.6 9.2,8.9" /></svg></label>
+  <!-- 星は 5 つ。選んだ星までに data-filled を付ける -->
+</div>`,
+    a11y: ["選べる時はラジオのグループ。矢印キーで選び直し、Tab はグループの外へ移る", "各星の名前は「5 段階中 3」。グループの名前は label", "見るだけの時は全体を 1 つの画像にし、「評価: 5 段階中 4」と読む。色だけで伝えず、塗りと線の違いで示す", "星の線は隣の色と 3:1 以上"],
+  },
+  {
     slug: "slider", name: "Slider", imports: ["Slider"],
     lead: "量を指で選ぶ。音量や明るさのように、ちょうどの数より加減が大事な時に使う。ちょうどの数を入れる時は Stepper か Input を使う。value を [下限, 上限] にすると範囲を選べる。",
     demos: [
