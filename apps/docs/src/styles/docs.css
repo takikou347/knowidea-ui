@@ -427,8 +427,9 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 }
 
 /* ページの移り(View Transitions)。上のバーは動かさず、見出しは前のページの見出しから形を変えてつなぎ、本文は少し上へ滑って出る。
-   使えないブラウザでは、ふつうに移る。動きを減らす設定では止める。 */
-@view-transition { navigation: auto; }
+   使えないブラウザでは、ふつうに移る。動きを減らす設定では止める。
+   入る宣言(@view-transition)は layouts/Base.astro の head の先頭に置く。ここに置くと、Chrome 155 では新しいページが
+   この CSS を当てる前に宣言を読むことがあり、移りが止まって誤り(ViewTransition opt-in disabled)が出る */
 .docs-top { view-transition-name: docs-top; }
 .docs-main { view-transition-name: docs-main; }
 .docs-main > h1:first-of-type { view-transition-name: docs-title; }
@@ -437,6 +438,3 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 ::view-transition-new(docs-main) { animation: docs-vt-in var(--motion-duration-enter) var(--motion-ease) both; }
 @keyframes docs-vt-out { to { opacity: 0; } }
 @keyframes docs-vt-in { from { opacity: 0; transform: translateY(var(--space-2)); } }
-@media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
-}
