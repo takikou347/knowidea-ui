@@ -68,7 +68,7 @@ const features = [
           <li>
             <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
             <p>{f.text}</p>
-            <p class="features-links"><a href={f.at}>{f.atLabel}</a><a href={href(f.to)}>{f.link}</a></p>
+            <p class="features-links"><a href={f.at} aria-label={`${f.title} を${f.atLabel}`}>{f.atLabel}</a><a href={href(f.to)}>{f.link}</a></p>
           </li>
         ))}
       </ul>
