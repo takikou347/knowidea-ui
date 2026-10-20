@@ -30,6 +30,7 @@ const icon = (name) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style is:inline>@view-transition { navigation: auto; } @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }</style>
     {baseTag && <base href={baseTag} />}
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
