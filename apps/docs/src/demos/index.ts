@@ -36,6 +36,7 @@ import * as dRadio from "./radio";
 import * as dSelect from "./select";
 import * as dSegmentedControl from "./segmented-control";
 import * as dSlider from "./slider";
+import * as dRating from "./rating";
 import * as dFileUpload from "./file-upload";
 import * as dKbd from "./kbd";
 import * as dDisplay from "./display";
@@ -94,6 +95,7 @@ export const demos = {
   "select": dSelect,
   "segmented-control": dSegmentedControl,
   slider: dSlider,
+  rating: dRating,
   "file-upload": dFileUpload,
   kbd: dKbd,
   display: dDisplay,
