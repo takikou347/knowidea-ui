@@ -345,7 +345,7 @@ table.docs-table { border-collapse: collapse; width: 100%; }
 @media (min-width: 720px) { .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .features-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .features-lead { margin: 0 0 var(--space-4); max-width: 68ch; }
-.features-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); margin: 0; }
+.features-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); }
 .features-grid li { border-top: 1px solid var(--color-line); padding-top: var(--space-3); min-width: 0; }
 .features-grid h3 { display: flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); font-size: var(--font-size-3); font-weight: var(--font-weight-strong); }
 .features-grid h3 .ki-icon { color: var(--color-text-muted); }
