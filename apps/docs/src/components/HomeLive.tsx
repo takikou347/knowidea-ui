@@ -65,7 +65,7 @@ function Dashboard() {
       <div className="hl-app-head">
         <div>
           <p className="hl-app-title">Usage</p>
-          <p className="hl-app-sub">数値はすべてサンプル</p>
+          <p className="hl-app-sub">サンプルの数値</p>
         </div>
         <div className="hl-app-actions">
           <div className="hl-select"><Select aria-label="Range" options={RANGES} value={range} onValueChange={(v) => v && setRange(v)} /></div>
