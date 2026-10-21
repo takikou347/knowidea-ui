@@ -668,7 +668,7 @@ await kb("トップ(サイドメニューが無い、上のバーの 6 つのリ
   assert((await page.getByRole("link", { name: "Get started" }).count()) === 1 && (await page.getByRole("link", { name: "Browse components" }).count()) >= 1, "Get started と Browse components が無い");
   assert((await page.locator("h1").textContent()).length > 10, "h1 が無い");
   assert((await page.locator(".cp").count()) >= 6, "動く部品の格子が少ない");
-  assert((await page.locator(".features-grid li").count()) === 4, "特長が 4 つでない");
+  assert((await page.locator(".features-list li").count()) === 4, "特長が 4 つでない");
   await bar.getByRole("link", { name: "Docs", exact: true }).click();
   await page.waitForURL(/getting-started\/install\.html/);
   assert((await page.locator('.docs-topnav a[aria-current]').textContent()) === "Docs", "今いる所の印が Docs に付かない");
