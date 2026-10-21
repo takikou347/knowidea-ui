@@ -48,7 +48,7 @@ const features = [
 
     <section class="live" aria-labelledby="live-title">
       <h2 id="live-title">Live components</h2>
-      <p class="live-lead">色、角丸、密度、ダークを切り替えると、画面と部品がその場で変わる。数値はサンプル。</p>
+      <p class="live-lead">色、角丸、密度、ダークを切り替えると、画面と部品がその場で変わる。</p>
       <HomeLive client:load cells={cells} />
     </section>
 
@@ -63,7 +63,7 @@ const features = [
     <section class="features" aria-labelledby="features-title">
       <h2 id="features-title">Features</h2>
       <p class="features-lead">それぞれ、上の実物のどこを見ればよいかを書いた。</p>
-      <ul class="features-grid">
+      <ul class="features-list">
         {features.map((f) => (
           <li>
             <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
