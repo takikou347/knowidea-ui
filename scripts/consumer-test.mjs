@@ -11,7 +11,7 @@
 //           SKIP_PACK=1  release/ を作り直さない / CHROMIUM_PATH  Chromium を指す
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, existsSync, readdirSync, cpSync } from "node:fs";
 import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { tmpdir, homedir } from "node:os";
 import { root, run, runScript, serve, launch, openPage } from "./consumer/lib.mjs";
 import { reactSnippets, importLines, htmlSnippets } from "./consumer/snippets.mjs";
 import { recorder, checkReactApp, checkDisplayFont, installHelpers, hexToRgb } from "./consumer/checks.mjs";
@@ -24,6 +24,17 @@ const subst = {
   "tailwindcss @tailwindcss/vite": "tailwindcss@4.3.3 @tailwindcss/vite@4.3.3",
 };
 const PRIMARY = "#2255CC";
+// リポジトリの外のプロジェクトには packageManager が無い。corepack は「最後に使った pnpm」を呼ぶので、
+// それが壊れていると a が落ちる。ルートの package.json の packageManager(正本)を、この回だけの COREPACK_HOME で最後に使った版にする。
+// 版の数字はここに書かない。
+const pmSpec = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).packageManager ?? "";
+const pnpmVer = /^pnpm@(\d+\.\d+\.\d+)/.exec(pmSpec)?.[1];
+if (!pnpmVer) throw new Error("package.json の packageManager に pnpm@<版> が無い");
+const corepackSrc = process.env.COREPACK_HOME ?? join(process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"), "node", "corepack");
+const corepackHome = mkdtempSync(join(tmpdir(), "ki-corepack-"));
+if (existsSync(corepackSrc)) cpSync(corepackSrc, corepackHome, { recursive: true });
+writeFileSync(join(corepackHome, "lastKnownGood.json"), JSON.stringify({ pnpm: pnpmVer }) + "\n");
+process.env.COREPACK_HOME = corepackHome;
 const only = process.env.ONLY ? process.env.ONLY.split(",") : null;
 const base = process.env.DIR ?? mkdtempSync(join(tmpdir(), "ki-consumer-"));
 mkdirSync(base, { recursive: true });
@@ -366,5 +377,6 @@ if (want("c")) await step("c: Vite + React + Tailwind v4(npm)", async () => { co
 
 log("\n== 結果");
 for (const r of reports) log(`  ${r.failed === 0 ? "PASS" : "FAIL"} ${r.name}${r.failed ? ` (${r.failed} 件)` : ""}`);
+rmSync(corepackHome, { recursive: true, force: true });
 if (!process.env.KEEP && !process.env.DIR) rmSync(base, { recursive: true, force: true }); else log(`  作ったプロジェクト: ${base}`);
 process.exit(reports.some((r) => r.failed) ? 1 : 0);
