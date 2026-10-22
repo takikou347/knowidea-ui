@@ -21,11 +21,11 @@ const cells = picks.map(([slug, fn]) => {
   const t = tileCode(c, raws[`../demos/${slug}.tsx`], fn);
   return { slug, fn, name: c.name, desc: first(c.lead), href: href("components/" + slug), react: t.react, html: t.html };
 });
-// 4 つの特長。言葉で褒めず、上の実物のどこを見ればよいかを示す
+// 4 つの特長。text は同じファイルの定数で、<code> を含めて set:html で描く(外から来る文字は入れない)。言葉で褒めず、上の実物のどこを見ればよいかを示す
 const features = [
   { icon: "settings", title: "Theming", text: "上の Primary と Radius を押すと、画面と部品の色と角丸がその場で変わる。変わるのは CSS 変数だけで、コンポーネントのコードには触らない。", at: "#hl-controls", atLabel: "上の画面で試す", to: "customization/theme", link: "Theme" },
   { icon: "eye", title: "Accessibility", text: "Compact でも、押せる所は 44px 以上。focus の輪は 2px で、本文のコントラスト比は 4.5:1 以上。Density を Comfortable にすると余白だけが広がる。", at: "#hl-stage", atLabel: "上の画面で試す", to: "components", link: "Components" },
-  { icon: "moon", title: "Dark mode", text: "上の Dark を入れると、反転ではなく別に決めた値に切り替わる。OS の設定にも、data-theme にも従う。", at: "#hl-controls", atLabel: "上の画面で試す", to: "customization/dark-mode", link: "Dark mode" },
+  { icon: "moon", title: "Dark mode", text: "上の Dark を入れると、反転ではなく別に決めた値に切り替わる。OS の設定にも、<code>data-theme</code> にも従う。", at: "#hl-controls", atLabel: "上の画面で試す", to: "customization/dark-mode", link: "Dark mode" },
   { icon: "star", title: "Icons", text: `上の Stat のアイコンも、${all.icons.length} 個のうちの 1 つ。regular と bold があり、SVG、sprite、React のコンポーネントから使える。`, at: "#hl-stage", atLabel: "上の画面で見る", to: "icons", link: "Icons" },
 ];
 ---
@@ -67,7 +67,7 @@ const features = [
         {features.map((f) => (
           <li>
             <h3><Fragment set:html={icon(f.icon)} />{f.title}</h3>
-            <p>{f.text}</p>
+            <p set:html={f.text} />
             <p class="features-links"><a href={f.at} aria-label={`${f.title} を${f.atLabel}`}>{f.atLabel}</a><a href={href(f.to)}>{f.link}</a></p>
           </li>
         ))}
