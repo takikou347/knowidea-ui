@@ -11,6 +11,7 @@ const { href, rel } = links(Astro.url.pathname);
 const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="${rel}sprite.svg#${n}"/></svg>`;
 
 // トップの格子に置く代表的な操作。全部の見本とコードは Components と各部品のページにある
+// 6 つのまま。新しい部品(Rating など)はここに足さず、各部品のページで見せる(issue 12 の山田の決め)。入れ替えるのは、今の 6 つのどれかより代表的な操作と言える時だけで、理由を PR に書く
 const picks = [
   ["button", "Variants"], ["text-field", "Basic"], ["checkbox", "Basic"], ["switch", "Basic"], ["tabs", "Basic"], ["chip", "Filter"],
 ];
