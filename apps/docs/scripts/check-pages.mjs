@@ -479,7 +479,7 @@ await kb("Jacket(角丸 0、題字は見出しの書体で読めて、面から�
 
 await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大きな 1 つの題だけ、行は 44px 以上で題のリンクが行全体を押せる、横にはみ出さない)", "components/featured-list.html", async (page) => {
   await page.evaluate(() => document.fonts.ready);
-  const list = page.locator(".demo .ki-featured").first();
+  const list = page.locator(".demo .ki-featured__list").first();
   const lead = list.locator("> li[data-lead]");
   const rows = list.locator("> li:not([data-lead])");
   assert((await rows.count()) === 3, "行が 3 つでない");
@@ -492,11 +492,15 @@ await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大�
   const hits = await list.locator("> li").evaluateAll((els) => els.map((li) => { const a = li.querySelector(".ki-featured__title a"); const l = li.getBoundingClientRect(); const r = a.getBoundingClientRect(); const af = getComputedStyle(a, "::after"); return { h: l.height, w: l.width, ph: parseFloat(af.height), pw: parseFloat(af.width), a: r.height }; }));
   assert(hits.length === 4 && hits.every((x) => x.h >= 44), `行の高さが 44px に届かない(${hits.map((x) => Math.round(x.h))})`);
   assert(hits.every((x) => Math.abs(x.ph - x.h) < 2 && Math.abs(x.pw - x.w) < 2), "題のリンクが行全体を押せる所にしていない");
+  const narrow = page.locator(".demo .ki-featured__list").nth(1);
+  const na = await narrow.locator("> li[data-lead]").boundingBox(); const nb = await narrow.locator("> li:not([data-lead])").first().boundingBox();
+  assert((await narrow.boundingBox()).width <= 401, "狭い入れ物の幅が 400 でない");
+  assert(Math.abs(na.x - nb.x) < 2 && nb.y >= na.y + na.height - 1, "820px の画面でも、幅 400 の入れ物の中は縦に積まれない");
   const gap = await list.locator("> li:not([data-lead])").first().evaluate((li) => { const t = li.querySelector(".ki-featured__title a").getBoundingClientRect(); const m = li.querySelector(".ki-featured__meta").getBoundingClientRect(); return m.top - t.bottom; });
   assert(gap < 12, `題と日付が離れている(${Math.round(gap)}px)`);
   const bg = await list.locator("> li").evaluateAll((els) => els.map((el) => { const c = getComputedStyle(el); return c.boxShadow + c.backgroundColor + c.borderTopLeftRadius; }));
   assert(bg.every((x) => x === bg[0]), "項目に枠、影、面の色が付いている");
-  const single = page.locator(".demo .ki-featured").nth(1);
+  const single = page.locator(".demo .ki-featured__list").nth(2);
   assert((await single.locator("> li").count()) === 1, "1 つだけの見本が 1 つでない");
   const sb = await single.locator("> li").boundingBox(); const sw = await single.boundingBox();
   assert(sb.width > sw.width - 2, "1 つの時に空の右の列ができる");

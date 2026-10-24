@@ -46,21 +46,23 @@ export const layout = [
   },
   {
     slug: "featured-list", name: "FeaturedList", imports: ["FeaturedList", "Jacket"],
-    lead: "大きな 1 つと小さな行で並べる。新着のように、一番新しい物、一番大事な物を大きくして、ほかを小さくする時に使う。同じ大きさで並べたい時は Grid を使う。持つのは配置だけで、題や日付や画像は子で渡す。",
+    lead: "大きな 1 つと小さな行で並べる。新着のように、一番新しい物、一番大事な物を大きくして、ほかを小さくする時に使う。同じ大きさで並べたい時は Grid を使う。持つのは配置だけで、題や日付や画像は子で渡す。Jacket を置く時、Jacket の題字と大きな題に同じ言葉を入れない。Jacket は番組や連載の名、大きな題は回の題。",
     demos: [
-      { fn: "Basic", title: "Basic", text: "1 つ目の子が大きな 1 つ、残りが行。720px 以上の画面では左に大きな 1 つ、右に行を縦に並べる。それより狭ければ大きな 1 つの下に行を積む。日付はサンプル。", block: true },
+      { fn: "Basic", title: "Basic", text: "1 つ目の子が大きな 1 つ、残りが行。入れ物の幅が 720px 以上なら左に大きな 1 つ、右に行を縦に並べる。それより狭ければ大きな 1 つの下に行を積む。Jacket の題字は番組や連載の名で、大きな題は回の題。日付はサンプル。", block: true },
+      { fn: "Narrow", title: "Narrow container", text: "幅 400px の入れ物の中では、画面が広くても縦に積む。切り替えは画面でなく、部品が置かれた入れ物の幅で決まる。", block: true },
       { fn: "Single", title: "One item", text: "項目が 1 つの時は大きな 1 つだけを出す。空の右の列は作らない。", block: true },
     ],
     props: [
       ["children", "ReactNode", "-", "並べる中身。1 つ目が大きな 1 つ、残りが行。1 つにつき <li> を 1 つ描く。0 の時は何も描かない"],
-      ["className、style、aria-*", "ul の属性", "-", "そのまま <ul> に渡る。読み込み中は aria-busy を付ける"],
+      ["className、style、aria-*", "ul の属性", "-", "そのまま内側の <ul> に渡る。読み込み中は aria-busy を付ける"],
     ],
     classes: [
-      [".ki-featured", "本体の <ul>。--ki-rows に行の数(大きな 1 つを除く)を渡す。React は自動で入れる"],
+      [".ki-featured", "外側の入れ物(<div>)。container-type: inline-size で、この幅が 720px 以上なら 2 列。React は自動で包む"],
+      [".ki-featured__list", "本体の <ul>。--ki-rows に行の数(大きな 1 つを除く)を渡す。React は自動で入れる"],
       ["li[data-lead]", "大きな 1 つ。題だけ display-2 の大きさになる"],
       [".ki-featured__media", "画像の面。角丸 0。中に img や Jacket を置く"],
       [".ki-featured__title", "題。中に <a> を置くと、行全体(44px 以上)が押せる所になる(::after)"],
-      [".ki-featured__meta", "題に添える 1 行(日付、種類)。日付は <time> に入れると等幅になる"],
+      [".ki-featured__meta", "題に添える 1 行(日付、種類)。日付は <time> に入れると等幅になる。中の a と button は行全体のリンクの上に出て、押せる"],
     ],
     vars: [
       ["--ki-rows", "行の数。2 列の時の行の数に使う"],
@@ -68,7 +70,8 @@ export const layout = [
       ["--color-line", "行の上の線。区切りはこの線だけ"],
       ["--size-hit", "行の高さの下限(44px)"],
     ],
-    html: `<ul class="ki-featured" style="--ki-rows: 2">
+    html: `<div class="ki-featured">
+<ul class="ki-featured__list" style="--ki-rows: 2">
   <li data-lead>
     <div class="ki-featured__title"><a href="article-a.html">大きな 1 つの題</a></div>
     <p class="ki-featured__meta"><time datetime="2026-10-20">2026-10-20</time><span>記事</span></p>
@@ -80,8 +83,9 @@ export const layout = [
   <li>
     <div class="ki-featured__title"><a href="article-c.html">行の題</a></div>
   </li>
-</ul>`,
-    a11y: ["<ul> と <li> の並びのまま読み上げる。読み上げの順序は子の並び順。CSS で見た目の順序だけを入れ替えない", "押せる所は題のリンクで、行全体(44px 以上)。飛び先の無いリンクは作らない", "区切りは線 1 本で、色だけで伝えない。動きは持たない"],
+</ul>
+</div>`,
+    a11y: ["<ul> と <li> の並びのまま読み上げる。読み上げの順序は子の並び順。CSS で見た目の順序だけを入れ替えない", "押せる所は題のリンクで、行全体(44px 以上)。飛び先の無いリンクは作らない", "区切りは線 1 本で、色だけで伝えない。動きは持たない", "題に添える行の中にリンクやボタンを置いても、行全体のリンクの上に出るので別に押せる。その押せる所も 44px 以上にする"],
   },
   {
     slug: "container", name: "Container", imports: ["Container"],
