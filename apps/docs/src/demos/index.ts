@@ -23,6 +23,7 @@ import * as dDrawer from "./drawer";
 import * as dEmptyState from "./empty-state";
 import * as dField from "./field";
 import * as dGrid from "./grid";
+import * as dFeaturedList from "./featured-list";
 import * as dIconButton from "./icon-button";
 import * as dInput from "./input";
 import * as dLink from "./link";
@@ -82,6 +83,7 @@ export const demos = {
   "empty-state": dEmptyState,
   "field": dField,
   "grid": dGrid,
+  "featured-list": dFeaturedList,
   "icon-button": dIconButton,
   "input": dInput,
   "link": dLink,

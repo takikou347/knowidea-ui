@@ -11,7 +11,7 @@ export const pick = {
   dialog: { fn: "Basic" }, sheet: { fn: "Basic" }, progress: { fn: "Basic" }, skeleton: { fn: "Shapes" }, spinner: { fn: "Basic" }, "empty-state": { fn: "Basic" },
   card: { fn: "Basic", wide: true }, accordion: { fn: "Basic" }, "selection-bar": { fn: "Basic", wide: true }, link: { fn: "Basic" },
   tabs: { fn: "Basic" }, menu: { fn: "Basic" }, breadcrumbs: { fn: "Basic" }, pagination: { fn: "Basic" }, "app-bar": { fn: "Basic", wide: true },
-  drawer: { fn: "Permanent", wide: true }, "bottom-navigation": { fn: "Basic" }, stack: { fn: "Column" }, grid: { fn: "Fixed", wide: true },
+  drawer: { fn: "Permanent", wide: true }, "bottom-navigation": { fn: "Basic" }, stack: { fn: "Column" }, grid: { fn: "Fixed", wide: true }, "featured-list": { fn: "Basic", wide: true },
   container: { fn: "Sizes", wide: true }, divider: { fn: "Basic" }, chart: { fn: "Line", wide: true },
 };
 

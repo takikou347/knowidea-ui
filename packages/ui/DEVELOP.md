@@ -21,7 +21,7 @@ npm に出している。使う側は 4 つ全部を同じコマンドで入れ�
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |
 | Navigation | Link、Tabs、Menu、Breadcrumbs、Pagination、AppBar、Drawer、BottomNavigation |
-| Layout | Stack、Grid、Container、Divider |
+| Layout | Stack、Grid、FeaturedList、Container、Divider |
 | Charts | Chart(棒グラフと折れ線グラフ。追加の依存なしで、自前の SVG で描画する) |
 | Theme | ThemeProvider、createTheme |
 
