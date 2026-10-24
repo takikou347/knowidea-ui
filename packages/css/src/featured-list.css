@@ -1,12 +1,13 @@
-/* 大きな 1 つと小さな行で並べる配置(FeaturedList)。素の HTML は <ul class="ki-featured" style="--ki-rows: 行の数"> の中に <li data-lead>(大きな 1 つ)と <li>(行)。
+/* 大きな 1 つと小さな行で並べる配置(FeaturedList)。素の HTML は <div class="ki-featured"><ul class="ki-featured__list" style="--ki-rows: 行の数"> の中に <li data-lead>(大きな 1 つ)と <li>(行)。
    部品が持つのは配置だけ。中身は子で渡す。題は .ki-featured__title(中にリンク)、添える 1 行は .ki-featured__meta、画像の面は .ki-featured__media。
-   画面の幅が 720 以上なら 2 列(左に大きな 1 つが 3/5、右に行を縦に)。それより狭ければ大きな 1 つの下に行。区切りは行の上の線だけ。カードにしない。 */
-.ki-featured {
+   外側の入れ物(.ki-featured)の幅が 720 以上なら 2 列(左に大きな 1 つが 3/5、右に行を縦に)。それより狭ければ大きな 1 つの下に行。区切りは行の上の線だけ。カードにしない。 */
+.ki-featured { container: ki-featured / inline-size; width: 100%; box-sizing: border-box; }
+.ki-featured__list {
   display: grid; grid-template-columns: minmax(0, 1fr);
   margin: 0; padding: 0; list-style: none; color: var(--color-text);
 }
-.ki-featured > li { position: relative; min-width: 0; min-height: var(--size-hit); padding-block: var(--space-2); border-top: 1px solid var(--color-line); }
-.ki-featured > li[data-lead] { padding-block: 0 var(--space-4); border-top: 0; }
+.ki-featured__list > li { position: relative; min-width: 0; min-height: var(--size-hit); padding-block: var(--space-2); border-top: 1px solid var(--color-line); }
+.ki-featured__list > li[data-lead] { padding-block: 0 var(--space-4); border-top: 0; }
 .ki-featured__media { display: block; margin: 0 0 var(--space-3); border-radius: 0; overflow: hidden; }
 .ki-featured__media :is(img, picture, video) { display: block; width: 100%; height: auto; border-radius: 0; }
 .ki-featured__title {
@@ -20,7 +21,7 @@
   .ki-featured__title a:hover { text-decoration: underline; text-underline-offset: 2px; }
 }
 /* display を使うのは大きな 1 つの題だけ(1 画面に 1〜2 か所) */
-.ki-featured > li[data-lead] .ki-featured__title {
+.ki-featured__list > li[data-lead] .ki-featured__title {
   font-family: var(--font-display); font-weight: var(--font-weight-display);
   font-size: var(--font-size-display-2); line-height: var(--font-line-height-display-2);
   letter-spacing: -0.01em; font-feature-settings: "palt"; text-wrap: balance;
@@ -29,15 +30,17 @@
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); margin: 0;
   font-size: var(--font-size-2); line-height: var(--font-line-height-2); color: var(--color-text-muted);
 }
-.ki-featured > li[data-lead] .ki-featured__meta { margin-top: var(--space-2); }
+.ki-featured__list > li[data-lead] .ki-featured__meta { margin-top: var(--space-2); }
+/* メタの中のリンクとボタンは、題の ::after(行全体)の上に出して押せるままにする(List の .ki-list__side と同じ) */
+.ki-featured__meta :is(a, button) { position: relative; z-index: 1; }
 .ki-featured__meta time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-/* 項目が 2 つ以上で、画面の幅が 720 以上: 左に大きな 1 つ、右に行。行の数(--ki-rows)の分の行と、余りを受ける 1fr の行を引く */
-@media (min-width: 720px) {
-  .ki-featured:has(> li:nth-child(2)) {
+/* 項目が 2 つ以上で、入れ物の幅が 720 以上: 左に大きな 1 つ、右に行。行の数(--ki-rows)の分の行と、余りを受ける 1fr の行を引く */
+@container ki-featured (min-width: 720px) {
+  .ki-featured__list:has(> li:nth-child(2)) {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); column-gap: var(--space-6);
     grid-template-rows: repeat(var(--ki-rows, 1), auto) 1fr;
   }
-  .ki-featured:has(> li:nth-child(2)) > li[data-lead] { grid-column: 1; grid-row: 1 / -1; padding-bottom: 0; }
-  .ki-featured:has(> li:nth-child(2)) > li:not([data-lead]) { grid-column: 2; }
-  .ki-featured:has(> li:nth-child(2)) > li:nth-child(2) { border-top: 0; padding-top: 0; }
+  .ki-featured__list:has(> li:nth-child(2)) > li[data-lead] { grid-column: 1; grid-row: 1 / -1; padding-bottom: 0; }
+  .ki-featured__list:has(> li:nth-child(2)) > li:not([data-lead]) { grid-column: 2; }
+  .ki-featured__list:has(> li:nth-child(2)) > li:nth-child(2) { border-top: 0; padding-top: 0; }
 }
