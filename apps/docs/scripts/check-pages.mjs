@@ -477,7 +477,7 @@ await kb("Jacket(角丸 0、題字は見出しの書体で読めて、面から�
   assert(await page.evaluate(() => document.fonts.check('800 16px "KI Murecho"', "夜更けの台所ラジオ")), "見出しの書体が読めていない");
 }, { width: 390, height: 844 });
 
-await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大きな 1 つの題だけ、題のリンクは 44px、横にはみ出さない)", "components/featured-list.html", async (page) => {
+await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大きな 1 つの題だけ、行は 44px 以上で題のリンクが行全体を押せる、横にはみ出さない)", "components/featured-list.html", async (page) => {
   await page.evaluate(() => document.fonts.ready);
   const list = page.locator(".demo .ki-featured").first();
   const lead = list.locator("> li[data-lead]");
@@ -489,8 +489,11 @@ await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大�
   const fam = (sel) => list.locator(sel).first().evaluate((el) => getComputedStyle(el).fontFamily);
   assert(/KI Murecho/.test(await fam("> li[data-lead] .ki-featured__title")), "大きな 1 つの題が見出しの書体でない");
   assert(!/KI Murecho/.test(await fam("> li:not([data-lead]) .ki-featured__title")), "行の題が見出しの書体になっている");
-  const links = await list.locator(".ki-featured__title a").evaluateAll((els) => els.map((el) => el.getBoundingClientRect().height));
-  assert(links.length === 4 && links.every((h) => h >= 44), `題のリンクが 44px に届かない(${links.map(Math.round)})`);
+  const hits = await list.locator("> li").evaluateAll((els) => els.map((li) => { const a = li.querySelector(".ki-featured__title a"); const l = li.getBoundingClientRect(); const r = a.getBoundingClientRect(); const af = getComputedStyle(a, "::after"); return { h: l.height, w: l.width, ph: parseFloat(af.height), pw: parseFloat(af.width), a: r.height }; }));
+  assert(hits.length === 4 && hits.every((x) => x.h >= 44), `行の高さが 44px に届かない(${hits.map((x) => Math.round(x.h))})`);
+  assert(hits.every((x) => Math.abs(x.ph - x.h) < 2 && Math.abs(x.pw - x.w) < 2), "題のリンクが行全体を押せる所にしていない");
+  const gap = await list.locator("> li:not([data-lead])").first().evaluate((li) => { const t = li.querySelector(".ki-featured__title a").getBoundingClientRect(); const m = li.querySelector(".ki-featured__meta").getBoundingClientRect(); return m.top - t.bottom; });
+  assert(gap < 12, `題と日付が離れている(${Math.round(gap)}px)`);
   const bg = await list.locator("> li").evaluateAll((els) => els.map((el) => { const c = getComputedStyle(el); return c.boxShadow + c.backgroundColor + c.borderTopLeftRadius; }));
   assert(bg.every((x) => x === bg[0]), "項目に枠、影、面の色が付いている");
   const single = page.locator(".demo .ki-featured").nth(1);
