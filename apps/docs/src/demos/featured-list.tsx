@@ -2,7 +2,7 @@ import { EmptyState, FeaturedList, Icon, Jacket, Skeleton } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const sample = [
-  { title: "春の献立を、冷蔵庫にある物から決める", date: "2026-10-20", kind: "記事", jacket: "春の献立" },
+  { title: "春の献立を、冷蔵庫にある物から決める", date: "2026-10-20", kind: "記事", jacket: "台所の手帖" },
   { title: "朝の 5 分で、机の上を空にする", date: "2026-10-17", kind: "記事" },
   { title: "雨の日の本棚を整える手順", date: "2026-10-12", kind: "記事" },
   { title: "町の音を録る、3 つの置き方", date: "2026-10-05", kind: "音声" },
@@ -24,6 +24,10 @@ function Entries({ rows = sample }: { rows?: typeof sample }) {
 
 export function Basic() {
   return <div style={{ width: "100%" }}><Entries /></div>;
+}
+
+export function Narrow() {
+  return <div style={{ width: "min(100%, 400px)" }}><Entries /></div>;
 }
 
 export function Single() {
