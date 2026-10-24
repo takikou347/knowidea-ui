@@ -38,6 +38,7 @@ export { Status, statusKinds, type StatusProps, type StatusKind, type StatusTone
 export { Stat, Sparkline, type StatProps, type StatDelta, type SparklineProps } from "./Stat.js";
 export { Chart, type ChartProps, type ChartPoint, type ChartBreakdown } from "./Chart.js";
 export { Stack, Grid, Container, type StackProps, type GridProps, type ContainerProps, type Space } from "./Layout.js";
+export { FeaturedList, type FeaturedListProps } from "./FeaturedList.js";
 export { Card, type CardProps, type CardMeta } from "./Card.js";
 export { Accordion, type AccordionProps, type AccordionItem } from "./Accordion.js";
 export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbItem } from "./Breadcrumbs.js";

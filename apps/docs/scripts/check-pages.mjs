@@ -477,6 +477,33 @@ await kb("Jacket(角丸 0、題字は見出しの書体で読めて、面から�
   assert(await page.evaluate(() => document.fonts.check('800 16px "KI Murecho"', "夜更けの台所ラジオ")), "見出しの書体が読めていない");
 }, { width: 390, height: 844 });
 
+await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大きな 1 つの題だけ、題のリンクは 44px、横にはみ出さない)", "components/featured-list.html", async (page) => {
+  await page.evaluate(() => document.fonts.ready);
+  const list = page.locator(".demo .ki-featured").first();
+  const lead = list.locator("> li[data-lead]");
+  const rows = list.locator("> li:not([data-lead])");
+  assert((await rows.count()) === 3, "行が 3 つでない");
+  const a = await lead.boundingBox(); const b = await rows.first().boundingBox();
+  assert(b.x > a.x + a.width - 1 && b.y <= a.y + 4, "720px 以上で、右に行が並ばない");
+  assert(a.width > b.width, "大きな 1 つが行より広くない");
+  const fam = (sel) => list.locator(sel).first().evaluate((el) => getComputedStyle(el).fontFamily);
+  assert(/KI Murecho/.test(await fam("> li[data-lead] .ki-featured__title")), "大きな 1 つの題が見出しの書体でない");
+  assert(!/KI Murecho/.test(await fam("> li:not([data-lead]) .ki-featured__title")), "行の題が見出しの書体になっている");
+  const links = await list.locator(".ki-featured__title a").evaluateAll((els) => els.map((el) => el.getBoundingClientRect().height));
+  assert(links.length === 4 && links.every((h) => h >= 44), `題のリンクが 44px に届かない(${links.map(Math.round)})`);
+  const bg = await list.locator("> li").evaluateAll((els) => els.map((el) => { const c = getComputedStyle(el); return c.boxShadow + c.backgroundColor + c.borderTopLeftRadius; }));
+  assert(bg.every((x) => x === bg[0]), "項目に枠、影、面の色が付いている");
+  const single = page.locator(".demo .ki-featured").nth(1);
+  assert((await single.locator("> li").count()) === 1, "1 つだけの見本が 1 つでない");
+  const sb = await single.locator("> li").boundingBox(); const sw = await single.boundingBox();
+  assert(sb.width > sw.width - 2, "1 つの時に空の右の列ができる");
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "横にはみ出す");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const a2 = await lead.boundingBox(); const b2 = await rows.first().boundingBox();
+  assert(Math.abs(a2.x - b2.x) < 2 && b2.y >= a2.y + a2.height - 1, "390px で縦に積まれない");
+  assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "390px で横にはみ出す");
+}, { width: 820, height: 1180 });
+
 await kb("Display(見出しの書体、390px で 40px 以上、ページの題は display-2)", "components/display.html", async (page) => {
   await page.evaluate(() => document.fonts.ready);
   const d = await page.locator(".demo .ki-display").first().evaluate((el) => ({ size: parseFloat(getComputedStyle(el).fontSize), family: getComputedStyle(el).fontFamily, weight: getComputedStyle(el).fontWeight }));
@@ -710,9 +737,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 57, "カードが 57 枚でない");
+  assert((await page.locator(".cp").count()) === 58, "カードが 58 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 57, "見本が 57 個でない");
+  assert((await page.locator(".cp-fit").count()) === 58, "見本が 58 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
