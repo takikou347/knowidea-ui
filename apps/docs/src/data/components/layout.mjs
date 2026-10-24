@@ -59,14 +59,14 @@ export const layout = [
       [".ki-featured", "本体の <ul>。--ki-rows に行の数(大きな 1 つを除く)を渡す。React は自動で入れる"],
       ["li[data-lead]", "大きな 1 つ。題だけ display-2 の大きさになる"],
       [".ki-featured__media", "画像の面。角丸 0。中に img や Jacket を置く"],
-      [".ki-featured__title", "題。中に <a> を置くと、高さ 44px 以上の押せる所になる"],
+      [".ki-featured__title", "題。中に <a> を置くと、行全体(44px 以上)が押せる所になる(::after)"],
       [".ki-featured__meta", "題に添える 1 行(日付、種類)。日付は <time> に入れると等幅になる"],
     ],
     vars: [
       ["--ki-rows", "行の数。2 列の時の行の数に使う"],
       ["--font-size-display-2、--font-display", "大きな 1 つの題"],
       ["--color-line", "行の上の線。区切りはこの線だけ"],
-      ["--size-hit", "題のリンクの高さ(44px)"],
+      ["--size-hit", "行の高さの下限(44px)"],
     ],
     html: `<ul class="ki-featured" style="--ki-rows: 2">
   <li data-lead>
@@ -81,7 +81,7 @@ export const layout = [
     <div class="ki-featured__title"><a href="article-c.html">行の題</a></div>
   </li>
 </ul>`,
-    a11y: ["<ul> と <li> の並びのまま読み上げる。読み上げの順序は子の並び順。CSS で見た目の順序だけを入れ替えない", "押せる所は題のリンクで、高さ 44px 以上。飛び先の無いリンクは作らない", "区切りは線 1 本で、色だけで伝えない。動きは持たない"],
+    a11y: ["<ul> と <li> の並びのまま読み上げる。読み上げの順序は子の並び順。CSS で見た目の順序だけを入れ替えない", "押せる所は題のリンクで、行全体(44px 以上)。飛び先の無いリンクは作らない", "区切りは線 1 本で、色だけで伝えない。動きは持たない"],
   },
   {
     slug: "container", name: "Container", imports: ["Container"],
