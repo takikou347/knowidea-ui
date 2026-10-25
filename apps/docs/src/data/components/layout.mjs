@@ -49,7 +49,7 @@ export const layout = [
     lead: "大きな 1 つと小さな行で並べる。新着のように、一番新しい物、一番大事な物を大きくして、ほかを小さくする時に使う。同じ大きさで並べたい時は Grid を使う。持つのは配置だけで、題や日付や画像は子で渡す。Jacket を置く時、Jacket の題字と大きな題に同じ言葉を入れない。Jacket は番組や連載の名、大きな題は回の題。",
     demos: [
       { fn: "Basic", title: "Basic", text: "1 つ目の子が大きな 1 つ、残りが行。入れ物の幅が 720px 以上なら左に大きな 1 つ、右に行を縦に並べる。それより狭ければ大きな 1 つの下に行を積む。Jacket の題字は番組や連載の名で、大きな題は回の題。日付はサンプル。", block: true },
-      { fn: "Narrow", title: "Narrow container", text: "幅 400px の入れ物の中では、画面が広くても縦に積む。切り替えは画面でなく、部品が置かれた入れ物の幅で決まる。", block: true },
+      { fn: "Narrow", title: "Narrow container", text: "style で幅を 400px に絞ると、画面が広くても縦に積む。切り替えは画面でなく、外側の入れ物(.ki-featured)の幅で決まる。", block: true },
       { fn: "Single", title: "One item", text: "項目が 1 つの時は大きな 1 つだけを出す。空の右の列は作らない。", block: true },
     ],
     props: [
