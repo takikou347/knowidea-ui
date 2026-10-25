@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.10.1",
+    date: "2026-10-25",
+    summary: "FeaturedList の meta のリンクの押せる所を、題と次の行にかぶらない形にした。",
+    rows: [
+      ["knowidea-css", ".ki-featured__meta の負の margin-block をやめた。meta に a か button がある時だけ、その 1 行を 44px の高さにし、字は上に寄せる。押せる所は行の中に収まる。リンクの無い meta の高さは変わらない。"],
+      ["knowidea-ui", "変更なし(版をそろえた)。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "FeaturedList の Basic の行の meta にもリンクを置いた。a11y に、meta にリンクを置くと行が少し高くなることを書いた。"],
+    ],
+  },
+  {
     version: "0.10.0",
     date: "2026-10-25",
     summary: "大きな 1 つと小さな行で並べる FeaturedList を足した。",
