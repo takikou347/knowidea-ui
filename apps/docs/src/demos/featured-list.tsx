@@ -2,20 +2,20 @@ import { EmptyState, FeaturedList, Icon, Jacket, Skeleton } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const sample = [
-  { title: "春の献立を、冷蔵庫にある物から決める", date: "2026-10-20", kind: "記事", jacket: "台所の手帖" },
-  { title: "朝の 5 分で、机の上を空にする", date: "2026-10-17", kind: "記事" },
+  { title: "春の献立を、冷蔵庫にある物から決める", date: "2026-10-20", kind: "記事", jacket: "台所の手帖", series: "台所の手帖" },
+  { title: "朝の 5 分で、机の上を空にする", date: "2026-10-17", kind: "記事", series: "台所の手帖" },
   { title: "雨の日の本棚を整える手順", date: "2026-10-12", kind: "記事" },
   { title: "町の音を録る、3 つの置き方", date: "2026-10-05", kind: "音声" },
 ];
 
-function Entries({ rows = sample, style }: { rows?: typeof sample; style?: React.CSSProperties }) {
+function Entries({ rows = sample, style }: { rows?: { title: string; date: string; kind: string; jacket?: string; series?: string }[]; style?: React.CSSProperties }) {
   return (
     <FeaturedList style={style}>
       {rows.map((r, i) => (
         <div key={r.title}>
           {i === 0 && r.jacket ? <div className="ki-featured__media"><Jacket title={r.jacket} ratio="landscape" decorative /></div> : null}
           <div className="ki-featured__title"><a href="#featured-list">{r.title}</a></div>
-          <p className="ki-featured__meta"><time dateTime={r.date}>{r.date}</time><span>{r.kind}</span>{i === 0 && r.jacket ? <a href="#featured-list">{r.jacket}</a> : null}</p>
+          <p className="ki-featured__meta"><time dateTime={r.date}>{r.date}</time><span>{r.kind}</span>{r.series ? <a href="#featured-list">{r.series}</a> : null}</p>
         </div>
       ))}
     </FeaturedList>
