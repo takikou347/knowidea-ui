@@ -54,7 +54,8 @@ export const layout = [
     ],
     props: [
       ["children", "ReactNode", "-", "並べる中身。1 つ目が大きな 1 つ、残りが行。1 つにつき <li> を 1 つ描く。0 の時は何も描かない"],
-      ["className、style、aria-*", "ul の属性", "-", "そのまま内側の <ul> に渡る。読み込み中は aria-busy を付ける"],
+      ["className、style", "div の属性", "-", "外側の入れ物(.ki-featured)に渡る。幅を絞るのにも使える"],
+      ["aria-*、id ほか", "ul の属性", "-", "内側の <ul> に渡る。読み込み中は aria-busy を付ける"],
     ],
     classes: [
       [".ki-featured", "外側の入れ物(<div>)。container-type: inline-size で、この幅が 720px 以上なら 2 列。React は自動で包む"],

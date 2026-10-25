@@ -495,6 +495,7 @@ await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大�
   const narrow = page.locator(".demo .ki-featured__list").nth(1);
   const na = await narrow.locator("> li[data-lead]").boundingBox(); const nb = await narrow.locator("> li:not([data-lead])").first().boundingBox();
   assert((await narrow.boundingBox()).width <= 401, "狭い入れ物の幅が 400 でない");
+  assert((await page.locator(".demo .ki-featured").nth(1).boundingBox()).width <= 401, "style が外側の .ki-featured に渡っていない(幅が 400 以下でない)");
   assert(Math.abs(na.x - nb.x) < 2 && nb.y >= na.y + na.height - 1, "820px の画面でも、幅 400 の入れ物の中は縦に積まれない");
   const gap = await list.locator("> li:not([data-lead])").first().evaluate((li) => { const t = li.querySelector(".ki-featured__title a").getBoundingClientRect(); const m = li.querySelector(".ki-featured__meta").getBoundingClientRect(); return m.top - t.bottom; });
   assert(gap < 12, `題と日付が離れている(${Math.round(gap)}px)`);
@@ -505,7 +506,14 @@ await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大�
   const sb = await single.locator("> li").boundingBox(); const sw = await single.boundingBox();
   assert(sb.width > sw.width - 2, "1 つの時に空の右の列ができる");
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "横にはみ出す");
+  const hitAt = () => list.evaluate((ul) => { const q = (s) => ul.querySelector(s); const mid = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }; const ma = q("li[data-lead] .ki-featured__meta a"); const t = q("li[data-lead] .ki-featured__meta time"); ma.scrollIntoView({ block: "center" }); const [ax, ay] = mid(ma); const [tx, ty] = mid(t); return { a: document.elementFromPoint(ax, ay) === ma, time: document.elementFromPoint(tx, ty) === q("li[data-lead] .ki-featured__title a") }; });
+  const h820 = await hitAt();
+  assert(h820.a, "820px で meta の a の真ん中を押しても、その a が返らない");
+  assert(h820.time, "820px で time の真ん中で、題のリンクが返らない");
   await page.setViewportSize({ width: 390, height: 844 });
+  const h390 = await hitAt();
+  assert(h390.a, "390px で meta の a の真ん中を押しても、その a が返らない");
+  assert(h390.time, "390px で time の真ん中で、題のリンクが返らない");
   const a2 = await lead.boundingBox(); const b2 = await rows.first().boundingBox();
   assert(Math.abs(a2.x - b2.x) < 2 && b2.y >= a2.y + a2.height - 1, "390px で縦に積まれない");
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "390px で横にはみ出す");
