@@ -507,10 +507,14 @@ await kb("FeaturedList(820px は 2 列で左が大きな 1 つ、display は大�
   assert(sb.width > sw.width - 2, "1 つの時に空の右の列ができる");
   assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "横にはみ出す");
   const hitAt = () => list.evaluate((ul) => { const q = (s) => ul.querySelector(s); const mid = (el) => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }; const ma = q("li[data-lead] .ki-featured__meta a"); const t = q("li[data-lead] .ki-featured__meta time"); ma.scrollIntoView({ block: "center" }); const [ax, ay] = mid(ma); const [tx, ty] = mid(t); return { a: document.elementFromPoint(ax, ay) === ma, time: document.elementFromPoint(tx, ty) === q("li[data-lead] .ki-featured__title a") }; });
+  const inside = () => list.evaluate((ul) => [...ul.querySelectorAll(":scope > li")].flatMap((li) => [...li.querySelectorAll(".ki-featured__meta a, .ki-featured__meta button")].map((m) => { const l = li.getBoundingClientRect(); const r = m.getBoundingClientRect(); const t = li.querySelector(".ki-featured__title a").getBoundingClientRect(); return { top: r.top - l.top, bottom: l.bottom - r.bottom, overlap: r.top < t.bottom - 0.5 && r.bottom > t.top + 0.5 && r.left < t.right - 0.5 && r.right > t.left + 0.5, h: r.height }; })));
+  const boxes = async (w) => { const v = await inside(); assert(v.length >= 2, `${w}px で meta の a が 2 つ未満(大きな 1 つと行に置く)`); for (const b of v) { assert(b.top >= -0.5 && b.bottom >= -0.5, `${w}px で meta の a の箱が自分の li からはみ出す(上 ${b.top}、下 ${b.bottom})`); assert(!b.overlap, `${w}px で meta の a の箱が題の a の箱と重なる`); assert(b.h >= 43.5, `${w}px で meta の a が 44px 未満(${b.h})`); } };
+  await boxes(820);
   const h820 = await hitAt();
   assert(h820.a, "820px で meta の a の真ん中を押しても、その a が返らない");
   assert(h820.time, "820px で time の真ん中で、題のリンクが返らない");
   await page.setViewportSize({ width: 390, height: 844 });
+  await boxes(390);
   const h390 = await hitAt();
   assert(h390.a, "390px で meta の a の真ん中を押しても、その a が返らない");
   assert(h390.time, "390px で time の真ん中で、題のリンクが返らない");
