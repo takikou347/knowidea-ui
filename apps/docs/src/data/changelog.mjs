@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.10.0",
+    date: "2026-10-25",
+    summary: "大きな 1 つと小さな行で並べる FeaturedList を足した。",
+    rows: [
+      ["knowidea-ui", "FeaturedList を足した。1 つ目の子が大きな 1 つ、残りが行。入れ物の幅が 720px 以上なら 2 列、狭ければ縦に積む。className と style は外側の入れ物(.ki-featured)に、aria-* ほかは内側の ul に渡る。"],
+      ["knowidea-css", ".ki-featured(入れ物)、.ki-featured__list、__media、__title、__meta を足した。題のリンクが行全体を押せる所になり、meta の中の a と button はその上で押せる。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "FeaturedList のページ(Basic、Narrow container、One item)。"],
+    ],
+  },
+  {
     version: "0.9.0",
     date: "2026-10-19",
     summary: "見出しの書体と大きな字の段を足し、題字のジャケット Jacket を足した。部品は 56 個。",
