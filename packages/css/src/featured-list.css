@@ -33,9 +33,10 @@
 .ki-featured__list > li[data-lead] .ki-featured__meta { margin-top: var(--space-2); }
 /* メタの中のリンクとボタンは、題の ::after(行全体)の上に出して押せるままにする(List の .ki-list__side と同じ) */
 .ki-featured__meta :is(a, button) {
-  position: relative; z-index: 1; display: inline-flex; align-items: center;
-  min-height: var(--size-hit); margin-block: calc((var(--font-line-height-2) * 1em - var(--size-hit)) / 2); /* 押せる所は 44px、行の高さは増やさない */
+  position: relative; z-index: 1; display: inline-flex; align-items: flex-start;
+  min-height: var(--size-hit); /* 押せる所は 44px。meta の中に収め、題と次の行にかぶらない */
 }
+.ki-featured__meta:has(:is(a, button)) { align-items: flex-start; }
 .ki-featured__meta time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 /* 項目が 2 つ以上で、入れ物の幅が 720 以上: 左に大きな 1 つ、右に行。行の数(--ki-rows)の分の行と、余りを受ける 1fr の行を引く */
 @container ki-featured (min-width: 720px) {
