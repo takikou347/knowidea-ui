@@ -6,14 +6,14 @@ export interface FeaturedListProps extends ComponentPropsWithoutRef<"ul"> {
   children?: React.ReactNode;
 }
 
-/** 大きな 1 つと小さな行で並べる。配置だけを持つ。入れ物の幅が 720 以上なら 2 列、狭ければ縦に積む。0 の時は何も描かない。 */
+/** 大きな 1 つと小さな行で並べる。配置だけを持つ。className と style は外側の div.ki-featured、aria-* などは ul に渡る。入れ物の幅が 720 以上なら 2 列、狭ければ縦に積む。0 の時は何も描かない。 */
 export function FeaturedList({ children, className, style, ...rest }: FeaturedListProps) {
   const items = Children.toArray(children);
   if (items.length === 0) return null;
-  const vars = { "--ki-rows": Math.max(items.length - 1, 1), ...style } as CSSProperties;
+  const vars = { "--ki-rows": Math.max(items.length - 1, 1) } as CSSProperties;
   return (
-    <div className="ki-featured">
-      <ul className={cx("ki-featured__list", className)} style={vars} {...rest}>
+    <div className={cx("ki-featured", className)} style={style}>
+      <ul className="ki-featured__list" style={vars} {...rest}>
         {items.map((item, i) => <li key={i} data-lead={i === 0 ? "" : undefined}>{item}</li>)}
       </ul>
     </div>
