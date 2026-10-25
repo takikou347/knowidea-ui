@@ -8,14 +8,14 @@ const sample = [
   { title: "町の音を録る、3 つの置き方", date: "2026-10-05", kind: "音声" },
 ];
 
-function Entries({ rows = sample }: { rows?: typeof sample }) {
+function Entries({ rows = sample, style }: { rows?: typeof sample; style?: React.CSSProperties }) {
   return (
-    <FeaturedList>
+    <FeaturedList style={style}>
       {rows.map((r, i) => (
         <div key={r.title}>
           {i === 0 && r.jacket ? <div className="ki-featured__media"><Jacket title={r.jacket} ratio="landscape" decorative /></div> : null}
           <div className="ki-featured__title"><a href="#featured-list">{r.title}</a></div>
-          <p className="ki-featured__meta"><time dateTime={r.date}>{r.date}</time><span>{r.kind}</span></p>
+          <p className="ki-featured__meta"><time dateTime={r.date}>{r.date}</time><span>{r.kind}</span>{i === 0 && r.jacket ? <a href="#featured-list">{r.jacket}</a> : null}</p>
         </div>
       ))}
     </FeaturedList>
@@ -27,7 +27,7 @@ export function Basic() {
 }
 
 export function Narrow() {
-  return <div style={{ width: "min(100%, 400px)" }}><Entries /></div>;
+  return <div style={{ width: "100%" }}><Entries style={{ width: "min(100%, 400px)" }} /></div>;
 }
 
 export function Single() {
