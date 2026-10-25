@@ -1,6 +1,6 @@
 {
   "name": "knowidea-ui",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "KNOW IDEA UI の React の部品(Base UI が土台)",
   "license": "MIT",
   "repository": {
