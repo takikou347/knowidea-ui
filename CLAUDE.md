@@ -10,7 +10,7 @@ KNOW IDEA の画面の部品(公開)。組織の決まりは takikou347/knowidea
 
 ## 版と配り方
 
-- 4 つのパッケージと apps/docs の版はそろえて上げ、changelog に 1 項目足す。main に入ると npm に出る
+- 4 つのパッケージと apps/docs の版はそろえて上げ、changelog に 1 項目足す。版を上げた package.json が main に入ると npm に出る
 - 部品を足したら minor、直しだけなら patch
 
 ## 書き方
