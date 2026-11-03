@@ -2,7 +2,7 @@
 
 特定のアプリに依存しない UI ライブラリ(トークン、アイコン、CSS、React のコンポーネント)。ドキュメントは https://takikou347.github.io/knowidea-ui/ 。
 
-決まりは [DESIGN.md](DESIGN.md)。計画と文書は develop-docs の `company/proposals/20261012-priorities/` と `docs/design/`。
+決まりは [DESIGN.md](DESIGN.md)。直し方は [CLAUDE.md](CLAUDE.md)。
 
 ## 配り方
 
