@@ -26,24 +26,39 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./editor": {
+      "types": "./dist/editor.d.ts",
+      "default": "./dist/editor.js"
+    },
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@base-ui/react": "1.9.0"
+    "@base-ui/react": "1.9.0",
+    "@codemirror/autocomplete": "6.20.4",
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/lang-css": "6.3.1",
+    "@codemirror/lang-javascript": "6.2.5",
+    "@codemirror/lang-json": "6.0.2",
+    "@codemirror/lang-markdown": "6.5.2",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/lint": "6.9.7",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "@lezer/highlight": "1.2.5"
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "knowidea-css": "workspace:^",
     "knowidea-icons": "workspace:^",
-    "knowidea-tokens": "workspace:^"
+    "knowidea-tokens": "workspace:^",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "knowidea-css": "workspace:*",
     "knowidea-icons": "workspace:*",
     "knowidea-tokens": "workspace:*",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "typescript": "5.9.3"

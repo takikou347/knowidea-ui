@@ -58,6 +58,8 @@ export { formatNumber } from "./utils.js";
 export { AppShell, type AppShellProps } from "./AppShell.js";
 export { ListDetail, type ListDetailProps } from "./ListDetail.js";
 export { DiffView, type DiffViewProps } from "./DiffView.js";
+// エディタの本体(CodeEditor)は knowidea-ui/editor から。CodeMirror に依らない所だけ、ここからも出す
+export { editorLanguageOfPath, editorOffset, editorPosition, type EditorLanguage } from "./editorText.js";
 export { parseUnifiedDiff, diffLineKey, pairDiffLines, diffWords, type DiffFile, type DiffHunk, type DiffLine, type DiffRow, type DiffWords } from "./diff.js";
 export { Conversation, type ConversationProps, type ConversationMessage } from "./Conversation.js";
 export { breakpoints, mediaQuery, type Breakpoint } from "./breakpoints.js";

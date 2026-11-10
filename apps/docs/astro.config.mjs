@@ -5,10 +5,12 @@ import react from "@astrojs/react";
 //  - build.format "file": ページは components/button.html の形(ディレクトリ + index.html にしない)
 //  - リンクは Base.astro がページの深さから相対で書く(src/lib/paths.mjs)
 //  - 出力した HTML の /assets/... は scripts/relativize.mjs が相対に直す(`pnpm build` が続けて回す)
+//  - JS が後から読み込む物(エディタの CodeMirror など)の先読みは、読み込む JS の場所からの相対にする(renderBuiltUrl)
 // base は "/" のまま。サブパスは build の後の相対化で吸収する。
 export default defineConfig({
   integrations: [react()],
   devToolbar: { enabled: false },
   trailingSlash: "ignore",
   build: { format: "file", assets: "assets" },
+  vite: { experimental: { renderBuiltUrl: (_file, { hostType }) => (hostType === "js" ? { relative: true } : undefined) } },
 });

@@ -1,6 +1,6 @@
 # knowidea-ui
 
-KNOW IDEA UI の React の部品。56 個。ボタン、入力、表、ダイアログ、トースト、大きな見出しと題字のジャケットなど。ライトとダークの両方に対応し、押せる所はすべて 44px 以上。
+KNOW IDEA UI の React の部品。63 個。ボタン、入力、表、ダイアログ、トースト、大きな見出しと題字のジャケットなど。ライトとダークの両方に対応し、押せる所はすべて 44px 以上。
 
 [ドキュメント](https://takikou347.github.io/knowidea-ui/) / [GitHub](https://github.com/takikou347/knowidea-ui) / MIT
 

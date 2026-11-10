@@ -1,0 +1,65 @@
+/* エディタ(CodeEditor。中身は CodeMirror 6)。色は semantic の変数だけなので、ライトとダークは変数で替わる。
+   CodeMirror の元の見た目より強く当てるため、.ki-editor .cm-editor から書く。色分けは @lezer/highlight の tok- のクラス。
+   指で触る端末では字を 16px にする(iOS が、小さい字の欄に入った時に画面を拡大するため)。 */
+.ki-editor { position: relative; min-width: 0; border: 1px solid var(--color-line-strong); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text); overflow: hidden; }
+.ki-editor:focus-within { outline: 2px solid var(--color-focus); outline-offset: 1px; }
+.ki-editor[data-readonly] { background: var(--color-surface-2); }
+.ki-editor__fallback { margin: 0; padding: var(--space-1) var(--space-3) var(--space-1) calc(var(--space-7) + var(--space-2)); min-height: calc(var(--font-line-height-3) * 6em); overflow: auto; font-family: var(--font-mono); font-size: var(--font-size-2); line-height: var(--font-line-height-3); tab-size: 2; white-space: pre; }
+.ki-editor .cm-editor { font-size: var(--font-size-2); color: var(--color-text); background: transparent; }
+.ki-editor .cm-editor.cm-focused { outline: 0; }
+.ki-editor .cm-editor .cm-scroller { font-family: var(--font-mono); line-height: var(--font-line-height-3); min-height: calc(var(--font-line-height-3) * 6em); overflow: auto; }
+.ki-editor[data-fixed] .cm-editor { height: var(--ki-editor-height); }
+.ki-editor[data-fixed] .ki-editor__fallback { height: var(--ki-editor-height); }
+.ki-editor .cm-editor .cm-content { padding: var(--space-1) 0; caret-color: var(--color-text); }
+.ki-editor .cm-editor .cm-line { padding: 0 var(--space-3) 0 var(--space-1); }
+.ki-editor .cm-editor .cm-gutters { background: var(--color-surface-2); color: var(--color-text-muted); border-right: 1px solid var(--color-line); font-variant-numeric: tabular-nums; }
+.ki-editor .cm-editor .cm-lineNumbers .cm-gutterElement { padding: 0 var(--space-1) 0 var(--space-2); min-width: 3ch; }
+.ki-editor .cm-editor .cm-foldGutter .cm-gutterElement { padding: 0 var(--space-1); cursor: pointer; }
+.ki-editor .cm-editor .cm-activeLine { background: color-mix(in oklab, var(--color-text) 5%, transparent); }
+.ki-editor .cm-editor .cm-activeLineGutter { background: color-mix(in oklab, var(--color-text) 9%, transparent); color: var(--color-text); }
+.ki-editor .cm-editor .cm-cursor, .ki-editor .cm-editor .cm-dropCursor { border-left-color: var(--color-text); }
+.ki-editor .cm-editor .cm-selectionBackground, .ki-editor .cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground { background: color-mix(in oklab, var(--color-primary) 26%, transparent); }
+.ki-editor .cm-editor .cm-content ::selection { background: color-mix(in oklab, var(--color-primary) 26%, transparent); }
+.ki-editor .cm-editor .cm-matchingBracket, .ki-editor .cm-editor.cm-focused .cm-matchingBracket { background: color-mix(in oklab, var(--color-primary) 22%, transparent); outline: 1px solid var(--color-line-strong); }
+.ki-editor .cm-editor .cm-nonmatchingBracket, .ki-editor .cm-editor.cm-focused .cm-nonmatchingBracket { background: var(--color-error-soft); }
+.ki-editor .cm-editor .cm-foldPlaceholder { background: var(--color-surface-2); border: 1px solid var(--color-line); color: var(--color-text-muted); border-radius: var(--radius-1); padding: 0 var(--space-1); }
+/* 色分け。どの色も、面の上で 4.5:1 以上(knowidea-tokens の検査にある組) */
+.ki-editor .tok-keyword, .ki-editor .tok-operatorKeyword, .ki-editor .tok-modifier { color: var(--color-primary); }
+.ki-editor .tok-string, .ki-editor .tok-string2, .ki-editor .tok-inserted { color: var(--color-success); }
+.ki-editor .tok-number, .ki-editor .tok-bool, .ki-editor .tok-atom, .ki-editor .tok-literal { color: var(--color-warn); }
+.ki-editor .tok-typeName, .ki-editor .tok-className, .ki-editor .tok-namespace, .ki-editor .tok-macroName { color: var(--color-info); }
+.ki-editor .tok-propertyName { color: var(--color-info); }
+.ki-editor .tok-comment, .ki-editor .tok-meta { color: var(--color-text-muted); font-style: italic; }
+.ki-editor .tok-invalid, .ki-editor .tok-deleted { color: var(--color-error); }
+.ki-editor .tok-heading { font-weight: var(--font-weight-strong); }
+.ki-editor .tok-strong { font-weight: var(--font-weight-strong); }
+.ki-editor .tok-emphasis { font-style: italic; }
+.ki-editor .tok-link, .ki-editor .tok-url { color: var(--color-primary); text-decoration: underline; }
+.ki-editor .tok-strikethrough { text-decoration: line-through; }
+/* 書き間違いの下線。色だけでなく、合わせると中身が文字で出る */
+.ki-editor .cm-editor .cm-lintRange { background-image: none; text-decoration-line: underline; text-decoration-style: wavy; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.ki-editor .cm-editor .cm-lintRange-error { text-decoration-color: var(--color-error); }
+.ki-editor .cm-editor .cm-lintRange-warning { text-decoration-color: var(--color-warn); }
+.ki-editor .cm-editor .cm-lintRange-info, .ki-editor .cm-editor .cm-lintRange-hint { text-decoration-color: var(--color-info); }
+/* 浮く面(候補、説明、知らせ) */
+.ki-editor .cm-editor .cm-tooltip { border: 1px solid var(--color-line); border-radius: var(--radius-2); background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop); font-family: var(--font-sans); font-size: var(--font-size-2); max-width: min(32rem, calc(100vw - var(--space-5))); overflow: hidden; }
+.ki-editor__hover { padding: var(--space-1) var(--space-2); font-family: var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.ki-editor .cm-editor .cm-tooltip-autocomplete > ul { font-family: var(--font-mono); max-height: 14em; }
+.ki-editor .cm-editor .cm-tooltip-autocomplete > ul > li { padding: var(--space-1) var(--space-2); line-height: var(--font-line-height-2); }
+.ki-editor .cm-editor .cm-tooltip-autocomplete > ul > li[aria-selected] { background: var(--color-primary); color: var(--color-on-primary); }
+.ki-editor .cm-editor .cm-completionDetail { margin-left: var(--space-2); color: var(--color-text-muted); font-style: normal; }
+.ki-editor .cm-editor li[aria-selected] .cm-completionDetail { color: inherit; }
+.ki-editor .cm-editor .cm-completionMatchedText { text-decoration: none; font-weight: var(--font-weight-strong); }
+.ki-editor .cm-editor .cm-completionIcon { opacity: 1; color: var(--color-text-muted); }
+.ki-editor .cm-editor li[aria-selected] .cm-completionIcon { color: inherit; }
+.ki-editor .cm-editor .cm-completionInfo { padding: var(--space-1) var(--space-2); }
+.ki-editor .cm-editor .cm-tooltip-lint { padding: 0; }
+.ki-editor .cm-editor .cm-diagnostic { padding: var(--space-1) var(--space-2); border-left: 4px solid var(--color-info); white-space: pre-wrap; }
+.ki-editor .cm-editor .cm-diagnostic-error { border-left-color: var(--color-error); }
+.ki-editor .cm-editor .cm-diagnostic-warning { border-left-color: var(--color-warn); }
+@media (pointer: coarse) {
+  /* 折り畳みの印は 44px に届かないので、指の端末では出さない(キーでは畳める)。CodeMirror が display に !important を付けているので、ここも付ける */
+  .ki-editor .cm-editor .cm-foldGutter { display: none !important; }
+  .ki-editor .cm-editor, .ki-editor__fallback { font-size: max(16px, var(--font-size-3)); }
+  .ki-editor .cm-editor .cm-tooltip-autocomplete > ul > li { min-height: var(--size-hit); display: flex; align-items: center; }
+}

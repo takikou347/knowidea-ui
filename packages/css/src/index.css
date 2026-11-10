@@ -51,5 +51,6 @@
 @import "./app-shell.css";
 @import "./list-detail.css";
 @import "./diff.css";
+@import "./editor.css";
 @import "./conversation.css";
 @import "./look.css";
