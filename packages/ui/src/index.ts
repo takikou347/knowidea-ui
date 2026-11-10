@@ -55,3 +55,9 @@ export { BottomNavigation, type BottomNavigationProps } from "./BottomNavigation
 export type { NavItem } from "./NavItems.js";
 export { ThemeProvider, createTheme, type ThemeProviderProps, type ThemeOptions, type ThemeWarning } from "./ThemeProvider.js";
 export { formatNumber } from "./utils.js";
+export { AppShell, type AppShellProps } from "./AppShell.js";
+export { ListDetail, type ListDetailProps } from "./ListDetail.js";
+export { DiffView, type DiffViewProps } from "./DiffView.js";
+export { parseUnifiedDiff, diffLineKey, pairDiffLines, diffWords, type DiffFile, type DiffHunk, type DiffLine, type DiffRow, type DiffWords } from "./diff.js";
+export { Conversation, type ConversationProps, type ConversationMessage } from "./Conversation.js";
+export { breakpoints, mediaQuery, type Breakpoint } from "./breakpoints.js";

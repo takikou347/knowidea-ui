@@ -1,0 +1,15 @@
+/* 画面の枠(AppShell)。スマホと iPad(1024px 未満)は下に BottomNavigation、PC(1024px 以上、--breakpoint-desktop)は左に Drawer を出す。
+   --ki-shell-height で最小の高さを変えられる(既定 100dvh)。 */
+.ki-shell {
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto;
+  min-height: var(--ki-shell-height, 100dvh); background: var(--color-bg); color: var(--color-text);
+}
+.ki-shell__side { display: none; }
+.ki-shell__body { display: flex; flex-direction: column; min-width: 0; }
+.ki-shell__main { flex: 1; min-width: 0; }
+.ki-shell__bottom { grid-column: 1; }
+@media (min-width: 1024px) {
+  .ki-shell { grid-template-columns: calc(var(--space-7) * 5) minmax(0, 1fr); grid-template-rows: auto; }
+  .ki-shell__side { display: flex; position: sticky; top: 0; align-self: start; height: var(--ki-shell-height, 100dvh); box-sizing: border-box; }
+  .ki-shell__bottom { display: none; }
+}

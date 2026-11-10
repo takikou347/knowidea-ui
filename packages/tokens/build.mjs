@@ -106,6 +106,7 @@ for (const [k, v] of Object.entries(light)) {
   else if (k === "motion.ease") tw["--ease-standard"] = v;
   else if (k.startsWith("motion.duration.")) tw["--duration-" + k.slice(16)] = v;
   else if (k === "size.hit") tw["--size-hit"] = v;
+  else if (k.startsWith("breakpoint.")) tw["--breakpoint-" + k.slice(11)] = v;
 }
 const theme = `${header}/* tokens.css も読み込む。@theme の値はライト。ダークは tokens.css の変数の上書きで変わる */
 @theme static {

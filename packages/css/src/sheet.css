@@ -38,7 +38,7 @@
 .ki-sheet__body { display: grid; gap: var(--space-3); }
 .ki-sheet__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-2); }
 .ki-sheet__loading { display: grid; }
-@media (max-width: 480px) { .ki-sheet__actions { flex-direction: column-reverse; } .ki-sheet__actions > * { width: 100%; } }
+@media (max-width: 599.98px) { .ki-sheet__actions { flex-direction: column-reverse; } .ki-sheet__actions > * { width: 100%; } }
 
 /* 素の HTML の <dialog>。開く時だけ下から出る(@starting-style)。指で引いて閉じる動きは無い */
 dialog.ki-sheet { position: fixed; inset: auto 0 0; height: auto; }

@@ -1,0 +1,14 @@
+/* 一覧と詳細(ListDetail)。PC(1024px 以上)と iPad の横(幅も高さも 600px 以上の横長)は 2 列。スマホ(横向きも)と iPad の縦は 1 列で、data-show で片方を出す。 */
+.ki-listdetail { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); min-width: 0; }
+.ki-listdetail__list, .ki-listdetail__detail { min-width: 0; }
+.ki-listdetail[data-show="list"] > .ki-listdetail__detail { display: none; }
+.ki-listdetail[data-show="detail"] > .ki-listdetail__list { display: none; }
+.ki-listdetail__back { margin: 0 0 var(--space-2) calc(var(--space-3) * -1); }
+.ki-listdetail__empty { display: grid; min-height: calc(var(--space-7) * 4); }
+.ki-listdetail__empty:empty { display: none; }
+@media (min-width: 1024px), (min-width: 600px) and (min-height: 600px) and (orientation: landscape) {
+  .ki-listdetail { grid-template-columns: minmax(calc(var(--space-7) * 6), 2fr) minmax(0, 3fr); gap: var(--space-5); align-items: start; }
+  .ki-listdetail[data-show] > .ki-listdetail__list, .ki-listdetail[data-show] > .ki-listdetail__detail { display: block; }
+  .ki-listdetail__back { display: none; }
+  .ki-listdetail__empty:empty { display: grid; }
+}

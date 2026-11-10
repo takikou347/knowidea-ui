@@ -267,5 +267,23 @@
       "$type": "dimension",
       "$description": "押せる所の最小。WCAG AA は 24px、会社は 44px"
     }
+  },
+  "breakpoint": {
+    "tablet": {
+      "$value": {
+        "value": 600,
+        "unit": "px"
+      },
+      "$type": "dimension",
+      "$description": "幅の区切り。これ未満がスマホ、以上が iPad。メディアクエリには変数が使えないので、CSS では同じ値を直に書く(scripts/check-breakpoints.mjs が確かめる)"
+    },
+    "desktop": {
+      "$value": {
+        "value": 1024,
+        "unit": "px"
+      },
+      "$type": "dimension",
+      "$description": "幅の区切り。これ以上が PC と iPad の横"
+    }
   }
 }
