@@ -44,7 +44,7 @@ jobs:
           cache: pnpm
           registry-url: https://registry.npmjs.org
       - run: pnpm install --frozen-lockfile
-      # build して tarball を作り、workspace: が残っていないことを確かめる。test:consumer は Chromium が要るので、出す前に手元で流す
+      # build して tarball を作り、workspace: が残っていないことを確かめる。test:consumer は PR ごとに check-pages.yml が流す
       - run: pnpm release:pack
       - run: pnpm check
       - name: Publish
