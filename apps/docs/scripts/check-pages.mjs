@@ -756,9 +756,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 58, "カードが 58 枚でない");
+  assert((await page.locator(".cp").count()) === 62, "カードが 62 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 58, "見本が 58 個でない");
+  assert((await page.locator(".cp-fit").count()) === 62, "見本が 62 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
@@ -1008,6 +1008,110 @@ await kb("見本の画面(ダッシュボード: 表で選んでアーカイブ�
   assert((await page.getByRole("checkbox", { name: "項目 A を選択" }).count()) === 0, "アーカイブしても行が消えない");
   await page.getByRole("button", { name: "元に戻す" }).click();
   assert((await page.getByRole("checkbox", { name: "項目 A を選択" }).count()) === 1, "元に戻しても行が戻らない");
+});
+
+// DiffView。デモ Basic(auto)、Comment(auto で一言)、Collapsed
+const diffLayout = (page) => page.locator("#demo-basic ~ astro-island .demo .ki-diff").first().getAttribute("data-layout");
+await kb("DiffView(PC の幅は左右、行の中の印、ファイルを閉じる)", "components/diff-view.html", async (page) => {
+  assert((await diffLayout(page)) === "split", "1280px で左右に並ばない");
+  const basic = page.locator("#demo-basic ~ astro-island .demo .ki-diff").first();
+  const pair = basic.locator(".ki-diff__pair").nth(1);
+  const l = await pair.locator('[data-side="left"]').boundingBox();
+  const r = await pair.locator('[data-side="right"]').boundingBox();
+  assert(l && r && r.x >= l.x + l.width - 1 && Math.abs(l.y - r.y) < 1, "前と後が左右に並んでいない");
+  assert((await pair.locator('[data-side="left"] .ki-diff__sign').textContent()) === "−", "消した行に − の印が無い");
+  assert((await pair.locator('[data-side="right"] .ki-diff__word').textContent()) === "n", "行の中で変わった所の印が違う");
+  // 左右の形でも、対になった消した行に一言を付けられる
+  const comment = page.locator("#demo-comment ~ astro-island .demo").first();
+  assert((await comment.locator(".ki-diff").getAttribute("data-layout")) === "split", "一言のデモが 1280px で左右に並ばない");
+  // 折り返した行でも、番号は中身の 1 行目にそろう
+  const gap = await comment.getByRole("button", { name: "src/total.ts の消した 3 行目に一言を付ける" }).evaluate((el) => {
+    const top = (node) => { const r = document.createRange(); r.selectNodeContents(node); return r.getClientRects()[0].top; };
+    return Math.abs(top(el) - top(el.parentElement.querySelector(".ki-diff__code")));
+  });
+  assert(gap <= 2, `左右の形で、番号が中身の 1 行目から ${gap}px ずれている`);
+  await comment.getByRole("button", { name: "src/total.ts の消した 3 行目に一言を付ける" }).click();
+  assert((await comment.locator(".ki-diff__after textarea").count()) === 1, "左右の形で、消した行に一言を付けられない");
+  await comment.getByRole("button", { name: "やめる" }).click();
+  const file = basic.locator("details").first();
+  await file.locator("summary").focus();
+  await press(page, "Enter");
+  assert(!(await file.evaluate((el) => el.open)), "Enter でファイルが閉じない");
+  await page.setViewportSize({ width: 800, height: 800 });
+  await page.waitForTimeout(150);
+  assert((await diffLayout(page)) === "unified", "800px で 1 列にならない");
+});
+await kb("DiffView(390px は 1 列、はみ出さない、一言を付ける)", "components/diff-view.html", async (page) => {
+  assert((await diffLayout(page)) === "unified", "390px で 1 列にならない");
+  const demo = page.locator("#demo-comment ~ astro-island .demo").first();
+  const btn = demo.getByRole("button", { name: "src/total.ts の 5 行目に一言を付ける" });
+  const box = await btn.boundingBox();
+  assert(box && box.height >= 44, `一言を付けるボタンの高さが ${box?.height}px`);
+  const names = await demo.locator(".ki-diff__comment").evaluateAll((els) => els.map((el) => el.getAttribute("aria-label")));
+  assert(new Set(names).size === names.length, "一言を付けるボタンの名前が重なっている");
+  assert((await demo.locator(".ki-diff__comment").evaluateAll((els) => els.filter((el) => !el.textContent.trim()).length)) === 0, "番号の無いボタンがある");
+  // 指で触る端末でも、行の中身は 1 つの流れのまま(印の所で列に割れない)
+  const marked = demo.locator(".ki-diff__line:has(.ki-diff__word) .ki-diff__code").first();
+  assert((await marked.evaluate((el) => getComputedStyle(el).display)) !== "flex", "指で触る端末で、行の中身が横並びの箱に割れる");
+  assert(await page.evaluate(() => matchMedia("(pointer: coarse)").matches), "指で触る端末として開けていない");
+  await btn.click();
+  await demo.locator("textarea").fill("負の数は入らない。");
+  await demo.getByRole("button", { name: "付ける", exact: true }).click();
+  assert((await demo.locator(".ki-diff__after").filter({ hasText: "負の数は入らない。" }).count()) === 1, "付けた一言が行の下に出ない");
+  assert((await demo.locator("textarea").count()) === 0, "付けた後も書く欄が残る");
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+// ListDetail。390px は 1 列で片方、1280px は 2 列
+await kb("ListDetail(390px は一覧 → 詳細 → 一覧へ戻る)", "components/list-detail.html", async (page) => {
+  const demo = page.locator("#demo-basic ~ astro-island .demo").first();
+  const list = demo.locator(".ki-listdetail__list");
+  const detail = demo.locator(".ki-listdetail__detail");
+  assert((await list.isVisible()) && !(await detail.isVisible()), "始めに一覧だけが出ていない");
+  await demo.getByRole("link", { name: "色の検査" }).click();
+  assert(!(await list.isVisible()) && (await detail.isVisible()), "行を押しても詳細に移らない");
+  assert((await detail.getByRole("heading", { name: "色の検査" }).count()) === 1, "詳細の中身が違う");
+  await detail.getByRole("button", { name: "一覧へ戻る" }).click();
+  assert((await list.isVisible()) && !(await detail.isVisible()), "一覧へ戻らない");
+}, { width: 390, height: 844 }, { hasTouch: true });
+await kb("ListDetail(1280px は 2 列、戻るボタンは出ない)", "components/list-detail.html", async (page) => {
+  const demo = page.locator("#demo-basic ~ astro-island .demo").first();
+  const l = await demo.locator(".ki-listdetail__list").boundingBox();
+  const d = await demo.locator(".ki-listdetail__detail").boundingBox();
+  assert(l && d && d.x >= l.x + l.width, "一覧と詳細が左右に並んでいない");
+  await demo.getByRole("link", { name: "アイコンの整理" }).click();
+  assert((await demo.locator(".ki-listdetail__detail").getByRole("heading", { name: "アイコンの整理" }).count()) === 1, "行を押しても詳細が替わらない");
+  assert(!(await demo.getByRole("button", { name: "一覧へ戻る" }).isVisible()), "2 列で戻るボタンが出ている");
+  const empty = page.locator("#demo-unselected ~ astro-island .demo").first();
+  assert(await empty.locator(".ki-listdetail__detail").getByText("仕事を選ぶ").isVisible(), "何も選んでいない時の面が出ない");
+});
+
+// AppShell。切り替えは幅で片方だけ
+await kb("AppShell(1280px は左、800px は下)", "components/app-shell.html", async (page) => {
+  const demo = page.locator("#demo-basic ~ astro-island .demo").first();
+  const side = demo.locator(".ki-shell__side");
+  const bottom = demo.locator(".ki-shell__bottom");
+  assert((await side.isVisible()) && !(await bottom.isVisible()), "1280px で左の切り替えだけが出ていない");
+  assert((await demo.getByRole("navigation", { name: "画面の切り替え" }).count()) === 1, "読み上げに切り替えが 2 つ出る");
+  assert((await demo.locator('[aria-current="page"]:visible').count()) === 1, "今いる所の印が 1 つでない");
+  await page.setViewportSize({ width: 800, height: 800 });
+  await page.waitForTimeout(150);
+  assert(!(await side.isVisible()) && (await bottom.isVisible()), "800px で下の切り替えだけが出ていない");
+  assert((await demo.getByRole("main").count()) === 1, "中身が main に入っていない");
+});
+
+// Conversation。自分は右、相手は左
+await kb("Conversation(自分は右、相手は左、続きは名前を省く)", "components/conversation.html", async (page) => {
+  const demo = page.locator("#demo-basic ~ astro-island .demo").first();
+  assert((await demo.getByRole("log", { name: "会話" }).count()) === 1, "role=log が無い");
+  const stage = await demo.locator(".ki-convo").boundingBox();
+  const self = await demo.locator('.ki-convo__msg[data-from="self"] .ki-convo__bubble').first().boundingBox();
+  const other = await demo.locator('.ki-convo__msg[data-from="other"] .ki-convo__bubble').first().boundingBox();
+  assert(stage && self && other, "吹き出しが無い");
+  assert(Math.abs(self.x + self.width - (stage.x + stage.width)) < 2, "自分の話が右に寄っていない");
+  assert(other.x - stage.x < 60, "相手の話が左に寄っていない");
+  assert((await demo.locator(".ki-convo__author:visible").filter({ hasText: "作る役" }).count()) === 1, "続けて話した時に名前が 2 度出る");
+  const st = page.locator("#demo-status ~ astro-island .demo").first();
+  assert(await st.getByText("送れなかった").isVisible(), "送れなかった事が文字で出ない");
 });
 
 await browser.close();

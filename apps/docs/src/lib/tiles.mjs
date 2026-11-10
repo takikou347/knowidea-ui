@@ -13,6 +13,7 @@ export const pick = {
   tabs: { fn: "Basic" }, menu: { fn: "Basic" }, breadcrumbs: { fn: "Basic" }, pagination: { fn: "Basic" }, "app-bar": { fn: "Basic", wide: true },
   drawer: { fn: "Permanent", wide: true }, "bottom-navigation": { fn: "Basic" }, stack: { fn: "Column" }, grid: { fn: "Fixed", wide: true }, "featured-list": { fn: "Basic", wide: true },
   container: { fn: "Sizes", wide: true }, divider: { fn: "Basic" }, chart: { fn: "Line", wide: true },
+  "app-shell": { fn: "Basic", wide: true }, "list-detail": { fn: "Basic", wide: true }, conversation: { fn: "Basic", wide: true }, "diff-view": { fn: "Unified", wide: true },
 };
 
 const icon = (n) => `<svg class="ki-icon" aria-hidden="true"><use href="#${n}"/></svg>`;

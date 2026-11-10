@@ -28,7 +28,7 @@ export function Stack({ direction = "column", gap, align, justify, wrap, as: Tag
 }
 
 export interface GridProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
-  /** 列の数を固定する。狭い幅(600px 以下)では 1 列になる。無ければ minItemWidth で自動 */
+  /** 列の数を固定する。スマホの幅(600px 未満)では 1 列になる。無ければ minItemWidth で自動 */
   columns?: number;
   /** columns が無いとき、1 つの最小の幅(px)。既定 240 */
   minItemWidth?: number;
