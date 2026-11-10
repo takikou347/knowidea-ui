@@ -1,6 +1,10 @@
 // 全部のデモ。DemoBlock と StatesBlock が slug で引く。(デモを足したら import と対応の 1 行を足す)
 
 import * as dAccordion from "./accordion";
+import * as dAppShell from "./app-shell";
+import * as dConversation from "./conversation";
+import * as dDiffView from "./diff-view";
+import * as dListDetail from "./list-detail";
 import * as dAlert from "./alert";
 import * as dAppBar from "./app-bar";
 import * as dAvatar from "./avatar";
@@ -118,4 +122,8 @@ export const demos = {
   "timeline": dTimeline,
   "toast": dToast,
   "tooltip": dTooltip,
+  "app-shell": dAppShell,
+  conversation: dConversation,
+  "diff-view": dDiffView,
+  "list-detail": dListDetail,
 };

@@ -21,6 +21,7 @@ KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を�
 | 2g 選べる見た目(0.8.0) | グラデーションの見た目 `look: "gradient"`。既定は flat のまま、使う側が ThemeProvider の theme か `data-ki-look="gradient"` で選んだ時だけ当たる。掛かるのは主の色の面(プライマリの Button、Switch と Checkbox の選んだ印、カレンダーの選んだ日、Pagination の今の頁、Progress と Slider の線)と、Card のごく薄い差し色。終わりの色は主の色から色相を 40 度回して作るので、テーマとダークに付いてくる。文字は両端で 4.5:1 以上を createTheme が確かめる。読めないブラウザでは平らな主の色に戻る | 作った |
 | 2h 配る名前(0.8.0) | パッケージの名前を `knowidea-tokens`、`knowidea-css`、`knowidea-icons`、`knowidea-ui` に変えた。npm の組織は作らず、オーナー個人のアカウントで出す。MIT ライセンス。出すのは GitHub Actions の Publish を手で動かした時だけ。package.json にメールアドレスを書かない | 0.8.0 を npm に出した。0.8.1 で npm のページの説明を短くし、文書の入れ方を npm にした |
 | 2i 字の段と題字の面(0.9.0) | 見出しの書体 Murecho 800(`--font-display`、SIL OFL 1.1)を足し、`knowidea-css` の中から woff2 で配る(英数字とかな 26 KB、漢字 260 KB、外の配信なし)。大きな字の段 `--font-size-display-1`(40〜56px)と `-2`(32〜44px)。部品は Display(大きな見出し)と Jacket(題字のジャケット)。本文の大きさは変えない | 作った。Ruleru と Logru に当てるのは次の段 |
+| 2j 管理の画面の部品(0.11.0) | know-office のような管理の画面を組む部品。AppShell(画面の枠。切り替えは 1024px 未満で下、以上で左)、ListDetail(一覧と詳細。広い幅は 2 列、狭い幅は 1 列で片方)、Conversation(会話。自分は右、相手は左。書いている間は 1 行の文字で示し、点を動かさない)、DiffView(変更の表示。広い幅は前と後を左右に、狭い幅は 1 列。足した行と消した行は色と記号、行の中で変わった所は濃い面)。幅の区切りは 600px と 1024px の 2 つにそろえ、トークンに置いた | 作った。オーナーの目で確かめる。エディタの部品は次の段 |
 
 | 方向 | 密度、色の温度 | 形、書体 |
 | --- | --- | --- |

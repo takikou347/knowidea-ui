@@ -27,7 +27,7 @@ export const layout = [
     slug: "grid", name: "Grid", imports: ["Grid"],
     lead: "子要素をグリッドに並べる。列数を指定するか、1 つあたりの最小幅を指定して自動的に詰める。",
     demos: [
-      { fn: "Fixed", title: "Fixed columns", text: "幅が狭い場合(600px 以下)は 1 列になる。keepColumns を指定すると、列数を維持する。", block: true },
+      { fn: "Fixed", title: "Fixed columns", text: "スマホの幅(600px 未満)では 1 列になる。keepColumns を指定すると、列数を維持する。", block: true },
       { fn: "Auto", title: "Auto-fit", text: "minItemWidth(px)ごとに、収まるだけ並べる。", block: true },
     ],
     props: [
@@ -105,5 +105,44 @@ export const layout = [
     slug: "divider", name: "Divider", imports: ["Divider"],
     demos: [{ fn: "Basic", title: "Horizontal, labeled, vertical", text: "区切りは 1 本の線で表す。文章の切れ目に語を入れることもできる。" }],
     a11y: ["横方向は <hr> で描画する。ラベル付きと縦方向は role=\"separator\" を使う", "線のコントラスト比が 3:1 以上必要な場面では、data-strong を指定する"],
+  },
+  {
+    slug: "app-shell", name: "AppShell", imports: ["AppShell", "AppBar"],
+    lead: "画面の枠。画面の切り替えを、スマホと iPad(1024px 未満)では下に、PC(1024px 以上)では左に出す。中身は <main> に入る。切り替えの項目は 3〜5 個にする。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "幅を変えると、切り替えが下と左で入れ替わる。見本の中に置くので minHeight で高さを絞っている。使う時は既定の 100dvh のままにする。", block: true },
+    ],
+    props: [
+      ["items", "NavItem[]", "-", "画面の切り替え。{ id, label, icon?, href, count?, disabled? }"],
+      ["current", "string", "-", "今いる所の id。aria-current が付く"],
+      ["brand", "{ name, sub? }", "-", "左の切り替えの上に出す名前(PC の幅だけ)"],
+      ["header", "ReactNode", "-", "中身の上に置く物。AppBar など"],
+      ["sideFooter", "ReactNode", "-", "左の切り替えの下に置く物(PC の幅だけ)"],
+      ["label", "string", '"画面の切り替え"', "切り替えの nav の名前"],
+      ["minHeight", "string", '"100dvh"', "枠の最小の高さ"],
+    ],
+    classes: [[".ki-shell", "枠"], [".ki-shell__side、__bottom", "左と下の切り替え。幅で片方だけが出る"], [".ki-shell__body、__main", "中身の側と <main>"], ["--ki-shell-height", "枠の最小の高さ"]],
+    vars: [["--color-bg、--color-text", "枠の色"], ["--space-7", "左の切り替えの幅(5 倍)"]],
+    a11y: ["切り替えは左と下の 2 つを描き、幅で片方だけを見せる。見えない方は display: none なので、読み上げにも Tab にも出ない", "中身は <main> に入る。1 ページに AppShell は 1 つだけ置く", "今いる所の項目に aria-current=\"page\" が付く"],
+  },
+  {
+    slug: "list-detail", name: "ListDetail", imports: ["ListDetail", "List"],
+    lead: "一覧と詳細を並べる。PC(1024px 以上)と iPad の横では 2 列、スマホ(横向きも)と iPad の縦では 1 列になり、一覧か詳細の片方を出す。切り替えは CSS だけで決まるので、幅が変わっても選んだ物は残る。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "一覧の行を押すと詳細が替わる。1 列の時は詳細に移り、一覧へ戻るボタンが出る。", block: true },
+      { fn: "Unselected", title: "Nothing selected", text: "何も選んでいない時、2 列では詳細の側に empty を出す。", block: true },
+    ],
+    props: [
+      ["list", "ReactNode", "-", "一覧。List や Table など"],
+      ["detail", "ReactNode", "-", "選んだ物の詳細。無ければ empty を出す"],
+      ["showDetail", "boolean", "false", "1 列の時に、一覧でなく詳細を出す"],
+      ["onBack", "() => void", "-", "1 列で詳細を出している時の、一覧へ戻るボタン。渡した時だけ出る"],
+      ["backLabel", "string", '"一覧へ戻る"', "戻るボタンの文字"],
+      ["empty", "ReactNode", "-", "2 列で何も選んでいない時に、詳細の側に出す物"],
+      ["listLabel / detailLabel", "string", '"一覧" / "詳細"', "読み上げの名前"],
+    ],
+    classes: [[".ki-listdetail", "本体。data-show: list | detail"], [".ki-listdetail__list、__detail", "一覧と詳細の <section>"], [".ki-listdetail__back、__empty", "戻るボタンの行、何も選んでいない時の面"]],
+    vars: [["--space-4、--space-5", "列の間"]],
+    a11y: ["一覧と詳細は、名前の付いた <section> になる", "1 列で片方を隠す時は display: none なので、隠れた側は読み上げにも Tab にも出ない", "1 列で詳細に移った時の focus の移し方は、使う側が決める(詳細の見出しに移すと、読み上げが続きから始まる)"],
   },
 ];

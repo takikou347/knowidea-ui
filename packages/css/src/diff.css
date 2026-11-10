@@ -1,0 +1,66 @@
+/* 差分(DiffView)。ファイルごとに <details>。行は 前の番号、後の番号、印、中身。足した行は成功の色、消した行は誤りの色の薄い面。
+   data-commentable の時、行の番号が一言を付けるボタンになり、指で触る端末では行の高さが 44px になる。
+   スマホの幅(600px 未満)では長い行を折り返す。
+   data-layout="split" の時は、前と後を左右に並べ、長い行は折り返す。行の中で変わった所は <mark class="ki-diff__word">。 */
+.ki-diff { display: grid; gap: var(--space-3); min-width: 0; }
+.ki-diff__file { border: 1px solid var(--color-line); border-radius: var(--radius-3); background: var(--color-surface); overflow: hidden; }
+.ki-diff__head {
+  display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-1) var(--space-3); min-height: var(--size-hit); padding: var(--space-1) var(--space-3);
+  background: var(--color-surface-2); cursor: pointer; list-style: none;
+}
+.ki-diff__head::-webkit-details-marker { display: none; }
+.ki-diff__head > .ki-icon { flex: none; color: var(--color-text-muted); transition: transform var(--motion-duration-state) var(--motion-ease); }
+.ki-diff__file[open] > .ki-diff__head > .ki-icon { transform: rotate(90deg); }
+.ki-diff__file[open] > .ki-diff__head { border-bottom: 1px solid var(--color-line); }
+.ki-diff__head:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-diff__path { flex: 1 1 12rem; min-width: 0; font-family: var(--font-mono); font-size: var(--font-size-2); overflow-wrap: anywhere; }
+.ki-diff__status { font-size: var(--font-size-1); color: var(--color-text-muted); }
+.ki-diff__count { display: inline-flex; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--font-size-1); font-variant-numeric: tabular-nums; }
+.ki-diff__count [data-type="add"] { color: var(--color-success); }
+.ki-diff__count [data-type="del"] { color: var(--color-error); }
+.ki-diff__body { overflow-x: auto; font-family: var(--font-mono); font-size: var(--font-size-2); line-height: var(--font-line-height-2); }
+.ki-diff__hunk { width: max-content; min-width: 100%; }
+.ki-diff__hunk-head { padding: var(--space-1) var(--space-3); color: var(--color-text-muted); background: color-mix(in oklab, var(--color-info) 8%, var(--color-surface)); white-space: pre; }
+.ki-diff__line { display: grid; grid-template-columns: 4ch 4ch 2ch minmax(0, 1fr); align-items: stretch; }
+.ki-diff__line[data-type="add"] { background: var(--color-success-soft); }
+.ki-diff__line[data-type="del"] { background: var(--color-error-soft); }
+.ki-diff__num { display: block; box-sizing: border-box; padding: 0 var(--space-1); color: var(--color-text-muted); text-align: right; font: inherit; font-variant-numeric: tabular-nums; user-select: none; }
+.ki-diff__sign { text-align: center; user-select: none; }
+.ki-diff__line[data-type="add"] .ki-diff__sign { color: var(--color-success); }
+.ki-diff__line[data-type="del"] .ki-diff__sign { color: var(--color-error); }
+.ki-diff__code { font: inherit; white-space: pre; padding-right: var(--space-3); }
+.ki-diff__word { color: inherit; background: color-mix(in oklab, var(--color-text) 14%, transparent); border-radius: 2px; }
+.ki-diff__line[data-type="add"] .ki-diff__word { background: color-mix(in oklab, var(--color-success) 28%, transparent); }
+.ki-diff__line[data-type="del"] .ki-diff__word { background: color-mix(in oklab, var(--color-error) 28%, transparent); }
+.ki-diff[data-layout="split"] .ki-diff__hunk { width: auto; }
+.ki-diff[data-layout="split"] .ki-diff__pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.ki-diff[data-layout="split"] .ki-diff__line { grid-template-columns: 4ch 2ch minmax(0, 1fr); }
+.ki-diff[data-layout="split"] .ki-diff__line[data-side="right"] { border-left: 1px solid var(--color-line); }
+.ki-diff[data-layout="split"] .ki-diff__line[data-type="none"] { background: var(--color-surface-2); }
+.ki-diff[data-layout="split"] .ki-diff__code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ki-diff__comment { margin: 0; border: 0; background: transparent; cursor: pointer; }
+.ki-diff__nums { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; align-items: start; padding: 0; color: inherit; font: inherit; }
+/* 左右の形の番号のボタン。折り返した行でも、番号は 1 行目にそろえる */
+.ki-diff__num.ki-diff__comment { display: flex; align-items: flex-start; justify-content: flex-end; }
+.ki-diff__comment.is-hover { background: color-mix(in oklab, var(--color-primary) 14%, transparent); color: var(--color-primary); }
+@media (hover: hover) {
+  .ki-diff__comment:hover { background: color-mix(in oklab, var(--color-primary) 14%, transparent); color: var(--color-primary); }
+}
+.ki-diff__comment:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+.ki-diff__after { padding: var(--space-2) var(--space-3); border-block: 1px solid var(--color-line); background: var(--color-bg); font-family: var(--font-sans); font-size: var(--font-size-3); line-height: var(--font-line-height-3); white-space: normal; }
+@media (pointer: coarse) {
+  .ki-diff[data-commentable] .ki-diff__line { min-height: var(--size-hit); }
+  .ki-diff[data-commentable] .ki-diff__line > :not(.ki-diff__nums, .ki-diff__code) { display: flex; align-items: center; }
+  .ki-diff[data-commentable] .ki-diff__code { align-self: center; }
+  .ki-diff[data-commentable] .ki-diff__nums { align-items: center; min-width: var(--size-hit); }
+  .ki-diff[data-commentable][data-layout="split"] .ki-diff__line { grid-template-columns: var(--size-hit) 2ch minmax(0, 1fr); }
+  .ki-diff[data-commentable] .ki-diff__num { justify-content: flex-end; }
+  .ki-diff[data-commentable] .ki-diff__sign { justify-content: center; }
+}
+@media (max-width: 599.98px) {
+  .ki-diff__hunk { width: auto; }
+  .ki-diff__hunk-head { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .ki-diff__line { grid-template-columns: 3.5ch 3.5ch 1.5ch minmax(0, 1fr); }
+  .ki-diff__code { white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+@media (prefers-reduced-motion: reduce) { .ki-diff__head > .ki-icon { transition: none; } }
