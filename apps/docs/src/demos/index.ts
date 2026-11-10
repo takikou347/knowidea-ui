@@ -18,6 +18,7 @@ import * as dChart from "./chart";
 import * as dCheckbox from "./checkbox";
 import * as dChip from "./chip";
 import * as dCodeBlock from "./code-block";
+import * as dCodeEditor from "./code-editor";
 import * as dCombobox from "./combobox";
 import * as dContainer from "./container";
 import * as dDatePicker from "./date-picker";
@@ -124,6 +125,7 @@ export const demos = {
   "tooltip": dTooltip,
   "app-shell": dAppShell,
   conversation: dConversation,
+  "code-editor": dCodeEditor,
   "diff-view": dDiffView,
   "list-detail": dListDetail,
 };

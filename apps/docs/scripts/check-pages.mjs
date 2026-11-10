@@ -756,9 +756,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 62, "カードが 62 枚でない");
+  assert((await page.locator(".cp").count()) === 63, "カードが 63 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 62, "見本が 62 個でない");
+  assert((await page.locator(".cp-fit").count()) === 63, "見本が 63 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();
@@ -1059,6 +1059,97 @@ await kb("DiffView(390px は 1 列、はみ出さない、一言を付ける)", 
   await demo.getByRole("button", { name: "付ける", exact: true }).click();
   assert((await demo.locator(".ki-diff__after").filter({ hasText: "負の数は入らない。" }).count()) === 1, "付けた一言が行の下に出ない");
   assert((await demo.locator("textarea").count()) === 0, "付けた後も書く欄が残る");
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+// CodeEditor。打つ、色分け、書き間違い、候補、外へ出る、読むだけ
+const editor = (page, fn) => page.locator(`#demo-${fn} ~ astro-island .demo`).first();
+await kb("CodeEditor(打つ、色分け、書き間違いの下線、候補、Esc の後の Tab、読むだけ)", "components/code-editor.html", async (page) => {
+  const basic = editor(page, "basic");
+  await basic.locator(".cm-content").waitFor();
+  const content = basic.getByRole("textbox", { name: "src/total.ts" });
+  assert((await basic.locator(".ki-editor__fallback").count()) === 0, "動き出した後も、仮の中身が残る");
+  const before = await basic.locator(".ki-editor-demo__count").textContent();
+  await content.click();
+  await page.keyboard.press("Control+End");
+  await page.keyboard.type("// memo");
+  assert((await basic.locator(".ki-editor-demo__count").textContent()) !== before, "打っても onChange が呼ばれない");
+  const colors = await basic.locator(".cm-content").evaluate((el) => {
+    const c = (sel) => { const n = el.querySelector(sel); return n ? getComputedStyle(n).color : null; };
+    return { text: getComputedStyle(el).color, keyword: c(".tok-keyword"), comment: c(".tok-comment") };
+  });
+  assert(colors.keyword && colors.keyword !== colors.text, "予約語に色が付かない");
+  assert(colors.comment && colors.comment !== colors.text, "打ったコメントに色が付かない");
+  // Tab は字下げ。Esc の後の Tab で外へ出る
+  await page.keyboard.press("Tab");
+  assert(await inside(page, "#demo-basic ~ astro-island .ki-editor"), "Tab で外へ出てしまう(字下げにならない)");
+  await press(page, "Escape");
+  await press(page, "Tab");
+  assert(!(await inside(page, "#demo-basic ~ astro-island .ki-editor")), "Esc の後の Tab で外へ出られない");
+
+  const diag = editor(page, "diagnostics");
+  assert((await diag.locator(".cm-lintRange-error").count()) === 2, "書き間違いの下線が 2 つ出ない");
+  const line = await diag.locator(".cm-lintRange-error").first().evaluate((el) => getComputedStyle(el).textDecorationLine);
+  assert(line.includes("underline"), "書き間違いが下線で示されない");
+  await diag.getByRole("textbox", { name: "src/count.ts" }).click();
+  await page.keyboard.press("Control+a");
+  await page.keyboard.type("const count = 3;");
+  await page.waitForTimeout(200);
+  assert((await diag.locator(".cm-lintRange-error").count()) === 0, "直しても下線が消えない");
+  assert((await diag.locator("p[role=status]").textContent()) === "書き間違いは無い", "直した後の知らせが違う");
+
+  const comp = editor(page, "completion");
+  await comp.getByRole("textbox", { name: "src/App.tsx" }).click();
+  await page.keyboard.press("Control+Home");
+  for (let i = 0; i < 9; i++) await page.keyboard.press("ArrowRight");
+  await page.keyboard.type("Ba");
+  await comp.locator(".cm-tooltip-autocomplete").waitFor();
+  assert((await comp.locator(".cm-tooltip-autocomplete li").first().textContent()).startsWith("Badge"), "候補の頭が Badge でない");
+  await press(page, "Enter");
+  assert((await comp.locator(".cm-line").first().textContent()) === 'import { Badge } from "knowidea-ui";', "候補を選んでも入らない");
+
+  // キーで、カーソルの所の説明を出す。Esc で消える
+  await page.keyboard.press("ArrowLeft");
+  await page.keyboard.press("Control+Shift+Space");
+  await comp.locator(".ki-editor__hover").waitFor();
+  assert((await comp.locator(".ki-editor__hover").textContent()) === "Badge: 短い印", "キーで出した説明が違う");
+  assert((await comp.locator('.ki-editor > [role="status"]').textContent()) === "Badge: 短い印", "キーで出した説明が読み上げに伝わらない");
+  await press(page, "Escape");
+  assert((await comp.locator(".ki-editor__hover").count()) === 0, "Esc で説明が消えない");
+
+  // 外からファイルを替える。書き換えた事にならず、元に戻しても前のファイルの中身にならない
+  const fl = editor(page, "files");
+  await fl.getByRole("textbox", { name: "src/total.ts" }).waitFor();
+  await fl.getByRole("button", { name: "README.md" }).click();
+  const md = fl.getByRole("textbox", { name: "README.md" });
+  await md.waitFor();
+  assert((await fl.getByRole("textbox").count()) === 1, "ファイルを替えた後、欄の名前が前のまま残る");
+  assert((await fl.locator("p[role=status]").textContent()) === "書き換えていない", "ファイルを替えただけで onChange が呼ばれる");
+  await md.click();
+  await page.keyboard.press("Control+z");
+  assert((await fl.locator(".cm-line").first().textContent()) === "# total", "元に戻すと、前のファイルの中身になる");
+  assert((await fl.locator(".cm-content .tok-heading").count()) > 0, "ファイルを替えた後、言語が当たらない");
+  await page.keyboard.type("x");
+  assert((await fl.locator("p[role=status]").textContent()) === "書き換えた", "替えた後に打っても onChange が呼ばれない");
+
+  const ro = editor(page, "readonly");
+  const roBox = ro.getByRole("textbox", { name: "src/total.ts(読むだけ)" });
+  assert((await roBox.getAttribute("aria-readonly")) === "true", "読むだけの欄に aria-readonly が無い");
+  const roText = await ro.locator(".cm-content").textContent();
+  await roBox.click();
+  await page.keyboard.type("x");
+  assert((await ro.locator(".cm-content").textContent()) === roText, "読むだけなのに打てる");
+  const h = await ro.locator(".cm-editor").boundingBox();
+  assert(h && Math.abs(h.height - 128) < 2, `height を渡しても高さが ${h?.height}px`);
+});
+await kb("CodeEditor(390px は折り返す、はみ出さない、字は 16px)", "components/code-editor.html", async (page) => {
+  const basic = editor(page, "basic");
+  await basic.locator(".cm-content").waitFor();
+  assert((await basic.locator(".cm-content.cm-lineWrapping").count()) === 1, "390px で折り返さない");
+  assert(!(await basic.locator(".cm-foldGutter").isVisible()), "指で触る端末で、44px に届かない折り畳みの印が出ている");
+  assert((await basic.locator(".cm-editor").evaluate((el) => getComputedStyle(el).fontSize)) === "16px", "指で触る端末で字が 16px でない");
+  const over = await basic.locator(".cm-scroller").evaluate((el) => el.scrollWidth - el.clientWidth);
+  assert(over <= 1, `エディタの中が横に ${over}px はみ出す`);
+  assert((await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)) <= 0, "ページが横にはみ出す");
 }, { width: 390, height: 844 }, { hasTouch: true });
 
 // ListDetail。390px は 1 列で片方、1280px は 2 列

@@ -25,6 +25,7 @@ diff --git a/README.md b/README.md
 -合計を返す。
 +合計を返す。負になる時は RangeError を投げる。
 `;
+
 const files = parseUnifiedDiff(text);
 
 export function Basic() {

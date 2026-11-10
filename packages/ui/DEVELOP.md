@@ -17,11 +17,11 @@ npm に出している。使う側は 4 つ全部を同じコマンドで入れ�
 | Category | Components |
 | --- | --- |
 | Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Rating、Slider、Stepper、FileUpload、Switch、Field |
-| Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、Kbd、CodeBlock、Quote、Display、Jacket |
+| Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、Kbd、CodeBlock、Quote、Display、Jacket、Conversation、DiffView、CodeEditor(`knowidea-ui/editor` から。CodeMirror 6 が土台) |
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |
 | Navigation | Link、Tabs、Menu、Breadcrumbs、Pagination、AppBar、Drawer、BottomNavigation |
-| Layout | Stack、Grid、FeaturedList、Container、Divider |
+| Layout | Stack、Grid、FeaturedList、Container、Divider、AppShell、ListDetail |
 | Charts | Chart(棒グラフと折れ線グラフ。追加の依存なしで、自前の SVG で描画する) |
 | Theme | ThemeProvider、createTheme |
 

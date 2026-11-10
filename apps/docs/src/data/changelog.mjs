@@ -4,13 +4,14 @@ export const releases = [
   {
     version: "0.11.0",
     date: "2026-11-10",
-    summary: "管理の画面を組む部品を 4 つ足した。画面の枠 AppShell、一覧と詳細 ListDetail、会話 Conversation、変更の表示 DiffView。幅の区切りをトークンにした。",
+    summary: "管理の画面を組む部品を 5 つ足した。画面の枠 AppShell、一覧と詳細 ListDetail、会話 Conversation、変更の表示 DiffView、コードを書く欄 CodeEditor。幅の区切りをトークンにした。",
     rows: [
       ["knowidea-ui", "AppShell(画面の切り替えを、1024px 未満は下、以上は左に出す)、ListDetail(一覧と詳細。広い幅は 2 列、狭い幅は 1 列で片方)、Conversation(会話の流れ。自分は右、相手は左)、DiffView(変更の表示。広い幅は前と後を左右に、狭い幅は 1 列。行の中で変わった所に印。行に一言を付けられる)を足した。git diff の文字列を読む parseUnifiedDiff、左右の組を作る pairDiffLines、行の中の違いを取る diffWords、幅の区切り breakpoints と mediaQuery も出した。"],
-      ["knowidea-css", ".ki-shell、.ki-listdetail、.ki-convo、.ki-diff を足した。幅の区切りを 600px と 1024px にそろえ、検査(scripts/check-breakpoints.mjs)を足した。これで見た目が変わる所: Alert、Dialog、Sheet の折り返しと縦並びは 480px 以下から 600px 未満に(481〜599px でも Dialog のボタンが縦に並ぶ)、Code の折り返しは 640px 以下から 600px 未満に変わる。"],
+      ["knowidea-ui", "CodeEditor(コードを書く欄。中身は CodeMirror 6。色分け、括弧の対応、折り畳み、候補、書き間違いの下線、合わせた所の説明)を、別の入口 knowidea-ui/editor に足した。使わない画面には CodeMirror を読み込ませない。CodeMirror の 11 個のパッケージが依存に加わった。パスから言語を決める editorLanguageOfPath も出した。"],
+      ["knowidea-css", ".ki-shell、.ki-listdetail、.ki-convo、.ki-diff、.ki-editor を足した。幅の区切りを 600px と 1024px にそろえ、検査(scripts/check-breakpoints.mjs)を足した。これで見た目が変わる所: Alert、Dialog、Sheet の折り返しと縦並びは 480px 以下から 600px 未満に(481〜599px でも Dialog のボタンが縦に並ぶ)、Code の折り返しは 640px 以下から 600px 未満に変わる。"],
       ["knowidea-tokens", "幅の区切り --breakpoint-tablet(600px)と --breakpoint-desktop(1024px)を足した。メディアクエリには変数が使えないので、CSS では同じ値を直に書く。"],
       ["knowidea-icons", "変更なし(版をそろえた)。"],
-      ["Docs", "AppShell、ListDetail、Conversation、DiffView のページを足した。Grid の説明の幅の書き方を直した。"],
+      ["Docs", "AppShell、ListDetail、Conversation、DiffView、CodeEditor のページを足した。Grid の説明の幅の書き方を直した。"],
     ],
   },
   {
