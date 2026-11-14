@@ -4,7 +4,7 @@ KNOW IDEA の画面のコンポーネント(公開)。組織の決まりは taki
 
 ## 直し方
 
-- main で直さず、ブランチで直して PR にし、作った者と別のモデルのレビュー担当が承認したら、そのブランチを main へ fast-forward で push して入れる。main が進んでいたら rebase し、チェックを通し直す。GitHub の画面や API では入れない
+- main で直さず、ブランチで直して PR にし、作った者と別のモデルのレビュー担当が承認したら、そのブランチを main へ fast-forward で push して入れる。main が進んでいたら rebase し、チェックを通し直す。GitHub の画面や API では入れない。PR は下書きで出し、PR を作る道具が説明に足す帰属の行を消してから下書きを外す
 - コンポーネントを足す時は packages/css と packages/ui の両方、apps/docs の 1 コンポーネント 1 ページ、check-pages の確かめを一緒に足す
 - push の前に `pnpm check`、`pnpm -r build`、`pnpm --filter @knowidea/docs check:pages`、`python3 knowidea/tools/check.py knowidea-ui` を通す
 
