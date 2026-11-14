@@ -11,6 +11,7 @@ import { createServer } from "node:http";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 
 const dist = resolve(fileURLToPath(new URL("../dist/", import.meta.url)));
 const failedRequests = [];
@@ -1210,6 +1211,82 @@ await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", 
   const guard = page.locator(".ki-shell__bottom:visible").filter({ has: page.locator('[aria-current="page"]', { hasText: "守り" }) });
   assert((await guard.count()) === 1, "bottomCurrent を省いた時に、下の「守り」に印が付かない");
 });
+
+// AppShell。狭い幅で中身が長い時、Tab で移った所が上の AppBar と下の切り替えに隠れない(WCAG 2.2 の 2.4.11)
+// 見本の枠 .demo は overflow: hidden で sticky を閉じ込める。使う側の画面と同じく、ページに対して貼り付くように clip に替えて確かめる
+const shellAt = async (page, id) => {
+  const demo = page.locator(`#demo-${id} ~ astro-island .demo`).first();
+  await demo.evaluate((el) => { el.style.overflow = "clip"; });
+  return demo;
+};
+await kb("AppShell(360px、長い中身で Tab と Shift+Tab の止まる所が帯に隠れない)", "components/app-shell.html", async (page) => {
+  const demo = await shellAt(page, "long");
+  await demo.scrollIntoViewIfNeeded();
+  const buttons = demo.locator(".ki-shell__main button");
+  const n = await buttons.count();
+  assert(n >= 12, `見本のボタンが少ない(${n})`);
+  // 中心にある物がそのボタンか。違う時は上に重なった物の class を返す
+  const hidden = () => page.evaluate(() => {
+    const el = document.activeElement;
+    if (!(el instanceof HTMLButtonElement)) return null;
+    const r = el.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return hit && (hit === el || el.contains(hit)) ? null : `「${el.textContent}」が ${hit ? hit.closest("[class]")?.className : "画面の外"} に隠れる`;
+  });
+  await buttons.first().focus();
+  for (let i = 1; i < n; i++) {
+    await press(page, "Tab");
+    assert(await buttons.nth(i).evaluate((el) => el === document.activeElement), `Tab で ${i + 1} 番目のボタンへ移らない`);
+    const h = await hidden();
+    assert(!h, `Tab: ${h}`);
+  }
+  for (let i = n - 2; i >= 0; i--) {
+    await press(page, "Shift+Tab");
+    assert(await buttons.nth(i).evaluate((el) => el === document.activeElement), `Shift+Tab で ${i + 1} 番目のボタンへ戻らない`);
+    const h = await hidden();
+    assert(!h, `Shift+Tab: ${h}`);
+  }
+}, { width: 360, height: 780 });
+
+// AppShell。狭い幅の長い中身に、axe の critical と serious が無い(下の切り替えが中身に重ならない、送れる所に Tab で入れる)
+const axeSource = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
+await kb("AppShell(360px、長い中身に axe の critical と serious が無い)", "components/app-shell.html", async (page) => {
+  await page.addScriptTag({ content: axeSource });
+  const bad = [];
+  for (const id of ["long", "longtext"]) {
+    const demo = await shellAt(page, id);
+    await demo.scrollIntoViewIfNeeded();
+    const found = await demo.evaluate(async (el) => {
+      const r = await window.axe.run(el, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] } });
+      return r.violations.filter((v) => v.impact === "critical" || v.impact === "serious").map((v) => `${v.id}(${v.nodes.length})`);
+    });
+    if (found.length) bad.push(`${id}: ${found.join(", ")}`);
+  }
+  assert(bad.length === 0, bad.join(" / "));
+}, { width: 360, height: 780 });
+
+// AppShell。押せる物の無い長い中身も、<main> に Tab で入って PageDown で送れる
+await kb("AppShell(360px、長い文は <main> に Tab で入り PageDown で送れる)", "components/app-shell.html", async (page) => {
+  const demo = await shellAt(page, "longtext");
+  await demo.scrollIntoViewIfNeeded();
+  const main = demo.locator(".ki-shell__main");
+  // AppBar の題を押して、Tab の始まりを見本の頭に置く
+  await demo.locator(".ki-appbar__title").click();
+  let reached = false;
+  for (let i = 0; i < 3 && !reached; i++) {
+    await press(page, "Tab");
+    reached = await main.evaluate((el) => el === document.activeElement);
+  }
+  assert(reached, "Tab で <main> に入れない");
+  const ring = await main.evaluate((el) => getComputedStyle(el).outlineStyle !== "none" && parseFloat(getComputedStyle(el).outlineWidth) >= 2);
+  assert(ring, "<main> に focus の輪が無い");
+  const before = await main.evaluate((el) => el.scrollTop);
+  const pageBefore = await page.evaluate(() => scrollY);
+  await press(page, "PageDown");
+  await page.waitForTimeout(400);
+  const after = await main.evaluate((el) => el.scrollTop);
+  assert(after > before, `PageDown で <main> が送られない(scrollTop ${before} → ${after}、ページは ${pageBefore} → ${await page.evaluate(() => scrollY)})`);
+}, { width: 360, height: 780 });
 
 // Conversation。自分は右、相手は左
 await kb("Conversation(自分は右、相手は左、続きは名前を省く)", "components/conversation.html", async (page) => {

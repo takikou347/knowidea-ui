@@ -1,4 +1,4 @@
-import { AppBar, AppShell, type NavItem } from "knowidea-ui";
+import { AppBar, AppShell, Button, type NavItem } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: NavItem[] = [
@@ -8,7 +8,7 @@ const items: NavItem[] = [
   { id: "settings", label: "設定", icon: "settings", href: "#settings" },
 ];
 
-const frame = { width: "100%", border: "1px solid var(--color-line)", borderRadius: "var(--radius-3)", overflow: "hidden" } as const;
+const frame = { width: "100%", border: "1px solid var(--color-line)", borderRadius: "var(--radius-3)", overflow: "clip" } as const;
 
 export function Basic() {
   return (
@@ -49,6 +49,38 @@ export function Many() {
         <div style={{ padding: "var(--space-4)" }}>
           <p style={{ marginTop: 0 }}>左には 8 つの画面がすべて出る。</p>
           <p>下には主な 4 つと「その他」だけが出る。「記録」は下に無いので、「その他」に今いる印が付く。</p>
+        </div>
+      </AppShell>
+    </div>
+  );
+}
+
+const work = Array.from({ length: 20 }, (_, n) => `仕事 ${n + 1}`);
+
+export function Long() {
+  return (
+    <div style={frame}>
+      <AppShell items={items} current="list" brand={{ name: "見本のアプリ" }} minHeight="24rem" header={<AppBar title="一覧" headingLevel={3} position="sticky" />}>
+        <ul style={{ display: "grid", gap: "var(--space-2)", margin: 0, padding: "var(--space-4)", listStyle: "none" }}>
+          {work.map((w) => (
+            <li key={w}>
+              <Button variant="secondary">{w}を開く</Button>
+            </li>
+          ))}
+        </ul>
+      </AppShell>
+    </div>
+  );
+}
+
+export function LongText() {
+  return (
+    <div style={frame}>
+      <AppShell items={items} current="home" brand={{ name: "見本のアプリ" }} minHeight="24rem" header={<AppBar title="読み物" headingLevel={3} position="sticky" />}>
+        <div style={{ padding: "var(--space-4)" }}>
+          {work.map((w) => (
+            <p key={w}>{w}の説明。押せる物の無い長い中身でも、キーボードで中身を送れる。</p>
+          ))}
         </div>
       </AppShell>
     </div>

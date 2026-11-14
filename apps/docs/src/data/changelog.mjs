@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.12.1",
+    date: "2026-11-14",
+    summary: "AppShell の狭い幅で、Tab で移った所が上の AppBar と下の切り替えに隠れる事と、下の切り替えが中身に重なる事を直した。",
+    rows: [
+      ["knowidea-css", ".ki-shell は高さを決め(--ki-shell-height、既定 100dvh)、送られるのは .ki-shell__main だけにした。上の AppBar と下の切り替えは別の段に置き、中身に重ねない。1024px 以上の左の切り替えは sticky をやめ、枠の高さに伸ばした。<main> に focus の輪を足した。これで見た目が変わる所: ページ全体ではなく <main> の中が送られる。"],
+      ["knowidea-ui", "AppShell の <main> を Tab で止まる所にした(押せる物の無い長い中身も矢印のキーで送れる)。下の切り替えを sticky にせず、枠の下の段に置いた。minHeight は枠の高さになった。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "AppShell のページに、長い中身の見本 Long と LongText を足した。狭い幅で focus が隠れない事、axe の critical と serious が無い事、<main> を PageDown で送れる事を check-pages で確かめる。"],
+    ],
+  },
+  {
     version: "0.12.0",
     date: "2026-11-14",
     summary: "AppShell が 6 個以上の画面を持てるようにした。下の切り替えには主な物と「その他」だけを出す。",

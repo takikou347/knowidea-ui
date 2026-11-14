@@ -112,6 +112,8 @@ export const layout = [
     demos: [
       { fn: "Basic", title: "Basic", text: "幅を変えると、切り替えが下と左で入れ替わる。見本の中に置くので minHeight で高さを絞っている。使う時は既定の 100dvh のままにする。", block: true },
       { fn: "Many", title: "Many items", text: "8 つの画面を持つ時。左にはすべて、下には主な 4 つと「その他」だけを出す。今いる画面が下に無い時は bottomCurrent で「その他」に印を付ける。", block: true },
+      { fn: "Long", title: "Long content", text: "中身が枠より長い時。中身だけが送られ、上の AppBar と下の切り替えは中身に重ならない。Tab で移った所は帯に隠れない。", block: true },
+      { fn: "LongText", title: "Long text", text: "押せる物の無い長い中身。<main> に Tab で入り、矢印のキーで中身を送れる。", block: true },
     ],
     props: [
       ["items", "NavItem[]", "-", "画面の切り替え。{ id, label, icon?, href, count?, disabled? }。左にはすべて出る。bottomItems が無い時は下にも出るので 3〜5 個"],
@@ -122,9 +124,9 @@ export const layout = [
       ["header", "ReactNode", "-", "中身の上に置く物。AppBar など"],
       ["sideFooter", "ReactNode", "-", "左の切り替えの下に置く物(PC の幅だけ)"],
       ["label", "string", '"画面の切り替え"', "切り替えの nav の名前"],
-      ["minHeight", "string", '"100dvh"', "枠の最小の高さ"],
+      ["minHeight", "string", '"100dvh"', "枠の高さ。中身が長い時は <main> の中だけが送られる"],
     ],
-    classes: [[".ki-shell", "枠"], [".ki-shell__side、__bottom", "左と下の切り替え。幅で片方だけが出る"], [".ki-shell__body、__main", "中身の側と <main>"], ["--ki-shell-height", "枠の最小の高さ"]],
+    classes: [[".ki-shell", "枠"], [".ki-shell__side、__bottom", "左と下の切り替え。幅で片方だけが出る"], [".ki-shell__body、__main", "中身の側と <main>。送られるのは <main> だけで、Tab で止まる"], ["--ki-shell-height", "枠の高さ"]],
     vars: [["--color-bg、--color-text", "枠の色"], ["--space-7", "左の切り替えの幅(5 倍)"]],
     a11y: ["切り替えは左と下の 2 つを描き、幅で片方だけを見せる。見えない方は display: none なので、読み上げにも Tab にも出ない", "中身は <main> に入る。1 ページに AppShell は 1 つだけ置く", "今いる所の項目に aria-current=\"page\" が付く"],
   },
