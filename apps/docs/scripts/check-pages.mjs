@@ -1190,6 +1190,21 @@ await kb("AppShell(1280px は左、800px は下)", "components/app-shell.html", 
   assert((await demo.getByRole("main").count()) === 1, "中身が main に入っていない");
 });
 
+// AppShell。項目が多い時は、下には主な物と「その他」だけ
+await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", "components/app-shell.html", async (page) => {
+  const demo = page.locator("#demo-many ~ astro-island .demo").first();
+  const side = demo.locator(".ki-shell__side");
+  const bottom = demo.locator(".ki-shell__bottom");
+  assert((await side.getByRole("link").count()) === 8, "左の切り替えに 8 つ出ていない");
+  assert((await side.locator('[aria-current="page"]').getByText("記録").count()) === 1, "左で今いる所が「記録」でない");
+  await page.setViewportSize({ width: 800, height: 800 });
+  await page.waitForTimeout(150);
+  assert((await bottom.getByRole("link").count()) === 5, "下の切り替えに 5 つ出ていない");
+  assert((await bottom.locator('[aria-current="page"]').getByText("その他").count()) === 1, "下で今いる所が「その他」でない");
+  const w = await bottom.evaluate((el) => el.scrollWidth - el.clientWidth);
+  assert(w <= 0, "下の切り替えが横にはみ出す");
+});
+
 // Conversation。自分は右、相手は左
 await kb("Conversation(自分は右、相手は左、続きは名前を省く)", "components/conversation.html", async (page) => {
   const demo = page.locator("#demo-basic ~ astro-island .demo").first();

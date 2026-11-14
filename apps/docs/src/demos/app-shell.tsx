@@ -23,6 +23,38 @@ export function Basic() {
   );
 }
 
+const many: NavItem[] = [
+  { id: "home", label: "ホーム", icon: "home", href: "#home" },
+  { id: "staff", label: "社員と仕事", icon: "users", href: "#staff" },
+  { id: "goals", label: "目的", icon: "flag", href: "#goals" },
+  { id: "office", label: "オフィス", icon: "buildings", href: "#office" },
+  { id: "services", label: "サービス", icon: "lightbulb", href: "#services" },
+  { id: "guard", label: "守り", icon: "stop", href: "#guard" },
+  { id: "records", label: "記録", icon: "chart-bar", href: "#records" },
+  { id: "settings", label: "設定", icon: "settings", href: "#settings" },
+];
+
+const manyBottom: NavItem[] = [
+  many[0]!,
+  many[1]!,
+  many[4]!,
+  many[5]!,
+  { id: "more", label: "その他", icon: "more", href: "#more" },
+];
+
+export function Many() {
+  return (
+    <div style={frame}>
+      <AppShell items={many} current="records" bottomItems={manyBottom} bottomCurrent="more" brand={{ name: "見本のアプリ" }} minHeight="24rem" header={<AppBar title="記録" headingLevel={3} />}>
+        <div style={{ padding: "var(--space-4)" }}>
+          <p style={{ marginTop: 0 }}>左には 8 つの画面がすべて出る。</p>
+          <p>下には主な 4 つと「その他」だけが出る。「記録」は下に無いので、「その他」に今いる印が付く。</p>
+        </div>
+      </AppShell>
+    </div>
+  );
+}
+
 export function states(): StateRow[] {
   return [
     { label: "Empty", na: "項目のない切り替えは作らない。中身が空の時の見せ方は、中に置く画面が決める" },
