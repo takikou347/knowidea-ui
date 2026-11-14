@@ -2,5 +2,4 @@ node_modules
 dist
 release
 .astro
-samples/all/gen
 apps/docs/public/

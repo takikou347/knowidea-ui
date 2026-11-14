@@ -1,4 +1,4 @@
-// 自作のアイコンを、大きさ違いで Phosphor の近い物と並べて撮る。samples/shots/icons-custom-*.png に置く。
+// 自作のアイコンを、大きさ違いで Phosphor の近い物と並べて撮る。knowidea の knowidea-ui/samples/shots/icons-custom-*.png に置く (knowidea を隣に置いて使う)。
 // 使い方: node shoot.mjs(playwright-core と /opt/pw-browsers の Chromium を直に指す)
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -19,6 +19,6 @@ const browser = await chromium.launch({ executablePath: "/opt/pw-browsers/chromi
 for (const theme of ["light", "dark"]) {
   const page = await browser.newPage({ viewport: { width: 640, height: 600 }, deviceScaleFactor: 2 });
   await page.setContent(html(theme));
-  await page.screenshot({ path: `../../samples/shots/icons-custom-${theme}.png`, fullPage: true });
+  await page.screenshot({ path: `../../../knowidea/knowidea-ui/samples/shots/icons-custom-${theme}.png`, fullPage: true });
 }
 await browser.close();
