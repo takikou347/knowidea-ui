@@ -1,13 +1,13 @@
 # DESIGN.md
 
-KNOW IDEA の共通のデザインの決まり。見本を作る時と、PR を見る時に読む。
+KNOW IDEA の共通のデザインの決まり。画面を作る時と、PR を見る時に読む。
 計画の正本は develop-docs の `company/proposals/20261012-priorities/proposal.md`(#116)。
 
 ## 今の段
 
 | 段 | 中身 | 状態 |
 | --- | --- | --- |
-| 1a 方向の見本 | 軸を分けた 3 つの方向 A、B、C | B に決定。A と C は比べた記録として残す |
+| 1a 方向の選定 | 軸を分けた 3 つの方向 A、B、C | B に決定 |
 | 1b 土台 | 会社の主の色と会社のアイコン、トークン、UI のアイコン、ドキュメントサイトの骨組み | 主の色 #016C6C(ダーク #4CBFBF)とロゴ「ループ」に決定。決まりは `brand/README.md`。書体は今の IBM Plex Sans / Sans JP / Mono のまま。トークン(`packages/tokens`、DTCG、OKLCH)、UI のアイコンの比較(`packages/icons`)、ドキュメントサイトの骨組み(`apps/docs`、Astro)を置いた。オーナーの選択待ち: 成功の色(おすすめは候補 a、色相 145)、アイコンの組(おすすめは Phosphor regular)、ドキュメントサイトに Astro を採用するか。1c 以降はおすすめの案(成功の色 a、Phosphor regular、Astro)で組んだ。オーナーが別の案を選んだら差し替える |
 | 1c コンポーネント | 44 のコンポーネントを `packages/css`(素の CSS)と `packages/ui`(Base UI 1.9.0 をベースにした React)に置き、`apps/docs` の 1 コンポーネント 1 ページで確かめる。サンプルは `apps/docs`、検査は `pnpm --filter @knowidea/docs check:pages` | 作った。オーナーの目で確かめる |
 | 1d 拡張 | 情報の色(青、色相 250)をトークンに足した。アイコンを 133 個にし、コンポーネントの中のアイコンを `packages/icons` に差し替えた。Tailwind v4 の検査 `examples/tailwind/`、素の HTML の例 `examples/static/`。アプリ別のコンポーネント、アプリ別の上書き(`themes/`)、全部の見本(`samples/all`)は、1e で作り直して消した | 1e に置き換えた |
