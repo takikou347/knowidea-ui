@@ -1,12 +1,12 @@
 # AGENTS.md
 
-KNOW IDEA UI(会社の共通のデザインの部品)。Codex(OpenAI)はここで、デザイン部の Claude から頼まれた案と直しを作る。決めるのはデザイン部の Claude で、作る者と見る者を別の会社のモデルにしている。
+KNOW IDEA UI(会社の共通のデザインのコンポーネント)。Codex(OpenAI)はここで、デザイン部の Claude から頼まれた案と直しを作る。決めるのはデザイン部の Claude で、作る者と見る者を別の会社のモデルにしている。
 
 ## 読むもの
 
 - `DESIGN.md`: デザインの決まりの正本。色、字、角丸、密度、動き
 - `brand/README.md`: 主の色 #016C6C(ダーク #4CBFBF)、ロゴ、書体 IBM Plex
-- `packages/tokens`(トークン)、`packages/css` と `packages/ui`(部品)、`apps/docs`(文書サイト)
+- `packages/tokens`(トークン)、`packages/css` と `packages/ui`(コンポーネント)、`apps/docs`(文書サイト)
 
 ## すること
 

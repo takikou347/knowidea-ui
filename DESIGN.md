@@ -3,9 +3,9 @@
 KNOW IDEA の共通のデザインの決まり。画面を作る時と、PR を見る時に読む。
 計画の正本は develop-docs の `company/proposals/20261012-priorities/proposal.md`(#116)。
 
-## 今の段
+## 今のフェーズ
 
-| 段 | 中身 | 状態 |
+| フェーズ | 中身 | 状態 |
 | --- | --- | --- |
 | 1a 方向の選定 | 軸を分けた 3 つの方向 A、B、C | B に決定 |
 | 1b 土台 | 会社の主の色と会社のアイコン、トークン、UI のアイコン、ドキュメントサイトの骨組み | 主の色 #016C6C(ダーク #4CBFBF)とロゴ「ループ」に決定。決まりは `brand/README.md`。書体は今の IBM Plex Sans / Sans JP / Mono のまま。トークン(`packages/tokens`、DTCG、OKLCH)、UI のアイコンの比較(`packages/icons`)、ドキュメントサイトの骨組み(`apps/docs`、Astro)を置いた。オーナーの選択待ち: 成功の色(おすすめは候補 a、色相 145)、アイコンの組(おすすめは Phosphor regular)、ドキュメントサイトに Astro を採用するか。1c 以降はおすすめの案(成功の色 a、Phosphor regular、Astro)で組んだ。オーナーが別の案を選んだら差し替える |
@@ -34,7 +34,7 @@ KNOW IDEA の共通のデザインの決まり。画面を作る時と、PR を�
 
 大きさで 3 段に分け、全部に同じ値は使わない。
 
-| 段 | 値 | 使う所 |
+| 段階 | 値 | 使う所 |
 | --- | --- | --- |
 | `--radius-1` | 4px | Checkbox、Badge、Status、Skeleton、インラインのコードなど小さな部品 |
 | `--radius-2` | 8px | Button、入力欄、Select、Alert、メニューの項目、Tooltip |
