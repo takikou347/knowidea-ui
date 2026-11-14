@@ -5,13 +5,13 @@ import type { NavItem } from "./NavItems.js";
 import { cx } from "./utils.js";
 
 export interface AppShellProps {
-  /** 画面の切り替え。bottomItems が無い時は 3〜5 個 */
+  /** 画面の切り替え。左にはすべてを出す。bottomItems が無い時は下にも同じ物を出すので 3〜5 個にする(6 個以上だと下ではみ出す) */
   items: NavItem[];
   /** 今いる所の id */
   current?: string;
-  /** 下の切り替え(1024px 未満)だけに出す項目。3〜5 個。項目が 6 個以上ある時に、主な物と「その他」の画面を置く */
+  /** 下の切り替え(1024px 未満)だけに出す項目。3〜5 個。items が 6 個以上の時は必ず渡し、主な物と「その他」を置く。「その他」は、下に出さない画面を並べた画面へ行く項目で、その画面は使う側が作る */
   bottomItems?: NavItem[];
-  /** 下の切り替えで今いる所の id。既定は current。current が bottomItems に無い時に「その他」を指す */
+  /** 下の切り替えで今いる所の id。既定は current。current が bottomItems に無いと下には印が付かないので、その時は「その他」の id を渡す */
   bottomCurrent?: string;
   /** 左の切り替えの上に出す名前(PC の幅だけ) */
   brand?: { name: string; sub?: string };

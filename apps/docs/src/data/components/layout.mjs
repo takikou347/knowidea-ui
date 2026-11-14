@@ -108,16 +108,16 @@ export const layout = [
   },
   {
     slug: "app-shell", name: "AppShell", imports: ["AppShell", "AppBar"],
-    lead: "画面の枠。画面の切り替えを、スマホと iPad(1024px 未満)では下に、PC(1024px 以上)では左に出す。中身は <main> に入る。切り替えの項目は 3〜5 個にする。6 個以上ある時は、下には bottomItems で主な物と「その他」の画面だけを出す。",
+    lead: "画面の枠。画面の切り替えを、スマホと iPad(1024px 未満)では下に、PC(1024px 以上)では左に出す。中身は <main> に入る。切り替えの項目は 3〜5 個にする。6 個以上ある時は、bottomItems を必ず渡し、下には主な物と「その他」だけを出す(渡さないと下ではみ出す)。「その他」は、下に出さない画面を並べた画面へ行く項目で、その画面は使う側が作る。",
     demos: [
       { fn: "Basic", title: "Basic", text: "幅を変えると、切り替えが下と左で入れ替わる。見本の中に置くので minHeight で高さを絞っている。使う時は既定の 100dvh のままにする。", block: true },
       { fn: "Many", title: "Many items", text: "8 つの画面を持つ時。左にはすべて、下には主な 4 つと「その他」だけを出す。今いる画面が下に無い時は bottomCurrent で「その他」に印を付ける。", block: true },
     ],
     props: [
-      ["items", "NavItem[]", "-", "画面の切り替え。{ id, label, icon?, href, count?, disabled? }"],
+      ["items", "NavItem[]", "-", "画面の切り替え。{ id, label, icon?, href, count?, disabled? }。左にはすべて出る。bottomItems が無い時は下にも出るので 3〜5 個"],
       ["current", "string", "-", "今いる所の id。aria-current が付く"],
-      ["bottomItems", "NavItem[]", "items", "下の切り替え(1024px 未満)だけに出す項目。3〜5 個"],
-      ["bottomCurrent", "string", "current", "下の切り替えで今いる所の id"],
+      ["bottomItems", "NavItem[]", "items", "下の切り替え(1024px 未満)だけに出す項目。3〜5 個。items が 6 個以上の時は必ず渡す"],
+      ["bottomCurrent", "string", "current", "下の切り替えで今いる所の id。current が bottomItems に無いと下には印が付かないので、その時は「その他」の id を渡す"],
       ["brand", "{ name, sub? }", "-", "左の切り替えの上に出す名前(PC の幅だけ)"],
       ["header", "ReactNode", "-", "中身の上に置く物。AppBar など"],
       ["sideFooter", "ReactNode", "-", "左の切り替えの下に置く物(PC の幅だけ)"],
