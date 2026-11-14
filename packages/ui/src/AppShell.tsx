@@ -5,10 +5,14 @@ import type { NavItem } from "./NavItems.js";
 import { cx } from "./utils.js";
 
 export interface AppShellProps {
-  /** 画面の切り替え。3〜5 個 */
+  /** 画面の切り替え。bottomItems が無い時は 3〜5 個 */
   items: NavItem[];
   /** 今いる所の id */
   current?: string;
+  /** 下の切り替え(1024px 未満)だけに出す項目。3〜5 個。項目が 6 個以上ある時に、主な物と「その他」の画面を置く */
+  bottomItems?: NavItem[];
+  /** 下の切り替えで今いる所の id。既定は current。current が bottomItems に無い時に「その他」を指す */
+  bottomCurrent?: string;
   /** 左の切り替えの上に出す名前(PC の幅だけ) */
   brand?: { name: string; sub?: string };
   /** 切り替えの nav の名前。既定「画面の切り替え」 */
@@ -28,7 +32,7 @@ export interface AppShellProps {
  * 画面の枠。スマホと iPad(1024px 未満)は下に、PC(1024px 以上)は左に画面の切り替えを出す。
  * 中身は <main> に入る。切り替えは両方を描き、幅で片方だけを見せる(見えない方は読み上げにも出ない)。
  */
-export function AppShell({ items, current, brand, label = "画面の切り替え", header, sideFooter, minHeight, className, style, children }: AppShellProps) {
+export function AppShell({ items, current, bottomItems, bottomCurrent, brand, label = "画面の切り替え", header, sideFooter, minHeight, className, style, children }: AppShellProps) {
   const s = { ...(minHeight ? { "--ki-shell-height": minHeight } : null), ...style } as CSSProperties;
   return (
     <div className={cx("ki-shell", className)} style={s}>
@@ -37,7 +41,7 @@ export function AppShell({ items, current, brand, label = "画面の切り替え
         {header}
         <main className="ki-shell__main">{children}</main>
       </div>
-      <BottomNavigation className="ki-shell__bottom" items={items} current={current} label={label} position="sticky" />
+      <BottomNavigation className="ki-shell__bottom" items={bottomItems ?? items} current={bottomCurrent ?? current} label={label} position="sticky" />
     </div>
   );
 }

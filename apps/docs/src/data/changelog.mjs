@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.12.0",
+    date: "2026-11-14",
+    summary: "AppShell が 6 個以上の画面を持てるようにした。下の切り替えには主な物と「その他」だけを出す。",
+    rows: [
+      ["knowidea-ui", "AppShell に bottomItems と bottomCurrent を足した。下の切り替え(1024px 未満)だけに出す項目と、そこでの今いる所を、左の切り替えと別に渡せる。渡さなければ今までと同じ。"],
+      ["knowidea-css", "変更なし(版をそろえた)。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "AppShell のページに、8 つの画面を持つ見本 Many を足した。"],
+    ],
+  },
+  {
     version: "0.11.0",
     date: "2026-11-10",
     summary: "管理の画面を組む部品を 5 つ足した。画面の枠 AppShell、一覧と詳細 ListDetail、会話 Conversation、変更の表示 DiffView、コードを書く欄 CodeEditor。幅の区切りをトークンにした。",
