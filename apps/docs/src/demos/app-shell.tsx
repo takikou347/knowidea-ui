@@ -61,6 +61,7 @@ export function states(): StateRow[] {
     { label: "Loading", na: "枠は先に決まっているため、ローディング状態を持たない。中身の読み込みは、中に置く画面が Skeleton で示す" },
     { label: "Error", na: "エラー状態を持たない" },
     { label: "Disabled", node: <div style={frame}><AppShell items={[items[0]!, { ...items[1]!, disabled: true }, items[2]!]} current="home" minHeight="12rem"><div style={{ padding: "var(--space-4)" }}>中身</div></AppShell></div>, note: "押せない項目は、切り替えの中で薄く出る" },
+    { label: "Many, current in bottom", node: <div style={frame}><AppShell items={many} current="guard" bottomItems={manyBottom} minHeight="12rem"><div style={{ padding: "var(--space-4)" }}>中身</div></AppShell></div>, note: "今いる画面が下にもある時は、bottomCurrent を省いても下のその項目に印が付く" },
     { label: "Focus", text: "切り替えの項目に Tab で移り、2px のリングが出る。見えていない方の切り替えには focus が移らない" },
   ];
 }

@@ -1188,6 +1188,9 @@ await kb("AppShell(1280px は左、800px は下)", "components/app-shell.html", 
   await page.waitForTimeout(150);
   assert(!(await side.isVisible()) && (await bottom.isVisible()), "800px で下の切り替えだけが出ていない");
   assert((await demo.getByRole("main").count()) === 1, "中身が main に入っていない");
+  // bottomItems を渡さない時は、下にも items と同じ物が出る
+  assert((await bottom.getByRole("link").count()) === 4, "bottomItems が無い時に下が items と同じでない");
+  assert((await bottom.locator('[aria-current="page"]').getByText("ホーム").count()) === 1, "下で今いる所が「ホーム」でない");
 });
 
 // AppShell。項目が多い時は、下には主な物と「その他」だけ
@@ -1203,6 +1206,9 @@ await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", 
   assert((await bottom.locator('[aria-current="page"]').getByText("その他").count()) === 1, "下で今いる所が「その他」でない");
   const w = await bottom.evaluate((el) => el.scrollWidth - el.clientWidth);
   assert(w <= 0, "下の切り替えが横にはみ出す");
+  // bottomCurrent を省いても、今いる画面が下にあればその項目に印が付く
+  const guard = page.locator(".ki-shell__bottom:visible").filter({ has: page.locator('[aria-current="page"]', { hasText: "守り" }) });
+  assert((await guard.count()) === 1, "bottomCurrent を省いた時に、下の「守り」に印が付かない");
 });
 
 // Conversation。自分は右、相手は左
