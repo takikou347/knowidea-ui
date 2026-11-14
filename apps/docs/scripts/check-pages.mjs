@@ -1213,7 +1213,7 @@ await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", 
 });
 
 // AppShell。狭い幅で中身が長い時、Tab で移った所が上の AppBar と下の切り替えに隠れない(WCAG 2.2 の 2.4.11)
-// 見本の枠 .demo は overflow: hidden で sticky を閉じ込める。使う側の画面と同じく、ページに対して貼り付くように clip に替えて確かめる
+// 見本の枠 .demo は overflow: hidden で sticky を閉じ込める。使う側の画面と同じく、ページに対して貼り付くように clip に替えて確かめる。見本の中の枠 (demos/app-shell.tsx の frame) も、見た目は hidden と同じ clip にしてある
 const shellAt = async (page, id) => {
   const demo = page.locator(`#demo-${id} ~ astro-island .demo`).first();
   await demo.evaluate((el) => { el.style.overflow = "clip"; });

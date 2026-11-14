@@ -8,7 +8,6 @@ const items: NavItem[] = [
   { id: "settings", label: "設定", icon: "settings", href: "#settings" },
 ];
 
-// 見本の枠は clip にする。hidden と見た目は同じで、中の sticky がページに対して貼り付く形を check-pages で確かめられる
 const frame = { width: "100%", border: "1px solid var(--color-line)", borderRadius: "var(--radius-3)", overflow: "clip" } as const;
 
 export function Basic() {
