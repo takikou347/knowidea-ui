@@ -1,6 +1,6 @@
 # knowidea-icons
 
-UI ライブラリのアイコン。ベースは Phosphor の regular。比較は `apps/docs` の Icons ページと `samples/tokens/index.html` で確認できる。
+UI ライブラリのアイコン。ベースは Phosphor の regular。比較は `apps/docs` の Icons ページと knowidea の `knowidea-ui/samples/tokens/index.html` で確認できる。
 
 ## 3 組(2026-10-13 に npm で確認)
 
@@ -72,7 +72,7 @@ Phosphor の regular を使う。
 | `hex-lines` | 六角形に 2 本の線 | 使用量の単位などに使う。Phosphor の `coins` は金銭に読めてしまい、費用(`cost`)と区別できない |
 | `chat-prompt` | 吹き出しにプロンプト | 吹き出しに `>_`。`chats` は人の会話、`terminal-window` は端末で、頼んだ 1 回の作業とは違う |
 
-周期のくり返しは `clock-clockwise`、チップは `cpu`、ひらめきは `lightbulb`、待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを `samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `hex-lines` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。他社のロゴは写していない。
+周期のくり返しは `clock-clockwise`、チップは `cpu`、ひらめきは `lightbulb`、待ちは `hand-palm` で足りるので自作しない。自作は Phosphor と同じ 256 の格子、線 16(bold は 24)、端と角は丸。16px と 20px で潰れないことを knowidea の `knowidea-ui/samples/shots/icons-custom-light.png`、`icons-custom-dark.png` で確かめた(16px の bold で `hex-lines` の中の 2 本が詰まる。表の中では `regular` の 20px を使う)。他社のロゴは写していない。
 
 ## 出す形
 
