@@ -128,7 +128,7 @@ export const layout = [
     ],
     classes: [[".ki-shell", "枠"], [".ki-shell__side、__bottom", "左と下の切り替え。幅で片方だけが出る"], [".ki-shell__body、__main", "中身の側と <main>。送られるのは <main> だけで、Tab で止まる"], ["--ki-shell-height", "枠の高さ"]],
     vars: [["--color-bg、--color-text", "枠の色"], ["--space-7", "左の切り替えの幅(5 倍)"]],
-    a11y: ["切り替えは左と下の 2 つを描き、幅で片方だけを見せる。見えない方は display: none なので、読み上げにも Tab にも出ない", "中身は <main> に入る。1 ページに AppShell は 1 つだけ置く", "今いる所の項目に aria-current=\"page\" が付く"],
+    a11y: ["切り替えは左と下の 2 つを描き、幅で片方だけを見せる。見えない方は display: none なので、読み上げにも Tab にも出ない", "中身は <main> に入る。1 ページに AppShell は 1 つだけ置く", "枠は画面の高さ全体を使い、送るのは <main> の中だけ。枠の上下に別の物を置かない", "今いる所の項目に aria-current=\"page\" が付く"],
   },
   {
     slug: "list-detail", name: "ListDetail", imports: ["ListDetail", "List"],
