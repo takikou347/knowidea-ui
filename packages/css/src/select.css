@@ -31,8 +31,8 @@ select.ki-select { appearance: none; -webkit-appearance: none; padding-right: ca
 .ki-select__icon > .ki-icon { width: var(--space-4); height: var(--space-4); }
 
 /* Base UI の popup */
-/* 開いた一覧はダイアログ、シート、ドロワー(31)の前に出す。中に置いても選べるように */
-.ki-select__positioner { z-index: 32; }
+/* 浮く一覧の重なりの順: 背景 30 < ダイアログ、シート、ドロワー 31 < 一覧 32 (Select、Menu、Popover、Combobox、DatePicker) < Tooltip 40 < Toast 50 */
+.ki-select__positioner { z-index: 32; } /* ダイアログ、シート、ドロワー(31)の前に出す */
 .ki-select__popup {
   min-width: var(--anchor-width); max-height: var(--available-height); overflow: auto;
   padding: var(--space-1); border: 1px solid var(--color-line); border-radius: var(--radius-3);

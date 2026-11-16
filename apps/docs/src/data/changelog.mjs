@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.12.2",
+    date: "2026-11-17",
+    summary: "Dialog、Sheet、Drawer の中に置いた Select などの一覧が、後ろに開いて選べない事を直した。",
+    rows: [
+      ["knowidea-css", "Select、Menu、Popover、Combobox、DatePicker の一覧の z-index を 20 から 32 にし、ダイアログ、シート、ドロワー(31)の前に出るようにした。Tooltip(40)と Toast(50)はその前のまま。"],
+      ["knowidea-ui", "変更なし(版をそろえた)。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "Dialog のページに、中に Select を置く見本 With Select を足した。一覧が前に出て、キーボードとマウスで選べる事を check-pages で確かめる。"],
+    ],
+  },
+  {
     version: "0.12.1",
     date: "2026-11-14",
     summary: "AppShell の狭い幅で、Tab で移った所が上の AppBar と下の切り替えに隠れる事と、下の切り替えが中身に重なる事を直した。",
