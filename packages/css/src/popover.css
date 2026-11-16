@@ -1,6 +1,6 @@
 /* ボタンの近くに出る小さな面(Popover)と、打って絞り込む欄(Combobox)。React だけ。
    Popover の素の HTML は popover 属性(<div popover>)、Combobox は <input list> と <datalist> が近い。 */
-.ki-popover__positioner { z-index: 20; max-width: calc(100vw - var(--space-4) * 2); }
+.ki-popover__positioner { z-index: 32; /* ダイアログとシート(31)の前に出す */ max-width: calc(100vw - var(--space-4) * 2); }
 .ki-popover {
   display: grid; gap: var(--space-2); width: max-content; max-width: min(calc(var(--space-7) * 7), calc(100vw - var(--space-4) * 2));
   padding: var(--space-3) var(--space-4) var(--space-4); border: 1px solid var(--color-line); border-radius: var(--radius-3);
@@ -54,7 +54,7 @@
   .ki-combobox__button:hover { color: var(--color-text); }
 }
 
-.ki-combobox__positioner { z-index: 20; }
+.ki-combobox__positioner { z-index: 32; } /* ダイアログとシート(31)の前に出す */
 .ki-combobox__popup {
   width: var(--anchor-width); max-width: calc(100vw - var(--space-4) * 2); max-height: min(calc(var(--size-hit) * 7.5), var(--available-height)); overflow-y: auto; overscroll-behavior: contain;
   padding: var(--space-1); border: 1px solid var(--color-line); border-radius: var(--radius-3);

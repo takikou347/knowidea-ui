@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogClose, ConfirmDialog, Button, Field, Input, Alert, Icon, Spinner, Status } from "knowidea-ui";
+import { Dialog, DialogClose, ConfirmDialog, Button, Field, Input, Select, Alert, Icon, Spinner, Status } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {
@@ -11,6 +11,29 @@ export function Basic() {
       actions={<><DialogClose>キャンセル</DialogClose><DialogClose variant="primary">保存</DialogClose></>}
     >
       <Field label="新しい名前"><Input placeholder="例: sample-name" /></Field>
+    </Dialog>
+  );
+}
+
+/** 中に Select を置く例。開いた一覧はダイアログの前に出る */
+export function WithSelect() {
+  return (
+    <Dialog
+      trigger={<Button variant="secondary">担当を選ぶ</Button>}
+      title="担当を変える"
+      actions={<><DialogClose>キャンセル</DialogClose><DialogClose variant="primary">保存</DialogClose></>}
+    >
+      <Field label="担当">
+        <Select
+          aria-label="担当"
+          placeholder="選ぶ"
+          options={[
+            { value: "design", label: "デザイン" },
+            { value: "dev", label: "開発" },
+            { value: "review", label: "レビュー" },
+          ]}
+        />
+      </Field>
     </Dialog>
   );
 }

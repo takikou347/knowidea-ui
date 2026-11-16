@@ -32,6 +32,7 @@ export const feedback = [
     lead: "現在の作業を中断して、ユーザーに 1 つのことを求める。フォーカスは中に閉じ込められ、Esc で閉じ、閉じると開いたボタンに戻る。取り消せない操作には確認用の ConfirmDialog を使い、外側をクリックしても閉じないようにする。",
     demos: [
       { fn: "Basic", title: "Basic", text: "入力を求める例。外側をクリックすると閉じる。" },
+      { fn: "WithSelect", title: "With Select", text: "中に Select や Menu などの開く部品を置ける。開いた一覧はダイアログの前に出て、マウスでもキーボードでも選べる。" },
       { fn: "Confirm", title: "Confirm (ConfirmDialog)", text: "取り消せない操作に使う。外側をクリックしても閉じず、最初のフォーカスはキャンセル側に置かれる。" },
       { fn: "Verify", title: "Verify the result", text: "確認ダイアログでリクエストを送り、リクエスト中の表示を経て、結果をマークで示す。反映まで時間がかかる操作に使う。" },
     ],

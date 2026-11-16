@@ -41,7 +41,7 @@
 .ki-datepicker { display: flex; align-items: stretch; gap: var(--space-2); width: 100%; }
 .ki-datepicker > .ki-select { flex: 1; min-width: 0; }
 .ki-datepicker__value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.ki-datepicker__positioner { z-index: 20; max-width: calc(100vw - var(--space-4) * 2); }
+.ki-datepicker__positioner { z-index: 32; /* ダイアログとシート(31)の前に出す */ max-width: calc(100vw - var(--space-4) * 2); }
 .ki-datepicker__popup {
   padding: var(--space-2); border: 1px solid var(--color-line); border-radius: var(--radius-3);
   background: var(--color-surface); color: var(--color-text); box-shadow: var(--shadow-pop); outline: 0;

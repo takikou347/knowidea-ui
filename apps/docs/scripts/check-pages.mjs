@@ -2,7 +2,7 @@
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
 //  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  すべて dist を /a/b/ の下で配って確かめる(どの場所に置いても壊れないこと。404 はコンソールの誤りに出る)
-//  2. 操作: ダイアログ(閉じ込め、Esc)、シート(下へ引いて閉じる)、SegmentedControl、Calendar、DatePicker、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
+//  2. 操作: ダイアログ(閉じ込め、Esc、中の Select)、シート(下へ引いて閉じる)、SegmentedControl、Calendar、DatePicker、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
 // 使い方: pnpm --filter @knowidea/docs build の後に pnpm --filter @knowidea/docs check:pages
 // ONLY=メニュー のように名前の一部を渡すと、その操作だけ回す
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -219,6 +219,34 @@ await kb("ダイアログ(閉じ込め、Esc、戻る)", "components/dialog.html
   await page.keyboard.press("Escape");
   await dlg.waitFor({ state: "hidden" });
   assert(await page.evaluate(() => document.activeElement?.textContent?.includes("ダイアログを開く")), "閉じた後に focus が開いたボタンへ戻らない");
+});
+
+await kb("ダイアログの中の Select(一覧が前に出る、キーボードとマウスで選ぶ)", "components/dialog.html", async (page) => {
+  await page.getByRole("button", { name: "担当を選ぶ" }).first().click();
+  const dlg = page.getByRole("dialog").first();
+  await dlg.waitFor({ state: "visible" });
+  const field = dlg.getByRole("combobox", { name: "担当" });
+  // 一覧の項目の真ん中で一番上にある物が、その項目自身であること(ダイアログや背景に隠れていない)
+  const onTop = (name) => page.getByRole("option", { name }).evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    return !!document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('[role="option"]')?.isSameNode(el);
+  });
+  await field.focus();
+  await press(page, "ArrowDown");
+  await page.getByRole("listbox").waitFor({ state: "visible" });
+  assert(await onTop("開発"), "開いた一覧がダイアログの後ろに出る");
+  await press(page, "ArrowDown");
+  await press(page, "Enter");
+  await page.getByRole("listbox").waitFor({ state: "hidden" });
+  assert((await field.textContent()).includes("開発"), "キーボードで選べない");
+  assert(await dlg.isVisible(), "選んだらダイアログが閉じた");
+  await field.click();
+  await page.getByRole("listbox").waitFor({ state: "visible" });
+  assert(await onTop("レビュー"), "マウスで開いた一覧がダイアログの後ろに出る");
+  await page.getByRole("option", { name: "レビュー" }).click();
+  await page.getByRole("listbox").waitFor({ state: "hidden" });
+  assert((await field.textContent()).includes("レビュー"), "マウスで選べない");
+  assert(await dlg.isVisible(), "選んだらダイアログが閉じた");
 });
 
 await kb("確かめる操作(取り消し側が先 → 依頼中 → 止めた)", "components/dialog.html", async (page) => {
