@@ -10,7 +10,7 @@ tools: Read, Grep, Glob, Bash
 - 頼まれた事を、正しく、過不足なくしているか
 - この CLAUDE.md、knowidea の CLAUDE.md、`.claude/rules/` に合っているか
 - `DESIGN.md` の「レビューの表」の問いに、差分が触るコンポーネントとページで答える。コントラスト、44px、focus、5 つの状態、幅 390px は数か画面で確かめる
-- コンポーネントを足す差分は、CSS、React、文書のページ、check-pages の確かめの 4 つがそろっているか (スキル `add-component`)
+- コンポーネントを足す差分は、CSS と index.css、React と index.ts、見本の tsx、文書の項目、check-pages の確かめがそろっているか (スキル `add-component`)
 - 版を上げる差分は、4 つのパッケージと apps/docs の版がそろい、changelog に 1 項目あるか (スキル `bump-version`)
 - `pnpm check` と `pnpm -r build` が通るか。走らせて確かめる
 - お金が増えること、外部連携に当たる時は、承認でも「オーナーの はい が要る」と書く
