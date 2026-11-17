@@ -115,6 +115,7 @@ export const layout = [
       { fn: "Long", title: "Long content", text: "中身が枠より長い時。中身だけが送られ、上の AppBar と下の切り替えは中身に重ならない。Tab で移った所は帯に隠れない。", block: true },
       { fn: "LongText", title: "Long text", text: "押せる物の無い長い中身。<main> に Tab で入り、矢印のキーで中身を送れる。", block: true },
       { fn: "WithFooter", title: "With footer", text: "中身の下に後から知らせを出す。出ても中身の上の端と見出しは動かず、中身の段が下から縮む。", block: true },
+      { fn: "Nonce", title: "CSP nonce", text: "CSP の style-src を nonce で許す画面では、cspNonce に画面の nonce を渡す。Select の一覧を開いた時に差し込まれる <style> にも nonce が付く。", block: true },
     ],
     props: [
       ["items", "NavItem[]", "-", "画面の切り替え。{ id, label, icon?, href, count?, disabled? }。左にはすべて出る。bottomItems が無い時は下にも出るので 3〜5 個"],

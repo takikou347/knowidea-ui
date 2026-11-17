@@ -1222,6 +1222,16 @@ await kb("AppShell(1280px は左、800px は下)", "components/app-shell.html", 
   assert((await bottom.locator('[aria-current="page"]').getByText("ホーム").count()) === 1, "下で今いる所が「ホーム」でない");
 });
 
+// AppShell。cspNonce を渡すと、中の部品 (ポータルに出る一覧も) が差し込む <style> に nonce が付く。CSP の style-src を nonce で許す画面で断られない
+await kb("AppShell(cspNonce を渡すと、Select を開いて差し込まれる <style> に nonce が付く)", "components/app-shell.html", async (page) => {
+  const demo = page.locator("#demo-nonce ~ astro-island .demo").first();
+  await demo.getByRole("combobox", { name: "通知の間隔" }).click();
+  await page.getByRole("option", { name: "毎週" }).waitFor();
+  const styles = await page.evaluate(() => [...document.querySelectorAll('style[data-href="base-ui-disable-scrollbar"]')].map((e) => e.nonce || e.getAttribute("nonce") || ""));
+  assert(styles.length > 0, "Select を開いても Base UI の <style> が無い");
+  assert(styles.every((n) => n === "ki-demo-nonce"), `nonce の無い <style> がある: ${JSON.stringify(styles)}`);
+});
+
 // AppShell。項目が多い時は、下には主な物と「その他」だけ
 await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", "components/app-shell.html", async (page) => {
   const demo = page.locator("#demo-many ~ astro-island .demo").first();

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, AppBar, AppShell, Button, type NavItem } from "knowidea-ui";
+import { Alert, AppBar, AppShell, Button, Select, type NavItem } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: NavItem[] = [
@@ -116,6 +116,18 @@ export function WithFooter() {
           {work.map((w) => (
             <p key={w}>{w}の説明。</p>
           ))}
+        </div>
+      </AppShell>
+    </div>
+  );
+}
+
+export function Nonce() {
+  return (
+    <div style={frame}>
+      <AppShell items={items} current="settings" brand={{ name: "見本のアプリ" }} minHeight="24rem" cspNonce="ki-demo-nonce" header={<AppBar title="設定" headingLevel={3} />}>
+        <div style={{ padding: "var(--space-4)" }}>
+          <Select aria-label="通知の間隔" options={[{ value: "daily", label: "毎日" }, { value: "weekly", label: "毎週" }]} placeholder="間隔を選択" />
         </div>
       </AppShell>
     </div>
