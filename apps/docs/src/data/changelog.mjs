@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.15.0",
+    date: "2026-11-17",
+    summary: "AppShell に cspNonce を足し、style-src を nonce で許す CSP の画面でも、Select などが差し込む <style> が断られないようにした。",
+    rows: [
+      ["knowidea-ui", "AppShell に cspNonce を足した。渡すと Base UI の CSPProvider で枠ごと包み、中の部品とポータルに出る一覧が差し込む <style> に nonce が付く。"],
+      ["knowidea-css", "変更なし(版をそろえた)。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "AppShell のページの props に cspNonce を足した。"],
+    ],
+  },
+  {
     version: "0.14.0",
     date: "2026-11-17",
     summary: "AppShell に footer を足した。後から出る知らせを中身の下に置くと、出ても中身の上の端と見出しが動かない。",

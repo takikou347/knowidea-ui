@@ -127,6 +127,7 @@ export const layout = [
       ["sideFooter", "ReactNode", "-", "左の切り替えの下に置く物(PC の幅だけ)"],
       ["label", "string", '"画面の切り替え"', "切り替えの nav の名前"],
       ["minHeight", "string", '"100dvh"', "枠の高さ。中身が長い時は <main> の中だけが送られる"],
+      ["cspNonce", "string", "-", "画面の CSP の nonce。中の部品 (ポータルに出る一覧も) が差し込む <style> に付き、style-src を nonce で許す画面で断られない"],
     ],
     classes: [[".ki-shell", "枠"], [".ki-shell__side、__bottom", "左と下の切り替え。幅で片方だけが出る"], [".ki-shell__body、__main", "中身の側と <main>。送られるのは <main> だけで、Tab で止まる"], [".ki-shell__footer", "中身の下の段。footer を渡した時だけ出る (null と false は渡さない扱い)"], ["--ki-shell-height", "枠の高さ"]],
     vars: [["--color-bg、--color-text", "枠の色"], ["--space-7", "左の切り替えの幅(5 倍)"]],

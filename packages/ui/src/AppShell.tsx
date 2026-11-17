@@ -1,3 +1,4 @@
+import { CSPProvider } from "@base-ui/react/csp-provider";
 import type { CSSProperties, ReactNode } from "react";
 import { BottomNavigation } from "./BottomNavigation.js";
 import { Drawer } from "./Drawer.js";
@@ -25,6 +26,8 @@ export interface AppShellProps {
   sideFooter?: ReactNode;
   /** 枠の高さ。既定 100dvh。中身が長い時は <main> の中だけが送られる。見本の中に置く時に絞る */
   minHeight?: string;
+  /** 画面の CSP の nonce。渡すと、中の部品が差し込む <style> (Select などがスクロールを止める間の見た目) に付き、style-src を nonce で許す画面で断られない */
+  cspNonce?: string;
   className?: string;
   style?: CSSProperties;
   children?: ReactNode;
@@ -36,9 +39,9 @@ export interface AppShellProps {
  * <main> は Tab で止まり、押せる物の無い長い中身も矢印のキーで送れる。
  * 切り替えは両方を描き、幅で片方だけを見せる(見えない方は読み上げにも出ない)。
  */
-export function AppShell({ items, current, bottomItems, bottomCurrent, brand, label = "画面の切り替え", header, footer, sideFooter, minHeight, className, style, children }: AppShellProps) {
+export function AppShell({ items, current, bottomItems, bottomCurrent, brand, label = "画面の切り替え", header, footer, sideFooter, minHeight, cspNonce, className, style, children }: AppShellProps) {
   const s = { ...(minHeight ? { "--ki-shell-height": minHeight } : null), ...style } as CSSProperties;
-  return (
+  const shell = (
     <div className={cx("ki-shell", className)} style={s}>
       <Drawer className="ki-shell__side" variant="permanent" items={items} current={current} brand={brand} label={label} footer={sideFooter} />
       <div className="ki-shell__body">
@@ -52,4 +55,6 @@ export function AppShell({ items, current, bottomItems, bottomCurrent, brand, la
       <BottomNavigation className="ki-shell__bottom" items={bottomItems ?? items} current={bottomCurrent ?? current} label={label} />
     </div>
   );
+  // ポータルに出る一覧にも届くよう、Base UI の CSP の設定で枠ごと包む
+  return cspNonce ? <CSPProvider nonce={cspNonce}>{shell}</CSPProvider> : shell;
 }
