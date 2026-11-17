@@ -349,6 +349,7 @@ export const display = [
       ["onSave", "(value) => void", "-", "Ctrl+S か Cmd+S"],
       ["height", "string", "-", "高さ(CSS の長さ)。無ければ中身に合わせて伸びる"],
       ["extensions", "Extension[]", "-", "CodeMirror の拡張を足す"],
+      ["cspNonce", "string", "-", "CSP の nonce。CodeMirror は見た目を <style> で差し込むので、style-src を nonce で許す画面で渡す。作った時の値だけを使う"],
     ],
     classes: [[".ki-editor", "本体。data-readonly、data-fixed(height を渡した時)"], [".ki-editor__hover", "合わせた所の説明"], [".tok-keyword、.tok-string、.tok-comment など", "色分け(@lezer/highlight のクラス)"]],
     vars: [["--ki-editor-height", "高さ(height で入る)"], ["--color-primary、--color-success、--color-warn、--color-info", "色分け。どれも面の上で 4.5:1 以上"], ["--font-mono", "中身のフォント"]],

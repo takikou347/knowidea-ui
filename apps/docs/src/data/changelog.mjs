@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.13.0",
+    date: "2026-11-17",
+    summary: "CodeEditor に cspNonce を足し、style-src 'self' の CSP の画面でも CodeMirror の見た目が断られずに付くようにした。",
+    rows: [
+      ["knowidea-ui", "CodeEditor に cspNonce を足した。渡すと CodeMirror が差し込む <style> に nonce が付き、CSP の style-src を nonce で許す画面で見た目が付く。作った時の値だけを使う。"],
+      ["knowidea-css", "変更なし(版をそろえた)。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "CodeEditor のページの props に cspNonce を足した。"],
+    ],
+  },
+  {
     version: "0.12.2",
     date: "2026-11-17",
     summary: "Dialog、Sheet、Drawer の中に置いた Select などの一覧が、後ろに開いて選べない事を直した。",

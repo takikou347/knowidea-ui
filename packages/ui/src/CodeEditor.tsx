@@ -69,6 +69,8 @@ export interface CodeEditorProps {
   height?: string;
   /** CodeMirror の拡張を足す */
   extensions?: Extension[];
+  /** CSP の nonce。CodeMirror は見た目を <style> で差し込むので、style-src を nonce で許す画面で渡す。作った時の値だけを使う */
+  cspNonce?: string;
   className?: string;
   style?: CSSProperties;
 }
@@ -123,7 +125,7 @@ const infoField = StateField.define<Tooltip | null>({
  * 外から value を替えると(別のファイルを開いた時など)、onChange は呼ばず、元に戻す履歴を空にする。
  * knowidea-ui/editor から読み込む(CodeMirror を、使う画面でだけ読み込むため)。
  */
-export function CodeEditor({ value, onChange, label, language = "text", readOnly = false, wrap, diagnostics, complete, hover, onDefinition, onSave, height, extensions, className, style }: CodeEditorProps) {
+export function CodeEditor({ value, onChange, label, language = "text", readOnly = false, wrap, diagnostics, complete, hover, onDefinition, onSave, height, extensions, cspNonce, className, style }: CodeEditorProps) {
   const host = useRef<HTMLDivElement>(null);
   const view = useRef<EditorView | null>(null);
   // ready は、エディタを作った回数と、外から中身を入れ替えた回数。替わるたびに、下の effect が今の設定を送り直す
@@ -193,6 +195,8 @@ export function CodeEditor({ value, onChange, label, language = "text", readOnly
           }),
           EditorView.updateListener.of((u) => { if (u.docChanged) cb.current.onChange?.(u.state.doc.toString()); }),
           p.label.of([]), p.language.of([]), p.readOnly.of([]), p.wrap.of([]), p.extra.of([]),
+          // 見た目の <style> は作った時に差し込むので、nonce は作る時から持たせる
+          cspNonce ? EditorView.cspNonce.of(cspNonce) : [],
     ];
     const v = new EditorView({ parent: host.current, state: EditorState.create({ doc: value, extensions: base.current }) });
     view.current = v;
