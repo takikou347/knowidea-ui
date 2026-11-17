@@ -10,7 +10,7 @@ KNOW IDEA の画面のコンポーネント(公開)。組織の決まりは taki
 
 ## バージョンと配り方
 
-- 版はスキル `release`。4 つのパッケージと apps/docs の版をそろえて上げ、changelog に 1 項目足す。版を上げた package.json が main に入ると npm に出る。足したら minor、直しだけなら patch
+- 版はスキル `bump-version`。4 つのパッケージと apps/docs の版をそろえて上げ、changelog に 1 項目足す。版を上げた package.json が main に入ると npm に出る。足したら minor、直しだけなら patch
 
 ## 書き方
 
