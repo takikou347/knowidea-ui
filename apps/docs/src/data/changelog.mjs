@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.14.0",
+    date: "2026-11-17",
+    summary: "AppShell に footer を足した。後から出る知らせを中身の下に置くと、出ても中身の上の端と見出しが動かない。",
+    rows: [
+      ["knowidea-ui", "AppShell に footer を足した。<main> の後ろ、下の切り替えの上に置き、中身の段を下から縮める。渡さなければ今までと同じ。"],
+      ["knowidea-css", ".ki-shell__footer を足した。高くても枠の 4 割で止め、中は送れる。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "AppShell のページに見本 With footer を足した。360px と 1280px で、footer が出ても消えても中身の上の端が動かない事、中身と切り替えに重ならない事、axe の critical と serious が無い事を check-pages で確かめる。"],
+    ],
+  },
+  {
     version: "0.13.0",
     date: "2026-11-17",
     summary: "CodeEditor に cspNonce を足し、style-src 'self' の CSP の画面でも CodeMirror の見た目が断られずに付くようにした。",

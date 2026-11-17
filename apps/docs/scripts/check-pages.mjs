@@ -1316,6 +1316,58 @@ await kb("AppShell(360px、長い文は <main> に Tab で入り PageDown で送
   assert(after > before, `PageDown で <main> が送られない(scrollTop ${before} → ${after}、ページは ${pageBefore} → ${await page.evaluate(() => scrollY)})`);
 }, { width: 360, height: 780 });
 
+// AppShell。中身の下の footer は、出ても中身の上の端を動かさず、中身と切り替えに重ならない。無い時は段を作らない。高くても中身の段は送れる
+for (const size of [{ width: 360, height: 780 }, { width: 1280, height: 800 }]) {
+  await kb(`AppShell(${size.width}px、footer が出ても中身の上の端が動かず、重ならない)`, "components/app-shell.html", async (page) => {
+    const basic = page.locator("#demo-basic ~ astro-island .demo").first();
+    assert((await basic.locator(".ki-shell__footer").count()) === 0, "footer を渡さない時に段がある");
+    // 見本は知らせを出す前に footer へ null を渡している
+    assert((await page.locator("#demo-withfooter ~ astro-island .demo").first().locator(".ki-shell__footer").count()) === 0, "footer に null を渡した時に段がある");
+    const demo = await shellAt(page, "withfooter");
+    await demo.scrollIntoViewIfNeeded();
+    const main = demo.locator(".ki-shell__main");
+    const heading = demo.getByRole("heading", { name: "一覧" });
+    const top = async () => ({ main: (await main.boundingBox()).y, heading: (await heading.boundingBox()).y });
+    const before = await top();
+    await demo.getByRole("button", { name: "知らせを出す", exact: true }).click();
+    const footer = demo.locator(".ki-shell__footer");
+    await footer.getByText("後から届いた知らせ").waitFor();
+    const after = await top();
+    assert(Math.abs(before.main - after.main) < 1 && Math.abs(before.heading - after.heading) < 1, `footer が出て中身の上の端が動いた(${JSON.stringify(before)} → ${JSON.stringify(after)})`);
+    const m = await main.boundingBox();
+    const f = await footer.boundingBox();
+    assert(f.y >= m.y + m.height - 1, "footer が中身に重なる");
+    const bottom = demo.locator(".ki-shell__bottom");
+    if (await bottom.isVisible()) {
+      const b = await bottom.boundingBox();
+      assert(f.y + f.height <= b.y + 1, "footer が下の切り替えに重なる");
+    }
+    // 中身の段は残り、自分で送れる
+    assert(m.height > 0 && (await main.evaluate((el) => el.scrollHeight > el.clientHeight)), "footer が出た後に中身の段が送れない");
+    await page.addScriptTag({ content: axeSource });
+    const found = await demo.evaluate(async (el) => {
+      const r = await window.axe.run(el, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] } });
+      return r.violations.filter((v) => v.impact === "critical" || v.impact === "serious").map((v) => `${v.id}(${v.nodes.length})`);
+    });
+    assert(found.length === 0, found.join(", "));
+    await footer.getByRole("button", { name: "読んだ" }).click();
+    await page.waitForTimeout(100);
+    const gone = await top();
+    assert(Math.abs(before.main - gone.main) < 1 && Math.abs(before.heading - gone.heading) < 1, "footer が消えて中身の上の端が動いた");
+    // 長い footer は枠の 4 割で止まり、中が送れ、中身の段が残る
+    await demo.getByRole("button", { name: "長い知らせを出す" }).click();
+    await footer.getByText("後から届いた知らせ").waitFor();
+    const shell = await demo.locator(".ki-shell__body").boundingBox();
+    const lf = await footer.boundingBox();
+    const lm = await main.boundingBox();
+    assert(lf.height <= shell.height * 0.4 + 1, `長い footer が枠の 4 割を超える(${lf.height} / ${shell.height})`);
+    assert(await footer.evaluate((el) => el.scrollHeight > el.clientHeight), "長い footer の中が送れない");
+    assert(lm.height > 0 && (await main.evaluate((el) => el.scrollHeight > el.clientHeight)), "長い footer で中身の段が送れない");
+    const top2 = await top();
+    assert(Math.abs(before.main - top2.main) < 1, "長い footer で中身の上の端が動いた");
+  }, size);
+}
+
 // Conversation。自分は右、相手は左
 await kb("Conversation(自分は右、相手は左、続きは名前を省く)", "components/conversation.html", async (page) => {
   const demo = page.locator("#demo-basic ~ astro-island .demo").first();

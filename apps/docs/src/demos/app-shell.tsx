@@ -1,4 +1,5 @@
-import { AppBar, AppShell, Button, type NavItem } from "knowidea-ui";
+import { useState } from "react";
+import { Alert, AppBar, AppShell, Button, type NavItem } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 const items: NavItem[] = [
@@ -80,6 +81,40 @@ export function LongText() {
         <div style={{ padding: "var(--space-4)" }}>
           {work.map((w) => (
             <p key={w}>{w}の説明。押せる物の無い長い中身でも、キーボードで中身を送れる。</p>
+          ))}
+        </div>
+      </AppShell>
+    </div>
+  );
+}
+
+const longNotice = "長い知らせの続き。".repeat(40);
+
+export function WithFooter() {
+  const [shown, setShown] = useState<"none" | "short" | "long">("none");
+  return (
+    <div style={frame}>
+      <AppShell
+        items={items}
+        current="list"
+        brand={{ name: "見本のアプリ" }}
+        minHeight="24rem"
+        header={<AppBar title="一覧" headingLevel={3} />}
+        footer={
+          shown === "none" ? null : (
+            <Alert tone="warn" title="後から届いた知らせ" live action={<Button variant="secondary" onClick={() => setShown("none")}>読んだ</Button>}>
+              {shown === "long" ? longNotice : "知らせが出ても、中身の上の端は動かない。中身の段が下から縮む。"}
+            </Alert>
+          )
+        }
+      >
+        <div style={{ padding: "var(--space-4)" }}>
+          <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
+            <Button onClick={() => setShown("short")}>知らせを出す</Button>
+            <Button variant="secondary" onClick={() => setShown("long")}>長い知らせを出す</Button>
+          </div>
+          {work.map((w) => (
+            <p key={w}>{w}の説明。</p>
           ))}
         </div>
       </AppShell>
