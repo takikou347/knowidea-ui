@@ -1,5 +1,4 @@
-import { useRef, type ReactNode } from "react";
-import { Checkbox } from "./Choice.js";
+import { lazy, Suspense, useRef, type ReactNode } from "react";
 import { EmptyState } from "./EmptyState.js";
 import { Icon } from "./Icon.js";
 import { useListMotion } from "./motion.js";
@@ -30,6 +29,9 @@ export interface ListItemProps {
   selectLabel?: string;
 }
 
+/** 選ぶ枠。選べる一覧の時だけ読む (選べない一覧の画面の最初の JS に入れない) */
+const Checkbox = lazy(() => import("./Choice.js").then((m) => ({ default: m.Checkbox })));
+
 /** 1 行。List の外では使えない(List の中に並べる)。 */
 export function ListItem({ item, selected, onSelectedChange, selectLabel }: ListItemProps) {
   const text = typeof item.title === "string" ? item.title : undefined;
@@ -37,7 +39,9 @@ export function ListItem({ item, selected, onSelectedChange, selectLabel }: List
     <li className="ki-list__item" data-id={item.id} data-selected={selected ? "" : undefined} data-disabled={item.disabled ? "" : undefined}>
       {onSelectedChange ? (
         <div className="ki-list__pick">
-          <Checkbox aria-label={selectLabel ?? `${text ?? "この行"} を選択`} checked={!!selected} disabled={item.disabled} onCheckedChange={onSelectedChange} />
+          <Suspense fallback={null}>
+            <Checkbox aria-label={selectLabel ?? `${text ?? "この行"} を選択`} checked={!!selected} disabled={item.disabled} onCheckedChange={onSelectedChange} />
+          </Suspense>
         </div>
       ) : null}
       <div className="ki-list__main">
@@ -86,12 +90,14 @@ export function List({
       <ul ref={box} className="ki-list" aria-label={label} aria-busy={state === "loading" || undefined} data-selectable={selectable ? "" : undefined}>
         {selectable && state === "ready" && items.length > 0 ? (
           <li className="ki-list__head">
-            <Checkbox
-              label={selected.length > 0 ? selectedLabel.replace("{count}", String(selected.length)) : selectAllLabel}
-              checked={all}
-              indeterminate={some && !all}
-              onCheckedChange={(c) => onSelectedChange!(c ? selectableItems.map((i) => i.id) : [])}
-            />
+            <Suspense fallback={null}>
+              <Checkbox
+                label={selected.length > 0 ? selectedLabel.replace("{count}", String(selected.length)) : selectAllLabel}
+                checked={all}
+                indeterminate={some && !all}
+                onCheckedChange={(c) => onSelectedChange!(c ? selectableItems.map((i) => i.id) : [])}
+              />
+            </Suspense>
             {summary ? <span>{summary}</span> : null}
           </li>
         ) : null}

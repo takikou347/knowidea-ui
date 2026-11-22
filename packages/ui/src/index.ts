@@ -1,4 +1,4 @@
-export { Icon, type IconProps, type IconName } from "./Icon.js";
+export { Icon, registerIcons, type IconProps, type IconName } from "./Icon.js";
 export { Spinner, type SpinnerProps } from "./Spinner.js";
 export { Button, type ButtonProps, type ButtonVariant } from "./Button.js";
 export { IconButton, type IconButtonProps } from "./IconButton.js";

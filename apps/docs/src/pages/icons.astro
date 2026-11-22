@@ -5,7 +5,7 @@ import IconBrowser from "../components/IconBrowser.tsx";
 import { icons } from "../data/examples.mjs";
 import { links } from "../lib/paths.mjs";
 import all from "knowidea-icons/dist/icons-data.json" with { type: "json" };
-const { react, html } = icons;
+const { react, register, html } = icons;
 const { href } = links(Astro.url.pathname);
 ---
 <Base title="Icons" description="用途ごとに分類したアイコン。名前で検索してコピーできる">
@@ -16,6 +16,9 @@ const { href } = links(Astro.url.pathname);
   <h2 id="use">Usage</h2>
   <h3 id="use-react">React</h3>
   <Code code={react} label="React icon example" />
+  <h3 id="use-by-name">Icon by name (knowidea-ui)</h3>
+  <p>knowidea-ui の <code>Icon</code> は、部品が中で使うアイコンだけを最初から持つ。ほかの名前は初めて描く時にその絵だけを読み、読み終えるまでは同じ大きさの空きを描く。画面の最初の JS に全部の絵が入らない。最初の画面で名前で描くアイコンは <code>registerIcons</code> で足すと、待たずに描く。</p>
+  <Code code={register} label="registerIcons example" />
   <h3 id="use-html">Plain HTML</h3>
   <Code code={html} lang="html" label="Plain HTML icon example" />
   <p><code>sprite.svg</code> の置き方は <a href={href("getting-started/html")}>Plain HTML</a> を参照。<code>href</code> は置いた場所に合わせる。</p>

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { execSync } from "node:child_process";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Icon, ChevronRightIcon, iconNames } from "./dist/react/index.js";
+import { Icon, ChevronRightIcon, iconNames, iconLoaders } from "./dist/react/index.js";
 
 const { icons } = JSON.parse(fs.readFileSync("icons.json", "utf8"));
 const fail = (m) => { console.error("NG:", m); process.exit(1); };
@@ -19,5 +19,8 @@ const h = renderToStaticMarkup(createElement(Icon, { name: "chevron-right", size
 if (!h.includes('width="16"') || !h.includes("aria-hidden")) fail("Icon の描画: " + h);
 const t = renderToStaticMarkup(createElement(ChevronRightIcon, { title: "進む" }));
 if (!t.includes("<title>進む</title>") || !t.includes('role="img"')) fail("title: " + t);
+if (Object.keys(iconLoaders).length !== icons.length) fail("iconLoaders の数");
+const loaded = await iconLoaders["chevron-right"]();
+if (loaded !== ChevronRightIcon) fail("iconLoaders が名前の部品を返さない");
 execSync("npx tsc -p test/tsconfig.json", { stdio: "inherit" });
 console.log("OK:", icons.length, "個、svg", icons.length * 2, "枚、型もよし");

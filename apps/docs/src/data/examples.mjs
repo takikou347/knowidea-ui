@@ -279,6 +279,16 @@ export function IconsPageExample() {
     </>
   );
 }`,
+  // knowidea-ui の Icon は部品が中で使う物だけを最初から持ち、ほかの名前は初めて描く時に読む
+  register: `import { HomeIcon, LightbulbIcon } from "knowidea-icons/react";
+import { Icon, registerIcons } from "knowidea-ui";
+
+// 最初の画面で名前で描くアイコンを足すと、読み込みを待たずに描く
+registerIcons({ home: HomeIcon, lightbulb: LightbulbIcon });
+
+export function IconsRegisterExample() {
+  return <Icon name="lightbulb" label="案" />;
+}`,
   // sprite.svg は Plain HTML のページの手順で assets/ に取り出す
   html: `<svg class="ki-icon" aria-hidden="true"><use href="assets/sprite.svg#calendar"/></svg>`,
 };

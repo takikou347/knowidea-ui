@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.16.0",
+    date: "2026-11-22",
+    summary: "名前で描くアイコンを使う時だけ読む形にし、画面の最初の JS に全部のアイコンの絵が入らないようにした。List は選べる一覧の時だけ選ぶ枠を読む。",
+    rows: [
+      ["knowidea-ui", "Icon は部品が中で使うアイコンだけを最初から持ち、ほかの名前は初めて描く時にその絵だけを読む。最初の画面で使う物を先に足す registerIcons を足した。List は選べる一覧の時だけ Checkbox を読む。"],
+      ["knowidea-css", "アイコンを読み終えるまでの空き (span の .ki-icon) を inline-block にし、絵と同じ大きさを取る。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "名前ごとの部品を使う時に読む iconLoaders を足した。"],
+      ["Docs", "Icons のページに、knowidea-ui の Icon を名前で描く時の読み方と registerIcons の見本を足した。"],
+    ],
+  },
+  {
     version: "0.15.0",
     date: "2026-11-17",
     summary: "AppShell に cspNonce を足し、style-src を nonce で許す CSP の画面でも、Select などが差し込む <style> が断られないようにした。",

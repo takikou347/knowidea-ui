@@ -71,6 +71,7 @@ function writeReactApp(dir, { tailwind: tw }) {
   docs("ColorMode", react.colorMode);
   docs("Overriding", overriding.react);
   docs("IconsPage", icons.react);
+  docs("IconsRegister", icons.register);
   if (tw) docs("TailwindUse", tailwind.use);
 
   const rs = reactSnippets();

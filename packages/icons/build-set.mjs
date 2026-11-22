@@ -132,6 +132,13 @@ export declare const ${P}: FC<IconProps>;
 export default ${P};
 `);
 }
+// 名前ごとの部品を、使う時に読む口。使う側の bundle では 1 つずつ別の塊に分かれ、最初の JS に絵の data が入らない
+fs.writeFileSync(path.join(R, "loaders.js"), `export const iconLoaders = {\n${icons.map((i) => `  ${JSON.stringify(i.name)}: () => import("./icons/${pascal(i.name)}.js").then((m) => m.${pascal(i.name)}),`).join("\n")}\n};\n`);
+fs.writeFileSync(path.join(R, "loaders.d.ts"), `import type { FC } from "react";
+import type { IconProps } from "./types.js";
+import type { IconName } from "./names.js";
+export declare const iconLoaders: Readonly<Record<IconName, () => Promise<FC<IconProps>>>>;
+`);
 fs.writeFileSync(path.join(R, "data.js"), `export const iconDefs = ${JSON.stringify(def)};\nexport const iconNames = ${JSON.stringify(names)};\n`);
 fs.writeFileSync(path.join(R, "Icon.js"), `import { createElement } from "react";
 import { createIcon } from "./create.js";
@@ -157,12 +164,14 @@ export declare const Icon: FC<IconProps & { name: IconName }>;
 fs.writeFileSync(path.join(R, "names.d.ts"), `export type IconName =\n${names.map((n) => `  | "${n}"`).join("\n")};\nexport declare const iconNames: readonly IconName[];\n`);
 fs.writeFileSync(path.join(R, "index.js"), `export { Icon } from "./Icon.js";
 export { iconNames } from "./data.js";
+export { iconLoaders } from "./loaders.js";
 ${icons.map((i) => `export { ${pascal(i.name)} } from "./icons/${pascal(i.name)}.js";`).join("\n")}
 `);
 fs.writeFileSync(path.join(R, "index.d.ts"), `export { Icon } from "./Icon.js";
 export type { IconProps, IconWeight } from "./types.js";
 export type { IconName } from "./names.js";
 export { iconNames } from "./names.js";
+export { iconLoaders } from "./loaders.js";
 ${icons.map((i) => `export { ${pascal(i.name)} } from "./icons/${pascal(i.name)}.js";`).join("\n")}
 `);
 console.log(`dist/svg: ${icons.length * 2} 枚、sprite.svg、react: ${icons.length} 部品 + Icon`);
