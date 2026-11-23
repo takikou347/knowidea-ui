@@ -1232,6 +1232,63 @@ await kb("AppShell(cspNonce を渡すと、Select を開いて差し込まれる
   assert(styles.every((n) => n === "ki-demo-nonce"), `nonce の無い <style> がある: ${JSON.stringify(styles)}`);
 });
 
+const axeSource = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
+
+// AppShell。brand の href と logo で左上は印付きの名前のリンク。collapsible で左の切り替えをアイコンだけの細い列に閉じ、もう一度押すと開く
+await kb("AppShell(collapsible で左を閉じて開く。キーで押せ、aria-expanded と Tooltip で名前が出る。左上の名前はリンク)", "components/app-shell.html", async (page) => {
+  const demo = page.locator("#demo-collapsible ~ astro-island .demo").first();
+  await demo.scrollIntoViewIfNeeded();
+  const side = demo.locator(".ki-shell__side");
+  const toggle = side.getByRole("button", { name: "サイドメニュー" });
+  const width = async () => (await side.boundingBox()).width;
+  const open = await width();
+  assert((await toggle.getAttribute("aria-expanded")) === "true", "開いている時に aria-expanded が true でない");
+  const brand = side.getByRole("link", { name: "見本のアプリ" });
+  assert((await brand.getAttribute("href")) === "#home", "左上の名前が brand の href へのリンクでない");
+  assert((await brand.boundingBox()).height >= 43.5, "左上の名前のリンクが 44px 未満");
+  assert((await brand.locator(".ki-drawer__logo").count()) === 1, "左上の名前に印が無い");
+  // キーで閉じる。focus はボタンに残る
+  await toggle.focus();
+  await press(page, "Enter");
+  await page.waitForTimeout(250);
+  assert((await toggle.getAttribute("aria-expanded")) === "false", "Enter で閉じても aria-expanded が false にならない");
+  assert(await inside(page, ".ki-drawer__toggle"), "閉じた後に focus が開け閉めのボタンから外れた");
+  const shut = await width();
+  assert(shut < 80 && shut < open, `閉じても左が細くならない(${open} → ${shut})`);
+  assert((await side.locator("[data-collapsed]").count()) + (await side.evaluate((el) => (el.hasAttribute("data-collapsed") ? 1 : 0))) === 1, "閉じた印 data-collapsed が無い");
+  // 名前は見せず、aria-label と Tooltip で出す。押せる所は 44px 四方
+  const list = side.getByRole("link", { name: "一覧、3 件" });
+  assert((await list.count()) === 1, "閉じた項目の名前が aria-label に無い");
+  assert(!(await side.getByText("ホーム", { exact: true }).isVisible()), "閉じても項目の名前が見えている");
+  for (const box of await side.locator(".ki-drawer__item").evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return [r.width, r.height]; }))) {
+    assert(box[0] >= 43.5 && box[1] >= 43.5, `閉じた項目が 44px 四方より小さい(${box})`);
+  }
+  assert((await side.getByRole("link", { name: "見本のアプリ" }).count()) === 1, "閉じた時に左上の印のリンクに名前が無い");
+  await press(page, "Tab");
+  assert(await inside(page, ".ki-drawer__item"), "閉じた後に Tab で項目へ移れない");
+  await page.getByRole("tooltip").or(page.locator(".ki-tooltip")).filter({ hasText: "ホーム" }).first().waitFor({ state: "visible", timeout: 2000 });
+  await list.hover();
+  await page.locator(".ki-tooltip").filter({ hasText: "一覧" }).first().waitFor({ state: "visible", timeout: 2000 });
+  await page.addScriptTag({ content: axeSource });
+  const found = await demo.evaluate(async (el) => {
+    const r = await window.axe.run(el, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] } });
+    return r.violations.filter((v) => v.impact === "critical" || v.impact === "serious").map((v) => `${v.id}(${v.nodes.length})`);
+  });
+  assert(found.length === 0, `閉じた時に axe: ${found.join(", ")}`);
+  // Space でもう一度押すと開く
+  await toggle.focus();
+  await press(page, "Space");
+  await page.waitForTimeout(250);
+  assert((await toggle.getAttribute("aria-expanded")) === "true", "Space で開いても aria-expanded が true にならない");
+  assert(Math.abs((await width()) - open) < 1, "開き直しても元の幅に戻らない");
+  assert(await side.getByText("ホーム", { exact: true }).isVisible(), "開き直しても項目の名前が出ない");
+  // 左上の名前を押すと href へ移る
+  await side.getByRole("link", { name: "見本のアプリ" }).click();
+  assert(new URL(page.url()).hash === "#home", "左上の名前を押しても href へ移らない");
+  // 既定 (collapsible なし) の見本には開け閉めのボタンが無い
+  assert((await page.locator("#demo-basic ~ astro-island .demo").first().getByRole("button", { name: "サイドメニュー" }).count()) === 0, "collapsible を渡さない見本に開け閉めのボタンがある");
+});
+
 // AppShell。項目が多い時は、下には主な物と「その他」だけ
 await kb("AppShell(8 項目。1280px は左に 8 つ、800px は下に 5 つ)", "components/app-shell.html", async (page) => {
   const demo = page.locator("#demo-many ~ astro-island .demo").first();
@@ -1287,7 +1344,6 @@ await kb("AppShell(360px、長い中身で Tab と Shift+Tab の止まる所が�
 }, { width: 360, height: 780 });
 
 // AppShell。狭い幅の長い中身に、axe の critical と serious が無い(下の切り替えが中身に重ならない、送れる所に Tab で入れる)
-const axeSource = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
 await kb("AppShell(360px、長い中身に axe の critical と serious が無い)", "components/app-shell.html", async (page) => {
   await page.addScriptTag({ content: axeSource });
   const bad = [];

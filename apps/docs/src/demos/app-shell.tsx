@@ -122,6 +122,30 @@ export function WithFooter() {
   );
 }
 
+export function Collapsible() {
+  // 開け閉めの状態はアプリ側が覚える。ここでは見本の中だけで持つ
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <div style={frame}>
+      <AppShell
+        items={items}
+        current="list"
+        brand={{ name: "見本のアプリ", sub: "サンプル", href: "#home", logo: "lightbulb" }}
+        collapsible
+        collapsed={collapsed}
+        onCollapsedChange={setCollapsed}
+        minHeight="24rem"
+        header={<AppBar title="一覧" headingLevel={3} />}
+      >
+        <div style={{ padding: "var(--space-4)" }}>
+          <p style={{ marginTop: 0 }}>左上の名前を押すと、brand の href へ移る。</p>
+          <p>名前の横のボタンで、左の切り替えがアイコンだけの細い列になる。もう一度押すと開く。今は{collapsed ? "閉じている" : "開いている"}。</p>
+        </div>
+      </AppShell>
+    </div>
+  );
+}
+
 export function Nonce() {
   return (
     <div style={frame}>

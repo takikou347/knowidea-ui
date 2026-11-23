@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.17.0",
+    date: "2026-11-23",
+    summary: "AppShell と Drawer の左上の名前をアイコン付きのリンクにでき、PC の幅の左の切り替えをアイコンだけの細い列に閉じられるようにした。既定は今までと同じく閉じない。",
+    rows: [
+      ["knowidea-ui", "AppShell と Drawer の brand に href と logo (アイコンの名前か要素) を足した。collapsible、collapsed、defaultCollapsed、onCollapsedChange、collapseLabel を足し、名前の横のボタン (aria-expanded) で左を閉じて開く。閉じた項目は名前を aria-label に持ち、Tooltip で出す。"],
+      ["knowidea-css", "閉じた左の切り替え (.ki-drawer[data-collapsed]、.ki-shell[data-side-collapsed])、開け閉めのボタン (.ki-drawer__toggle)、名前の前の印 (.ki-drawer__logo) と名前のリンクの形を足した。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "AppShell のページに名前のリンクと開け閉めの見本と props を足し、Drawer のページの props にも足した。"],
+    ],
+  },
+  {
     version: "0.16.0",
     date: "2026-11-22",
     summary: "名前で描くアイコンを使う時だけ読む形にし、画面の最初の JS に全部のアイコンの絵が入らないようにした。List は選べる一覧の時だけ選ぶ枠を読む。",

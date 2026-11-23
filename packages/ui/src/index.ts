@@ -50,7 +50,7 @@ export { List, ListItem, type ListProps, type ListEntry, type ListItemProps } fr
 export { Timeline, type TimelineProps, type TimelineEntry } from "./Timeline.js";
 export { SelectionBar, type SelectionBarProps } from "./SelectionBar.js";
 export { AppBar, type AppBarProps } from "./AppBar.js";
-export { Drawer, type DrawerProps, type DrawerGroup } from "./Drawer.js";
+export { Drawer, type DrawerProps, type DrawerGroup, type DrawerBrand, type DrawerCollapseProps } from "./Drawer.js";
 export { BottomNavigation, type BottomNavigationProps } from "./BottomNavigation.js";
 export type { NavItem } from "./NavItems.js";
 export { ThemeProvider, createTheme, type ThemeProviderProps, type ThemeOptions, type ThemeWarning } from "./ThemeProvider.js";

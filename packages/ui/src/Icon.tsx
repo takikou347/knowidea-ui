@@ -2,7 +2,7 @@ import { useLayoutEffect, useState, type FC } from "react";
 import {
   AddIcon, ArrowDownIcon, ArrowUpIcon, CalendarIcon, CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon,
   ChevronUpIcon, ClockIcon, CloseIcon, CopyIcon, DragIcon, ErrorIcon, FileIcon, InboxIcon, InfoIcon, NoteIcon,
-  PausedIcon, PulseIcon, RemoveIcon, SearchIcon, SortIcon, StaleIcon, StoppedIcon, SuccessIcon, UploadIcon, UserIcon,
+  PausedIcon, PulseIcon, RemoveIcon, SearchIcon, SidebarIcon, SortIcon, StaleIcon, StoppedIcon, SuccessIcon, UploadIcon, UserIcon,
   WarningIcon, WorkingIcon, iconLoaders, type IconName, type IconProps as BaseIconProps,
 } from "knowidea-icons/react";
 import { cx } from "./utils.js";
@@ -26,7 +26,7 @@ const BUILT_IN: Partial<Record<IconName, IconComponent>> = {
   "chevron-down": ChevronDownIcon, "chevron-left": ChevronLeftIcon, "chevron-right": ChevronRightIcon,
   "chevron-up": ChevronUpIcon, clock: ClockIcon, close: CloseIcon, copy: CopyIcon, drag: DragIcon, error: ErrorIcon,
   file: FileIcon, inbox: InboxIcon, info: InfoIcon, note: NoteIcon, paused: PausedIcon, pulse: PulseIcon,
-  remove: RemoveIcon, search: SearchIcon, sort: SortIcon, stale: StaleIcon, stopped: StoppedIcon, success: SuccessIcon,
+  remove: RemoveIcon, search: SearchIcon, sidebar: SidebarIcon, sort: SortIcon, stale: StaleIcon, stopped: StoppedIcon, success: SuccessIcon,
   upload: UploadIcon, user: UserIcon, warning: WarningIcon, working: WorkingIcon,
 };
 

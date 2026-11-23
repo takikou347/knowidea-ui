@@ -87,7 +87,8 @@ export const navigation = [
     props: [
       ["items / groups", "NavItem[] / { label?, items }[]", "-", "項目、または分類ごとの項目。NavItem は { id, label, icon?, href, count?, disabled? }"],
       ["current", "string", "-", "現在のページの id"],
-      ["brand", "{ name, sub? }", "-", "上部の見出し"],
+      ["brand", "{ name, sub?, href?, logo? }", "-", "上部の見出し。href を渡すとリンク、logo(アイコンの名前か要素)を渡すと名前の前に印を付ける"],
+      ["collapsible / collapsed / defaultCollapsed / onCollapsedChange", "boolean / boolean / boolean / (collapsed) => void", "false / - / false / -", "permanent をアイコンだけの細い列に閉じられるようにする。使い方は AppShell のページ"],
       ["variant", '"permanent" | "temporary"', '"permanent"', "常に表示するか、引き出しにするか"],
       ["open / defaultOpen / onOpenChange", "boolean / boolean / (open) => void", "-", "temporary の開閉"],
       ["label / closeLabel", "string", '"ナビゲーション" / "ナビゲーションを閉じる"', "nav の名前、閉じるボタンの名前"],
@@ -96,6 +97,7 @@ export const navigation = [
     classes: [
       [".ki-drawer", "本体。data-variant: permanent | temporary"],
       [".ki-drawer__head、__brand、__group、__list、__item", "内部の要素。__item の aria-current=\"page\" が現在のページ"],
+      [".ki-drawer[data-collapsed]、__toggle、__logo", "閉じた細い列、開け閉めのボタン、名前の前の印"],
       ["<dialog class=\"ki-drawer\" data-variant=\"temporary\">", "素の HTML の引き出し。data-ki-dialog-open で開く(ki.js)"],
     ],
     vars: [["--color-bg、--color-line", "背景と境界線"], ["--color-primary", "現在のページの色と線"], ["--color-surface-2", "ホバー時の背景"], ["--shadow-pop", "引き出しの影"], ["--motion-duration-state", "表示と非表示のアニメーション(prefers-reduced-motion で止まる)"]],

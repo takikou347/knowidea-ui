@@ -1,11 +1,11 @@
 import { CSPProvider } from "@base-ui/react/csp-provider";
 import type { CSSProperties, ReactNode } from "react";
 import { BottomNavigation } from "./BottomNavigation.js";
-import { Drawer } from "./Drawer.js";
+import { Drawer, useCollapsed, type DrawerBrand, type DrawerCollapseProps } from "./Drawer.js";
 import type { NavItem } from "./NavItems.js";
 import { cx } from "./utils.js";
 
-export interface AppShellProps {
+export interface AppShellProps extends DrawerCollapseProps {
   /** 画面の切り替え。左にはすべてを出す。bottomItems が無い時は下にも同じ物を出すので 3〜5 個にする(6 個以上だと下ではみ出す) */
   items: NavItem[];
   /** 今いる所の id */
@@ -14,8 +14,8 @@ export interface AppShellProps {
   bottomItems?: NavItem[];
   /** 下の切り替えで今いる所の id。既定は current。current が bottomItems に無いと下には印が付かないので、その時は「その他」の id を渡す */
   bottomCurrent?: string;
-  /** 左の切り替えの上に出す名前(PC の幅だけ) */
-  brand?: { name: string; sub?: string };
+  /** 左の切り替えの上に出す名前(PC の幅だけ)。href を渡すと押すとそこへ移るリンクに、logo(アイコンの名前か要素)を渡すと名前の前に印を付ける */
+  brand?: DrawerBrand;
   /** 切り替えの nav の名前。既定「画面の切り替え」 */
   label?: string;
   /** 中身の上に置く物。AppBar など */
@@ -38,12 +38,15 @@ export interface AppShellProps {
  * 中身は <main> に入り、送られるのは <main> だけ。上の header、下の footer と切り替えは別の段に置き、中身に重ねない。
  * <main> は Tab で止まり、押せる物の無い長い中身も矢印のキーで送れる。
  * 切り替えは両方を描き、幅で片方だけを見せる(見えない方は読み上げにも出ない)。
+ * collapsible を渡すと、PC の幅の左の切り替えをアイコンだけの細い列に閉じられる。既定は閉じない。
  */
-export function AppShell({ items, current, bottomItems, bottomCurrent, brand, label = "画面の切り替え", header, footer, sideFooter, minHeight, cspNonce, className, style, children }: AppShellProps) {
+export function AppShell({ items, current, bottomItems, bottomCurrent, brand, label = "画面の切り替え", header, footer, sideFooter, minHeight, cspNonce, collapsible = false, collapsed, defaultCollapsed, onCollapsedChange, collapseLabel, className, style, children }: AppShellProps) {
   const s = { ...(minHeight ? { "--ki-shell-height": minHeight } : null), ...style } as CSSProperties;
+  // 左の列の幅も変えるので、開け閉めの状態は枠が持ち、Drawer には制御で渡す
+  const [isCollapsed, setCollapsed] = useCollapsed({ collapsible, collapsed, defaultCollapsed, onCollapsedChange });
   const shell = (
-    <div className={cx("ki-shell", className)} style={s}>
-      <Drawer className="ki-shell__side" variant="permanent" items={items} current={current} brand={brand} label={label} footer={sideFooter} />
+    <div className={cx("ki-shell", className)} style={s} data-side-collapsed={isCollapsed ? "" : undefined}>
+      <Drawer className="ki-shell__side" variant="permanent" items={items} current={current} brand={brand} label={label} footer={sideFooter} collapsible={collapsible} collapsed={isCollapsed} onCollapsedChange={setCollapsed} collapseLabel={collapseLabel} />
       <div className="ki-shell__body">
         {header}
         {/* 送られる所にキーボードで入れる(axe の scrollable-region-focusable) */}

@@ -1,6 +1,7 @@
 /* 画面の枠(AppShell)。スマホと iPad(1024px 未満)は下に BottomNavigation、PC(1024px 以上、--breakpoint-desktop)は左に Drawer を出す。
    枠の高さは --ki-shell-height(既定 100dvh)。送られるのは中身の <main> だけで、上の AppBar、中身の下の footer、下の切り替えは別の段に置き、中身に重ねない。
-   footer は中身の段を下から縮め、高くなっても枠の 4 割で止めて中身の段を残す。 */
+   footer は中身の段を下から縮め、高くなっても枠の 4 割で止めて中身の段を残す。
+   左の切り替えを閉じた時(data-side-collapsed)は、左の列をアイコン 1 つ分(44px と左右の余白)に細くする。 */
 .ki-shell {
   display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto;
   height: var(--ki-shell-height, 100dvh); background: var(--color-bg); color: var(--color-text);
@@ -12,7 +13,12 @@
 .ki-shell__main:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
 .ki-shell__bottom { grid-column: 1; grid-row: 2; }
 @media (min-width: 1024px) {
-  .ki-shell { grid-template-columns: calc(var(--space-7) * 5) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+  .ki-shell {
+    grid-template-columns: calc(var(--space-7) * 5) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr);
+    transition: grid-template-columns var(--motion-duration-state) var(--motion-ease);
+  }
+  .ki-shell[data-side-collapsed] { grid-template-columns: calc(var(--size-hit) + var(--space-2) * 2 + 1px) minmax(0, 1fr); }
   .ki-shell__side { display: flex; min-height: 0; box-sizing: border-box; }
   .ki-shell__bottom { display: none; }
 }
+@media (prefers-reduced-motion: reduce) { .ki-shell { transition: none; } }
