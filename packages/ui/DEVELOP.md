@@ -1,6 +1,6 @@
 # knowidea-ui
 
-KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定のアプリに依存しない。見た目は `knowidea-css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer、Sheet、SegmentedControl、DatePicker、Popover、Combobox、Slider、Stepper)は `@base-ui/react` 1.9.0 をベースに実装している。
+KNOW IDEA の UI ライブラリの React 19 コンポーネント。特定のアプリに依存しない。見た目は `knowidea-css` のクラスを当てるだけで、挙動が複雑なコンポーネント(Dialog、ConfirmDialog、Tabs、Menu、Tooltip、Select、Checkbox、Radio、Switch、Toast、Field、Input、Accordion、Progress、Avatar、Drawer、Sheet、SegmentedControl、DatePicker、TimePicker、Popover、Combobox、Slider、Stepper)は `@base-ui/react` 1.9.0 をベースに実装している。
 
 | コマンド | 中身 |
 | --- | --- |
@@ -16,7 +16,7 @@ npm に出している。使う側は 4 つ全部を同じコマンドで入れ�
 
 | Category | Components |
 | --- | --- |
-| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、Calendar、Checkbox、Radio、SegmentedControl、Rating、Slider、Stepper、FileUpload、Switch、Field |
+| Inputs | Button、IconButton、TextField、Input、Textarea、Select、Combobox、DatePicker、TimePicker、Calendar、Checkbox、Radio、SegmentedControl、Rating、Slider、Stepper、FileUpload、Switch、Field |
 | Data display | Avatar、Badge、Chip、Status、Stat(Sparkline)、Table、List(ListItem)、Timeline、Tooltip、Popover、Kbd、CodeBlock、Quote、Display、Jacket、Conversation、DiffView、CodeEditor(`knowidea-ui/editor` から。CodeMirror 6 が土台) |
 | Feedback | Alert、Toast、Dialog、ConfirmDialog、Sheet、Progress、Skeleton、Spinner、EmptyState |
 | Surfaces | Card、Accordion、SelectionBar |

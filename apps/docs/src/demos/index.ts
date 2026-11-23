@@ -61,6 +61,7 @@ import * as dTabs from "./tabs";
 import * as dTextField from "./text-field";
 import * as dTextarea from "./textarea";
 import * as dTimeline from "./timeline";
+import * as dTimePicker from "./time-picker";
 import * as dToast from "./toast";
 import * as dTooltip from "./tooltip";
 
@@ -121,6 +122,7 @@ export const demos = {
   "text-field": dTextField,
   "textarea": dTextarea,
   "timeline": dTimeline,
+  "time-picker": dTimePicker,
   "toast": dToast,
   "tooltip": dTooltip,
   "app-shell": dAppShell,

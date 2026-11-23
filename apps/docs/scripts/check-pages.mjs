@@ -2,7 +2,7 @@
 //  1. 全ページを 390px ライトと 1280px ダークで開き、横にはみ出さない(scrollWidth <= 画面の幅)こと、コンソールの誤りが 0 なこと
 //  1b. 390px で、見える押せる物(a、button、[role=tab]、input など)が 44x44 以上なこと
 //  すべて dist を /a/b/ の下で配って確かめる(どの場所に置いても壊れないこと。404 はコンソールの誤りに出る)
-//  2. 操作: ダイアログ(閉じ込め、Esc、中の Select)、シート(下へ引いて閉じる)、SegmentedControl、Calendar、DatePicker、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
+//  2. 操作: ダイアログ(閉じ込め、Esc、中の Select)、シート(下へ引いて閉じる)、SegmentedControl、Calendar、DatePicker、TimePicker、Card の設定の形、確かめる操作、タブ、メニュー、アコーディオン、グラフ、ナビゲーションのドロワー(390px)、検索、テーマを試す所、アイコンの一覧
 // 使い方: pnpm --filter @knowidea/docs build の後に pnpm --filter @knowidea/docs check:pages
 // ONLY=メニュー のように名前の一部を渡すと、その操作だけ回す
 // Chromium は /opt/pw-browsers の中を直に指す(playwright install はしない)。CHROMIUM_PATH で上書きできる。
@@ -341,6 +341,70 @@ await kb("DatePicker(開くと日へ focus、選ぶと閉じて欄に戻る、39
   assert(!(await trigger.getAttribute("aria-label")).endsWith("未選択"), "選んだ値が欄に出ない");
   assert(await page.evaluate(() => document.activeElement?.classList.contains("ki-select")), "閉じた後に focus が欄へ戻らない");
 }, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("TimePicker(開くと選んだ時刻へ focus、矢印と Enter で選ぶ、Esc で戻る、44px、390px で収まる)", "components/time-picker.html", async (page) => {
+  const trigger = page.getByRole("combobox", { name: "知らせる時刻" }).first();
+  const tb = await trigger.boundingBox();
+  assert(tb.height >= 44, `欄の高さが 44px に届かない(${tb.height})`);
+  const desc = await trigger.evaluate((el) => (el.getAttribute("aria-describedby") ?? "").split(" ").map((id) => document.getElementById(id)?.textContent ?? "").join(" "));
+  assert(desc.includes("毎日この時刻に知らせる"), `補足の文が欄に結ばれない(${desc})`);
+  await trigger.click();
+  const list = page.getByRole("listbox");
+  await list.waitFor({ state: "visible" });
+  await page.waitForTimeout(200);
+  const focused = await page.evaluate(() => document.activeElement?.textContent?.trim());
+  assert(focused === "09:00", `開いた時に選んだ時刻へ focus が移らない(${focused})`);
+  const popup = page.locator(".ki-timepicker__popup");
+  const box = await popup.boundingBox();
+  assert(box.x >= 0 && box.x + box.width <= 390, `開いた一覧が画面の外に出る(${Math.round(box.x)}..${Math.round(box.x + box.width)})`);
+  assert(box.height < 44 * 8, `一覧が長いまま出る(${Math.round(box.height)}px)`);
+  assert(await popup.evaluate((el) => el.scrollHeight > el.clientHeight), "一覧を送れない");
+  const small = await page.getByRole("option").evaluateAll((els) => els.filter((e) => e.getBoundingClientRect().height < 44).length);
+  assert(small === 0, `44px に届かない行が ${small} 個`);
+  const opt = page.getByRole("option", { name: "09:00" });
+  const ob = await opt.boundingBox();
+  assert(ob.y >= box.y - 1 && ob.y + ob.height <= box.y + box.height + 1, "選んだ時刻の行が見える所に無い");
+  await press(page, "ArrowDown");
+  await press(page, "Enter");
+  await list.waitFor({ state: "hidden" });
+  assert((await trigger.textContent()).includes("09:15"), "矢印と Enter で選べない");
+  assert(await page.getByText("値: 09:15").first().isVisible(), "選んだ値が渡らない");
+  assert(await trigger.evaluate((el) => document.activeElement === el), "閉じた後に focus が欄へ戻らない");
+  await press(page, "ArrowDown");
+  await list.waitFor({ state: "visible" });
+  await press(page, "Escape");
+  await list.waitFor({ state: "hidden" });
+  assert((await trigger.textContent()).includes("09:15"), "Esc で値が変わった");
+  assert(await trigger.evaluate((el) => document.activeElement === el), "Esc の後に focus が欄へ戻らない");
+}, { width: 390, height: 844 }, { hasTouch: true });
+
+await kb("TimePicker(min と max の間を 30 分ごと、刻みに無い値も残す)", "components/time-picker.html", async (page) => {
+  await page.getByRole("combobox", { name: /^受け付けの時刻/ }).first().click();
+  await page.getByRole("listbox").waitFor({ state: "visible" });
+  const names = (await page.getByRole("option").allTextContents()).map((t) => t.trim());
+  assert(names.length === 19 && names[0] === "09:00" && names.at(-1) === "18:00", `範囲が合わない(${names[0]}..${names.at(-1)}、${names.length} 個)`);
+  await press(page, "Escape");
+  await page.getByRole("combobox", { name: "開始" }).first().click();
+  await page.getByRole("listbox").waitFor({ state: "visible" });
+  const five = (await page.getByRole("option").allTextContents()).map((t) => t.trim());
+  assert(five.length === 288 && five.includes("13:05"), `5 分ごとにならない(${five.length} 個)`);
+});
+
+await kb("Card(lg の見出しは 1 段大きく、end の操作は右下に寄る)", "components/card.html", async (page) => {
+  const demo = page.locator(".demo").filter({ has: page.locator('.ki-card[data-title-size="lg"]') }).first();
+  const cards = demo.locator(".ki-card");
+  const md = await page.locator('.demo .ki-card:not([data-title-size]) .ki-card__title').first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+  const lg = await cards.first().locator(".ki-card__title").evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+  assert(lg > md, `lg の見出しが大きくならない(md ${md}px、lg ${lg}px)`);
+  const pos = await cards.evaluateAll((els) => els.map((c) => {
+    const a = c.querySelector(".ki-card__actions > :last-child").getBoundingClientRect();
+    const r = c.getBoundingClientRect();
+    const pad = parseFloat(getComputedStyle(c).paddingRight) + 1;
+    return { right: r.right - a.right - pad, bottom: r.bottom - a.bottom - parseFloat(getComputedStyle(c).paddingBottom) - 1 };
+  }));
+  assert(pos.length === 2, "設定の見本のカードが 2 つでない");
+  for (const p of pos) assert(Math.abs(p.right) <= 1 && Math.abs(p.bottom) <= 1, "操作が右下に寄らない: " + JSON.stringify(p));
+});
 
 await kb("Combobox(読みで探す、矢印と Enter で選ぶ、合う物が無い、390px で欄が Field に収まる)", "components/combobox.html", async (page) => {
   const input = page.getByRole("combobox", { name: "都道府県" }).first();
@@ -785,9 +849,9 @@ await kb("トップの動く見本(主の色、角丸、密度、ダーク、範
 });
 
 await kb("部品の一覧(カテゴリごとの触れる見本、Code でコードを開いてコピー)", "components.html", async (page) => {
-  assert((await page.locator(".cp").count()) === 63, "カードが 63 枚でない");
+  assert((await page.locator(".cp").count()) === 64, "カードが 64 枚でない");
   assert((await page.locator("main section h2").count()) === 7, "カテゴリが 7 つでない");
-  assert((await page.locator(".cp-fit").count()) === 63, "見本が 63 個でない");
+  assert((await page.locator(".cp-fit").count()) === 64, "見本が 64 個でない");
   // 見本は触れる: Switch を押すと切り替わる
   const sw = page.locator(".cp").filter({ has: page.locator(".cp-link", { hasText: /^Switch$/ }) }).locator('[role="switch"]').first();
   await sw.scrollIntoViewIfNeeded();

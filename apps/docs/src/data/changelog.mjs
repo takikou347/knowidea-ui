@@ -2,6 +2,18 @@
 // rows の各行は [パッケージか Docs, 内容]。使う人にとっての変更を短く書く。
 export const releases = [
   {
+    version: "0.18.0",
+    date: "2026-11-23",
+    summary: "時刻を選ぶ TimePicker を足し、Card に見出しを 1 段大きくする titleSize と操作を右下に寄せる actionsAlign を足した。設定の画面の項目を組める。既定の形は今までと同じ。",
+    rows: [
+      ["knowidea-ui", "TimePicker を足した。値は \"HH:MM\"、step(分、既定 15)、min と max、label、hint、error、required、disabled、name を受ける。Card に titleSize(\"md\" | \"lg\")と actionsAlign(\"start\" | \"end\")を足した。"],
+      ["knowidea-css", "time-picker.css(.ki-timepicker、__trigger、__value、__popup、__item)を足した。Card に data-title-size=\"lg\" と data-actions-align=\"end\" の形を足した。"],
+      ["knowidea-tokens", "変更なし(版をそろえた)。"],
+      ["knowidea-icons", "変更なし(版をそろえた)。"],
+      ["Docs", "TimePicker のページを足し、Card のページに設定の項目の見本と props を足した。"],
+    ],
+  },
+  {
     version: "0.17.0",
     date: "2026-11-23",
     summary: "AppShell と Drawer の左上の名前をアイコン付きのリンクにでき、PC の幅の左の切り替えをアイコンだけの細い列に閉じられるようにした。既定は今までと同じく閉じない。",

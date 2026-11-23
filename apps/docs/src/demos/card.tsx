@@ -1,4 +1,4 @@
-import { Card, Grid, Status, Button, Icon, Badge } from "knowidea-ui";
+import { Card, Grid, Status, Button, Icon, Badge, Switch, TimePicker } from "knowidea-ui";
 import type { StateRow } from "./types";
 
 export function Basic() {
@@ -29,6 +29,19 @@ export function WithBadge() {
     <div style={{ width: "min(100%, 320px)" }}>
       <Card title="下書き" badge={<Badge>公開前</Badge>} headingLevel={2}>本文は短く。見出しのレベルは headingLevel で合わせる。</Card>
     </div>
+  );
+}
+
+export function Settings() {
+  return (
+    <Grid minItemWidth={280} style={{ width: "100%" }}>
+      <Card title="通知" titleSize="lg" headingLevel={2} actionsAlign="end" actions={<Button variant="primary">保存</Button>}>
+        <TimePicker label="知らせる時刻" hint="毎日この時刻に、前の日の件数を知らせる" defaultValue="09:00" />
+      </Card>
+      <Card title="表示" titleSize="lg" headingLevel={2} actionsAlign="end" actions={<Button variant="primary">保存</Button>}>
+        <Switch label="細かい記録を出す" placement="end" />
+      </Card>
+    </Grid>
   );
 }
 

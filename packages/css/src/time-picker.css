@@ -1,0 +1,6 @@
+/* 時刻を選ぶ欄(TimePicker)。欄は Select と DatePicker と同じ形で、開くと step 分ごとの一覧が出る。React だけ(素の HTML は <input type="time">)。
+   一覧の行は Select の行(44px)と同じ。長い一覧は 6 行半で切って送れるようにし、続きがある事を見せる。 */
+.ki-timepicker__value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.ki-timepicker__trigger[data-placeholder] .ki-timepicker__value { font-family: inherit; }
+.ki-timepicker__popup { max-height: min(var(--available-height), calc(var(--size-hit) * 6.5 + var(--space-1) * 2)); overscroll-behavior: contain; }
+.ki-timepicker__item { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }

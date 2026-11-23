@@ -142,6 +142,36 @@ export const input = [
     a11y: ["欄は Base UI の Popover の Trigger。開くと、選んだ日(無ければ今日)に focus が移り、Esc で閉じて欄に戻る", "読み上げは「締め切り、2026年1月5日(月)」のように、名前と今の値を続けて読む", "カレンダーの操作は Calendar と同じ"],
   },
   {
+    slug: "time-picker", name: "TimePicker", imports: ["TimePicker"],
+    lead: "時刻を 1 つ選ぶ欄。押すと step 分ごとの時刻の一覧が開き、行を押すと閉じる。見た目は DatePicker と同じ欄で、値は 24 時間の「09:30」。ラベル、補足、誤りの文を一緒に持つ。フォームで送ると HH:MM になる。",
+    demos: [
+      { fn: "Basic", title: "Basic", text: "既定は 15 分ごと。開くと選んだ時刻の行に focus が移り、上下の矢印で移って Enter で選ぶ。数字を打つと、その時刻の行へ飛ぶ。" },
+      { fn: "Limits", title: "Min, max and step", text: "min と max の間だけを、両端を含めて出す。step は 00:00 から数える。name を渡すと、隠した input で HH:MM を送る。" },
+      { fn: "Step", title: "Step", text: "step=5 で 5 分ごと。一覧は 6 行半で切り、指でもホイールでも送れる。" },
+    ],
+    props: [
+      ["label", "ReactNode", "-", "ラベル。必須"],
+      ["hint / error", "ReactNode", "-", "補足と誤りの文。error があると欄が誤りの枠になる"],
+      ["value / defaultValue / onValueChange", "string | null", "null", "\"HH:MM\"(24 時間)。制御と非制御。刻みに無い値も一覧に残して出す"],
+      ["step", "number", "15", "刻み(分)。1 から 720 の整数。00:00 から数える"],
+      ["min / max", "string", "\"00:00\" / \"23:59\"", "選べる最初と最後の時刻。両端を含む"],
+      ["placeholder", "string", "\"時刻を選ぶ\"", "未選択の時の文"],
+      ["required / disabled", "boolean", "false", "必須の印、操作できない"],
+      ["name", "string", "-", "フォームで送る名前。値は HH:MM"],
+    ],
+    classes: [
+      [".ki-field.ki-timepicker", "外の枠。ラベル、欄、補足、誤りを縦に並べる(Field と同じ)"],
+      [".ki-timepicker__trigger.ki-select、__value", "欄(Select と同じクラス)と、等幅の値"],
+      [".ki-timepicker__popup、__item", "開いた一覧(6 行半で切る)と時刻の行(44px)"],
+    ],
+    vars: [["--color-line-strong、--color-surface", "欄の枠と背景(Select と同じ)"], ["--size-hit", "行の高さ(44px)と、一覧の高さの元"], ["--font-mono", "時刻の数字(等幅)"], ["--shadow-pop、--radius-3", "開いた一覧の影と角丸"]],
+    html: `<!-- 素の HTML では、ブラウザの時刻の欄を使う。step は秒(900 は 15 分) -->
+<label class="ki-field"><span class="ki-field__label">知らせる時刻</span>
+  <input class="ki-input" type="time" step="900" min="09:00" max="18:00" />
+</label>`,
+    a11y: ["欄は Base UI の Select の Trigger(role=\"combobox\")で、名前は label、補足と誤りは Field が結ぶ", "開くと選んだ時刻の行に focus が移る。上下の矢印で行を移り、Home と End で端、Enter で選んで閉じ、Esc で閉じて欄に戻る。数字を打つとその時刻の行へ飛ぶ", "行は 44px の高さで、指で選べる。一覧は 6 行半で切って、続きがある事を見せる"],
+  },
+  {
     slug: "calendar", name: "Calendar", imports: ["Calendar"],
     lead: "月のカレンダー。日を 1 つ選ぶ。今日は枠、選んだ日は主の色で塗り、予定のある日には点を付ける。1 日は 44px 四方で、360px の画面にも収まる。月を移ると、表が移った向きから少し滑って出る。",
     demos: [

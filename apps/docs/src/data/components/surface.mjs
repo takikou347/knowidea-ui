@@ -7,6 +7,7 @@ export const surface = [
     demos: [
       { fn: "Basic", title: "Clickable and with actions", text: "メタ情報は名前と値のペアで、2 列に並ぶ。値は等幅で表示する。", block: true },
       { fn: "WithBadge", title: "Heading level", text: "見出しのレベルは headingLevel で合わせる。" },
+      { fn: "Settings", title: "Settings item", text: "設定の項目に使う形。titleSize=\"lg\" で見出しを 1 段大きく(--font-size-4)し、actionsAlign=\"end\" で保存の操作を右下に寄せる。並べたカードの高さがそろっても、操作は下の端に付く。", block: true },
     ],
     props: [
       ["title", "ReactNode", "-", "見出し。必須"],
@@ -15,6 +16,8 @@ export const surface = [
       ["children", "ReactNode", "-", "本文"],
       ["meta", "{ label, value }[]", "-", "名前と値のペア。2 列で並び、値は等幅"],
       ["actions", "ReactNode", "-", "下部の操作。Button など。カード全体のリンクより前面に表示される"],
+      ["titleSize", '"md" | "lg"', '"md"', "見出しの大きさ。lg は 1 段大きく(--font-size-4)、設定の項目の見出しに使う"],
+      ["actionsAlign", '"start" | "end"', '"start"', "操作の寄せ方。end は右下に寄せ、縦に伸びたカードでも下の端に付く"],
       ["href / onOpen", "string / () => void", "-", "指定すると見出しがリンク(ボタン)になり、カード全体がクリック領域になる"],
       ["headingLevel", "2 | 3 | 4 | 5 | 6", "3", "見出し要素(h)のレベル"],
       ["state / error", '"ready" | "loading" | "error" / string', '"ready"', "ローディング(破線の枠)、エラー(エラーの枠と理由)"],
@@ -22,11 +25,11 @@ export const surface = [
       ["as", "ElementType", '"article"', "描画する要素"],
     ],
     classes: [
-      [".ki-card", "本体。data-interactive、data-state、data-disabled"],
+      [".ki-card", "本体。data-interactive、data-state、data-disabled、data-title-size=\"lg\"、data-actions-align=\"end\""],
       [".ki-card__header、__heading、__title、__subtitle、__link", "見出し部分。__link の ::after が枠全体に広がる"],
       [".ki-card__body、__meta、__actions、__error", "本文、メタ情報、操作、エラーの理由"],
     ],
-    vars: [["--color-surface、--color-line、--color-line-strong", "背景、枠線、ホバー時の枠線"], ["--color-error、--color-surface-2", "エラー時の枠線、無効時の背景"], ["--radius-3、--space-3、--space-4", "角丸、間隔、余白"], ["--color-focus", "フォーカスリング"]],
+    vars: [["--color-surface、--color-line、--color-line-strong", "背景、枠線、ホバー時の枠線"], ["--color-error、--color-surface-2", "エラー時の枠線、無効時の背景"], ["--radius-3、--space-3、--space-4", "角丸、間隔、余白"], ["--font-size-3、--font-size-4", "見出しの大きさ(md と lg)"], ["--color-focus", "フォーカスリング"]],
     html: `<article class="ki-card" data-interactive>
   <header class="ki-card__header">
     <div class="ki-card__heading"><h3 class="ki-card__title"><a class="ki-card__link" href="#">エクスポート設定</a></h3></div>

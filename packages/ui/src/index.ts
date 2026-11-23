@@ -8,6 +8,7 @@ export { Select, type SelectProps, type SelectOption } from "./Select.js";
 export { Checkbox, Switch, RadioGroup, type CheckboxProps, type SwitchProps, type RadioGroupProps, type RadioOption } from "./Choice.js";
 export { Calendar, sameDay, type CalendarProps } from "./Calendar.js";
 export { DatePicker, type DatePickerProps } from "./DatePicker.js";
+export { TimePicker, type TimePickerProps } from "./TimePicker.js";
 export { Combobox, normalizeForSearch, type ComboboxProps, type ComboboxOption } from "./Combobox.js";
 export { FileUpload, formatBytes, type FileUploadProps } from "./FileUpload.js";
 export { Kbd, type KbdProps } from "./Kbd.js";

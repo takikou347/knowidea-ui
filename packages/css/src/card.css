@@ -1,4 +1,5 @@
-/* カード。見出し、メタ、本文、操作の枠。data-interactive: タイトルのリンクがカード全体に広がる。data-state: loading | error。 */
+/* カード。見出し、メタ、本文、操作の枠。data-interactive: タイトルのリンクがカード全体に広がる。data-state: loading | error。
+   data-title-size="lg": 見出しを 1 段大きく(設定の項目の見出し)。data-actions-align="end": 操作を右下に寄せる。 */
 .ki-card {
   position: relative; display: grid; gap: var(--space-3); align-content: start; min-width: 0; padding: var(--space-4);
   background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-line); border-radius: var(--radius-3);
@@ -22,6 +23,10 @@
 .ki-card__meta dt { font-size: var(--font-size-1); color: var(--color-text-muted); }
 .ki-card__meta dd { margin: 0; font-family: var(--font-mono); font-size: var(--font-size-2); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .ki-card__actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.ki-card[data-title-size="lg"] .ki-card__title { font-size: var(--font-size-4); line-height: var(--font-line-height-4); }
+/* 右下: 縦に伸びたカードでも操作は下の端に付き、右に寄る */
+.ki-card[data-actions-align="end"] { display: flex; flex-direction: column; }
+.ki-card[data-actions-align="end"] > .ki-card__actions { margin-top: auto; justify-content: flex-end; }
 .ki-card[data-state="loading"] { border-style: dashed; }
 .ki-card[data-state="error"] { border-color: var(--color-error); }
 .ki-card[data-disabled] { color: var(--color-text-muted); background: var(--color-surface-2); }
